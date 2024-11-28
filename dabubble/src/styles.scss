@@ -1,1 +1,60 @@
-/* You can add global styles to this file, and also import other style files */
+/* nunito-regular - latin */
+@font-face {
+  font-display: swap;
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 400;
+  src: url("./assets/fonts/nunito-v26-latin/nunito-v26-latin-regular.woff2")
+    format("woff2");
+}
+/* nunito-500 - latin */
+@font-face {
+  font-display: swap;
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 500;
+  src: url("./assets/fonts/nunito-v26-latin/nunito-v26-latin-500.woff2")
+    format("woff2");
+}
+/* nunito-700 - latin */
+@font-face {
+  font-display: swap;
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 700;
+  src: url("./assets/fonts/nunito-v26-latin/nunito-v26-latin-700.woff2")
+    format("woff2");
+}
+/* nunito-800 - latin */
+@font-face {
+  font-display: swap;
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 800;
+  src: url("./assets/fonts/nunito-v26-latin/nunito-v26-latin-800.woff2")
+    format("woff2");
+}
+
+/* templates */
+@mixin arrangement(
+  $d: flex,
+  $jc: space-between,
+  $ai: center,
+  $fd: unset,
+  $g: 0
+) {
+  display: $d;
+  justify-content: $jc;
+  align-items: $ai;
+  flex-direction: $fd;
+  gap: $g;
+}
+
+* {
+  margin: 0;
+}
+
+body {
+  max-height: 100vh;
+  overflow: hidden;
+}
