@@ -1,6 +1,11 @@
 <p>general-view works!</p>
-<a [routerLink]="['public-chat']" >public</a>
-<a [routerLink]="['privat-chat']" >privat</a>
-<a [routerLink]="['new-message']" >new</a>
-
-<router-outlet></router-outlet>
+<section style="width: 100%">
+  <nav style="font-size: 32px; padding-left: 40px;">
+    <a [routerLink]="['public-chat']">public</a> <br />
+    <a [routerLink]="['privat-chat']">privat</a> <br />
+    <a [routerLink]="['new-message']">new</a>
+  </nav>
+  <div style="width: 100%; display: flex; justify-content: center; font-size: 42px; font-weight: 700;">
+    <router-outlet></router-outlet>
+  </div>
+</section>
