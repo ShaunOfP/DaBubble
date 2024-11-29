@@ -36,13 +36,7 @@
 }
 
 /* templates */
-@mixin arrangement(
-  $d: flex,
-  $jc: space-between,
-  $ai: center,
-  $fd: unset,
-  $g: 0
-) {
+@mixin arrangement( $d: flex, $jc: center, $ai: center, $fd: unset, $g: 0) {
   display: $d;
   justify-content: $jc;
   align-items: $ai;
@@ -52,9 +46,68 @@
 
 * {
   margin: 0;
+  font-family: "Nunito", Arial, Helvetica, sans-serif;
 }
 
 body {
   max-height: 100vh;
   overflow: hidden;
+  background-color: #eceefe;
+}
+
+h2 {
+  font-size: 46px;
+  font-weight: 700;
+  color: #124658;
+}
+h3 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #000000;
+}
+
+button{
+  cursor: pointer;
+}
+
+.btn-primary {
+  border: none;
+  border-radius: 25px;
+  padding: 12px 25px;
+  color: white;
+  &--default {
+    @extend .btn-primary;
+    background-color: #444df2;
+    &:hover {
+      background-color: #797ef3;
+    }
+  }
+  &--disable{
+    @extend .btn-primary;
+    background-color: #686868;
+    cursor: not-allowed;
+  }
+}
+
+.btn-secondary {
+  border: none;
+  border-radius: 25px;
+  padding: 12px 25px;
+  color: #797ef3;
+  &--default {
+    @extend .btn-secondary;
+    background-color: #FFFFFF;
+    border: 1px solid #797EF3;
+    &:hover{
+      background-color: #535AF1;
+      color: #FFFFFF;
+    }
+  }
+  &--disable{
+    @extend .btn-secondary;
+    background-color: #FFFFFF;
+    color: #686868;
+    border: 1px solid #686868;
+    cursor: not-allowed;
+  }
 }

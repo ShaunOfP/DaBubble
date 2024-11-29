@@ -1,0 +1,6 @@
+@import './../../../styles.scss';
+
+//example
+.class{
+    @include arrangement($d:block)
+}
