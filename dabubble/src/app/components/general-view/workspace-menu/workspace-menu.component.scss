@@ -4,8 +4,9 @@ section {
     background-color: white;
     width: 366px;
     border-radius: 30px;
-    min-height: 940px;
+    min-height: 680px; //ändern
     height: 100%;
+    max-height: 900px;
     padding: 32px 30px 32px 30px;
     display: flex;
     flex-direction: column;
@@ -123,6 +124,26 @@ h3 {
     flex-direction: column;
     align-items: start;
     gap: 13px;
+    max-height: 500px;
+    overflow-y: scroll;
+}
+
+.contacts-container::-webkit-scrollbar {
+    width: 7px;
+}
+
+.contacts-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 30px;
+}
+
+.contacts-container::-webkit-scrollbar-thumb {
+    background: var(--color-purple-secondary-hover);
+    border-radius: 30px;
+}
+
+.contacts-container::-webkit-scrollbar-thumb:hover {
+    background: var(--color-purple-primary-disabled);
 }
 
 .contact {
