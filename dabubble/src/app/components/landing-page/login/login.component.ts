@@ -14,6 +14,10 @@ export class LoginComponent {
     switch (route) {
       case 'public-chat':
         this.router.navigate(['/general/public-chat']);
+        break;
+      case 'imprint':
+        this.router.navigate(['/imprint']);
+        break;
     }
   }
 }

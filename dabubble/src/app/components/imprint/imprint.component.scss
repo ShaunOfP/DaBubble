@@ -1,9 +1,6 @@
 @import '../../../templates/mixins.scss';
 
-body {
-  display: flex;
-  justify-content: center;
-}
+
 
 .mat-mdc-card {
   @include arrangement($d: flex, $jc: center, $ai: center, $fd: column);

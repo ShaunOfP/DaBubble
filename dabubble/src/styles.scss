@@ -84,3 +84,9 @@ h3 {
   font-weight: 700;
   color: #000000;
 }
+
+.app-wrapper {
+  @include arrangement($d: flex, $jc: center, $ai: center, $fd: column);
+  height: 100vh;
+  background-color: var(--color-blue-bg);
+}
