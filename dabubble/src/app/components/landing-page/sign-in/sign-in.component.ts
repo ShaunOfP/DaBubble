@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 
 @Component({
-  selector: 'app-sing-in',
+  selector: 'app-sign-in',
   standalone: true,
   imports: [MatCardModule],
-  templateUrl: './sing-in.component.html',
-  styleUrl: './sing-in.component.scss'
+  templateUrl: './sign-in.component.html',
+  styleUrl: './sign-in.component.scss'
 })
-export class SingInComponent {
+export class SignInComponent {
 
 }
