@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
@@ -23,5 +23,9 @@ export class LoginComponent {
 
   signIn(){
     this.router.navigate(['/sign-in']);
+  }
+
+  forgotPassword(){
+    this.router.navigate(['/forgot-password'])
   }
 }

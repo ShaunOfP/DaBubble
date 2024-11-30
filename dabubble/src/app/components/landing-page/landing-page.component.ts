@@ -6,12 +6,12 @@ import { Router, RouterModule } from '@angular/router';
   standalone: true,
   imports: [RouterModule],
   templateUrl: './landing-page.component.html',
-  styleUrl: './landing-page.component.scss'
+  styleUrl: './landing-page.component.scss',
 })
 export class LandingPageComponent {
-/*   constructor(private router: Router) { }
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
-      this.router.navigate(['log-in']);
-  } */
+    this.router.navigate(['log-in']);
+  }
 }
