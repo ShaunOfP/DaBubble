@@ -10,18 +10,21 @@ import { LandingPageComponent } from './components/landing-page/landing-page.com
 import { WorkspaceMenuComponent } from './components/general-view/workspace-menu/workspace-menu.component';
 
 export const routes: Routes = [
-  { path: '', component: LandingPageComponent,
-    children:[
-      {path: '', component: LoginComponent}
-    ]
-   },
-  { path: 'general', component: GeneralViewComponent,
-    children: [
-      { path: 'public-chat', component: PublicChatComponent },
-      { path: 'privat-chat', component: PrivateChatComponent },
-      { path: 'new-message', component: NewMessageComponent },
-    ],
-  },
-  { path: 'imprint', component: ImprintComponent },
-  { path: 'privacy-policy', component: PrivacyPolicyComponent },
+  {
+    path: '', component: GeneralViewComponent,
+  }
+  // { path: '', component: LandingPageComponent,
+  //   children:[
+  //     {path: '', component: LoginComponent}
+  //   ]
+  //  },
+  // { path: 'general', component: GeneralViewComponent,
+  //   children: [
+  //     { path: 'public-chat', component: PublicChatComponent },
+  //     { path: 'privat-chat', component: PrivateChatComponent },
+  //     { path: 'new-message', component: NewMessageComponent },
+  //   ],
+  // },
+  // { path: 'imprint', component: ImprintComponent },
+  // { path: 'privacy-policy', component: PrivacyPolicyComponent },
 ];

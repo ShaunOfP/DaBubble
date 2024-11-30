@@ -1,4 +1,6 @@
-section{
+@import './../../../../styles.scss';
+
+section {
     background-color: white;
     width: 366px;
     border-radius: 30px;
@@ -6,13 +8,97 @@ section{
     height: 100%;
     padding: 32px 30px 32px 30px;
     display: flex;
+    flex-direction: column;
     gap: 25px;
 }
 
-.workspace-menu-header{
+.workspace-menu-header {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    >div {
+        display: flex;
+        gap: 15px;
+    }
 }
 
-.radius-30{
+.devspace-logo {
+    height: 60px;
+    width: 60px;
+}
+
+h3 {
+    display: flex;
+    align-items: center;
+}
+
+.radius-30 {
     border-radius: 30px;
 }
+
+.channels-container {
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.header {
+    display: flex;
+
+    >img {
+        height: 30px;
+        width: 30px;
+    }
+}
+
+.channels-header-container {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 15px;
+    width: 100%;
+
+    >img {
+        height: 30px;
+        width: 30px;
+    }
+}
+
+.channels-header-sub-container {
+    display: flex;
+    align-items: center;
+
+    >img {
+        height: 24px;
+        width: 24px;
+    }
+
+    >span {
+        font-weight: 700;
+        font-size: 20px;
+    }
+}
+
+.channels {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.add-channel {
+    display: flex;
+    gap: 10px;
+
+    >img {
+        height: 24px;
+        width: 24px;
+    }
+
+    >span {
+        font-weight: 400px;
+        font-size: 18px;
+    }
+}
+
+.dm-container {}
