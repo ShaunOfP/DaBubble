@@ -8,6 +8,7 @@ section {
     width: 60px;
     display: flex;
     justify-content: center;
+    filter: drop-shadow(black 0px 0px 2px);
 
     >div {
         transform: rotate(-90deg);
@@ -17,6 +18,7 @@ section {
 
         &:hover {
             color: var(--color-purple-secondary-hover);
+            cursor: pointer;
         }
     }
 }
