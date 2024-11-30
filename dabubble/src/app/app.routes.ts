@@ -6,9 +6,14 @@ import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-poli
 import { PublicChatComponent } from './components/general-view/public-chat/public-chat.component';
 import { PrivateChatComponent } from './components/general-view/private-chat/private-chat.component';
 import { NewMessageComponent } from './components/general-view/new-message/new-message.component';
+import { LandingPageComponent } from './components/landing-page/landing-page.component';
 
 export const routes: Routes = [
-  { path: '', component: LoginComponent },
+  { path: '', component: LandingPageComponent,
+    children:[
+      {path: 'login', component: LoginComponent}
+    ]
+   },
   { path: 'general', component: GeneralViewComponent,
     children: [
       { path: 'public-chat', component: PublicChatComponent },
