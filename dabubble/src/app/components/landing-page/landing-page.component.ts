@@ -12,7 +12,6 @@ export class LandingPageComponent {
   constructor(private router: Router) { }
 
   ngOnInit(): void {
-    // Umleitung zur 'log-in'-Route beim Laden der Landing Page
-    this.router.navigate(['log-in']);
+      this.router.navigate(['log-in']);
   }
 }
