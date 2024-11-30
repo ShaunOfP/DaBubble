@@ -12,6 +12,14 @@ section {
     gap: 25px;
 }
 
+.gap-10 {
+    gap: 10px;
+}
+
+.gap-15 {
+    gap: 15px;
+}
+
 .workspace-menu-header {
     display: flex;
     justify-content: space-between;
@@ -19,7 +27,6 @@ section {
 
     >div {
         display: flex;
-        gap: 15px;
     }
 }
 
@@ -46,6 +53,7 @@ h3 {
 
 .header {
     display: flex;
+    gap: 15px;
 
     >img {
         height: 30px;
@@ -56,7 +64,6 @@ h3 {
 .channels-header-container {
     display: flex;
     justify-content: space-between;
-    margin-left: 15px;
     width: 100%;
 
     >img {
@@ -65,7 +72,7 @@ h3 {
     }
 }
 
-.channels-header-sub-container {
+.header-middle {
     display: flex;
     align-items: center;
 
@@ -88,7 +95,6 @@ h3 {
 
 .add-channel {
     display: flex;
-    gap: 10px;
 
     >img {
         height: 24px;
@@ -99,6 +105,40 @@ h3 {
         font-weight: 400px;
         font-size: 18px;
     }
+
+    &:hover {
+        color: var(--color-purple-secondary-hover);
+        cursor: pointer;
+    }
 }
 
-.dm-container {}
+.dm-container {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.contacts-container {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 13px;
+}
+
+.contact {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4px 20px 4px 20px;
+    margin-left: 25px;
+
+    >img {
+        height: 50px;
+        width: 50px;
+    }
+
+    >span {
+        font-weight: 400;
+        font-size: 18px;
+    }
+}
