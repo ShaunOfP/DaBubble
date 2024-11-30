@@ -1,7 +1,15 @@
-@import "./../../../styles.scss";
+@import '../../../templates/mixins.scss';
 
 .mat-mdc-card {
+  @include arrangement($d: flex, $jc: center, $ai: center, $fd: column);
   width: 550px;
-  background-color: white;
-  color: var(--color-blue-primary-default);
 }
+
+
+.mat-mdc-card-title {
+  @include arrangement($d: flex, $jc: center, $ai: center, $fd: column);
+
+  color: var(--color-purple-primary-default);
+}
+
+

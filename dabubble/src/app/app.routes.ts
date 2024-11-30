@@ -7,11 +7,19 @@ import { PublicChatComponent } from './components/general-view/public-chat/publi
 import { PrivateChatComponent } from './components/general-view/private-chat/private-chat.component';
 import { NewMessageComponent } from './components/general-view/new-message/new-message.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
+import { WorkspaceMenuComponent } from './components/general-view/workspace-menu/workspace-menu.component';
+import { SignInComponent } from './components/landing-page/sign-in/sign-in.component';
+import { ForgotPasswordComponent } from './components/landing-page/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './components/landing-page/reset-password/reset-password.component';
 
 export const routes: Routes = [
   { path: '', component: LandingPageComponent,
     children:[
-      {path: '', component: LoginComponent}
+      {path: 'log-in', component: LoginComponent},
+      {path: 'sign-in', component: SignInComponent},
+      {path: 'forgot-password', component: ForgotPasswordComponent},
+      {path: 'reset-password', component: ResetPasswordComponent},
+
     ]
    },
   { path: 'general', component: GeneralViewComponent,

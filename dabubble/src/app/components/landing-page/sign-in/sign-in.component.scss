@@ -1,0 +1,26 @@
+@import '../../../../templates/mixins.scss';
+
+.main-content {
+  @include arrangement($d: flex, $jc: center, $ai: center);
+  height: 100vh;
+}
+
+h2{
+  color: var(--color-purple-primary-default);
+  margin-top: 0;
+}
+
+.mat-mdc-card {
+  @include arrangement($d: flex, $jc: center, $ai: center, $fd: column);
+  width: 550px;
+}
+
+.header-content{
+  @include arrangement($d: flex, $jc: center, $ai: center, $fd: column);
+
+  span{
+    text-align: center;
+  }
+}
+
+

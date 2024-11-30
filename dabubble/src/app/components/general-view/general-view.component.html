@@ -4,7 +4,11 @@
     <a [routerLink]="['privat-chat']">privat</a> <br />
     <a [routerLink]="['new-message']">new</a>
   </nav>
-  <div style="width: 100%; display: flex; justify-content: center; font-size: 42px; font-weight: 700;">
+  <!-- <div style="width: 100%; display: flex; justify-content: center; font-size: 42px; font-weight: 700;">
     <router-outlet></router-outlet>
+  </div> -->
+  <div>
+    <app-workspace-menu></app-workspace-menu>
+    <app-workspace-menu-close-button></app-workspace-menu-close-button>
   </div>
 </section>

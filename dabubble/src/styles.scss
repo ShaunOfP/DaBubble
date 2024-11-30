@@ -1,5 +1,6 @@
 @import './templates/styles/button.scss';
 @import './templates/mixins.scss';
+@import './templates/input.scss';
 
 
 :root {
@@ -8,7 +9,7 @@
 
   --color-white: white;
 
-  --color-blue-bg: #ECEEFE;
+  --color-blue-bg: #ECEEFE; //background color
   --color-blue-border: #ADB0D9;
   --color-purple-primary-default: #444DF2; //Purple color for header
   --color-purple-primary-disabled: #797EF3; //Purple color if text is disabled/grayed out
@@ -21,6 +22,11 @@
 
   --color-green: #92C83E; //Green color for online status
   --color-purple-error: #ED1E79; //Purple color for offline status
+
+
+    --mdc-elevated-card-container-shape: 30px; //Material Design Card Shape
+    --mdc-elevated-card-container-color: white; //Material Design Card Color
+    --mdc-elevated-card-container-elevation: 0 2px 10px #00000014; //Material Design Card Elevation
 }
 
 
@@ -71,17 +77,22 @@
 body {
   max-height: 100vh;
   overflow: hidden;
-  background-color: #eceefe;
-  margin: 0;
+  background-color: var(--color-blue-bg);
 }
 
 h2 {
   font-size: 46px;
   font-weight: 700;
-  color: #124658;
+  color: var(--color-purple-primary-default);
 }
 h3 {
   font-size: 24px;
   font-weight: 700;
   color: #000000;
+}
+
+.app-wrapper {
+  @include arrangement($d: flex, $jc: center, $ai: center, $fd: column);
+  height: 100vh;
+  background-color: var(--color-blue-bg);
 }
