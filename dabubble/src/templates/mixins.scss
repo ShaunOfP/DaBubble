@@ -1,0 +1,7 @@
+@mixin arrangement( $d: flex, $jc: center, $ai: center, $fd: unset, $g: 0) {
+    display: $d;
+    justify-content: $jc;
+    align-items: $ai;
+    flex-direction: $fd;
+    gap: $g;
+  }

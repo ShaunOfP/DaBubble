@@ -1,0 +1,44 @@
+  @mixin btn{
+    border: none;
+    border-radius: 25px;
+    padding: 12px 25px;
+    cursor: pointer;
+  }
+
+  .btn-primary {
+   @include btn;
+    color: white;
+    &--default {
+      @extend .btn-primary;
+      background-color: #444df2;
+      &:hover {
+        background-color: #797ef3;
+      }
+    }
+    &--disable{
+      @extend .btn-primary;
+      background-color: #686868;
+      cursor: not-allowed;
+    }
+  }
+  
+  .btn-secondary {
+    @include btn;
+    color: #797ef3;
+    &--default {
+      @extend .btn-secondary;
+      background-color: #FFFFFF;
+      border: 1px solid #797EF3;
+      &:hover{
+        background-color: #535AF1;
+        color: #FFFFFF;
+      }
+    }
+    &--disable{
+      @extend .btn-secondary;
+      background-color: #FFFFFF;
+      color: #686868;
+      border: 1px solid #686868;
+      cursor: not-allowed;
+    }
+  }
