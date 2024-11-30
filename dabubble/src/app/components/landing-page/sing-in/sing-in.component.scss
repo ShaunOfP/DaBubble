@@ -1,0 +1,27 @@
+@import '../../../../templates/mixins.scss';
+
+.main-content {
+  @include arrangement($d: flex, $jc: center, $ai: center);
+}
+
+.card {
+  @include arrangement($d: flex, $jc: center, $ai: center, $fd: column);
+  background-color: white;
+  color: var(--color-purple-primary-default);
+  border-radius: 30px;
+  max-width: 600px;
+
+  
+  span{
+    font-family: Nunito;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: center;
+  }
+}
+
+h2{
+  color: var(--color-purple-primary-default);
+}
+

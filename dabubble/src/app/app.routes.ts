@@ -8,11 +8,13 @@ import { PrivateChatComponent } from './components/general-view/private-chat/pri
 import { NewMessageComponent } from './components/general-view/new-message/new-message.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { WorkspaceMenuComponent } from './components/general-view/workspace-menu/workspace-menu.component';
+import { SingInComponent } from './components/landing-page/sing-in/sing-in.component';
 
 export const routes: Routes = [
   { path: '', component: LandingPageComponent,
     children:[
-      {path: '', component: LoginComponent}
+      {path: '', component: LoginComponent},
+      {path: 'sign-in', component: SingInComponent}
     ]
    },
   { path: 'general', component: GeneralViewComponent,

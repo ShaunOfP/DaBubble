@@ -20,4 +20,8 @@ export class LoginComponent {
         break;
     }
   }
+
+  signIn(){
+    this.router.navigate(['/sign-in']);
+  }
 }
