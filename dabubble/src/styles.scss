@@ -8,7 +8,7 @@
 
   --color-white: white;
 
-  --color-blue-bg: #ECEEFE;
+  --color-blue-bg: #ECEEFE; //background color
   --color-blue-border: #ADB0D9;
   --color-purple-primary-default: #444DF2; //Purple color for header
   --color-purple-primary-disabled: #797EF3; //Purple color if text is disabled/grayed out
@@ -71,8 +71,7 @@
 body {
   max-height: 100vh;
   overflow: hidden;
-  background-color: #eceefe;
-  margin: 0;
+  background-color: var(--color-blue-bg);
 }
 
 h2 {
@@ -84,4 +83,10 @@ h3 {
   font-size: 24px;
   font-weight: 700;
   color: #000000;
+}
+
+.app-wrapper {
+  @include arrangement($d: flex, $jc: center, $ai: center, $fd: column);
+  height: 100vh;
+  background-color: var(--color-blue-bg);
 }
