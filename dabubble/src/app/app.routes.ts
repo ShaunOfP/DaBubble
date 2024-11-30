@@ -11,7 +11,7 @@ import { LandingPageComponent } from './components/landing-page/landing-page.com
 export const routes: Routes = [
   { path: '', component: LandingPageComponent,
     children:[
-      {path: 'login', component: LoginComponent}
+      {path: '', component: LoginComponent}
     ]
    },
   { path: 'general', component: GeneralViewComponent,
