@@ -8,23 +8,21 @@ import { PrivateChatComponent } from './components/general-view/private-chat/pri
 import { NewMessageComponent } from './components/general-view/new-message/new-message.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { WorkspaceMenuComponent } from './components/general-view/workspace-menu/workspace-menu.component';
+import { SingInComponent } from './components/landing-page/sing-in/sing-in.component';
 
 export const routes: Routes = [
-  {
-    path: '', component: GeneralViewComponent,
-  }
-  // { path: '', component: LandingPageComponent,
-  //   children:[
-  //     {path: '', component: LoginComponent}
-  //   ]
-  //  },
-  // { path: 'general', component: GeneralViewComponent,
-  //   children: [
-  //     { path: 'public-chat', component: PublicChatComponent },
-  //     { path: 'privat-chat', component: PrivateChatComponent },
-  //     { path: 'new-message', component: NewMessageComponent },
-  //   ],
-  // },
-  // { path: 'imprint', component: ImprintComponent },
-  // { path: 'privacy-policy', component: PrivacyPolicyComponent },
+  { path: '', component: LandingPageComponent,
+    children:[
+      {path: '', component: LoginComponent}
+    ]
+   },
+  { path: 'general', component: GeneralViewComponent,
+    children: [
+      { path: 'public-chat', component: PublicChatComponent },
+      { path: 'privat-chat', component: PrivateChatComponent },
+      { path: 'new-message', component: NewMessageComponent },
+    ],
+  },
+  { path: 'imprint', component: ImprintComponent },
+  { path: 'privacy-policy', component: PrivacyPolicyComponent },
 ];
