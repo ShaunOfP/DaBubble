@@ -8,27 +8,27 @@ import { PrivateChatComponent } from './components/general-view/private-chat/pri
 import { NewMessageComponent } from './components/general-view/new-message/new-message.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { WorkspaceMenuComponent } from './components/general-view/workspace-menu/workspace-menu.component';
-import { SingInComponent } from './components/landing-page/sing-in/sing-in.component';
+import { SignInComponent } from './components/landing-page/sign-in/sign-in.component';
+import { ForgotPasswordComponent } from './components/landing-page/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './components/landing-page/reset-password/reset-password.component';
 
 export const routes: Routes = [
-  {
-    path: '', component: GeneralViewComponent,
-  }
+  { path: '', component: LandingPageComponent,
+    children:[
+      {path: 'log-in', component: LoginComponent},
+      {path: 'sign-in', component: SignInComponent},
+      {path: 'forgot-password', component: ForgotPasswordComponent},
+      {path: 'reset-password', component: ResetPasswordComponent},
 
-  // {
-  //   path: '', component: LandingPageComponent,
-  //   children: [
-  //     { path: '', component: LoginComponent }
-  //   ]
-  // },
-  // {
-  //   path: 'general', component: GeneralViewComponent,
-  //   children: [
-  //     { path: 'public-chat', component: PublicChatComponent },
-  //     { path: 'privat-chat', component: PrivateChatComponent },
-  //     { path: 'new-message', component: NewMessageComponent },
-  //   ],
-  // },
-  // { path: 'imprint', component: ImprintComponent },
-  // { path: 'privacy-policy', component: PrivacyPolicyComponent },
+    ]
+   },
+  { path: 'general', component: GeneralViewComponent,
+    children: [
+      { path: 'public-chat', component: PublicChatComponent },
+      { path: 'privat-chat', component: PrivateChatComponent },
+      { path: 'new-message', component: NewMessageComponent },
+    ],
+  },
+  { path: 'imprint', component: ImprintComponent },
+  { path: 'privacy-policy', component: PrivacyPolicyComponent },
 ];
