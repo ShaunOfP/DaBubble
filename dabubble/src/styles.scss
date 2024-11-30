@@ -1,5 +1,31 @@
 @import './templates/styles/button.scss';
 @import './templates/mixins.scss';
+
+
+:root {
+  --color-black: black;
+  --color-black-shadow: rgba(0, 0, 0, 0.2);
+
+  --color-white: white;
+
+  --color-blue-bg: #ECEEFE;
+  --color-blue-border: #ADB0D9;
+  --color-purple-primary-default: #444DF2; //Purple color for header
+  --color-purple-primary-disabled: #797EF3; //Purple color if text is disabled/grayed out
+  --color-purple-secondary-hover: #535AF1; //Hover over black text
+
+  --color-grey-bar: #d9d9d9;
+  --color-grey-hover: #E6E6E6;
+  --color-grey-primary-disable: #686868;
+  --color-grey-primary-overlay: rgba(104, 104, 104, .5);
+
+  --color-green: #92C83E; //Green color for online status
+  --color-purple-error: #ED1E79; //Purple color for offline status
+}
+
+
+
+
 /* nunito-regular - latin */
 @font-face {
   font-display: swap;
