@@ -7,6 +7,7 @@ import { PublicChatComponent } from './components/general-view/public-chat/publi
 import { PrivateChatComponent } from './components/general-view/private-chat/private-chat.component';
 import { NewMessageComponent } from './components/general-view/new-message/new-message.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
+import { WorkspaceMenuComponent } from './components/general-view/workspace-menu/workspace-menu.component';
 
 export const routes: Routes = [
   { path: '', component: LandingPageComponent,
