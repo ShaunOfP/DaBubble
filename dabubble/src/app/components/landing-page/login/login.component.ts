@@ -6,11 +6,14 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrl: './login.component.scss',
 })
 export class LoginComponent {
-  constructor(private router: Router){}
-  logIn(){
-    this.router.navigate(['/general/public-chat']);
+  constructor(private router: Router) {}
+  logIn(route: string) {
+    switch (route) {
+      case 'public-chat':
+        this.router.navigate(['/general/public-chat']);
+    }
   }
 }
