@@ -2,26 +2,25 @@
 
 .main-content {
   @include arrangement($d: flex, $jc: center, $ai: center);
-}
-
-.card {
-  @include arrangement($d: flex, $jc: center, $ai: center, $fd: column);
-  background-color: white;
-  color: var(--color-purple-primary-default);
-  border-radius: 30px;
-  max-width: 600px;
-
-  
-  span{
-    font-family: Nunito;
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 24px;
-    text-align: center;
-  }
+  height: 100vh;
 }
 
 h2{
   color: var(--color-purple-primary-default);
+  margin-top: 0;
 }
+
+.mat-mdc-card {
+  @include arrangement($d: flex, $jc: center, $ai: center, $fd: column);
+  width: 550px;
+}
+
+.header-content{
+  @include arrangement($d: flex, $jc: center, $ai: center, $fd: column);
+
+  span{
+    text-align: center;
+  }
+}
+
 
