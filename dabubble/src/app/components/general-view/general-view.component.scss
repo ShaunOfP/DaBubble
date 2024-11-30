@@ -1,1 +1,8 @@
 @import './../../../styles.scss';
+
+app-workspace-menu-close-button{
+    position: absolute;
+    left: 0;
+    bottom: 127px;
+    z-index: 1;
+}
