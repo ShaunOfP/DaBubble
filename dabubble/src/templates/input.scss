@@ -1,0 +1,20 @@
+.input-field {
+    @include arrangement($d: flex, $jc: space-between, $ai: center);
+    background-color: var(--color-blue-bg);
+    color: var(--color-grey-primary-disable);
+    padding: 18px 32px;
+    gap: 10px;
+    border-radius: 100px;
+    border: none;
+
+    input{
+        width: calc(100% - 64px);
+        background-color: var(--color-blue-bg);
+        border: none;
+        cursor: pointer;
+        font-family: "Nunito";
+        font-style: normal;
+        font-weight: 500;
+        font-size: 18px;
+    }
+}

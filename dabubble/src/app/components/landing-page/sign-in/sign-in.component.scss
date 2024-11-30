@@ -1,13 +1,12 @@
 @import '../../../../templates/mixins.scss';
 
-.main-content {
-  @include arrangement($d: flex, $jc: center, $ai: center);
-  height: 100vh;
-}
+
 
 h2{
   color: var(--color-purple-primary-default);
   margin-top: 0;
+  width: 100%;
+  text-align: center;
 }
 
 .mat-mdc-card {
@@ -15,12 +14,46 @@ h2{
   width: 550px;
 }
 
-.header-content{
+.mat-mdc-card-content{
+  padding: 36px !important;
+}
+
+.mat-mdc-card-header{
   @include arrangement($d: flex, $jc: center, $ai: center, $fd: column);
+  padding: 0;
 
   span{
     text-align: center;
+    font-size: 20px;
+    margin-bottom: 36px;
   }
 }
 
+.header-content{
+  @include arrangement($d: flex, $jc: center, $ai: center, $fd: row);
+  margin-bottom: 36px;
+  width: 100%;
+}
 
+.input-field{
+  margin-bottom: 36px;
+}
+
+.mat-mdc-checkbox{
+  margin-bottom: 36px;
+  color: #42526E;
+  font-size: 16px;
+
+  a{
+    cursor: pointer;
+    color: var(--color-purple-primary-disabled);
+  }
+}
+
+.button-container{
+  @include arrangement($d: flex, $jc: end, $ai: end, $fd: column);
+
+  button{
+    font-size: 18px;
+  }
+}
