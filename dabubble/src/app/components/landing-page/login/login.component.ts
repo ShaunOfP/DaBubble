@@ -10,7 +10,8 @@ import { Router, RouterModule } from '@angular/router';
 })
 export class LoginComponent {
   constructor(private router: Router) {}
-  logIn(route: string) {
+
+  navigateTo(route: string) {
     switch (route) {
       case 'public-chat':
         this.router.navigate(['/general/public-chat']);
@@ -18,14 +19,12 @@ export class LoginComponent {
       case 'imprint':
         this.router.navigate(['/imprint']);
         break;
+      case 'sign-in':
+        this.router.navigate(['/sign-in']);
+        break;
+      case 'forgot-password':
+        this.router.navigate(['/forgot-password']);
+        break;
     }
-  }
-
-  signIn(){
-    this.router.navigate(['/sign-in']);
-  }
-
-  forgotPassword(){
-    this.router.navigate(['/forgot-password'])
   }
 }
