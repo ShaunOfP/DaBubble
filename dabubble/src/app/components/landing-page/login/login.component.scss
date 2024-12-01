@@ -42,18 +42,7 @@
         transform: scale(1) translate(0);
     }
     100% {
-        transform: scale(0.5) translate(-80vw, -90vh);
-    }
-}
-
-@keyframes slideLogo {
-    0% {
-        justify-content: center;
-        align-items: center;
-    }
-    100% {
-        justify-content: flex-start;
-        align-items: flex-start;
+        transform: scale(0.5) translate(-80vw, -80vh);
     }
 }
 
@@ -67,46 +56,45 @@
     width: 100vw;
     background: linear-gradient(to bottom, #797EF3, #313BE5);
     background-color: transparent;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 16px;
     animation: fadeOut .6s forwards 4s;
+}
 
-    .wrapper {
-        display: flex;
+.wrapper {
+    @include arrangement();
+    position: absolute;
+    z-index: 1;
+    left: calc(50% - 250px);
+    right: calc(50% - 250px);
+    top: calc(50% - 100px);
+    bottom: calc(50% - 100px);
+    width: 500px;
+    height: 200px;
+    overflow: hidden;
+    gap: 16px;
+    animation: slideAndShrink 1s forwards 4s;
+
+    svg {
+        object-fit: cover;
         position: relative;
-        z-index: 1;
-        width: 500px;
-        height: 200px;
+        right: -38%;
+        animation: slideImage .5s forwards 1.5s;
+    }
+    
+    .animatedText {
+        @include arrangement();
+        position: relative;
         overflow: hidden;
-        gap: 16px;
-        animation: slideAndShrink .7s forwards 4s, fadeOut .01s forwards 5s;
+        width: 400px;
+        height: 100%;
+        background: transparent;
 
-        svg {
-            object-fit: cover;
-            position: relative;
-            right: -38%;
-            animation: slideImage .5s forwards 1.5s;
-        }
-        
-        .animatedText {
-            position: relative;
-            overflow: hidden;
-            width: 400px;
-            height: 100%;
-            background: transparent;
-            display: flex;
-            align-items: center;
-
-            p {
-                color: white;
-                font-size: 64px;
-                font-weight: bold;
-                position: absolute;
-                left: 100%;
-                animation: slideText .7s forwards 2.5s, textColor .2s forwards 4s;
-            }
+        p {
+            color: white;
+            font-size: 68px;
+            font-weight: bold;
+            position: absolute;
+            left: 100%;
+            animation: slideText .7s forwards 2.5s, textColor .2s forwards 4s;
         }
     }
 }
