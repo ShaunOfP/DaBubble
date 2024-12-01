@@ -1,6 +1,18 @@
 @import '../../../../templates/mixins.scss';
 
+.arrow-back{
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 100px;
 
+  &:hover{
+    background-color: var(--color-blue-bg);
+    scale: 1.1;
+    path {
+      fill: var(--color-purple-secondary-hover); /* Fülle den Pfad */
+    }
+  }
+}
 
 h2{
   color: var(--color-purple-primary-default);
@@ -57,3 +69,5 @@ h2{
     font-size: 18px;
   }
 }
+
+
