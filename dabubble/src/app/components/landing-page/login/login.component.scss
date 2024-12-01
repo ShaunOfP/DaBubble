@@ -1,16 +1,12 @@
 @import '../../../../templates/mixins.scss';
 
-//example
-.class{
-    @include arrangement($d:block)
-}
-
 @keyframes fadeOut {
     0% {
         opacity: 1;
     }
     100% {
         opacity: 0;
+        z-index: -2;
     }
 }
 
