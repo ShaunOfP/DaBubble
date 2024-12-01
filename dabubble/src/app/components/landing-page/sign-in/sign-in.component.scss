@@ -1,11 +1,11 @@
-@import '../../../../templates/mixins.scss';
+@import "../../../../templates/mixins.scss";
 
-.arrow-back{
+.arrow-back {
   cursor: pointer;
   padding: 8px;
   border-radius: 100px;
 
-  &:hover{
+  &:hover {
     background-color: var(--color-blue-bg);
     scale: 1.1;
     path {
@@ -14,7 +14,7 @@
   }
 }
 
-h2{
+h2 {
   color: var(--color-purple-primary-default);
   margin-top: 0;
   width: 100%;
@@ -26,48 +26,52 @@ h2{
   width: 550px;
 }
 
-.mat-mdc-card-content{
+.mat-mdc-card-content {
   padding: 36px !important;
 }
 
-.mat-mdc-card-header{
+.mat-mdc-card-header {
   @include arrangement($d: flex, $jc: center, $ai: center, $fd: column);
   padding: 0;
 
-  span{
+  span {
     text-align: center;
     font-size: 20px;
     margin-bottom: 36px;
   }
 }
 
-.header-content{
+.header-content {
   @include arrangement($d: flex, $jc: center, $ai: center, $fd: row);
   margin-bottom: 36px;
   width: 100%;
 }
 
-.input-field{
+.input-field {
   margin-bottom: 36px;
 }
 
-.mat-mdc-checkbox{
+.mat-mdc-checkbox {
   margin-bottom: 36px;
-  color: #42526E;
+  color: #42526e;
   font-size: 16px;
 
-  a{
+  a {
     cursor: pointer;
     color: var(--color-purple-primary-disabled);
   }
 }
 
-.button-container{
+.button-container {
   @include arrangement($d: flex, $jc: end, $ai: end, $fd: column);
 
-  button{
+  button {
     font-size: 18px;
   }
 }
 
-
+h3 {
+  color: var(--color-purple-primary-default);
+  margin-top: 0;
+  margin-bottom: 36px;
+}
