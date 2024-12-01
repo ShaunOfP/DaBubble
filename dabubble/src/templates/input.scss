@@ -5,8 +5,16 @@
     padding: 18px 32px;
     gap: 10px;
     border-radius: 100px;
-    border: none;
+    border: 1px solid transparent;
 
+    &:hover {
+        border: 1px solid var(--color-grey-primary-disable);
+      }
+
+    &.input-field-focused {
+        border: 1px solid var(--color-purple-secondary-hover);
+    }
+    
     input{
         width: calc(100% - 64px);
         background-color: var(--color-blue-bg);
@@ -16,5 +24,14 @@
         font-style: normal;
         font-weight: 500;
         font-size: 18px;
+
+        &:focus{
+            outline: none;
+            box-shadow: none;
+
+            &::placeholder {
+                opacity: 0;
+            }
+        }
     }
 }

@@ -9,7 +9,7 @@
     background-color: var(--color-blue-bg);
     scale: 1.1;
     path {
-      fill: var(--color-purple-secondary-hover); /* Fülle den Pfad */
+      fill: var(--color-purple-secondary-hover);
     }
   }
 }
@@ -65,7 +65,7 @@ h2 {
 .button-container {
   @include arrangement($d: flex, $jc: end, $ai: end, $fd: column);
 
-  button {
+  input {
     font-size: 18px;
   }
 }
