@@ -15,53 +15,61 @@
 
             <form (ngSubmit)="onSubmit(signInForm)" #signInForm="ngForm">
 
-                <div [ngClass]="{'input-field-focused': nameFocused}" class="input-field">
-                    <img 
-                     [src]="(name.valid || name.touched) ? '/img/public/profile-black.svg' : '/img/public/profile.svg'" 
-                     alt="name-icon"
-                     />
-                    <input  
-                        [(ngModel)]="accountData.name" 
-                        type="text" 
-                        name="name"
-                        #name="ngModel"
-                        placeholder="Name und Nachname"
-                        (focus)="onFocus(true, 'name')"
-                        (blur)="onFocus(false, 'name')"
-                        required>
+                <div class="input-container">
+                    <div [ngClass]="{'input-field-focused': nameFocused, 'input-field-valid': name.valid}" class="input-field">
+                        <img [src]="(name.valid && name.touched) ? '/img/public/profile-black.svg' : '/img/public/profile.svg'" alt="name-icon"/>
+                        <input  
+                            [(ngModel)]="accountData.name" 
+                            type="text" 
+                            name="name"
+                            #name="ngModel"
+                            placeholder="Name und Nachname"
+                            (focus)="onFocus(true, 'name')"
+                            (blur)="onFocus(false, 'name')"
+                            minlength="1"
+                            required>
+                    </div>
+                    @if (!name.valid && name.touched) {
+                        <span>Bitte schreiben Sie einen Namen.</span>
+                    }
                 </div>
 
-                <div [ngClass]="{'input-field-focused': mailFocused}" class="input-field">
-                    <img 
-                     [src]="(email.valid || email.touched) ? '/img/public/mail-black.svg' : '/img/public/mail.svg'" 
-                     alt="email-icon"
-                     />
-                    <input 
-                        [(ngModel)]="accountData.mail" 
-                        type="email" 
-                        name="email"
-                        #email="ngModel"
-                        placeholder="beispielname@email.com"
-                        (focus)="onFocus(true, 'mail')"
-                        (blur)="onFocus(false, 'mail')"
-                        required
-                        pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}">
+                <div class="input-container">
+                    <div [ngClass]="{'input-field-focused': mailFocused, 'input-field-valid': email.valid}" class="input-field">
+                        <img [src]="(email.valid && email.touched) ? '/img/public/mail-black.svg' : '/img/public/mail.svg'" alt="email-icon"/>
+                        <input 
+                            [(ngModel)]="accountData.mail" 
+                            type="email" 
+                            name="email"
+                            #email="ngModel"
+                            placeholder="beispielname@email.com"
+                            (focus)="onFocus(true, 'mail')"
+                            (blur)="onFocus(false, 'mail')"
+                            pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
+                            required>
+                    </div>
+                    @if (!email.valid && email.touched) {
+                        <span>*Diese E-Mail-Adresse ist leider ungültig.</span>
+                    }
                 </div>
 
-                <div [ngClass]="{'input-field-focused': passwordFocused}" class="input-field">
-                    <img 
-                     [src]="(password.valid || password.touched) ? '/img/public/password-lock-black.svg' : '/img/public/password-lock.svg'" 
-                     alt="password-icon"
-                     />
-                    <input 
-                        [(ngModel)]="accountData.password" 
-                        type="text" 
-                        name="password"
-                        #password="ngModel"
-                        placeholder="Passwort"
-                        (focus)="onFocus(true, 'password')"
-                        (blur)="onFocus(false, 'password')"
-                        required>
+                <div class="input-container">
+                    <div [ngClass]="{'input-field-focused': passwordFocused, 'input-field-valid': password.valid}" class="input-field">
+                        <img [src]="(password.valid && password.touched) ? '/img/public/password-lock-black.svg' : '/img/public/password-lock.svg'" alt="password-icon"/>
+                        <input 
+                            [(ngModel)]="accountData.password" 
+                            type="text" 
+                            name="password"
+                            #password="ngModel"
+                            placeholder="Passwort"
+                            (focus)="onFocus(true, 'password')"
+                            (blur)="onFocus(false, 'password')"
+                            minlength="1"
+                            required>
+                    </div>
+                    @if (!password.valid && password.touched) {
+                        <span>Bitte geben Sie ein Passwort ein.</span>
+                    }
                 </div>
                 
                 <div class="privacy-policy-container">

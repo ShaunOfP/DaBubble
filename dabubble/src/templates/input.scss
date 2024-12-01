@@ -6,12 +6,13 @@
     gap: 10px;
     border-radius: 100px;
     border: 1px solid transparent;
+    width: calc(100% - 64px);
 
     &:hover {
         border: 1px solid var(--color-grey-primary-disable);
       }
 
-    &.input-field-focused {
+    &.input-field-focused, &.input-field-valid {
         border: 1px solid var(--color-purple-secondary-hover);
     }
     

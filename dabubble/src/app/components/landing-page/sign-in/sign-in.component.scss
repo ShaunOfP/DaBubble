@@ -47,8 +47,19 @@ h2 {
   width: 100%;
 }
 
-.input-field {
+.input-container{
+  @include arrangement($d: flex, $jc: start, $ai: start, $fd: column);
   margin-bottom: 36px;
+  width: 100%;
+
+  .input-field {
+    margin-bottom: 8px;
+  }
+
+  span{
+    color: var(--color-purple-error);
+    font-size: 14px;
+  }
 }
 
 .mat-mdc-checkbox {
