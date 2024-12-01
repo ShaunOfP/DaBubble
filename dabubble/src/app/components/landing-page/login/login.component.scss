@@ -46,7 +46,7 @@
         transform: scale(1) translate(0);
     }
     100% {
-        transform: scale(0.5) translate(-85vw, -90vh);
+        transform: scale(0.5) translate(-80vw, -90vh);
     }
 }
 
@@ -63,6 +63,10 @@
 
 .overlay {
     position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     height: 100vh;
     width: 100vw;
     background: linear-gradient(to bottom, #797EF3, #313BE5);
