@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { NavigationService } from '../../services/navigation.service';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-imprint',
   standalone: true,
-  imports: [MatCardModule],
+  imports: [MatCardModule, RouterModule],
   templateUrl: './imprint.component.html',
-  styleUrl: './imprint.component.scss'
+  styleUrl: './imprint.component.scss',
 })
 export class ImprintComponent {
-  constructor(private navigationService: NavigationService) {}
+  constructor(private router: Router) {}
 
   navigateTo(route: string) {
-    this.navigationService.navigateTo(route);
+    this.router.navigate([route]);
   }
 }
