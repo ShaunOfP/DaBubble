@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { NavigationService } from '../../../services/navigation.service';
 
 @Component({
@@ -10,9 +10,9 @@ import { NavigationService } from '../../../services/navigation.service';
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
-  constructor(private navigationService: NavigationService) {}
-
+  /* constructor(private navigationService: NavigationService) {} */
+  constructor(private router: Router) {}
   navigateTo(route: string) {
-    this.navigationService.navigateTo(route);
+    this.router.navigate([route]);
   }
 }
