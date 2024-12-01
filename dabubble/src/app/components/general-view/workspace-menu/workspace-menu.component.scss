@@ -8,9 +8,12 @@ section {
     height: 100%;
     max-height: 900px;
     padding: 32px 30px 32px 30px;
-    display: flex;
     flex-direction: column;
     gap: 25px;
+}
+
+.d-none {
+    display: none;
 }
 
 .gap-10 {
@@ -21,14 +24,72 @@ section {
     gap: 15px;
 }
 
-.workspace-menu-header {
+.height-width-40 {
+    height: 40px;
+    width: 40px;
+}
+
+.height-width-24 {
+    height: 24px;
+    width: 24px;
+}
+
+.flex {
     display: flex;
+}
+
+.center {
+    justify-content: center;
+    align-items: center;
+}
+
+.justify-space-between {
+    justify-content: space-between;
+}
+
+.hover {
+    &:hover {
+        cursor: pointer;
+        background-color: var(--color-purple-primary-disabled);
+        border-radius: 30px;
+    }
+}
+
+.img-switch {
+    &:hover {
+        >:first-child {
+            display: none;
+        }
+
+        >:last-child {
+            display: flex;
+        }
+    }
+}
+
+.switch{
+    
+}
+
+.nested-img-switch {
+    &:hover {
+        >div {
+            >div {
+                >:first-child {
+                    display: none;
+                }
+
+                >:last-child {
+                    display: flex;
+                }
+            }
+        }
+    }
+}
+
+.workspace-menu-header {
     justify-content: space-between;
     align-items: center;
-
-    >div {
-        display: flex;
-    }
 }
 
 .devspace-logo {
@@ -37,7 +98,6 @@ section {
 }
 
 h3 {
-    display: flex;
     align-items: center;
 }
 
@@ -47,25 +107,12 @@ h3 {
 
 .channels-container {
     min-height: 100px;
-    display: flex;
     flex-direction: column;
     gap: 25px;
 }
 
 .header {
-    display: flex;
-    gap: 15px;
-
-    >img {
-        height: 30px;
-        width: 30px;
-    }
-}
-
-.channels-header-container {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
+    align-items: center;
 
     >img {
         height: 30px;
@@ -74,13 +121,7 @@ h3 {
 }
 
 .header-middle {
-    display: flex;
     align-items: center;
-
-    >img {
-        height: 24px;
-        width: 24px;
-    }
 
     >span {
         font-weight: 700;
@@ -89,19 +130,11 @@ h3 {
 }
 
 .channels {
-    display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 .add-channel {
-    display: flex;
-
-    >img {
-        height: 24px;
-        width: 24px;
-    }
-
     >span {
         font-weight: 400px;
         font-size: 18px;
@@ -114,13 +147,11 @@ h3 {
 }
 
 .dm-container {
-    display: flex;
     flex-direction: column;
     gap: 25px;
 }
 
 .contacts-container {
-    display: flex;
     flex-direction: column;
     align-items: start;
     gap: 13px;
@@ -147,9 +178,6 @@ h3 {
 }
 
 .contact {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     padding: 4px 20px 4px 20px;
     margin-left: 25px;
 

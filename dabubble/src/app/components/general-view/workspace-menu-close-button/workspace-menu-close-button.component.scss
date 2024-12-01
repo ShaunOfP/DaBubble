@@ -8,6 +8,7 @@ section {
     width: 60px;
     display: flex;
     justify-content: center;
+    align-items: center;
     filter: drop-shadow(black 0px 0px 2px);
 
     >div {
@@ -15,16 +16,40 @@ section {
         display: flex;
         align-items: center;
         gap: 10px;
+        height: fit-content;
 
         &:hover {
             color: var(--color-purple-secondary-hover);
             cursor: pointer;
+
+            >div {
+                >:first-child {
+                    display: none;
+                }
+
+                >:last-child {
+                    display: flex;
+                }
+            }
         }
     }
+}
+
+.d-none {
+    display: none;
 }
 
 span {
     font-weight: 500;
     font-size: 20px;
     white-space: nowrap;
+}
+
+.picture-container {
+    display: flex;
+    justify-content: center;
+}
+
+img {
+    transform: rotate(90deg);
 }
