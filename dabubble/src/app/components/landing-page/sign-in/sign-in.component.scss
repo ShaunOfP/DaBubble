@@ -52,13 +52,34 @@ h2 {
 }
 
 .mat-mdc-checkbox {
-  margin-bottom: 36px;
   color: #42526e;
   font-size: 16px;
+  padding: 0px 4px 4px;
+}
+
+.privacy-policy-container{
+  @include arrangement($d: flex, $jc: start, $ai: center, $fd: row);
+  gap: 8px;
+  margin-bottom: 36px;
+
+  &:hover{
+    .mat-mdc-checkbox{
+      background-color: var(--color-blue-bg);
+      color: var(--color-purple-primary-default);
+      border-radius: 100px;
+    }
+  }
 
   a {
     cursor: pointer;
     color: var(--color-purple-primary-disabled);
+
+    &:hover{
+      background-color: var(--color-blue-bg);
+      color: var(--color-purple-primary-default);
+      border-radius: 100px;
+      padding: 0 4px;
+    }
   }
 }
 
