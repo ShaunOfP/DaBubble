@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
+import { NavigationService } from '../../services/navigation.service';
 
 @Component({
   selector: 'app-imprint',
@@ -9,5 +10,9 @@ import { MatCardModule } from '@angular/material/card';
   styleUrl: './imprint.component.scss'
 })
 export class ImprintComponent {
+  constructor(private navigationService: NavigationService) {}
 
+  navigateTo(route: string) {
+    this.navigationService.navigateTo(route);
+  }
 }

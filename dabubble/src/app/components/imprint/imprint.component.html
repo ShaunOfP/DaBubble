@@ -4,7 +4,7 @@
         <mat-card-content>
             <mat-card-header>
 
-                    <img class="arrow-back" src="/img/public/arrow-back.svg" alt="back" />
+                <img (click)="navigateTo('log-in')" class="arrow-back" src="/img/public/arrow-back.svg" alt="back" />
 
             </mat-card-header>
             <h2>Impressum</h2>
@@ -17,11 +17,14 @@
                 <li>Sven</li>
             </ul>
             <h3>Adresse:</h3>
-
-            <mat-card-footer>
-                <h3>Contact:</h3>
-                <p>Email: <a href="mailto:contact@dabubble.com">contact&#64;dabubble385.com</a></p>
-            </mat-card-footer>
+            <div>
+                <p>Straßenname 3</p>
+                <p>12345 Stadt</p>
+            </div>
+            <!-- <mat-card-footer> -->
+            <h3>Contact:</h3>
+            <p>Email: <a href="mailto:contact@dabubble.com">contact&#64;dabubble385.com</a></p>
+            <!-- </mat-card-footer> -->
 
         </mat-card-content>
 

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
+import { NavigationService } from '../../../services/navigation.service';
 
 @Component({
   selector: 'app-login',
@@ -9,22 +10,9 @@ import { Router, RouterModule } from '@angular/router';
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
-  constructor(private router: Router) {}
+  constructor(private navigationService: NavigationService) {}
 
   navigateTo(route: string) {
-    switch (route) {
-      case 'public-chat':
-        this.router.navigate(['/general/public-chat']);
-        break;
-      case 'imprint':
-        this.router.navigate(['/imprint']);
-        break;
-      case 'sign-in':
-        this.router.navigate(['/sign-in']);
-        break;
-      case 'forgot-password':
-        this.router.navigate(['/forgot-password']);
-        break;
-    }
+    this.navigationService.navigateTo(route);
   }
 }
