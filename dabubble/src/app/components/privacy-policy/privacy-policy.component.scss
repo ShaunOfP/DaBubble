@@ -16,18 +16,21 @@
 
 .mat-mdc-card-content::-webkit-scrollbar {
   /* Styles the overall scrollbar */
-  width: 5px; /* Adjust the width of the scrollbar */
-}
-
-.mat-mdc-card-content::-webkit-scrollbar-thumb {
-  /* Styles the thumb */
-  background: #888;
-  border-radius: 5px; /* Adjust the border radius of the thumb */
+  width: 7px; /* Adjust the width of the scrollbar */
 }
 
 .mat-mdc-card-content::-webkit-scrollbar-track {
-  /* Styles the track */
   background: #f1f1f1;
+  border-radius: 30px;
+}
+
+.mat-mdc-card-content::-webkit-scrollbar-thumb {
+  background: var(--color-purple-secondary-hover);
+  border-radius: 30px;
+}
+
+.mat-mdc-card-content::-webkit-scrollbar-thumb:hover {
+  background: var(--color-purple-primary-disabled);
 }
 
 .mat-mdc-card-header {
@@ -41,4 +44,9 @@ h2 {
 
 h3 {
   margin-bottom: 0;
+}
+
+section{
+  @include arrangement($fd:column, $jc:space-around);
+  height: 100vh;
 }

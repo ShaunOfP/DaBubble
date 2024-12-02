@@ -28,3 +28,7 @@ h3{
     margin-bottom: 0;
 }
 
+section{
+    @include arrangement($fd:column, $jc:space-around);
+    height: 100vh;
+}
