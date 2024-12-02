@@ -6,6 +6,8 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 
+import { provideAnimations } from '@angular/platform-browser/animations';
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
@@ -22,5 +24,6 @@ export const appConfig: ApplicationConfig = {
     ),
     provideFirestore(() => getFirestore()),
     provideAuth(() => getAuth()),
+    provideAnimations(),
   ],
 };
