@@ -9,9 +9,4 @@ import { Router, RouterModule } from '@angular/router';
   styleUrl: './landing-page.component.scss',
 })
 export class LandingPageComponent {
- constructor(private router: Router) {}
-
-  ngOnInit(): void {
-    this.router.navigate(['log-in']);
-  } 
 }
