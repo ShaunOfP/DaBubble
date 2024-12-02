@@ -1,1 +1,21 @@
-<p>header works!</p>
+<header>
+    <div class="header-logo">
+        <img src="/img/general-view/workspace-menu/Logo.svg">
+        <h3>DABubble</h3>
+    </div>
+    <div class="searchbar">
+        <input placeholder="Devspace durchsuchen">
+        <button><img src="/img/general-view/workspace-menu/search.svg"></button>
+    </div>
+    <div class="account-info">
+        <span>Frederik Beck</span>
+        <img src="/img/general-view/workspace-menu/person_circle.svg">
+        <div class="dropdown">
+            <button mat-button [matMenuTriggerFor]="menu" class="dropdown-trigger-button"><img src="/img/general-view/workspace-menu/arrow_drop_down_thin.svg"></button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item>Profil</button>
+                <button mat-menu-item>Log out</button>
+            </mat-menu>
+        </div>
+    </div>
+</header>

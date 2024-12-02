@@ -4,6 +4,9 @@
   cursor: pointer;
   padding: 8px;
   border-radius: 100px;
+  path {
+    fill: var(--color-black);
+  }
 
   &:hover {
     background-color: var(--color-blue-bg);
@@ -15,10 +18,8 @@
 }
 
 h2 {
-  color: var(--color-purple-primary-default);
-  margin-top: 0;
+  @include centeredHeading($color: var(--color-purple-primary-default), $margin-top: 0, $text-align: center);
   width: 100%;
-  text-align: center;
 }
 
 .mat-mdc-card {
@@ -44,21 +45,49 @@ h2 {
 .header-content {
   @include arrangement($d: flex, $jc: center, $ai: center, $fd: row);
   margin-bottom: 36px;
-  width: 100%;
+  width: 100%; 
+  
+  a{
+    text-decoration: none;
+  }
 }
 
-.input-field {
+.input-container{
+  @include arrangement($d: flex, $jc: start, $ai: start, $fd: column);
   margin-bottom: 36px;
+  width: 100%;
+
+  .input-field {
+    margin-bottom: 8px;
+  }
+
+  span{
+    color: var(--color-purple-error);
+    font-size: 14px;
+  }
 }
 
 .mat-mdc-checkbox {
-  margin-bottom: 36px;
   color: #42526e;
   font-size: 16px;
+  padding: 0px 4px 4px;
+}
+
+.privacy-policy-container{
+  @include arrangement($d: flex, $jc: start, $ai: center, $fd: row);
+  gap: 8px;
+  margin-bottom: 36px;
+
+  &:hover{
+    .mat-mdc-checkbox{
+      background-color: var(--color-blue-bg);
+      color: var(--color-purple-primary-default);
+      border-radius: 100px;
+    }
+  }
 
   a {
-    cursor: pointer;
-    color: var(--color-purple-primary-disabled);
+    @include linkStyle($color-default: var(--color-purple-primary-disabled), $color-hover-bg: var(--color-blue-bg), $color-hover-text: var(--color-purple-primary-default));
   }
 }
 

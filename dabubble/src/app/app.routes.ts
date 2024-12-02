@@ -15,11 +15,10 @@ import { ResetPasswordComponent } from './components/landing-page/reset-password
 export const routes: Routes = [
   { path: '', component: LandingPageComponent,
     children:[
-      {path: 'log-in', component: LoginComponent},
+      {path: '', component: LoginComponent},
       {path: 'sign-in', component: SignInComponent},
       {path: 'forgot-password', component: ForgotPasswordComponent},
-      {path: 'reset-password', component: ResetPasswordComponent},
-
+      {path: 'reset-password', component: ResetPasswordComponent}
     ]
    },
   { path: 'general', component: GeneralViewComponent,

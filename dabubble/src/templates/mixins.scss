@@ -1,7 +1,27 @@
-@mixin arrangement( $d: flex, $jc: center, $ai: center, $fd: unset, $g: 0) {
-    display: $d;
-    justify-content: $jc;
-    align-items: $ai;
-    flex-direction: $fd;
-    gap: $g;
+@mixin arrangement($d: flex, $jc: center, $ai: center, $fd: unset, $g: 0) {
+  display: $d;
+  justify-content: $jc;
+  align-items: $ai;
+  flex-direction: $fd;
+  gap: $g;
+}
+
+@mixin linkStyle($color-default, $color-hover-bg, $color-hover-text) {
+  text-decoration: none;
+  color: $color-default;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $color-hover-bg;
+    color: $color-hover-text;
+    border-radius: 100px;
+    padding: 0px 4px;
+  }
+}
+
+@mixin centeredHeading($color, $margin-top, $text-align) {
+    color: $color;
+    margin-top: $margin-top;
+    width: 100%;
+    text-align: $text-align;
   }
