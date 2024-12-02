@@ -13,22 +13,26 @@ import { ForgotPasswordComponent } from './components/landing-page/forgot-passwo
 import { ResetPasswordComponent } from './components/landing-page/reset-password/reset-password.component';
 
 export const routes: Routes = [
-  { path: '', component: LandingPageComponent,
-    children:[
-      {path: '', component: LoginComponent},
-      {path: 'sign-in', component: SignInComponent},
-      {path: 'forgot-password', component: ForgotPasswordComponent},
-      {path: 'reset-password', component: ResetPasswordComponent},
+  {
+    path: '', component: GeneralViewComponent,
+  }
 
-    ]
-   },
-  { path: 'general', component: GeneralViewComponent,
-    children: [
-      { path: 'public-chat', component: PublicChatComponent },
-      { path: 'privat-chat', component: PrivateChatComponent },
-      { path: 'new-message', component: NewMessageComponent },
-    ],
-  },
-  { path: 'imprint', component: ImprintComponent },
-  { path: 'privacy-policy', component: PrivacyPolicyComponent },
+  // { path: '', component: LandingPageComponent,
+  //   children:[
+  //     {path: 'log-in', component: LoginComponent},
+  //     {path: 'sign-in', component: SignInComponent},
+  //     {path: 'forgot-password', component: ForgotPasswordComponent},
+  //     {path: 'reset-password', component: ResetPasswordComponent},
+
+  //   ]
+  //  },
+  // { path: 'general', component: GeneralViewComponent,
+  //   children: [
+  //     { path: 'public-chat', component: PublicChatComponent },
+  //     { path: 'privat-chat', component: PrivateChatComponent },
+  //     { path: 'new-message', component: NewMessageComponent },
+  //   ],
+  // },
+  // { path: 'imprint', component: ImprintComponent },
+  // { path: 'privacy-policy', component: PrivacyPolicyComponent },
 ];

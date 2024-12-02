@@ -1,1 +1,85 @@
 @import './../../../../styles.scss';
+
+.d-none {
+    display: none;
+}
+
+header {
+    padding: 25px 34px 20px 45px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    >img {
+        height: 70px;
+        width: 70px;
+    }
+}
+
+.searchbar {
+    padding: 17.5px 45px 17.5px 45px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: white;
+    border-radius: 30px;
+
+    >input {
+        border: none;
+        font-size: 24px;
+        font-weight: 400;
+    }
+
+    >button {
+        background-color: white;
+        border: none;
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        >img {
+            height: 25px;
+            width: 25px;
+        }
+    }
+}
+
+.account-info {
+    height: 70px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+
+    >span {
+        font-weight: 700;
+        font-size: 32px;
+    }
+
+    >img {
+        height: 70px;
+        width: 70px;
+    }
+
+    &:hover {
+        color: var(--color-purple-primary-disabled);
+        cursor: pointer;
+    }
+}
+
+.dropdown {}
+
+.dropdown-trigger-button {
+    height: 30px;
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
