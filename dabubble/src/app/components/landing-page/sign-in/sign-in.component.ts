@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 interface InputField {
   placeholder: string;
@@ -22,11 +22,7 @@ interface InputField {
   styleUrl: './sign-in.component.scss'
 })
 export class SignInComponent {
-  constructor(private router: Router) {}
-
-  navigateTo(route: string) {
-    this.router.navigate([route]);
-  }
+  constructor() {}
 
   accountData = {
     name: "",
