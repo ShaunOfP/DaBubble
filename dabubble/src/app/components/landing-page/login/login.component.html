@@ -1,5 +1,5 @@
 <div class="overlay"></div>
-<div class="wrapper">
+<div class="logoWrapper">
   <svg
     width="188"
     height="184"
@@ -65,7 +65,28 @@
   </div>
 </div>
 
-<p>login works!</p>
+<div class="loginCard">
+    <mat-card>
+        <div class="cardHeader">
+          <h2>Anmeldung</h2>
+          <span>Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit verwendest.</span>
+        </div>
+        <div class="loginInput">
+          <div class="input-field">
+            <img src="/public/img/public/mail.svg" alt="">
+            <input type="email" placeholder="beispielname@email.com">
+          </div>
+          <div class="input-field">
+            <img src="/public/img/public/password-lock.svg" alt="">
+            <input type="text" placeholder="Passwort">
+          </div>
+        </div>
+        <a href="">Passwort vergessen?</a>
+
+    </mat-card>
+</div>
+
+<!-- <p>login works!</p>
 <button
   class="btn-primary--default"
   (click)="navigateTo('general/public-chat')"
@@ -81,4 +102,4 @@
 </button>
 <button class="btn-primary--default" (click)="navigateTo('forgot-password')">
   Passwort vergessen
-</button>
+</button> -->
