@@ -1,4 +1,5 @@
 @import './../../../../styles.scss';
+@import './../../../../templates/input.scss';
 
 .d-none {
     display: none;
@@ -24,17 +25,12 @@ header {
 }
 
 .searchbar {
-    padding: 17.5px 45px 17.5px 45px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     background-color: white;
-    border-radius: 30px;
 
     >input {
-        border: none;
         font-size: 24px;
         font-weight: 400;
+        background-color: white;
     }
 
     >button {
@@ -74,12 +70,18 @@ header {
     }
 }
 
-.dropdown {}
-
-.dropdown-trigger-button {
+.dropdown {
     height: 30px;
     width: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.dropdown-trigger-button {}
+
+mat-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
