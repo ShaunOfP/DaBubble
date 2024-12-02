@@ -1,1 +1,44 @@
-@import './../../../styles.scss';
+@import "../../../templates/mixins.scss";
+@import "../landing-page/sign-in/sign-in.component.scss";
+
+.mat-mdc-card {
+  max-height: 80%;
+
+  padding: 36px;
+}
+
+.mat-mdc-card-content {
+  @include arrangement($d: flex, $jc: start, $ai: start, $fd: column, $g: 16px);
+  margin: 0;
+
+  overflow-y: auto;
+}
+
+.mat-mdc-card-content::-webkit-scrollbar {
+  /* Styles the overall scrollbar */
+  width: 5px; /* Adjust the width of the scrollbar */
+}
+
+.mat-mdc-card-content::-webkit-scrollbar-thumb {
+  /* Styles the thumb */
+  background: #888;
+  border-radius: 5px; /* Adjust the border radius of the thumb */
+}
+
+.mat-mdc-card-content::-webkit-scrollbar-track {
+  /* Styles the track */
+  background: #f1f1f1;
+}
+
+.mat-mdc-card-header {
+  @include arrangement($d: flex, $jc: start, $ai: start, $fd: row, $g: 0);
+  width: 100%;
+}
+
+h2 {
+  text-align: left;
+}
+
+h3 {
+  margin-bottom: 0;
+}
