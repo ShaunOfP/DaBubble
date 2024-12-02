@@ -1,22 +1,5 @@
-@import "../../../../templates/mixins.scss";
+@import './../landing-page.component.scss';
 
-/* .arrow-back {
-  cursor: pointer;
-  padding: 8px;
-  border-radius: 100px;
-  path {
-    fill: var(--color-black);
-  }
-
-  &:hover {
-    background-color: var(--color-blue-bg);
-    scale: 1.1;
-    path {
-      fill: var(--color-purple-secondary-hover);
-    }
-  }
-}
- */
 h2 {
   color: var(--color-purple-primary-default);
   margin-top: 0;
