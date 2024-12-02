@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { RouterModule } from '@angular/router';
 
 interface InputField {
   placeholder: string;
@@ -16,11 +17,12 @@ interface InputField {
 @Component({
   selector: 'app-sign-in',
   standalone: true,
-  imports: [CommonModule ,MatCardModule, FormsModule, MatCheckboxModule],
+  imports: [CommonModule ,MatCardModule, FormsModule, MatCheckboxModule, RouterModule],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.scss'
 })
 export class SignInComponent {
+  constructor() {}
 
   accountData = {
     name: "",
