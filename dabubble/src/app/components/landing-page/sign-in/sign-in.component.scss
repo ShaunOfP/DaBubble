@@ -1,6 +1,6 @@
 @import "../../../../templates/mixins.scss";
 
-.arrow-back {
+/* .arrow-back {
   cursor: pointer;
   padding: 8px;
   border-radius: 100px;
@@ -16,7 +16,7 @@
     }
   }
 }
-
+ */
 h2 {
   @include centeredHeading($color: var(--color-purple-primary-default), $margin-top: 0, $text-align: center);
   width: 100%;
