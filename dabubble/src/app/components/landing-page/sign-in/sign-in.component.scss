@@ -7,7 +7,7 @@ h2 {
   text-align: center;
 }
 
-.mat-mdc-card {
+/* .mat-mdc-card {
   @include arrangement($d: flex, $jc: center, $ai: center, $fd: column);
   width: 550px;
 }
@@ -25,7 +25,7 @@ h2 {
     font-size: 20px;
     margin-bottom: 36px;
   }
-}
+} */
 
 .header-content {
   @include arrangement($d: flex, $jc: center, $ai: center, $fd: row);
