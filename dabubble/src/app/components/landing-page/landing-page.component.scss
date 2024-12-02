@@ -20,3 +20,23 @@ section{
   }
 
 }
+
+  .mat-mdc-card {
+    @include arrangement($d: flex, $jc: center, $ai: center, $fd: column);
+    padding: 24px;
+  }
+  
+  .mat-mdc-card-content {
+    padding: 36px !important;
+  }
+  
+  .mat-mdc-card-header {
+    @include arrangement($d: flex, $jc: center, $ai: center, $fd: column);
+    padding: 0;
+  
+    span {
+      text-align: center;
+      font-size: 20px;
+      margin-bottom: 36px;
+    }
+  }
