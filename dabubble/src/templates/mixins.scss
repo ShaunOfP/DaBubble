@@ -9,6 +9,7 @@
 @mixin linkStyle($color-default, $color-hover-bg, $color-hover-text) {
   text-decoration: none;
   color: $color-default;
+  cursor: pointer;
 
   &:hover {
     background-color: $color-hover-bg;
