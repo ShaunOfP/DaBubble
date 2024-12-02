@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-imprint',
@@ -9,10 +9,7 @@ import { Router, RouterModule } from '@angular/router';
   templateUrl: './imprint.component.html',
   styleUrl: './imprint.component.scss',
 })
-export class ImprintComponent {
-  constructor(private router: Router) {}
 
-  navigateTo(route: string) {
-    this.router.navigate([route]);
-  }
+export class ImprintComponent {
+  constructor() {}
 }
