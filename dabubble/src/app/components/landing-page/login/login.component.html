@@ -1,5 +1,5 @@
-<div class="overlay"></div>
-<div class="logoWrapper">
+<div *ngIf="!animationPlayed" [ngClass]="{'d-none': animationPlayed}" class="overlay"></div>
+<div *ngIf="!animationPlayed" class="logoWrapper">
   <svg
     width="188"
     height="184"
