@@ -1,18 +1,26 @@
 import { Component } from '@angular/core';
-import { MatInputModule } from '@angular/material/input';
-import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { FormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatMenuModule } from '@angular/material/menu';
+import { Router, RouterModule } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [MatInputModule, MatIconModule, MatButtonModule, FormsModule, MatFormFieldModule, MatMenuModule],
+  imports: [MatButtonModule, MatMenuModule, RouterModule, MatIconModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-  value = '';
+  constructor(private router: Router) {
+
+  }
+
+  activate(){
+    document.getElementById('dropdown-list')?.style.display == 'inline-block';
+  }
+
+  navigateTo(route: string) {
+    this.router.navigate([route]);
+  }
 }
