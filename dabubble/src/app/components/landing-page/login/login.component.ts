@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { Router, RouterModule } from '@angular/router';
@@ -11,11 +11,20 @@ import { Router, RouterModule } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
-export class LoginComponent {
-  onSubmit() {
-    throw new Error('Method not implemented.');
+export class LoginComponent implements OnInit, OnDestroy{
+  animationPlayed:boolean = false;
+
+  constructor(private router: Router) {
+    const animation = sessionStorage.getItem('animation');
+    this.animationPlayed = animation === 'true'; 
   }
-  constructor(private router: Router) {}
+
+  ngOnInit(): void {
+  }
+
+  ngOnDestroy(): void {
+    sessionStorage.setItem('animation', 'true');
+  }
 
   navigateTo(route: string) {
     this.router.navigate([route]);
