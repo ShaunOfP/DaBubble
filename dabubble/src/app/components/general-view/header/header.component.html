@@ -11,7 +11,9 @@
         <span>Frederik Beck</span>
         <img src="/img/general-view/workspace-menu/person_circle.svg">
         <div class="dropdown">
-            <button mat-button [matMenuTriggerFor]="menu" class="dropdown-trigger-button"><img src="/img/general-view/workspace-menu/arrow_drop_down_thin.svg"></button>
+            <button mat-button [matMenuTriggerFor]="menu">
+                <img src="/img/general-view/workspace-menu/arrow_drop_down_thin.svg">
+            </button>
             <mat-menu #menu="matMenu">
                 <button mat-menu-item>Profil</button>
                 <button mat-menu-item (click)="navigateTo('general')">Log out</button>
