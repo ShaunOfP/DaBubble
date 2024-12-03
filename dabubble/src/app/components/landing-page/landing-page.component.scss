@@ -24,6 +24,7 @@ section{
   .mat-mdc-card {
     @include arrangement($d: flex, $jc: center, $ai: center, $fd: column);
     padding: 24px;
+    max-width: 600px;
   }
   
   .mat-mdc-card-content {

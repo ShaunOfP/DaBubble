@@ -26,6 +26,8 @@ interface InputField {
 export class SignInComponent {
   
   accountData: User = new User
+  acceptTerms: boolean = false;
+  
   constructor(private userService: UserDatasService) {}
  /*  accountData = {
     name: "",
