@@ -1,11 +1,11 @@
 export class User {
-  firstName: string;
-  lastName: string;
-  email: string;
+  name: string;
+  mail: string;
+  password: string;
 
   constructor(obj?: User) {
-    this.firstName = obj ? obj.firstName : '';
-    this.lastName = obj ? obj.lastName : '';
-    this.email = obj ? obj.email : '';
+    this.name = obj ? obj.name : '';
+    this.mail = obj ? obj.mail : '';
+    this.password = obj ? obj.password : '';
   }
 }
