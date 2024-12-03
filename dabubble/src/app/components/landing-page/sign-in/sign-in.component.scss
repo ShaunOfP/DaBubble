@@ -1,18 +1,4 @@
-@import "../../../../templates/mixins.scss";
-
-.arrow-back {
-  cursor: pointer;
-  padding: 8px;
-  border-radius: 100px;
-
-  &:hover {
-    background-color: var(--color-blue-bg);
-    scale: 1.1;
-    path {
-      fill: var(--color-purple-secondary-hover);
-    }
-  }
-}
+@import './../landing-page.component.scss';
 
 h2 {
   color: var(--color-purple-primary-default);
@@ -21,7 +7,7 @@ h2 {
   text-align: center;
 }
 
-.mat-mdc-card {
+/* .mat-mdc-card {
   @include arrangement($d: flex, $jc: center, $ai: center, $fd: column);
   width: 550px;
 }
@@ -39,27 +25,36 @@ h2 {
     font-size: 20px;
     margin-bottom: 36px;
   }
-}
+} */
 
 .header-content {
   @include arrangement($d: flex, $jc: center, $ai: center, $fd: row);
   margin-bottom: 36px;
-  width: 100%;
+  width: 100%; 
+  
+  a{
+    text-decoration: none;
+  }
 }
 
 .input-container{
   @include arrangement($d: flex, $jc: start, $ai: start, $fd: column);
-  margin-bottom: 36px;
   width: 100%;
 
   .input-field {
     margin-bottom: 8px;
   }
 
-  span{
+  .required-text{
     color: var(--color-purple-error);
     font-size: 14px;
+    min-height: 36px;
   }
+}
+
+.empty-field{
+  display: flex;
+  min-height: 36px;
 }
 
 .mat-mdc-checkbox {
@@ -82,14 +77,15 @@ h2 {
   }
 
   a {
-    cursor: pointer;
+    text-decoration: none;
     color: var(--color-purple-primary-disabled);
-
-    &:hover{
+    cursor: pointer;
+  
+    &:hover {
       background-color: var(--color-blue-bg);
       color: var(--color-purple-primary-default);
       border-radius: 100px;
-      padding: 0 4px;
+      padding: 0px 4px;
     }
   }
 }

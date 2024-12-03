@@ -1,10 +1,11 @@
+<section>
 <div class="app-wrapper">
     <mat-card>
 
         <mat-card-content>
             <mat-card-header>
 
-                <img (click)="navigateTo('log-in')" class="arrow-back" src="/img/public/arrow-back.svg" alt="back" />
+                <img [routerLink]="['/']" class="arrow-back" src="/img/public/arrow-back.svg" alt="back" />
 
             </mat-card-header>
             <h2>Impressum</h2>
@@ -29,6 +30,5 @@
         </mat-card-content>
 
     </mat-card>
-
-
 </div>
+</section>

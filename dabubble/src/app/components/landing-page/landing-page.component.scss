@@ -4,3 +4,39 @@ section{
     @include arrangement($fd:column, $jc:space-around);
     height: 100vh;
 }
+
+.arrow-back{
+  @include arrangement($d: flex, $ai: center);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 100px;
+
+  &:hover {
+    background-color: var(--color-blue-bg);
+    transform: scale(1.1);
+    img{
+      filter: brightness(0) saturate(100%) invert(21%) sepia(89%) saturate(3486%) hue-rotate(237deg) brightness(101%) contrast(90%);
+    }
+  }
+
+}
+
+  .mat-mdc-card {
+    @include arrangement($d: flex, $jc: center, $ai: center, $fd: column);
+    padding: 24px;
+  }
+  
+  .mat-mdc-card-content {
+    padding: 36px !important;
+  }
+  
+  .mat-mdc-card-header {
+    @include arrangement($d: flex, $jc: center, $ai: center, $fd: column);
+    padding: 0;
+  
+    span {
+      text-align: center;
+      font-size: 20px;
+      margin-bottom: 36px;
+    }
+  }

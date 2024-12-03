@@ -148,5 +148,16 @@
         var(--color-purple-primary-default)
       );
     }
+
+    .loginBorder {
+      @include arrangement($d: flex, $jc: space-between, $ai: center, $fd: row);
+      width: 100%;
+
+      .borderLine {
+        width: 240px;
+        height: 1px;
+        background-color: lightgray;
+      }
+    }
   }
 }
