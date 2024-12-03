@@ -5,22 +5,21 @@ section{
     height: 100vh;
 }
 
-.arrow-back {
-    cursor: pointer;
-    padding: 8px;
-    border-radius: 100px;
-    path {
-      fill: var(--color-black);
-    }
-  
-    &:hover {
-      background-color: var(--color-blue-bg);
-      scale: 1.1;
-      path {
-        fill: var(--color-purple-secondary-hover);
-      }
+.arrow-back{
+  @include arrangement($d: flex, $ai: center);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 100px;
+
+  &:hover {
+    background-color: var(--color-blue-bg);
+    transform: scale(1.1);
+    img{
+      filter: brightness(0) saturate(100%) invert(21%) sepia(89%) saturate(3486%) hue-rotate(237deg) brightness(101%) contrast(90%);
     }
   }
+
+}
 
   .mat-mdc-card {
     @include arrangement($d: flex, $jc: center, $ai: center, $fd: column);
