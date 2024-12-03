@@ -50,7 +50,7 @@
                             pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
                             required>
                     </div>
-                    @if (!email.valid && email.touched && !email.hasError('pattern')) {
+                    @if (!email.valid && email.touched) {
                         <label for="email" class="required-text">*Diese E-Mail-Adresse ist leider ungültig.</label>
                     } @else {
                         <label for="email" class="empty-field"></label>
@@ -79,12 +79,14 @@
                 </div>
                 
                 <div class="privacy-policy-container">
-                    <mat-checkbox></mat-checkbox>
-                    <span>Ich stimme der <a href="/privacy-policy" target="_blank">Datenschutzerklärung</a> zu.</span>  
+                    <mat-checkbox [(ngModel)]="acceptTerms" name="terms" required></mat-checkbox>
+                    <span>Ich stimme der <a href="/privacy-policy" target="_blank">Datenschutzerklärung</a> zu.</span>
                 </div>
 
                 <div class="button-container">
-                      <input type="submit" value="Weiter" class="btn-primary--default">
+                    <input type="submit" value="Weiter" [disabled]="!signInForm.valid" [ngClass]="{
+                        'btn-primary--disable': !signInForm.valid,
+                        'btn-primary--default': signInForm.valid}">
                 </div>
   
             </form>
