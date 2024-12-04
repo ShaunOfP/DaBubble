@@ -1,5 +1,12 @@
+<div class="login-header">
+  <div class="login-header-logo">
+  </div>
+  <div class="login-header-link" >
+  </div>
+</div>
+
 <div [ngClass]="{'d-none': animationPlayed}" class="overlay"></div>
-<div [ngClass]="{'d-none': animationPlayed}" class="overlay" class="logoWrapper">
+<div [ngClass]="{'d-none': animationPlayed}" class="overlay" class="logo-wrapper">
   <svg
     width="188"
     height="184"
@@ -60,32 +67,50 @@
       </clipPath>
     </defs>
   </svg>
-  <div class="animatedText">
+  <div class="animated-text">
     <p>DABubble</p>
   </div>
 </div>
 
-<div class="loginCard">
+<div class="login-card">
     <mat-card>
-        <div class="cardHeader">
+        <div class="card-header">
           <h2>Anmeldung</h2>
           <span>Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit verwendest.</span>
         </div>
-        <div class="loginInput">
+
+        <div class="login-input">
+
           <div class="input-field">
             <img src="/public/img/public/mail.svg" alt="">
             <input type="email" placeholder="beispielname@email.com">
           </div>
+
           <div class="input-field">
             <img src="/public/img/public/password-lock.svg" alt="">
             <input type="text" placeholder="Passwort">
           </div>
+
         </div>
+
         <a href="">Passwort vergessen?</a>
-        <div class="loginBorder">
-          <div class="borderLine"></div>
+        
+        <div class="login-border">
+          <div class="border-line"></div>
           <span>ODER</span>
-          <div class="borderLine"></div>
+          <div class="border-line"></div>
+        </div>
+
+        <div class="google-login">
+          <button class="input-field">
+            <img src="" alt="">
+            <span>Anmelden mit Google</span>
+          </button>
+        </div>
+
+        <div class="login-button">
+          <button class="btn-primary--default">Anmelden</button>
+          <button class="btn-secondary--default">Gäste-Login</button>
         </div>
 
     </mat-card>
