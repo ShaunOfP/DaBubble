@@ -10,11 +10,11 @@ import { User } from './../../models/user.class';
 })
 export class UserDatasService {
   private firestore = inject(Firestore);
-  items$: Observable<any[]>;
+  userDatas$: Observable<User[]>;
 
   constructor() {
     const aCollection = collection(this.firestore, 'userDatas');
-    this.items$ = collectionData(aCollection);
+    this.userDatas$ = collectionData(aCollection);
   }
 
   async saveUser(user: User): Promise<void> {
