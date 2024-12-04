@@ -1,13 +1,25 @@
+@import '../../../../styles.scss';
 @import "../../../../templates/mixins.scss";
 @import "../../../../templates/input.scss";
+@import "../../../../templates/styles/button.scss";
 
 @keyframes fadeOut {
   0% {
     opacity: 1;
   }
+
   100% {
     opacity: 0;
-    z-index: -2;
+    display: none;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
 
@@ -15,6 +27,7 @@
   0% {
     left: -100%;
   }
+
   100% {
     left: 0%;
   }
@@ -24,6 +37,7 @@
   0% {
     right: -40%;
   }
+
   100% {
     right: 0%;
   }
@@ -33,6 +47,7 @@
   0% {
     color: white;
   }
+
   100% {
     color: black;
   }
@@ -42,9 +57,52 @@
   0% {
     transform: scale(1) translate(0);
   }
+
   100% {
-    transform: scale(0.5) translate(-80vw, -80vh);
+    transform: scale(0.5) translate(-82vw, -85vh);
   }
+}
+
+.login-header {
+  @include arrangement($d: flex, $jc: space-between, $ai: center, $fd: row);
+  position: absolute;
+  top: 32px;
+  left: 32px;
+  right: 32px;
+
+  .login-header-logo {
+    @include arrangement($d: flex, $jc: center, $ai: center, $fd: row);
+    gap: 8px;
+    font-size: 28px;
+
+    img {
+      height: 75px;
+    }
+
+    .header-logo-overlay {
+      position: absolute;
+      z-index: 99;
+      width: 300px;
+      height: 100%;
+      background-color: transparent;
+    }
+  }
+
+  .login-header-link {
+    @include arrangement($d: flex, $jc: center, $ai: flex-end, $fd: column);
+    gap: 16px;
+
+    a {
+      @include linkStyle(var(--color-purple-primary-disabled),
+        var(--color-blue-bg),
+        var(--color-purple-primary-default));
+    }
+  }
+}
+
+.header-animation {
+  opacity: 0;
+  animation: fadeIn .2s forwards 4.2s;
 }
 
 .overlay {
@@ -58,10 +116,10 @@
   width: 100vw;
   background: linear-gradient(to bottom, #797ef3, #313be5);
   background-color: transparent;
-  animation: fadeOut 0.6s forwards 4s;
+  animation: fadeOut .8s forwards 4s;
 }
 
-.logoWrapper {
+.logo-wrapper {
   @include arrangement($d: flex, $jc: center, $ai: center, $fd: row);
   position: absolute;
   z-index: 3;
@@ -73,16 +131,17 @@
   height: 200px;
   overflow: hidden;
   gap: 16px;
-  animation: slideAndShrink 1s forwards 4s;
+  animation: slideAndShrink .2s forwards 4s, fadeOut .1s forwards 4.2s;
 
-  svg {
+  img {
     object-fit: cover;
     position: relative;
     right: -38%;
     animation: slideImage 0.5s forwards 1.5s;
+    height: 150px;
   }
 
-  .animatedText {
+  .animated-text {
     @include arrangement($d: flex, $jc: center, $ai: center, $fd: column);
     position: relative;
     overflow: hidden;
@@ -101,7 +160,7 @@
   }
 }
 
-.loginCard {
+.login-card {
   @include arrangement($d: flex, $jc: center, $ai: center, $fd: column);
 
   mat-card {
@@ -112,53 +171,84 @@
     gap: 24px;
     padding: 36px;
 
-    .cardHeader,
-    .loginInput {
+    .card-header,
+    .login-input {
       @include arrangement($d: flex, $jc: center, $ai: center, $fd: column);
       flex-direction: column;
       gap: 24px;
     }
 
-    .cardHeader {
+    .card-header {
       h2 {
-        @include centeredHeading(
-          var(--color-purple-primary-default),
+        @include centeredHeading(var(--color-purple-primary-default),
           0,
-          center
-        );
+          center);
       }
 
       span {
-        @include centeredHeading(
-          unset,
+        @include centeredHeading(unset,
           0,
-          center
-        );
+          center);
       }
     }
 
-    .loginInput {
-      width: 100%;
-    }
-    
     a {
-      @include linkStyle(
-        var(--color-purple-primary-disabled),
+      @include linkStyle(var(--color-purple-primary-disabled),
         var(--color-blue-bg),
-        var(--color-purple-primary-default)
-      );
+        var(--color-purple-primary-default));
     }
 
-    .loginBorder {
+    .login-border {
       @include arrangement($d: flex, $jc: space-between, $ai: center, $fd: row);
       width: 100%;
 
-      .borderLine {
+      .border-line {
         width: 240px;
         height: 1px;
         background-color: lightgray;
       }
     }
+  }
+}
+
+.login-input {
+  width: 100%;
+
+  .input-field {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.google-login {
+  @include arrangement($d: flex, $jc: center, $ai: center, $fd: row);
+  width: 100%;
+
+  button {
+    @include arrangement($d: flex, $jc: center, $ai: center, $fd: row);
+    width: 100%;
+    gap: 16px;
+    font-size: 18px;
+
+    svg {
+      height: 28px;
+      width: 28px;
+    }
+
+    &:hover {
+      border: 1px solid var(--color-purple-primary-default);
+      cursor: pointer;
+    }
+  }
+}
+
+.login-button {
+  @include arrangement($d: flex, $jc: space-between, $ai: center, $fd: row);
+  width: 60%;
+  
+  button {
+    font-size: 18px;
   }
 }
 

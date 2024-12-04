@@ -34,8 +34,8 @@ h3 {
 }
 
 .header-image-container {
-    height: 30px;
-    width: 30px;
+    height: 40px;
+    width: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -48,15 +48,23 @@ h3 {
 }
 
 .chat-container {
-    // padding: 0px 20px 40px 20px;
     display: flex;
     flex-direction: column;
     gap: 25px;
+    height: calc(100% - 104px);
+}
+
+.chat {
+    height: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .input-container {
     position: relative;
     padding: 0 20px 40px 20px;
+    display: flex;
+    flex-direction: column;
 }
 
 textarea {
@@ -73,8 +81,9 @@ textarea {
     align-items: center;
     justify-content: space-between;
     position: absolute;
-    bottom: 20px;
+    bottom: 60px;
     width: 380px;
+    left: 40px;
 
     >div {
         display: flex;
@@ -88,11 +97,36 @@ textarea {
     width: 40px;
 }
 
-.d-flex{
+.d-flex {
     display: flex;
 }
 
-.center{
+.d-none {
+    display: none;
+}
+
+.center {
     justify-content: center;
     align-items: center;
+}
+
+.hover {
+    &:hover {
+        cursor: pointer;
+        background-color: #ADB0D9;
+        border-radius: 30px;
+    }
+}
+
+.change-image-on-hover {
+    &:hover {
+        >:first-child {
+            display: none;
+        }
+
+        >:last-child {
+            display: flex;
+            cursor: pointer;
+        }
+    }
 }

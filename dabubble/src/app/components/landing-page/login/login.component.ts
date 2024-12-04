@@ -1,22 +1,22 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { Router, RouterModule } from '@angular/router';
+import { AuthService } from "../../../services/firebase-services/auth.service";
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterModule, CommonModule, MatCardModule, FormsModule],
+  imports: [RouterModule, CommonModule, MatCardModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
-export class LoginComponent implements OnInit, OnDestroy{
-  animationPlayed:boolean = false;
+export class LoginComponent implements OnInit, OnDestroy {
+  animationPlayed: boolean = false;
 
   constructor(private router: Router) {
     const animation = sessionStorage.getItem('animation');
-    this.animationPlayed = animation === 'true'; 
+    this.animationPlayed = animation === 'true';
   }
 
   ngOnInit(): void {
