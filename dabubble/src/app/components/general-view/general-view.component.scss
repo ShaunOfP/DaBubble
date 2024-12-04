@@ -1,9 +1,14 @@
 @import './../../../styles.scss';
 
-app-workspace-menu {
-    position: absolute;
-    bottom: 25px;
-    left: 20px;
+section {
+    display: flex;
+    flex-direction: column;
+}
+
+.devspace-container {
+    display: flex;
+    padding: 0 20px 25px 20px;
+    gap: 20px;
 }
 
 app-workspace-menu-close-button {
