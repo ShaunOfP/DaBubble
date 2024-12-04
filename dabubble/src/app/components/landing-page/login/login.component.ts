@@ -1,13 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { Router, RouterModule } from '@angular/router';
+import { AuthService } from "../../../services/firebase-services/auth.service";
+import
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterModule, CommonModule, MatCardModule, FormsModule],
+  imports: [RouterModule, CommonModule, MatCardModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
