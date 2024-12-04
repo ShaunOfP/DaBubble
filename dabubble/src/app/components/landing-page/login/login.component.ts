@@ -13,7 +13,6 @@ import { Router, RouterModule } from '@angular/router';
 })
 export class LoginComponent implements OnInit, OnDestroy {
   animationPlayed: boolean = false;
-  email: any;
 
   constructor(private router: Router) {
     const animation = sessionStorage.getItem('animation');

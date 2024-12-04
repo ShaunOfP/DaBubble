@@ -10,7 +10,16 @@
 
   100% {
     opacity: 0;
-    z-index: -2;
+    display: none;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
 
@@ -50,7 +59,7 @@
   }
 
   100% {
-    transform: scale(0.5) translate(-80vw, -80vh);
+    transform: scale(0.5) translate(-85vw, -85vh);
   }
 }
 
@@ -60,6 +69,10 @@
   top: 32px;
   left: 32px;
   right: 32px;
+
+  .login-header-logo {
+    font-size: 28px;
+  }
 
   .login-header-link {
     @include arrangement($d: flex, $jc: center, $ai: flex-end, $fd: column);
@@ -71,6 +84,11 @@
         var(--color-purple-primary-default));
     }
   }
+}
+
+.header-animation {
+  opacity: 0;
+  animation: fadeIn .2s forwards 4.2s;
 }
 
 .overlay {
@@ -99,7 +117,7 @@
   height: 200px;
   overflow: hidden;
   gap: 16px;
-  animation: slideAndShrink 1s forwards 4s;
+  animation: slideAndShrink .3s forwards 4s, fadeOut .2s forwards 4.2s;
 
   svg {
     object-fit: cover;
