@@ -4,7 +4,7 @@
   </div>
   <div class="login-header-link" >
     <span>Neu bei DA Bubble?</span>
-    <a href="">Konto erstellen</a>
+    <a [routerLink]="['sign-in']">Konto erstellen</a>
   </div>
 </div>
 
@@ -96,7 +96,7 @@
 
         </div>
 
-        <a href="">Passwort vergessen?</a>
+        <a [routerLink]="['forgot-password']">Passwort vergessen?</a>
 
         <div class="login-border">
           <div class="border-line"></div>
@@ -142,3 +142,4 @@
 <button class="btn-primary--default" (click)="navigateTo('forgot-password')">
   Passwort vergessen
 </button>
+
