@@ -1,4 +1,4 @@
-@import './../landing-page.component.scss';
+@import "./../landing-page.component.scss";
 
 h2 {
   color: var(--color-purple-primary-default);
@@ -14,7 +14,7 @@ h2 {
 .header-content {
   @include arrangement($d: flex, $jc: center, $ai: center, $fd: row);
   margin-bottom: 36px;
-  width: 100%; 
+  width: 100%;
 
   @media (max-width: 700px) {
     margin-bottom: 30px;
@@ -23,12 +23,12 @@ h2 {
     margin-bottom: 20px;
   }
 
-  a{
+  a {
     text-decoration: none;
   }
 }
 
-.input-container{
+.input-container {
   @include arrangement($d: flex, $jc: start, $ai: start, $fd: column);
   width: 100%;
 
@@ -36,24 +36,24 @@ h2 {
     margin-bottom: 8px;
   }
 
-  .required-text{
+  .required-text {
     color: var(--color-purple-error);
     font-size: 14px;
     min-height: 36px;
 
     @media (max-width: 450px) {
-        font-size: 12px;
-        min-height: 20px;
+      font-size: 12px;
+      min-height: 20px;
     }
   }
 }
 
-.empty-field{
+.empty-field {
   display: flex;
   min-height: 36px;
 
   @media (max-width: 450px) {
-      min-height: 20px;
+    min-height: 20px;
   }
 }
 
@@ -63,13 +63,13 @@ h2 {
   padding: 0px 4px 4px;
 }
 
-.privacy-policy-container{
+.privacy-policy-container {
   @include arrangement($d: flex, $jc: start, $ai: center, $fd: row);
   gap: 8px;
   margin-bottom: 36px;
 
-  &:hover{
-    .mat-mdc-checkbox{
+  &:hover {
+    .mat-mdc-checkbox {
       background-color: var(--color-blue-bg);
       color: var(--color-purple-primary-default);
       border-radius: 100px;
@@ -80,7 +80,7 @@ h2 {
     text-decoration: none;
     color: var(--color-purple-primary-disabled);
     cursor: pointer;
-  
+
     &:hover {
       background-color: var(--color-blue-bg);
       color: var(--color-purple-primary-default);
@@ -90,11 +90,11 @@ h2 {
   }
 
   @media (max-width: 450px) {
-  margin-top: 8px;
-  margin-bottom: 20px;
+    margin-top: 8px;
+    margin-bottom: 20px;
   }
 
-  span{
+  span {
     @media (max-width: 450px) {
       font-size: 15px;
     }
@@ -105,8 +105,8 @@ h2 {
   @include arrangement($d: flex, $jc: end, $ai: end, $fd: column);
 
   input {
-    font-size: 18px;    
-    
+    font-size: 18px;
+
     @media (max-width: 450px) {
       font-size: 15px;
     }
