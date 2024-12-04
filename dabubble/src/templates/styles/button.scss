@@ -20,6 +20,10 @@
       background-color: #686868;
       cursor: not-allowed;
     }
+
+    @media (max-width: 320px) {
+      padding: 8px 18px;
+    }
   }
   
   .btn-secondary {
