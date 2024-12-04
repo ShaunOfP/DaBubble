@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { inject } from '@angular/core';
-import { Firestore, collection, collectionData, addDoc } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, addDoc, getDoc, doc, onSnapshot } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { User } from './../../models/user.class';
 
@@ -15,6 +15,7 @@ export class UserDatasService {
   constructor() {
     const aCollection = collection(this.firestore, 'userDatas');
     this.userDatas$ = collectionData(aCollection);
+    this.getUserDatas()
   }
 
   async saveUser(user: User): Promise<void> {
@@ -26,5 +27,16 @@ export class UserDatasService {
       console.error("Error adding document: ", err);
     }
   }
-  
+
+  async getUserDatas(){  
+    const docRef = doc(this.firestore, 'userDatas', 'HWRU8fpwhZTUX6A7NFAa');
+    const docSnap = await getDoc(docRef);
+    
+    if (docSnap.exists()) {
+      console.log("Document data:", docSnap.data());
+    } else {
+      console.log("No such document!");
+    }}
 }
+
+
