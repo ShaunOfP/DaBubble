@@ -4,7 +4,7 @@ section {
     width: 485px;
     background-color: white;
     border-radius: 30px;
-    height: 940px; //ändern
+    height: calc(100vh - 130px);
 }
 
 header {
@@ -13,6 +13,7 @@ header {
     justify-content: space-between;
     align-items: center;
     height: 40px;
+    // shadow
 
     >div {
         display: flex;

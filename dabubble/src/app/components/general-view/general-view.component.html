@@ -1,16 +1,17 @@
 <section style="width: 100%">
-  <nav style="font-size: 32px; padding-left: 40px;">
+  <!-- <nav style="font-size: 32px; padding-left: 40px;">
     <a [routerLink]="['public-chat']">public</a> <br />
     <a [routerLink]="['privat-chat']">privat</a> <br />
     <a [routerLink]="['new-message']">new</a>
-  </nav>
+  </nav> -->
   <!-- <div style="width: 100%; display: flex; justify-content: center; font-size: 42px; font-weight: 700;">
     <router-outlet></router-outlet>
   </div> -->
-  <div>
-    <!-- <app-header></app-header> -->
-    <!-- <app-workspace-menu></app-workspace-menu> -->
-    <!-- <app-workspace-menu-close-button></app-workspace-menu-close-button> -->
-     <app-thread></app-thread>
-  </div>
+    <app-header></app-header>
+    <div class="devspace-container">
+      <app-workspace-menu></app-workspace-menu>
+      <app-workspace-menu-close-button></app-workspace-menu-close-button>
+      <app-chat></app-chat>
+      <app-thread></app-thread>
+    </div>
 </section>

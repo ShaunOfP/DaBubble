@@ -1,3 +1,48 @@
 <section>
-    
+    <header>
+        <div class="header-chat-info-container">
+            <h3>#</h3>
+            <h3>Entwicklerteam</h3>
+            <button><img class="d-flex center" src="/img/general-view/workspace-menu/arrow_drop_down_thin.svg"></button>
+        </div>
+        <div class="header-user-container d-flex gap-10">
+            <div class="d-flex center gap-10">
+                <div class="d-flex center">
+                    <img class="user-icon" src="/img/public/user_icon_male_2.svg">
+                    <img class="user-icon margin-left-minus-10" src="/img/public/user_icon_male_2.svg">
+                    <img class="user-icon margin-left-minus-10" src="/img/public/user_icon_male_2.svg">
+                </div>
+                <span class="count">3</span>
+            </div>
+            <div class="change-image-on-hover d-flex center b-grey-circle height-width-40">
+                <img src="/img/general-view/workspace-menu/add_person.svg">
+                <img class="d-none" src="/img/general-view/workspace-menu/hover_add_person.svg">
+            </div>
+        </div>
+    </header>
+    <div class="chat-container">
+        <div class="chat">
+            Chat
+        </div>
+        <div class="input-container">
+            <textarea [placeholder]="'Nachricht an #Entwicklerteam'">
+            </textarea>
+            <div class="textarea-icon-bar">
+                <div>
+                    <div class="height-width-40 d-flex center hover change-image-on-hover">
+                        <img src="/img/general-view/workspace-menu/smiley.svg">
+                        <img class="d-none" src="/img/general-view/workspace-menu/hover_smiley.svg">
+                    </div>
+                    <div class="height-width-40 d-flex center hover change-image-on-hover">
+                        <img src="/img/general-view/workspace-menu/aet.svg">
+                        <img class="d-none" src="/img/general-view/workspace-menu/hover_aet.svg">
+                    </div>
+                </div>
+                <div class="change-image-on-hover">
+                    <img class="height-width-40" src="/img/general-view/workspace-menu/send.svg">
+                    <img class="d-none height-width-40" src="/img/general-view/workspace-menu/hover_send.svg">
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
