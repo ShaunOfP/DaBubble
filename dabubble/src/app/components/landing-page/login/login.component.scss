@@ -59,7 +59,7 @@
   }
 
   100% {
-    transform: scale(0.5) translate(-85vw, -85vh);
+    transform: scale(0.5) translate(-82vw, -85vh);
   }
 }
 
@@ -71,7 +71,21 @@
   right: 32px;
 
   .login-header-logo {
+    @include arrangement($d: flex, $jc: center, $ai: center, $fd: row);
+    gap: 8px;
     font-size: 28px;
+
+    img {
+      height: 75px;
+    }
+
+    .header-logo-overlay {
+      position: absolute;
+      z-index: 99;
+      width: 300px;
+      height: 100%;
+      background-color: transparent;
+    }
   }
 
   .login-header-link {
@@ -102,7 +116,7 @@
   width: 100vw;
   background: linear-gradient(to bottom, #797ef3, #313be5);
   background-color: transparent;
-  animation: fadeOut 0.6s forwards 4s;
+  animation: fadeOut .8s forwards 4s;
 }
 
 .logo-wrapper {
@@ -117,13 +131,14 @@
   height: 200px;
   overflow: hidden;
   gap: 16px;
-  animation: slideAndShrink .3s forwards 4s, fadeOut .2s forwards 4.2s;
+  animation: slideAndShrink .2s forwards 4s, fadeOut .1s forwards 4.2s;
 
-  svg {
+  img {
     object-fit: cover;
     position: relative;
     right: -38%;
     animation: slideImage 0.5s forwards 1.5s;
+    height: 150px;
   }
 
   .animated-text {
