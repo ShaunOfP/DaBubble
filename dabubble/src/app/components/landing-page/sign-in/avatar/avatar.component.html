@@ -1,1 +1,47 @@
-<p>avatar works!</p>
+<div class="app-wrapper">
+    <mat-card>
+
+        <mat-card-content>
+            <mat-card-header>
+                <div class="header-content">
+                    <a class="arrow-back" (click)="navigateTo('sign-in')"
+                      ><img src="/img/public/arrow-back.svg" alt="back"
+                    /></a>
+                    <h2>Wähle deinen Avatar</h2>
+                </div>
+            </mat-card-header>
+
+            <form (ngSubmit)="createAvatar()" #signInForm="ngForm">
+
+                <div class="main-content">
+
+                    <div class="avatar-container">
+                        <img src="/img/general-view/create-avatar/default-avatar.svg" alt="back"/>
+                        <span>Name</span>
+                    </div>
+    
+                    <div class="avatar-list-container">
+                        <span>Aus der Liste wählen</span>
+                        <div>
+                            @for (avatar of avatarList; track avatar.name; let index = $index) {
+                                <img src="/img/general-view/create-avatar/{{avatar.img}}" alt="{{avatar.name}}">
+                            }
+                        </div>
+                    </div>
+                
+                    <div class="button-container">
+                        <input type="submit" value="Weiter" [disabled]="!signInForm.valid" [ngClass]="{
+                            'btn-primary--disable': !signInForm.valid,
+                            'btn-primary--default': signInForm.valid}">
+                    </div>
+
+                </div>
+  
+            </form>
+
+        </mat-card-content>
+
+    </mat-card>
+
+
+</div>

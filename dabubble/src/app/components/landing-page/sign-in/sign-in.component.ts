@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { UserDatasService } from '../../../services/firebase-services/user-datas.service';
 import { User } from '../../../models/user.class';
 
@@ -28,7 +28,7 @@ export class SignInComponent {
   accountData: User = new User
   acceptTerms: boolean = false;
   
-  constructor(private userService: UserDatasService) {}
+  constructor(private userService: UserDatasService, private router: Router) {}
  /*  accountData = {
     name: "",
     mail: "",
@@ -58,6 +58,10 @@ export class SignInComponent {
       console.log(this.accountData)
       this.userService.saveUser(this.accountData);
     }
+  }
+
+  navigateTo(route: string) {
+    this.router.navigate([route]);
   }
 
 }
