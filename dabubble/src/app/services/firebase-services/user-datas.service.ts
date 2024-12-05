@@ -5,14 +5,18 @@ import {
   collection,
   collectionData,
   addDoc,
-  getDoc,
-  doc,
-  onSnapshot,
   getDocs,
+  where, 
+  query
 } from '@angular/fire/firestore';
-import { elementAt, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { User } from './../../models/user.class';
 
+interface UserData {
+  mail: string;
+  password: string;
+  // weitere Felder, falls vorhanden
+}
 @Injectable({
   providedIn: 'root',
 })
@@ -23,7 +27,7 @@ export class UserDatasService {
 
   constructor() {
     this.userDatas$ = collectionData(this.userDatasRef());
-    this.getUserDatas();
+    this.getUserDatas('Test@test.de', '123');
   }
 
   async saveUser(user: User): Promise<void> {
@@ -36,14 +40,23 @@ export class UserDatasService {
     }
   }
 
-  async getUserDatas() {
+  async getUserDatas(email:string, password:string) {
+    const q = query(this.userDatasRef(), where("mail", "==", email))    
     try {
-      const querySnapshot = await getDocs(this.userDatasRef());
+      const querySnapshot = await getDocs(q);
+      let found = false
       querySnapshot.forEach((doc) => {
+        const userData = doc.data() as UserData;
+        if(userData.password === password){
         console.log('ID:', doc.id);
-        console.log('Data:', doc.data());
+        console.log('Data:', userData);
+        found = true;
+        }
       });
-    } catch (error) {
+      if(found === false) console.log('falsche Email oder falsches Passwort');
+    } 
+   
+    catch (error) {
       console.error('Error fetching documents:', error);
     }
   }
