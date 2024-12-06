@@ -83,10 +83,11 @@
                     <span>Ich stimme der <a href="/privacy-policy" target="_blank">Datenschutzerklärung</a> zu.</span>
                 </div>
 
-                <div class="button-container">
-                    <input type="submit" value="Weiter" [disabled]="!signInForm.valid" [ngClass]="{
+                <div class="button-container" >
+                    <input (click)="navigateTo('create-avatar')" type="submit" value="Weiter" [disabled]="!signInForm.valid" [ngClass]="{
                         'btn-primary--disable': !signInForm.valid,
-                        'btn-primary--default': signInForm.valid}">
+                        'btn-primary--default': signInForm.valid}"
+                        >
                 </div>
   
             </form>

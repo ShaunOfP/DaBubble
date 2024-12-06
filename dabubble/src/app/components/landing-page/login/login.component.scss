@@ -1,4 +1,4 @@
-@import '../../../../styles.scss';
+@import "../../../../styles.scss";
 @import "../../../../templates/mixins.scss";
 @import "../../../../templates/input.scss";
 @import "../../../../templates/styles/button.scss";
@@ -93,16 +93,18 @@
     gap: 16px;
 
     a {
-      @include linkStyle(var(--color-purple-primary-disabled),
+      @include linkStyle(
+        var(--color-purple-primary-disabled),
         var(--color-blue-bg),
-        var(--color-purple-primary-default));
+        var(--color-purple-primary-default)
+      );
     }
   }
 }
 
 .header-animation {
   opacity: 0;
-  animation: fadeIn .2s forwards 4.2s;
+  animation: fadeIn 0.2s forwards 4.2s;
 }
 
 .overlay {
@@ -116,7 +118,7 @@
   width: 100vw;
   background: linear-gradient(to bottom, #797ef3, #313be5);
   background-color: transparent;
-  animation: fadeOut .8s forwards 4s;
+  animation: fadeOut 0.8s forwards 4s;
 }
 
 .logo-wrapper {
@@ -131,7 +133,7 @@
   height: 200px;
   overflow: hidden;
   gap: 16px;
-  animation: slideAndShrink .2s forwards 4s, fadeOut .1s forwards 4.2s;
+  animation: slideAndShrink 0.2s forwards 4s, fadeOut 0.1s forwards 4.2s;
 
   img {
     object-fit: cover;
@@ -180,22 +182,24 @@
 
     .card-header {
       h2 {
-        @include centeredHeading(var(--color-purple-primary-default),
+        @include centeredHeading(
+          var(--color-purple-primary-default),
           0,
-          center);
+          center
+        );
       }
 
       span {
-        @include centeredHeading(unset,
-          0,
-          center);
+        @include centeredHeading(unset, 0, center);
       }
     }
 
     a {
-      @include linkStyle(var(--color-purple-primary-disabled),
+      @include linkStyle(
+        var(--color-purple-primary-disabled),
         var(--color-blue-bg),
-        var(--color-purple-primary-default));
+        var(--color-purple-primary-default)
+      );
     }
 
     .login-border {
@@ -221,6 +225,7 @@
   }
 }
 
+
 .google-login {
   @include arrangement($d: flex, $jc: center, $ai: center, $fd: row);
   width: 100%;
@@ -231,7 +236,7 @@
     gap: 16px;
     font-size: 18px;
 
-    svg {
+    img {
       height: 28px;
       width: 28px;
     }
@@ -246,7 +251,7 @@
 .login-button {
   @include arrangement($d: flex, $jc: space-between, $ai: center, $fd: row);
   width: 60%;
-  
+
   button {
     font-size: 18px;
   }

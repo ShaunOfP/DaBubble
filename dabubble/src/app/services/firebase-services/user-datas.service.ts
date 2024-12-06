@@ -1,42 +1,67 @@
 import { Injectable } from '@angular/core';
 import { inject } from '@angular/core';
-import { Firestore, collection, collectionData, addDoc, getDoc, doc, onSnapshot } from '@angular/fire/firestore';
+import {
+  Firestore,
+  collection,
+  collectionData,
+  addDoc,
+  getDocs,
+  where, 
+  query
+} from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { User } from './../../models/user.class';
 
-
+interface UserData {
+  mail: string;
+  password: string;
+  // weitere Felder, falls vorhanden
+}
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserDatasService {
   private firestore = inject(Firestore);
   userDatas$: Observable<User[]>;
+  userDatas: any;
 
   constructor() {
-    const aCollection = collection(this.firestore, 'userDatas');
-    this.userDatas$ = collectionData(aCollection);
-    this.getUserDatas()
+    this.userDatas$ = collectionData(this.userDatasRef());
+    this.getUserDatas('Test@test.de', '123');
   }
 
   async saveUser(user: User): Promise<void> {
     try {
-      const userPlainObject = { ...user }; // Important!! Firebase need a plainobject to read otherwise its not working!
-      const docRef = await addDoc(collection(this.firestore, 'userDatas'), userPlainObject);
-      console.log("Document written with ID: ", docRef.id);
+      const userPlainObject = { ...user }; // Important!! Firebase need a plainobject to read, otherwise its not working!
+      const docRef = await addDoc(this.userDatasRef(), userPlainObject);
+      console.log('Document written with ID: ', docRef.id);
     } catch (err) {
-      console.error("Error adding document: ", err);
+      console.error('Error adding document: ', err);
     }
   }
 
-  async getUserDatas(){  
-    const docRef = doc(this.firestore, 'userDatas', 'HWRU8fpwhZTUX6A7NFAa');
-    const docSnap = await getDoc(docRef);
-    
-    if (docSnap.exists()) {
-      console.log("Document data:", docSnap.data());
-    } else {
-      console.log("No such document!");
-    }}
+  async getUserDatas(email:string, password:string) {
+    const q = query(this.userDatasRef(), where("mail", "==", email))    
+    try {
+      const querySnapshot = await getDocs(q);
+      let found = false
+      querySnapshot.forEach((doc) => {
+        const userData = doc.data() as UserData;
+        if(userData.password === password){
+        console.log('ID:', doc.id);
+        console.log('Data:', userData);
+        found = true;
+        }
+      });
+      if(found === false) console.log('falsche Email oder falsches Passwort');
+    } 
+   
+    catch (error) {
+      console.error('Error fetching documents:', error);
+    }
+  }
+
+  userDatasRef() {
+    return collection(this.firestore, 'userDatas');
+  }
 }
-
-
