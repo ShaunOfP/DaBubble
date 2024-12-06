@@ -3,21 +3,23 @@
         <img src="/img/general-view/workspace-menu/Logo.svg">
         <h3>DABubble</h3>
     </div>
-    <div class="searchbar input-field">
-        <input placeholder="Devspace durchsuchen">
-        <button><img src="/img/general-view/workspace-menu/search.svg"></button>
-    </div>
-    <div class="account-info">
-        <span>Frederik Beck</span>
-        <img src="/img/general-view/workspace-menu/person_circle.svg">
-        <div class="dropdown">
-            <button mat-button [matMenuTriggerFor]="menu">
-                <img src="/img/general-view/workspace-menu/arrow_drop_down_thin.svg">
-            </button>
-            <mat-menu #menu="matMenu">
-                <button mat-menu-item>Profil</button>
-                <button mat-menu-item (click)="navigateTo('general')">Log out</button>
-            </mat-menu>
+    <div class="bar-info-container">
+        <div class="searchbar input-field">
+            <input placeholder="Devspace durchsuchen">
+            <button><img src="/img/general-view/workspace-menu/search.svg"></button>
         </div>
-    </div>
+        <div class="account-info">
+            <span>Frederik Beck</span>
+            <img src="/img/general-view/workspace-menu/person_circle.svg">
+            <div class="dropdown">
+                <button mat-button [matMenuTriggerFor]="menu">
+                    <img src="/img/general-view/workspace-menu/arrow_drop_down_thin.svg">
+                </button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item>Profil</button>
+                    <button mat-menu-item (click)="navigateTo('')">Log out</button>
+                </mat-menu>
+            </div>
+        </div>
+    </div>    
 </header>

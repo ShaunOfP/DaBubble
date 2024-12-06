@@ -25,8 +25,16 @@ header {
     }
 }
 
+.bar-info-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .searchbar {
     background-color: white;
+    margin-left: 50px;
+    width: 989px;
 
     >input {
         font-size: 24px;

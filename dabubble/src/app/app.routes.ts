@@ -13,15 +13,17 @@ import { ForgotPasswordComponent } from './components/landing-page/forgot-passwo
 import { ResetPasswordComponent } from './components/landing-page/reset-password/reset-password.component';
 
 export const routes: Routes = [
-  { path: '', component: LandingPageComponent,
-    children:[
-      {path: '', component: LoginComponent},
-      {path: 'sign-in', component: SignInComponent},
-      {path: 'forgot-password', component: ForgotPasswordComponent},
-      {path: 'reset-password', component: ResetPasswordComponent}
+  {
+    path: '', component: LandingPageComponent,
+    children: [
+      { path: '', component: LoginComponent },
+      { path: 'sign-in', component: SignInComponent },
+      { path: 'forgot-password', component: ForgotPasswordComponent },
+      { path: 'reset-password', component: ResetPasswordComponent }
     ]
-   },
-  { path: 'general', component: GeneralViewComponent,
+  },
+  {
+    path: 'general', component: GeneralViewComponent,
     children: [
       { path: 'public-chat', component: PublicChatComponent },
       { path: 'privat-chat', component: PrivateChatComponent },
