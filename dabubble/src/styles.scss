@@ -116,9 +116,34 @@ h3 {
 
 .cdk-overlay-connected-position-bounding-box {
   position: absolute;
-  right: 80px !important;
-  background-color: blue;
+  right: 50px !important;
+  background-color: white;
   top: 100px !important;
-  height: 200px !important;
-  width: 200px !important;
+  height: 181px !important;
+  width: 282px !important;
+  border-radius: 30px 0px 30px 30px;
+  display: flex;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.mat-mdc-menu-content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.mat-mdc-menu-item {
+  font-size: 24px;
+  font-weight: 700;
+  display: flex;
+  justify-content: center;
+  padding: 10px 45px 10px 45px;
+
+  &:hover {
+    cursor: pointer;
+    color: var(--color-purple-secondary-hover);
+    background-color: var(--color-blue-bg) !important;
+    border-radius: 100px;
+  }
 }
