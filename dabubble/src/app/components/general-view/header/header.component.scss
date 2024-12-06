@@ -81,3 +81,12 @@ header {
         cursor: pointer;
     }
 }
+
+.grey-layer {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 10;
+}
+
+.dummy {}

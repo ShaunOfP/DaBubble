@@ -1,4 +1,7 @@
 <header>
+    <div id="grey-screen" class="grey-layer d-none" (click)="toggleGreyScreen()">
+        i am grey
+    </div>
     <div class="header-logo">
         <img src="/img/general-view/workspace-menu/Logo.svg">
         <h3>DABubble</h3>
@@ -12,7 +15,7 @@
             <span>Frederik Beck</span>
             <img src="/img/general-view/workspace-menu/person_circle.svg">
             <div class="dropdown">
-                <button mat-button [matMenuTriggerFor]="menu">
+                <button mat-button [matMenuTriggerFor]="menu" (click)="toggleGreyScreen()" #menuTrigger="matMenuTrigger">
                     <img src="/img/general-view/workspace-menu/arrow_drop_down_thin.svg">
                 </button>
                 <mat-menu #menu="matMenu">
@@ -21,5 +24,5 @@
                 </mat-menu>
             </div>
         </div>
-    </div>    
+    </div>
 </header>
