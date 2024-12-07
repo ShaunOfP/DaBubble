@@ -4,6 +4,8 @@ import { FormsModule} from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { Router, RouterModule } from '@angular/router';
+import { UserDatasService } from '../../../../services/firebase-services/user-datas.service';
+// import { User } from '../../../../models/user.class';
 
 @Component({
   selector: 'app-avatar',
@@ -17,19 +19,7 @@ export class AvatarComponent implements OnInit {
   selectedAvatarImg: string = '/img/general-view/create-avatar/default-avatar.svg';
   user: any = null;
 
-  constructor(private router: Router) {}
-
-  ngOnInit(){
-    const user = localStorage.getItem('user');
-    if (user) {
-      this.user = JSON.parse(user);
-    }
-  }
-
-  selectAvatar(avatarName: string, avatarImg: string): void {
-    this.selectedAvatar = avatarName;
-    this.selectedAvatarImg = avatarImg;
-  }
+  constructor(private router: Router, private userService: UserDatasService,) {}
 
   avatarList = [
     {
@@ -58,8 +48,24 @@ export class AvatarComponent implements OnInit {
     },
   ]
 
-  createAvatar(){
+  ngOnInit(){
+    const user = localStorage.getItem('user');
+    if (user) {
+      this.user = JSON.parse(user);
+    }
+  }
 
+  selectAvatar(avatarName: string, avatarImg: string, event: Event): void {
+    event.preventDefault();
+    this.selectedAvatar = avatarName;
+    this.selectedAvatarImg = avatarImg;
+  }
+
+  createAvatar(){
+    if (this.selectedAvatar) {
+      console.log('Ready', this.user.id, this.selectedAvatarImg)
+      this.userService.updateUserAvatar(this.user.id, this.selectedAvatarImg);
+    }
   }
 
   navigateTo(route: string) {

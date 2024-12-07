@@ -7,7 +7,9 @@ import {
   addDoc,
   getDocs,
   where, 
-  query
+  query,
+  doc,
+  updateDoc
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { User } from './../../models/user.class';
@@ -56,6 +58,17 @@ export class UserDatasService {
     }    
     catch (error) {
       console.error('Error fetching documents:', error);
+    }
+  }
+
+  async updateUserAvatar(userId: string, avatarUrl: string){
+    try {
+      const userData = doc(this.firestore, `userDatas/${userId}`);
+      await updateDoc(userData, {
+        avatar: avatarUrl,
+      })
+    } catch (error) {
+      console.error('Error updating avatar:', error);
     }
   }
 
