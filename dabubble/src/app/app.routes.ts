@@ -12,6 +12,7 @@ import { SignInComponent } from './components/landing-page/sign-in/sign-in.compo
 import { ForgotPasswordComponent } from './components/landing-page/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/landing-page/reset-password/reset-password.component';
 import { AvatarComponent } from './components/landing-page/sign-in/avatar/avatar.component';
+import { UserProfileComponent } from './components/general-view/user-profile/user-profile.component';
 
 export const routes: Routes = [
   { path: '', component: LandingPageComponent,
@@ -29,6 +30,7 @@ export const routes: Routes = [
       { path: 'public-chat', component: PublicChatComponent },
       { path: 'privat-chat', component: PrivateChatComponent },
       { path: 'new-message', component: NewMessageComponent },
+      { path: 'user-profile', component: UserProfileComponent },
     ],
   },
   { path: 'imprint', component: ImprintComponent },

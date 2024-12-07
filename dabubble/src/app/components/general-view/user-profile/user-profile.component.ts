@@ -2,16 +2,15 @@ import { Component, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenu, MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { Router, RouterModule } from '@angular/router';
-import { UserProfileComponent } from '../user-profile/user-profile.component';
 
 @Component({
-  selector: 'app-header',
+  selector: 'app-user-profile',
   standalone: true,
-  imports: [MatButtonModule, MatMenuModule, RouterModule, UserProfileComponent],
-  templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  imports: [MatButtonModule, MatMenuModule, RouterModule],
+  templateUrl: './user-profile.component.html',
+  styleUrl: './user-profile.component.scss'
 })
-export class HeaderComponent {
+export class UserProfileComponent {
   constructor(private router: Router) {
 
   }
@@ -29,27 +28,6 @@ export class HeaderComponent {
   }
 
 
-  showProfileInfo() {
-    document.getElementById('profile-info-container')?.classList.remove('d-none');
-  }
-
-
-  closeProfileInfo() {
-    document.getElementById('profile-info-container')?.classList.add('d-none');
-    this.openDropdownMenu();
-  }
-
-
-  openDropdownMenu() {
-    this.menuTrigger.openMenu();
-  }
-
-
-  closeDropdownMenu() {
-    this.menuTrigger.closeMenu();
-  }
-
-
   /**
    * Toggles the grey screen for the dropdown menu, also closes the menu if the greyScreen is no longer displayed
    */
@@ -59,7 +37,7 @@ export class HeaderComponent {
     element?.classList.toggle('d-none');
 
     if (element?.classList.contains('d-none')) {
-      this.closeDropdownMenu();
+      this.menuTrigger.closeMenu();
     }
   }
 
@@ -71,5 +49,3 @@ export class HeaderComponent {
   }
 
 }
-
-
