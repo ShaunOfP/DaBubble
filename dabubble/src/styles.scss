@@ -136,6 +136,7 @@ h3 {
   display: flex;
   justify-content: center !important;
   align-items: center !important;
+  z-index: 11;
 }
 
 .mat-mdc-menu-content {
@@ -161,4 +162,17 @@ h3 {
 
 .cdk-overlay-connected-position-bounding-box {
   z-index: 999;
+}
+
+.btn-glass--default {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 21.6px;
+  &:hover {
+    font-weight: 500;
+  }
+}
+
+.d-none {
+  display: none;
 }

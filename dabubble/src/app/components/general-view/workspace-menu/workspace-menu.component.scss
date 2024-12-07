@@ -1,7 +1,7 @@
 @import './../../../../styles.scss';
 
 section {
-    background-color: white;
+    background-color: var(--color-white);
     width: 366px;
     border-radius: 30px;
     padding: 32px 30px 32px 30px;
@@ -48,12 +48,13 @@ section {
 .hover {
     &:hover {
         cursor: pointer;
-        background-color: #ECEEFE;
+        background-color: var(--color-blue-bg);
         border-radius: 30px;
     }
 }
 
 .img-switch {
+    transition: all ease-in 100ms;
     &:hover {
         >:first-child {
             display: none;

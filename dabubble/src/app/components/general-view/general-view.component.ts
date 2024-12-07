@@ -5,11 +5,12 @@ import { WorkspaceMenuCloseButtonComponent } from "./workspace-menu-close-button
 import { HeaderComponent } from "./header/header.component";
 import { ThreadComponent } from "./thread/thread.component";
 import { ChatComponent } from "./chat/chat.component";
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 @Component({
   selector: 'app-general-view',
   standalone: true,
-  imports: [RouterOutlet, RouterModule, WorkspaceMenuComponent, WorkspaceMenuCloseButtonComponent, HeaderComponent, ThreadComponent, ChatComponent],
+  imports: [RouterOutlet, RouterModule, WorkspaceMenuComponent, WorkspaceMenuCloseButtonComponent, HeaderComponent, ThreadComponent, ChatComponent, UserProfileComponent],
   templateUrl: './general-view.component.html',
   styleUrl: './general-view.component.scss'
 })
