@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-thread',
@@ -8,5 +8,13 @@ import { Component } from '@angular/core';
   styleUrl: './thread.component.scss'
 })
 export class ThreadComponent {
+  @Output() callParent: EventEmitter<void> = new EventEmitter();
+  
 
+  /**
+   * Emit a signal to the parent element to hide/close the Thread Menu
+   */
+  closeThread(){
+    this.callParent.emit();
+  }
 }
