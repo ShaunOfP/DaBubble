@@ -22,7 +22,7 @@ interface UserData {
   providedIn: 'root',
 })
 export class UserDatasService {
-  private firestore = inject(Firestore);
+  public firestore = inject(Firestore);
   userDatas$: Observable<User>;
   found: boolean = false
 
