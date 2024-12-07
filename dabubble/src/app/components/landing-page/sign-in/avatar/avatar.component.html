@@ -16,15 +16,22 @@
                 <div class="main-content">
 
                     <div class="avatar-container">
-                        <img src="/img/general-view/create-avatar/default-avatar.svg" alt="back"/>
-                        <span>Name</span>
+                        <img [src]="selectedAvatarImg" alt="back"/>
+                        <span>{{user.name}}</span>
                     </div>
     
                     <div class="avatar-list-container">
                         <span>Aus der Liste wählen</span>
                         <div>
                             @for (avatar of avatarList; track avatar.name; let index = $index) {
-                                <img src="/img/general-view/create-avatar/{{avatar.img}}" alt="{{avatar.name}}">
+                                <input type="image" 
+                                        src="{{avatar.img}}" 
+                                        alt="{{avatar.name}}" 
+                                        name="avatarSelection" 
+                                        value="{{avatar.name}}"
+                                        [ngClass]="{'selected': selectedAvatar === avatar.name}"
+                                        (click)="selectAvatar(avatar.name, avatar.img)"
+                                        >
                             }
                         </div>
                     </div>

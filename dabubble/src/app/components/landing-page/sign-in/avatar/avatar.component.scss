@@ -18,6 +18,11 @@
   @include arrangement($d: flex, $jc: center, $ai: center, $fd: column);
   gap: 36px;
 
+  img{
+    width: 170px;
+    height: 170px;
+  }
+
   span {
     font-size: 32px;
     font-weight: 700;
@@ -39,13 +44,23 @@
         border-radius: 100px;
         border-image-outset: 15px;
       }
+      &.selected {
+        border: 5px solid var(--color-blue-bg);
+        border-radius: 100px;
+      }
     }
 
-    img {
+    input {
       border: 1px solid transparent;
       &:hover {
         border: 1px solid transparent;
         background: var(--color-grey-hover);
+        border-radius: 100px;
+        border-image-outset: 15px;
+      }
+      &.selected {
+        border: 1px solid var(--color-blue-bg);
+        background: var(--color-blue-bg);
         border-radius: 100px;
         border-image-outset: 15px;
       }
@@ -58,5 +73,9 @@
   span {
     font-size: 20px;
     font-weight: 400;
+  }
+
+  .clicked{
+    border: 1px solid var(--color-blue-bg);
   }
 }

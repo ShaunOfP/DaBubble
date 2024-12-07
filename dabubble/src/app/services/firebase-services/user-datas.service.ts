@@ -34,6 +34,7 @@ export class UserDatasService {
       const userPlainObject = { ...user }; // Important!! Firebase need a plainobject to read, otherwise its not working!
       const docRef = await addDoc(this.userDatasRef(), userPlainObject);
       console.log('Document written with ID: ', docRef.id);
+      this.saveLocalStorage(docRef.id, user.name);
     } catch (err) {
       console.error('Error adding document: ', err);
     }
@@ -56,6 +57,11 @@ export class UserDatasService {
     catch (error) {
       console.error('Error fetching documents:', error);
     }
+  }
+
+  saveLocalStorage(id: string, name:string){
+    const user = { id: id, name: name  };
+    localStorage.setItem('user', JSON.stringify(user));
   }
 
   userDatasRef() {
