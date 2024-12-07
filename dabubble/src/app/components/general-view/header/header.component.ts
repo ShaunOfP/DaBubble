@@ -29,11 +29,6 @@ export class HeaderComponent {
   }
 
 
-  showProfileInfo() {
-    document.getElementById('profile-info-container')?.classList.remove('d-none');
-  }
-
-
   closeProfileInfo() {
     document.getElementById('profile-info-container')?.classList.add('d-none');
     this.openDropdownMenu();

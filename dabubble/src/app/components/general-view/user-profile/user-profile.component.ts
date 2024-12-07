@@ -28,6 +28,11 @@ export class UserProfileComponent {
   }
 
 
+  showProfileInfo() {
+    document.getElementById('profile-info-container')?.classList.remove('d-none');
+  }
+
+
   /**
    * Toggles the grey screen for the dropdown menu, also closes the menu if the greyScreen is no longer displayed
    */
