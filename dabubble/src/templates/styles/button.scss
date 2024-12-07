@@ -1,48 +1,69 @@
-  @mixin btn{
-    border: none;
-    border-radius: 25px;
-    padding: 12px 25px;
-    cursor: pointer;
+@mixin btn {
+  border: none;
+  border-radius: 25px;
+  padding: 12px 25px;
+  cursor: pointer;
+}
+
+.btn-primary {
+  @include btn;
+  color: white;
+  &--default {
+    @extend .btn-primary;
+    background-color: #444df2;
+    &:hover {
+      background-color: #797ef3;
+    }
+  }
+  &--disable {
+    @extend .btn-primary;
+    background-color: #686868;
+    cursor: not-allowed;
   }
 
-  .btn-primary {
-   @include btn;
-    color: white;
-    &--default {
-      @extend .btn-primary;
-      background-color: #444df2;
-      &:hover {
-        background-color: #797ef3;
-      }
-    }
-    &--disable{
-      @extend .btn-primary;
-      background-color: #686868;
-      cursor: not-allowed;
-    }
+  @media (max-width: 450px) {
+    padding: 8px 18px;
+  }
+}
 
-    @media (max-width: 450px) {
-      padding: 8px 18px;
+.btn-secondary {
+  @include btn;
+  color: #797ef3;
+  &--default {
+    @extend .btn-secondary;
+    background-color: #ffffff;
+    border: 1px solid #797ef3;
+    &:hover {
+      background-color: #535af1;
+      color: #ffffff;
     }
   }
-  
-  .btn-secondary {
-    @include btn;
-    color: #797ef3;
-    &--default {
-      @extend .btn-secondary;
-      background-color: #FFFFFF;
-      border: 1px solid #797EF3;
-      &:hover{
-        background-color: #535AF1;
-        color: #FFFFFF;
-      }
-    }
-    &--disable{
-      @extend .btn-secondary;
-      background-color: #FFFFFF;
-      color: #686868;
-      border: 1px solid #686868;
-      cursor: not-allowed;
+  &--disable {
+    @extend .btn-secondary;
+    background-color: #ffffff;
+    color: #686868;
+    border: 1px solid #686868;
+    cursor: not-allowed;
+  }
+}
+
+.btn-glass {
+  @include btn;
+  &--default {
+    @extend .btn-secondary;
+    background-color: rgba(255, 255, 255, 0);
+
+    color: var(--color-purple-primary-disabled);
+    &:hover {
+      color: var(--color-purple-primary-default);
+      border: 1px solid #ADB0D9;
     }
   }
+  &--disable {
+    @extend .btn-secondary;
+    background-color: #ffffff;
+    color: var(--color-purple-primary-disabled);
+    border: 1px solid #686868;
+    cursor: not-allowed;
+  }
+}
