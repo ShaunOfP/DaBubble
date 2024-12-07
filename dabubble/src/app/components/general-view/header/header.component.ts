@@ -40,4 +40,17 @@ export class HeaderComponent {
       this.menuTrigger.closeMenu();
     }
   }
+
+  toggleDisplayNone() {
+    let element = document.getElementById('user-profile');
+
+    element?.classList.toggle('d-none');
+
+    if (element?.classList.contains('d-none')) {
+      this.menuTrigger.closeMenu();
+    }
+  }
+
 }
+
+
