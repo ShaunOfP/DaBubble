@@ -7,17 +7,17 @@
 
 .btn-primary {
   @include btn;
-  color: white;
+  color: var(--color-white);
   &--default {
     @extend .btn-primary;
-    background-color: #444df2;
+    background-color: var(--color-purple-primary-default);
     &:hover {
-      background-color: #797ef3;
+      background-color: var(--color-purple-primary-disabled);
     }
   }
   &--disable {
     @extend .btn-primary;
-    background-color: #686868;
+    background-color: var(--color-grey-primary-disable);
     cursor: not-allowed;
   }
 
@@ -28,21 +28,21 @@
 
 .btn-secondary {
   @include btn;
-  color: #797ef3;
+  color: var(--color-purple-primary-disabled);
   &--default {
     @extend .btn-secondary;
-    background-color: #ffffff;
-    border: 1px solid #797ef3;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-purple-primary-disabled);
     &:hover {
-      background-color: #535af1;
-      color: #ffffff;
+      background-color: var(--color-purple-secondary-hover);
+      color: var(--color-white);
     }
   }
   &--disable {
     @extend .btn-secondary;
-    background-color: #ffffff;
-    color: #686868;
-    border: 1px solid #686868;
+    background-color: var(--color-white);
+    color: var(--color-grey-primary-disable);
+    border: 1px solid var(--color-grey-primary-disable);
     cursor: not-allowed;
   }
 }
@@ -51,19 +51,19 @@
   @include btn;
   &--default {
     @extend .btn-secondary;
-    background-color: rgba(255, 255, 255, 0);
+    background-color: var(--color-transparent);
 
     color: var(--color-purple-primary-disabled);
     &:hover {
       color: var(--color-purple-primary-default);
-      border: 1px solid #ADB0D9;
+      border: 1px solid var(--color-blue-border);
     }
   }
   &--disable {
     @extend .btn-secondary;
-    background-color: #ffffff;
+    background-color: var(--color-white);
     color: var(--color-purple-primary-disabled);
-    border: 1px solid #686868;
+    border: 1px solid var(--color-grey-primary-disable);
     cursor: not-allowed;
   }
 }
