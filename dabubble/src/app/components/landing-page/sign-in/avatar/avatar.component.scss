@@ -79,3 +79,37 @@
     border: 1px solid var(--color-blue-bg);
   }
 }
+
+.overlay-container{
+  @include arrangement($d: none, $jc: end, $ai: end, $fd: column);
+  position: absolute;
+  height: 100vh;
+  background: #ffffff46;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  .side-sheet{
+    background: var(--color-purple-primary-default);
+    box-shadow: 0px 6px 10px 0px #00000033;
+    border-radius: 30px 30px 0px 30px;
+    padding: 50px;
+    margin: 32px;
+    font-size: 36px;
+    font-weight: 700;
+    color: #FFFFFF;
+    animation: 0.2s ease-out 1 slideIn;
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+      }
+    
+      to {
+        transform: translateX(0%);
+      }
+    }
+    }
+}
+
+

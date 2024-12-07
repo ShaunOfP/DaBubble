@@ -11,7 +11,7 @@
                 </div>
             </mat-card-header>
 
-            <form (ngSubmit)="createAvatar()" #signInForm="ngForm">
+            <form (ngSubmit)="createAvatar()" #createAvatarForm="ngForm">
 
                 <div class="main-content">
 
@@ -30,16 +30,22 @@
                                         name="avatarSelection" 
                                         value="{{avatar.name}}"
                                         [ngClass]="{'selected': selectedAvatar === avatar.name}"
-                                        (click)="selectAvatar(avatar.name, avatar.img)"
+                                        (click)="selectAvatar(avatar.name, avatar.img, $event)"
                                         >
                             }
                         </div>
                     </div>
                 
                     <div class="button-container">
-                        <input type="submit" value="Weiter" [disabled]="!signInForm.valid" [ngClass]="{
-                            'btn-primary--disable': !signInForm.valid,
-                            'btn-primary--default': signInForm.valid}">
+                        <input
+                        type="submit" 
+                        value="Weiter" 
+                        [disabled]="!selectedAvatar" 
+                        [ngClass]="{
+                          'btn-primary--disable': !selectedAvatar,
+                          'btn-primary--default': selectedAvatar
+                        }"
+                        >
                     </div>
 
                 </div>
@@ -50,5 +56,11 @@
 
     </mat-card>
 
+</div>
 
+
+<div class="overlay-container">
+    <span class="side-sheet">
+        Konto erfolgreich erstellt!
+    </span>
 </div>
