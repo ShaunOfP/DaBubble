@@ -1,6 +1,35 @@
 <header>
     <div id="grey-screen" class="grey-layer d-none" (click)="toggleGreyScreen()">
-        i am grey
+    </div>
+    <div id="profile-info-container" class="profile-info-container d-none">
+        <div class="profile-info-header">
+            <h3>Profil</h3>
+            <div class="change-image-on-hover pointer" (click)="closeProfileInfo()">
+                <img src="/img/general-view/workspace-menu/close.svg">
+                <img class="d-none" src="/img/general-view/workspace-menu/hover_close.svg">
+            </div>            
+        </div>
+        <div class="profile-info-image">
+            <img src="/img/public/user_icon_male_2.svg">
+        </div>
+        <div class="profile-info-name-status">
+            <div class="profile-info-name-status-upper">
+                <span class="font-size-32 font-weight-700">Frederik Beck</span>
+                <span class="font-size-18 font-weight-700 color-purple-with-hover">Bearbeiten</span>
+            </div>
+            <div class="d-flex align-center">
+                <img class="active-circle">
+                <span class="font-size-20 margin-left-15 color-active">Aktiv</span>
+            </div>
+        </div>
+        <div>
+            <div>
+                <img src="">
+                <span>E-Mail-Adresse</span>
+            </div>
+            <a href="#">Mail</a>
+            <!-- Mail -->
+        </div>
     </div>
     <div class="header-logo">
         <img src="/img/general-view/workspace-menu/Logo.svg">
@@ -19,8 +48,7 @@
                     <img src="/img/general-view/workspace-menu/arrow_drop_down_thin.svg">
                 </button>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item (click)="toggleDisplayNone()">Profil</button>
-                    <button mat-menu-item (click)="navigateTo('')">Log out</button>
+                    <app-user-profile></app-user-profile>
                 </mat-menu>
             </div>
         </div>

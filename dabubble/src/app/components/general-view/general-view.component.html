@@ -9,10 +9,10 @@
   </div> -->
     <app-header></app-header>
     <div class="devspace-container">
-      <app-workspace-menu></app-workspace-menu>
+      <app-workspace-menu *ngIf="workspaceMenuIsVisible"></app-workspace-menu>
       <app-workspace-menu-close-button></app-workspace-menu-close-button>
       <app-chat></app-chat>
-      <app-thread></app-thread>
+      <app-thread *ngIf="threadIsVisible" (callParent)="closeThread()"></app-thread>
     </div>
-    <app-user-profile id="user-profile"></app-user-profile>
+    <app-user-profile class="d-none" id="user-profile"></app-user-profile>
 </section>
