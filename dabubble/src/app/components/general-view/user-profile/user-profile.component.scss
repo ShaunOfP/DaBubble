@@ -1,7 +1,1 @@
 @import './../../../../styles.scss';
-
-section{
-    @include arrangement($fd:column, $jc:space-around, $ai:center);
-    width: 100%;
-    height: 100%;
-}

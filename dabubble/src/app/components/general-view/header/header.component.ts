@@ -2,11 +2,12 @@ import { Component, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenu, MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { Router, RouterModule } from '@angular/router';
+import { UserProfileComponent } from '../user-profile/user-profile.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [MatButtonModule, MatMenuModule, RouterModule],
+  imports: [MatButtonModule, MatMenuModule, RouterModule, UserProfileComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
@@ -46,9 +47,6 @@ export class HeaderComponent {
 
     element?.classList.toggle('d-none');
 
-    if (element?.classList.contains('d-none')) {
-      this.menuTrigger.closeMenu();
-    }
   }
 
 }

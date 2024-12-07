@@ -19,8 +19,9 @@
                     <img src="/img/general-view/workspace-menu/arrow_drop_down_thin.svg">
                 </button>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item (click)="toggleDisplayNone()">Profil</button>
-                    <button mat-menu-item (click)="navigateTo('')">Log out</button>
+                    <app-user-profile></app-user-profile>
+                    <!-- <button mat-menu-item (click)="toggleDisplayNone()">Profil</button>
+                    <button mat-menu-item (click)="navigateTo('')">Log out</button> -->
                 </mat-menu>
             </div>
         </div>
