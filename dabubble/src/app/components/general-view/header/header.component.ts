@@ -29,19 +29,33 @@ export class HeaderComponent {
   }
 
 
+  /**
+   * Closes the Info Container and calls the function to open the Dropdown Menu
+   */
   closeProfileInfo() {
     document.getElementById('profile-info-container')?.classList.add('d-none');
     this.openDropdownMenu();
   }
 
 
+  /**
+   * Opens the Dropdown Menu
+   */
   openDropdownMenu() {
     this.menuTrigger.openMenu();
   }
 
 
+  /**
+   * Closes the Dropdown Menu and also closes the Profile Info Container if it is still open
+   */
   closeDropdownMenu() {
+    let profileInfoContainer = document.getElementById('profile-info-container');
+
     this.menuTrigger.closeMenu();
+    if (!profileInfoContainer?.classList.contains('d-none')){
+      profileInfoContainer?.classList.add('d-none');
+    }
   }
 
 
@@ -58,13 +72,11 @@ export class HeaderComponent {
     }
   }
 
+
   toggleDisplayNone() {
     let element = document.getElementById('user-profile');
 
     element?.classList.toggle('d-none');
 
   }
-
 }
-
-
