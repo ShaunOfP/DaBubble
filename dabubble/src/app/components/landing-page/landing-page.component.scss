@@ -65,3 +65,6 @@ section{
     }
   }
 
+.legal {
+  @include arrangement($g: 16px);
+}
