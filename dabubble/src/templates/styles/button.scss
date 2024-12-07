@@ -1,48 +1,73 @@
-  @mixin btn{
-    border: none;
-    border-radius: 25px;
-    padding: 12px 25px;
-    cursor: pointer;
+@mixin btn {
+  border: none;
+  border-radius: 25px;
+  padding: 12px 25px;
+  cursor: pointer;
+}
+
+.btn-primary {
+  @include btn;
+  color: var(--color-white);
+  &--default {
+    @extend .btn-primary;
+    background-color: var(--color-purple-primary-default);
+    &:hover {
+      transition: all ease-in 100ms;
+      background-color: var(--color-purple-primary-disabled);
+    }
+  }
+  &--disable {
+    @extend .btn-primary;
+    background-color: var(--color-grey-primary-disable);
+    cursor: not-allowed;
   }
 
-  .btn-primary {
-   @include btn;
-    color: white;
-    &--default {
-      @extend .btn-primary;
-      background-color: #444df2;
-      &:hover {
-        background-color: #797ef3;
-      }
-    }
-    &--disable{
-      @extend .btn-primary;
-      background-color: #686868;
-      cursor: not-allowed;
-    }
+  @media (max-width: 450px) {
+    padding: 8px 18px;
+  }
+}
 
-    @media (max-width: 450px) {
-      padding: 8px 18px;
+.btn-secondary {
+  @include btn;
+  color: var(--color-purple-primary-disabled);
+  &--default {
+    @extend .btn-secondary;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-purple-primary-disabled);
+    &:hover {
+      transition: all ease-in 100ms;
+      background-color: var(--color-purple-secondary-hover);
+      color: var(--color-white);
     }
   }
-  
-  .btn-secondary {
-    @include btn;
-    color: #797ef3;
-    &--default {
-      @extend .btn-secondary;
-      background-color: #FFFFFF;
-      border: 1px solid #797EF3;
-      &:hover{
-        background-color: #535AF1;
-        color: #FFFFFF;
-      }
-    }
-    &--disable{
-      @extend .btn-secondary;
-      background-color: #FFFFFF;
-      color: #686868;
-      border: 1px solid #686868;
-      cursor: not-allowed;
+  &--disable {
+    @extend .btn-secondary;
+    background-color: var(--color-white);
+    color: var(--color-grey-primary-disable);
+    border: 1px solid var(--color-grey-primary-disable);
+    cursor: not-allowed;
+  }
+}
+
+.btn-glass {
+  @include btn;
+  &--default {
+    @extend .btn-secondary;
+    background-color: var(--color-transparent);
+    border: 1px solid var(--color-transparent);
+    color: var(--color-purple-primary-disabled);
+    padding: 10px 15px;
+    &:hover {
+      color: var(--color-purple-primary-default);
+      border: 1px solid var(--color-blue-border);
+      transition: all ease-in 100ms;
     }
   }
+  &--disable {
+    @extend .btn-secondary;
+    background-color: var(--color-white);
+    color: var(--color-purple-primary-disabled);
+    border: 1px solid var(--color-grey-primary-disable);
+    cursor: not-allowed;
+  }
+}

@@ -15,18 +15,17 @@ import { User } from './../../models/user.class';
 interface UserData {
   mail: string;
   password: string;
-  // weitere Felder, falls vorhanden
 }
 @Injectable({
   providedIn: 'root',
 })
 export class UserDatasService {
   private firestore = inject(Firestore);
-  userDatas$: Observable<User[]>;
-  userDatas: any;
+  userDatas$: Observable<User>;
+  found: boolean = false
 
   constructor() {
-    this.userDatas$ = collectionData(this.userDatasRef());
+    this.userDatas$= collectionData(this.userDatasRef());
     this.getUserDatas('Test@test.de', '123');
   }
 
@@ -44,18 +43,16 @@ export class UserDatasService {
     const q = query(this.userDatasRef(), where("mail", "==", email))    
     try {
       const querySnapshot = await getDocs(q);
-      let found = false
       querySnapshot.forEach((doc) => {
         const userData = doc.data() as UserData;
         if(userData.password === password){
         console.log('ID:', doc.id);
         console.log('Data:', userData);
-        found = true;
+        this.found = true;
         }
       });
-      if(found === false) console.log('falsche Email oder falsches Passwort');
-    } 
-   
+      this.found ? false : console.log('falsche Email oder falsches Passwort');
+    }    
     catch (error) {
       console.error('Error fetching documents:', error);
     }

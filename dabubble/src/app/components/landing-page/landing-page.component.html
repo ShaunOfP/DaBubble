@@ -1,7 +1,7 @@
 <section>
 <router-outlet></router-outlet>
-<div>
-  <a [routerLink]="['imprint']">Impressum</a> /
-  <a [routerLink]="['privacy-policy']">Datenschutzerklärung</a>
+<div class="legal">
+  <button class="btn-glass--default" [routerLink]="['imprint']">Impressum</button>
+  <button class="btn-glass--default" [routerLink]="['privacy-policy']">Datenschutz</button>
 </div>
 </section>

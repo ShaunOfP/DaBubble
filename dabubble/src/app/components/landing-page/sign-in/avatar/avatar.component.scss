@@ -1,60 +1,62 @@
 @import "./../../landing-page.component.scss";
 @import "./../sign-in.component.scss";
 
-.mat-mdc-card-content{
-    padding: 16px !important;
+.mat-mdc-card-content {
+  padding: 16px !important;
 }
 
-.header-content{
-    gap: 16px;
+.header-content {
+  gap: 16px;
 }
 
-.main-content{
-    @include arrangement($d: flex, $jc: normal, $ai: normal, $fd: column);
-    gap: 36px;
+.main-content {
+  @include arrangement($d: flex, $jc: normal, $ai: normal, $fd: column);
+  gap: 36px;
 }
 
-.avatar-container{
+.avatar-container {
   @include arrangement($d: flex, $jc: center, $ai: center, $fd: column);
   gap: 36px;
 
-  span{
+  span {
     font-size: 32px;
     font-weight: 700;
   }
 }
 
-.avatar-list-container{
-    @include arrangement($d: flex, $jc: normal, $ai: normal, $fd: column);
-    gap: 16px;
+.avatar-list-container {
+  @include arrangement($d: flex, $jc: normal, $ai: normal, $fd: column);
+  gap: 16px;
 
-    div{
-        @include arrangement($d: flex, $jc: space-between, $ai: center, $fd: row);
+  div {
+    @include arrangement($d: flex, $jc: space-between, $ai: center, $fd: row);
 
-        :first-child{
-            border: 5px solid transparent;
-            &:hover{
-                border: 5px solid transparent;
-                background: var(--color-grey-hover);
-                border-radius: 100px;
-                border-image-outset: 15px;
-            }
-
-        }
-
-        img{
-            border: 1px solid transparent;
-            &:hover{
-                border: 1px solid transparent;
-                background: var(--color-grey-hover);
-                border-radius: 100px;
-                border-image-outset: 15px;
-            }
-        }
+    :first-child {
+      border: 5px solid transparent;
+      &:hover {
+        border: 5px solid transparent;
+        background: var(--color-grey-hover);
+        border-radius: 100px;
+        border-image-outset: 15px;
+      }
     }
 
-    span{
-        font-size: 20px;
-        font-weight: 400;
+    img {
+      border: 1px solid transparent;
+      &:hover {
+        border: 1px solid transparent;
+        background: var(--color-grey-hover);
+        border-radius: 100px;
+        border-image-outset: 15px;
+      }
     }
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  span {
+    font-size: 20px;
+    font-weight: 400;
+  }
 }
