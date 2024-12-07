@@ -162,3 +162,11 @@ h3 {
 .cdk-overlay-connected-position-bounding-box {
   z-index: 999;
 }
+
+.btn-glass--default {
+  font-size: 18px;
+  font-weight: 400;
+  &:hover {
+    font-weight: 500;
+  }
+}
