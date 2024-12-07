@@ -1,8 +1,8 @@
 @import './../../../../styles.scss';
 @import './../../../../templates/input.scss';
 
-.d-none {
-    display: none;
+h3 {
+    margin: 0;
 }
 
 header {
@@ -87,4 +87,140 @@ header {
     inset: 0;
     background-color: rgba(0, 0, 0, 0.4);
     z-index: 10;
+}
+
+.mdc-button {
+    min-width: 30px;
+}
+
+.mat-mdc-menu-trigger {
+    padding: 0;
+}
+
+.profile-info-container {
+    height: 705px;
+    width: 500px;
+    position: absolute;
+    top: 100px;
+    right: 40px;
+    border-radius: 30px 0px 30px 30px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 45px;
+    background-color: white;
+    z-index: 11;
+}
+
+.profile-info-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    >div {
+        height: 40px;
+        width: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &:hover {
+            background-color: var(--color-blue-border);
+            border-radius: 30px;
+        }
+    }
+}
+
+.profile-info-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    width: 100%;
+
+    >img {
+        width: 200px;
+    }
+}
+
+.profile-info-name-status {
+    display: flex;
+    gap: 15px;
+    flex-direction: column;
+}
+
+.profile-info-name-status-upper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.font-size-18 {
+    font-size: 18px;
+}
+
+.font-size-20 {
+    font-size: 20px;
+}
+
+.font-size-32 {
+    font-size: 32px;
+}
+
+.font-weight-700 {
+    font-weight: 700;
+}
+
+.margin-left-15 {
+    margin-left: 15px;
+}
+
+.color-purple-with-hover {
+    color: var(--color-purple-primary-disabled);
+
+    &:hover {
+        cursor: pointer;
+        color: var(--color-purple-secondary-hover);
+    }
+}
+
+.d-flex {
+    display: flex;
+}
+
+.align-center {
+    align-items: center;
+}
+
+.active-circle {
+    height: 16px;
+    width: 16px;
+    border-radius: 30px;
+    background-color: var(--color-green);
+}
+
+.color-active {
+    color: var(--color-green);
+}
+
+.pointer{
+    &:hover{
+        cursor: pointer;
+    }
+}
+
+.change-image-on-hover {
+    &:hover {
+        >:first-child {
+            display: none;
+        }
+
+        >:last-child {
+            display: flex;
+        }
+    }
+}
+
+.d-none {
+    display: none;
 }

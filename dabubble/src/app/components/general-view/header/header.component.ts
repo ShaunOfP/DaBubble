@@ -28,6 +28,27 @@ export class HeaderComponent {
   }
 
 
+  showProfileInfo() {
+    document.getElementById('profile-info-container')?.classList.remove('d-none');
+  }
+
+
+  closeProfileInfo() {
+    document.getElementById('profile-info-container')?.classList.add('d-none');
+    this.openDropdownMenu();
+  }
+
+
+  openDropdownMenu() {
+    this.menuTrigger.openMenu();
+  }
+
+
+  closeDropdownMenu() {
+    this.menuTrigger.closeMenu();
+  }
+
+
   /**
    * Toggles the grey screen for the dropdown menu, also closes the menu if the greyScreen is no longer displayed
    */
@@ -37,7 +58,7 @@ export class HeaderComponent {
     element?.classList.toggle('d-none');
 
     if (element?.classList.contains('d-none')) {
-      this.menuTrigger.closeMenu();
+      this.closeDropdownMenu();
     }
   }
 }
