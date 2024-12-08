@@ -37,6 +37,9 @@ export class GeneralViewComponent {
   }
 
 
+  /**
+   * Calls different functions to allow the toggling of the Workspace menu
+   */
   toggle(){
     if (this.toggleNumber == 0){
       this.closeWorkspaceMenu();
@@ -49,7 +52,7 @@ export class GeneralViewComponent {
 
 
   /**
-   * 
+   * Opens the Workspace menu
    */
   openWorkspaceMenu(){
     this.workspaceMenuIsVisible = true;
@@ -57,18 +60,24 @@ export class GeneralViewComponent {
 
 
   /**
-   *
+   *Closes the Workspace menu
    */
   closeWorkspaceMenu() {
     this.workspaceMenuIsVisible = false;
   }
 
 
+  /**
+   * Increases the toggleNumber
+   */
   toggleNumberIncrease() {
     this.toggleNumber++;
   }
 
 
+  /**
+   * Decreses the toggleNumber
+   */
   toggleNumberDecrease() {
     this.toggleNumber--;
   }

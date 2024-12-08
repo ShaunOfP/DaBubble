@@ -10,12 +10,15 @@ import { Component, EventEmitter, Output } from '@angular/core';
 export class WorkspaceMenuCloseButtonComponent {
   @Output() callParent: EventEmitter<void> = new EventEmitter();
 
-  variable: number = 0;
+  toggleNumber: number = 0;
   imagePath: string = `hide_nav`;
 
 
+  /**
+   * Calls different functions to enable the toggling of the workspace close button
+   */
   toggle() {
-    if (this.variable == 0) {
+    if (this.toggleNumber == 0) {
       this.closeWorkspaceMenu();
       this.switchMessage();
       this.switchImagePath();
@@ -29,11 +32,17 @@ export class WorkspaceMenuCloseButtonComponent {
   }
 
 
+  /**
+   * Calls the parent to close the workspace menu
+   */
   closeWorkspaceMenu() {
     this.callParent.emit();
   }
 
 
+  /**
+   * Switches classes around to show the open/close text on the Button
+   */
   switchMessage() {
     let closeMessage = document.getElementById('close-message');
     let openMessage = document.getElementById('open-message');
@@ -48,8 +57,11 @@ export class WorkspaceMenuCloseButtonComponent {
   }
 
 
+  /**
+   * Switches the image path to show the correct image on the close button
+   */
   switchImagePath() {
-    if (this.variable == 1) {
+    if (this.toggleNumber == 1) {
       this.imagePath = `hide_nav`;
     } else {
       this.imagePath = `show_nav`;
@@ -57,17 +69,26 @@ export class WorkspaceMenuCloseButtonComponent {
   }
 
 
+  /**
+   * Calls the parent to open the Workspace Menu
+   */
   openWorkspaceMenu() {
     this.callParent.emit();
   }
 
 
+  /**
+   * Increases the Variable toggleNumber
+   */
   increase() {
-    this.variable++;
+    this.toggleNumber++;
   }
 
 
+  /**
+   * Decreases the Variable toggleNumber
+   */
   decrease() {
-    this.variable--;
+    this.toggleNumber--;
   }
 }
