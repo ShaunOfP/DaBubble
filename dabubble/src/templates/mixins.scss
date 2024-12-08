@@ -20,8 +20,19 @@
 }
 
 @mixin centeredHeading($color, $margin-top, $text-align) {
-    color: $color;
-    margin-top: $margin-top;
-    width: 100%;
-    text-align: $text-align;
+  color: $color;
+  margin-top: $margin-top;
+  width: 100%;
+  text-align: $text-align;
+}
+
+@mixin filter-hover($color) {
+  transition: all ease-in 100ms;
+
+  &:hover {
+    cursor: pointer;
+    @if $color == purple-secondary-hover {
+      filter: var(--filter-purple-secondary-hover);
+    }
   }
+}

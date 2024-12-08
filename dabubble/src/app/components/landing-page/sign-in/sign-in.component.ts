@@ -55,7 +55,6 @@ export class SignInComponent {
 
   onSubmit(ngForm: NgForm){
     if(ngForm.valid && ngForm.submitted){
-      console.log(this.accountData)
       this.userService.saveUser(this.accountData);
       this.navigateTo('create-avatar');
     }

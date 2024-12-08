@@ -2,23 +2,19 @@ import { Component, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenu, MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { Router, RouterModule } from '@angular/router';
-import { UserProfileComponent } from '../user-profile/user-profile.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [MatButtonModule, MatMenuModule, RouterModule, UserProfileComponent],
+  imports: [MatButtonModule, MatMenuModule, RouterModule],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
-  constructor(private router: Router) {
-
-  }
+  constructor(private router: Router) {}
 
   @ViewChild('menu') menu!: MatMenu;
   @ViewChild('menuTrigger') menuTrigger!: MatMenuTrigger;
-
 
   /**
    * Navigating to a specific site via the router using a given route
@@ -28,7 +24,6 @@ export class HeaderComponent {
     this.router.navigate([route]);
   }
 
-
   /**
    * Closes the Info Container and calls the function to open the Dropdown Menu
    */
@@ -37,7 +32,6 @@ export class HeaderComponent {
     this.openDropdownMenu();
   }
 
-
   /**
    * Opens the Dropdown Menu
    */
@@ -45,19 +39,35 @@ export class HeaderComponent {
     this.menuTrigger.openMenu();
   }
 
-
   /**
    * Closes the Dropdown Menu and also closes the Profile Info Container if it is still open
    */
   closeDropdownMenu() {
-    let profileInfoContainer = document.getElementById('profile-info-container');
+    let profileInfoContainer = document.getElementById(
+      'profile-info-container'
+    );
 
     this.menuTrigger.closeMenu();
-    if (!profileInfoContainer?.classList.contains('d-none')){
+    if (!profileInfoContainer?.classList.contains('d-none')) {
       profileInfoContainer?.classList.add('d-none');
     }
   }
 
+  openEditForm() {
+    document
+      .getElementById('edit-profile-container')
+      ?.classList.remove('d-none');
+  }
+
+  closeEditForm() {
+    document.getElementById('edit-profile-container')?.classList.add('d-none');
+  }
+
+  showProfileInfo() {
+    document
+      .getElementById('profile-info-container')
+      ?.classList.remove('d-none');
+  }
 
   /**
    * Toggles the grey screen for the dropdown menu, also closes the menu if the greyScreen is no longer displayed
@@ -69,14 +79,13 @@ export class HeaderComponent {
 
     if (element?.classList.contains('d-none')) {
       this.closeDropdownMenu();
+      this.closeEditForm();
     }
   }
-
 
   toggleDisplayNone() {
     let element = document.getElementById('user-profile');
 
     element?.classList.toggle('d-none');
-
   }
 }
