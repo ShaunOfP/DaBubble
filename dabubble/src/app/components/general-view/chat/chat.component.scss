@@ -156,3 +156,9 @@ textarea {
     background-color: #ECEEFE;
     border-radius: 30px;
 }
+
+.pointer {
+    &:hover {
+        cursor: pointer;
+    }
+}
