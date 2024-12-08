@@ -5,7 +5,6 @@ import { MatCardModule } from '@angular/material/card';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { Router, RouterModule } from '@angular/router';
 import { UserDatasService } from '../../../../services/firebase-services/user-datas.service';
-import { SignInComponent } from '../sign-in.component';
 
 @Component({
   selector: 'app-avatar',
@@ -14,14 +13,14 @@ import { SignInComponent } from '../sign-in.component';
   templateUrl: './avatar.component.html',
   styleUrl: './avatar.component.scss'
 })
-export class AvatarComponent extends SignInComponent /* implements OnInit */{
+export class AvatarComponent implements OnInit {
   selectedAvatar: string | null = null;
   selectedAvatarImg: string = '/img/general-view/create-avatar/default-avatar.svg';
   avatarCreated: boolean = false;
   user: any = null;
 
-  /* constructor(private router: Router, private userService: UserDatasService,) {}
- */
+  constructor(private router: Router, private userService: UserDatasService,) {}
+
   avatarList = [
     {
       name: 'avatar1',
@@ -49,7 +48,7 @@ export class AvatarComponent extends SignInComponent /* implements OnInit */{
     },
   ]
 
- /*  ngOnInit(){
+  ngOnInit(){
     this.userService.user$.subscribe(user => {
       if (user) {
         this.user = user;
@@ -57,16 +56,15 @@ export class AvatarComponent extends SignInComponent /* implements OnInit */{
         this.userService.getUserFromStorage();
       }
     });
-  } */
+  }
 
   selectAvatar(avatarName: string, avatarImg: string, event: Event): void {
     event.preventDefault();
     this.selectedAvatar = avatarName;
     this.selectedAvatarImg = avatarImg;
   }
-  
-  saveUser(){}
- /*  createAvatar(){
+
+  createAvatar(){
     if (this.selectedAvatar) {
       this.userService.updateUserAvatar(this.user.id, this.selectedAvatarImg);
       this.avatarCreated = true;
@@ -76,10 +74,10 @@ export class AvatarComponent extends SignInComponent /* implements OnInit */{
         localStorage.removeItem('user')
       }, 1300);
     }
-  } */
-/* 
+  }
+
   navigateTo(route: string) {
     this.router.navigate([route]);
-  } */
+  }
 
 }
