@@ -19,18 +19,7 @@ section {
         height: fit-content;
 
         &:hover {
-            color: var(--color-purple-secondary-hover);
-            cursor: pointer;
-
-            >div {
-                >:first-child {
-                    display: none;
-                }
-
-                >:last-child {
-                    display: flex;
-                }
-            }
+            @include filter-hover(purple-secondary-hover);
         }
     }
 }

@@ -1,9 +1,9 @@
 <section>
-    <div>
-        <span>Workspace-Menü schließen</span>
+    <div (click)="toggle()">
+        <span id="close-message">Workspace-Menü schließen</span>
+        <span id="open-message" class="d-none">Workspace-Menü öffnen</span>
         <div class="picture-container">
-            <img src="/img/general-view/workspace-menu-close-button/hide_nav.svg">
-            <img class="d-none" src="/img/general-view/workspace-menu-close-button/hover_hide_nav.svg">
+            <img src="/img/general-view/workspace-menu-close-button/{{ imagePath }}.svg">
         </div>
     </div>
 </section>
