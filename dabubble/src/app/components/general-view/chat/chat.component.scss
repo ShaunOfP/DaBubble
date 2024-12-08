@@ -2,7 +2,6 @@
 
 section {
     background-color: var(--color-white);
-    border-radius: 30px;
     height: calc(100vh - 130px);
 }
 
@@ -38,15 +37,12 @@ h3 {
     &:hover {
         cursor: pointer;
         background-color: #ECEEFE;
-        border-radius: 30px;
 
         >h3 {
             color: var(--color-purple-primary-default);
         }
     }
 }
-
-.header-user-container {}
 
 .user-icon {
     height: 40px;
@@ -127,11 +123,28 @@ textarea {
     align-items: center;
 }
 
+.radius-30 {
+    border-radius: 30px;
+}
+
+.align-center {
+    align-items: center;
+}
+
+.padding-3-10 {
+    padding: 3px 10px;
+}
+
+.number-hover {
+    &:hover {
+        color: var(--color-purple-secondary-hover);
+    }
+}
+
 .hover {
     &:hover {
         cursor: pointer;
         background-color: #ADB0D9;
-        border-radius: 30px;
     }
 }
 
@@ -154,7 +167,6 @@ textarea {
 
 .b-grey-circle {
     background-color: #ECEEFE;
-    border-radius: 30px;
 }
 
 .pointer {
