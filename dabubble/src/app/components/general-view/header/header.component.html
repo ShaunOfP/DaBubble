@@ -34,13 +34,6 @@
         </div>
     </div>
 
-
-
-
-
-
-
-
     <div id="edit-profile-container" class="edit-profile-container d-none">
         <div class="profile-info-header">
             <h3>Dein Profil bearbeiten</h3>
@@ -78,12 +71,6 @@
         </div>
     </div>
 
-
-
-
-
-
-
     <div class="header-logo">
         <img src="/img/general-view/workspace-menu/Logo.svg">
         <h3>DABubble</h3>
@@ -102,7 +89,8 @@
                     <img src="/img/general-view/workspace-menu/arrow_drop_down_thin.svg">
                 </button>
                 <mat-menu #menu="matMenu">
-                    <app-user-profile></app-user-profile>
+                    <button mat-menu-item (click)="showProfileInfo()">Profil</button>
+                    <button mat-menu-item (click)="navigateTo('')">Log out</button>
                 </mat-menu>
             </div>
         </div>
