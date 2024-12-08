@@ -5,7 +5,6 @@ import { MatCardModule } from '@angular/material/card';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { Router, RouterModule } from '@angular/router';
 import { UserDatasService } from '../../../../services/firebase-services/user-datas.service';
-// import { User } from '../../../../models/user.class';
 
 @Component({
   selector: 'app-avatar',
@@ -63,7 +62,6 @@ export class AvatarComponent implements OnInit {
     event.preventDefault();
     this.selectedAvatar = avatarName;
     this.selectedAvatarImg = avatarImg;
-    console.log(this.user.id)
   }
 
   createAvatar(){
