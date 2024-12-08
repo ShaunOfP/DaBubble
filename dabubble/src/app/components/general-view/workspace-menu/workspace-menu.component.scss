@@ -54,11 +54,7 @@ section {
 }
 
 .hover-text-color {
-  transition: all ease-in 100ms;
-  &:hover {
-    cursor: pointer;
-    filter: var(--filter-purple-secondary-hover);
-  }
+  @include filter-hover(purple-secondary-hover);
 }
 
 .img-switch {
@@ -129,10 +125,13 @@ h3 {
     font-weight: 400px;
     font-size: 18px;
   }
+}
 
+.grow-img {
   &:hover {
-    color: var(--color-purple-secondary-hover);
-    cursor: pointer;
+    img {
+      transform: scale(1.05);
+    }
   }
 }
 
