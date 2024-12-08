@@ -11,7 +11,7 @@ import {
   doc,
   updateDoc
 } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { User } from './../../models/user.class';
 
 interface UserData {
@@ -25,6 +25,8 @@ export class UserDatasService {
   public firestore = inject(Firestore);
   userDatas$: Observable<User>;
   found: boolean = false
+  private userSubject = new BehaviorSubject<any>(null);
+  user$ = this.userSubject.asObservable();
 
   constructor() {
     this.userDatas$= collectionData(this.userDatasRef());
@@ -73,8 +75,16 @@ export class UserDatasService {
   }
 
   saveLocalStorage(id: string, name:string){
-    const user = { id: id, name: name  };
+    const user = { id, name };
     localStorage.setItem('user', JSON.stringify(user));
+    this.userSubject.next(user);
+  }
+
+  getUserFromStorage() {
+    const user = localStorage.getItem('user');
+    if (user) {
+      this.userSubject.next(JSON.parse(user));
+    }
   }
 
   userDatasRef() {
