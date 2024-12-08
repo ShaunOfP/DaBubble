@@ -6,6 +6,10 @@ h2 {
   width: 100%;
   text-align: center;
 
+  @media (max-width: 700px) {
+    font-size: 33px;
+  }
+
   @media (max-width: 450px) {
     font-size: 28px;
   }
