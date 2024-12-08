@@ -1,9 +1,9 @@
 @import "./../../landing-page.component.scss";
 @import "./../sign-in.component.scss";
 
-.mat-mdc-card-content {
-  padding: 16px !important;
-}
+// .mat-mdc-card-content {
+//   padding: 16px !important;
+// }
 
 .header-content {
   gap: 16px;
@@ -12,6 +12,10 @@
 .main-content {
   @include arrangement($d: flex, $jc: normal, $ai: normal, $fd: column);
   gap: 36px;
+
+  @media (max-width: 450px) {
+    gap: 20px;
+  }
 }
 
 .avatar-container {
@@ -21,11 +25,30 @@
   img{
     width: 170px;
     height: 170px;
+
+    @media (max-width: 700px) {
+      width: 130px;
+      height: 130px;
+    }
+
+    @media (max-width: 450px) {
+      width: 100px;
+      height: 100px;
+    }
   }
+
+  @media (max-width: 450px) {
+    gap: 20px;
+  }
+
 
   span {
     font-size: 32px;
     font-weight: 700;
+
+    @media (max-width: 450px) {
+     font-size: 20px;
+    }
   }
 }
 
@@ -35,6 +58,7 @@
 
   div {
     @include arrangement($d: flex, $jc: space-between, $ai: center, $fd: row);
+    flex-wrap: wrap !important;
 
     :first-child {
       border: 5px solid transparent;
@@ -47,6 +71,14 @@
       &.selected {
         border: 5px solid var(--color-blue-bg);
         border-radius: 100px;
+      }
+
+      @media (max-width: 700px) {
+        width: 55px;
+      }
+
+      @media (max-width: 450px) {
+        width: 45px;
       }
     }
 
@@ -64,6 +96,14 @@
         border-radius: 100px;
         border-image-outset: 15px;
       }
+
+      @media (max-width: 700px) {
+        width: 60px;
+      }
+
+      @media (max-width: 450px) {
+        width: 50px;
+      }
     }
     &:hover {
       cursor: pointer;
@@ -73,6 +113,10 @@
   span {
     font-size: 20px;
     font-weight: 400;
+
+    @media (max-width: 450px) {
+      font-size: 16px;
+    }
   }
 
   .clicked{
