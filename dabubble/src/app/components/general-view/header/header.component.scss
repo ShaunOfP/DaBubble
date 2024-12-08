@@ -34,17 +34,17 @@ header {
 }
 
 .searchbar {
-    background-color: white;
+    background-color: var(--color-white);
     min-width: 560px; //eventuell anpassen
 
     >input {
         font-size: 24px;
         font-weight: 400;
-        background-color: white;
+        background-color: var(--color-white);
     }
 
     >button {
-        background-color: white;
+        background-color: var(--color-white);
         border: none;
 
         &:hover {
@@ -108,7 +108,7 @@ header {
     display: flex;
     flex-direction: column;
     gap: 45px;
-    background-color: white;
+    background-color: var(--color-white);
     z-index: 11;
 }
 
@@ -230,7 +230,7 @@ header {
     display: flex;
     flex-direction: column;
     gap: 45px;
-    background-color: white;
+    background-color: var(--color-white);
     z-index: 11;
 }
 
@@ -269,7 +269,7 @@ header {
 }
 
 .input-field {
-    background-color: white;
+    background-color: var(--color-white);
     border: 1px solid var(--color-blue-border);
     font-size: 18px;
 

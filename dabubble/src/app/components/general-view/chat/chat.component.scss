@@ -1,7 +1,7 @@
 @import './../../../../styles.scss';
 
 section {
-    background-color: white;
+    background-color: var(--color-white);
     border-radius: 30px;
     height: calc(100vh - 130px);
 }
@@ -52,7 +52,7 @@ h3 {
     height: 40px;
     width: 40px;
     border-radius: 30px;
-    border: 2px solid white;
+    border: 2px solid var(--color-white);
 }
 
 .count {
