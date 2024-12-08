@@ -11,8 +11,9 @@ import {
   collectionData,
   CollectionReference,
   getDocs,
+  where,
 } from '@angular/fire/firestore';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, take } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -23,10 +24,14 @@ import { Observable, Subject } from 'rxjs';
 })
 export class LoginComponent implements OnInit, OnDestroy {
   animationPlayed: boolean = false;
+  newGuest: boolean = false;
 
   private users$: Observable<any[]> | undefined;
   private unsubscribe$ = new Subject<void>();
   private userCount: number | undefined;
+  private guestLogin: string | null | undefined;
+  private guestMail: string | undefined;
+  private guestPassword: string | undefined;
 
   guestUser: User = new User();
 
@@ -40,14 +45,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit(): Promise<void> {
+    this.guestLogin = localStorage.getItem('guestLogin');
     sessionStorage.setItem('animation', 'true');
     const userCollection = collection(this.userService.firestore, 'userDatas');
     this.users$ = collectionData(userCollection);
-    await this.users$?.subscribe((users) => {
-      console.log(users);
-      this.userCount = users.length + Math.floor(Math.random() * 100000);
-      console.log(this.userCount);
-    });
   }
 
   ngOnDestroy(): void {
@@ -59,20 +60,49 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.router.navigate([route]);
   }
 
+  logInGuest() {
+    if (this.guestLogin === 'true') {
+      console.log('log in as guest');
+    }
+    else {
+      this.createGuestUser();
+    }
+  }
+
   async createGuestUser() {
+    this.userCount = Math.floor(Math.random() * 1000000) + 1;
+    console.log(this.userCount);
     try {
       const guestUser = {
-        name: `guest${this.userCount}`,
+        name: `Gast${this.userCount}`,
         mail: `guest_${this.userCount}@example.com`,
         password: `guestUser${this.userCount}`,
-      };
+      }
+      this.checkGuestUser(guestUser);
 
-      await this.userService.saveUser(guestUser);
-      localStorage.setItem('mail', guestUser.mail);
-      localStorage.setItem('password', guestUser.password);
     } catch (err) {
       console.error('Fehler beim Gast-Login:', err);
       throw err;
     }
+  }
+
+  async checkGuestUser(guestUser: { name: string; mail: string; password: string; }) {
+    if (await this.checkExistingGuest(guestUser)) {
+      await this.userService.saveUser(guestUser);
+      localStorage.setItem('mail', guestUser.mail);
+      localStorage.setItem('password', guestUser.password);
+      localStorage.setItem('guestLogin', 'true');
+    } else {
+      this.createGuestUser();
+    }
+  }
+
+  async checkExistingGuest(userData: { name?: string; mail: any; password?: string }): Promise<boolean> {
+    return new Promise((resolve) => {
+      this.users$?.pipe(take(1)).subscribe((users) => {
+        const user = users.find((u) => u.mail === userData.mail);
+        resolve(!user); 
+      });
+    });
   }
 }
