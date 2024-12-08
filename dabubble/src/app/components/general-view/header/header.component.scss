@@ -1,5 +1,6 @@
 @import './../../../../styles.scss';
 @import './../../../../templates/input.scss';
+@import './../../../../templates/styles/button.scss';
 
 h3 {
     margin: 0;
@@ -98,7 +99,6 @@ header {
 }
 
 .profile-info-container {
-    height: 705px;
     width: 500px;
     position: absolute;
     top: 100px;
@@ -175,6 +175,14 @@ header {
     margin-left: 15px;
 }
 
+.height-30 {
+    height: 30px;
+}
+
+.width-30 {
+    width: 30px;
+}
+
 .color-purple-with-hover {
     color: var(--color-purple-primary-disabled);
 
@@ -192,6 +200,11 @@ header {
     align-items: center;
 }
 
+.center {
+    align-items: center;
+    justify-content: center;
+}
+
 .active-circle {
     height: 16px;
     width: 16px;
@@ -199,12 +212,34 @@ header {
     background-color: var(--color-green);
 }
 
+.profile-mail-container {
+    >a {
+        margin-left: 50px;
+        text-decoration: none;
+        color: #1381FF;
+    }
+}
+
+.edit-profile-container {
+    width: 500px;
+    position: absolute;
+    top: 100px;
+    right: 40px;
+    border-radius: 30px 0px 30px 30px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 45px;
+    background-color: white;
+    z-index: 11;
+}
+
 .color-active {
     color: var(--color-green);
 }
 
-.pointer{
-    &:hover{
+.pointer {
+    &:hover {
         cursor: pointer;
     }
 }
@@ -223,4 +258,59 @@ header {
 
 .d-none {
     display: none;
+}
+
+.gap-20 {
+    gap: 20px;
+}
+
+.gap-8 {
+    gap: 8px;
+}
+
+.gap-45 {
+    gap: 45px;
+}
+
+.input-field {
+    background-color: white;
+    border: 1px solid var(--color-blue-border);
+    font-size: 18px;
+
+    &:hover {
+        border: 1px solid var(--color-purple-primary-disabled);
+    }
+
+    &:focus {
+        border: 1px solid var(--color-purple-secondary-hover);
+    }
+}
+
+::placeholder {
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.height-100 {
+    height: 100%;
+}
+
+.width-100 {
+    width: 100%;
+}
+
+.column {
+    flex-direction: column;
+}
+
+form {
+    gap: 20px;
+}
+
+.height-25 {
+    height: 25px;
+}
+
+.justify-center {
+    justify-content: center;
 }

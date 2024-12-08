@@ -53,9 +53,19 @@ export class HeaderComponent {
     let profileInfoContainer = document.getElementById('profile-info-container');
 
     this.menuTrigger.closeMenu();
-    if (!profileInfoContainer?.classList.contains('d-none')){
+    if (!profileInfoContainer?.classList.contains('d-none')) {
       profileInfoContainer?.classList.add('d-none');
     }
+  }
+
+
+  openEditForm() {
+    document.getElementById('edit-profile-container')?.classList.remove('d-none');
+  }
+
+
+  closeEditForm() {
+    document.getElementById('edit-profile-container')?.classList.add('d-none');
   }
 
 
@@ -69,6 +79,7 @@ export class HeaderComponent {
 
     if (element?.classList.contains('d-none')) {
       this.closeDropdownMenu();
+      this.closeEditForm();
     }
   }
 
