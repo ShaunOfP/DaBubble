@@ -3,7 +3,6 @@
 section {
   background-color: var(--color-white);
   width: 366px;
-  border-radius: 30px;
   padding: 32px 30px 32px 30px;
   flex-direction: column;
   gap: 25px;
@@ -45,11 +44,14 @@ section {
   justify-content: space-between;
 }
 
+.radius-30 {
+  border-radius: 30px;
+}
+
 .hover {
   &:hover {
     cursor: pointer;
     background-color: var(--color-blue-bg);
-    border-radius: 30px;
   }
 }
 
@@ -59,6 +61,7 @@ section {
 
 .img-switch {
   transition: all ease-in 100ms;
+
   &:hover {
     > :first-child {
       display: none;
@@ -68,9 +71,6 @@ section {
       display: flex;
     }
   }
-}
-
-.switch {
 }
 
 .workspace-menu-header {
@@ -87,10 +87,6 @@ h3 {
   align-items: center;
 }
 
-.radius-30 {
-  border-radius: 30px;
-}
-
 .channels-container {
   min-height: 100px;
   flex-direction: column;
@@ -100,7 +96,7 @@ h3 {
 .header {
   align-items: center;
 
-  > img {
+  >img {
     height: 30px;
     width: 30px;
   }
@@ -109,7 +105,7 @@ h3 {
 .header-middle {
   align-items: center;
 
-  > span {
+  >span {
     font-weight: 700;
     font-size: 20px;
   }
@@ -121,7 +117,7 @@ h3 {
 }
 
 .add-channel {
-  > span {
+  >span {
     font-weight: 400px;
     font-size: 18px;
   }
@@ -170,12 +166,12 @@ h3 {
   padding: 4px 20px 4px 20px;
   margin-left: 25px;
 
-  > img {
+  >img {
     height: 50px;
     width: 50px;
   }
 
-  > span {
+  >span {
     font-weight: 400;
     font-size: 18px;
   }
