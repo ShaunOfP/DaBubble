@@ -17,7 +17,7 @@
 
                     <div class="avatar-container">
                         <img [src]="selectedAvatarImg" alt="back"/>
-                        <span>{{user.name}}</span>
+                        <span>{{user?.name}}</span>
                     </div>
     
                     <div class="avatar-list-container">
@@ -59,7 +59,7 @@
 </div>
 
 
-<div class="overlay-container">
+<div class="overlay-container" [ngClass]="{'d-flex': this.avatarCreated}">
     <span class="side-sheet">
         Konto erfolgreich erstellt!
     </span>

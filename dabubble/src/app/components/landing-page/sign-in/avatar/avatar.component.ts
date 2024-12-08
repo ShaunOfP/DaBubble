@@ -5,7 +5,6 @@ import { MatCardModule } from '@angular/material/card';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { Router, RouterModule } from '@angular/router';
 import { UserDatasService } from '../../../../services/firebase-services/user-datas.service';
-// import { User } from '../../../../models/user.class';
 
 @Component({
   selector: 'app-avatar',
@@ -17,6 +16,7 @@ import { UserDatasService } from '../../../../services/firebase-services/user-da
 export class AvatarComponent implements OnInit {
   selectedAvatar: string | null = null;
   selectedAvatarImg: string = '/img/general-view/create-avatar/default-avatar.svg';
+  avatarCreated: boolean = false;
   user: any = null;
 
   constructor(private router: Router, private userService: UserDatasService,) {}
@@ -49,10 +49,13 @@ export class AvatarComponent implements OnInit {
   ]
 
   ngOnInit(){
-    const user = localStorage.getItem('user');
-    if (user) {
-      this.user = JSON.parse(user);
-    }
+    this.userService.user$.subscribe(user => {
+      if (user) {
+        this.user = user;
+      } else {
+        this.userService.getUserFromStorage();
+      }
+    });
   }
 
   selectAvatar(avatarName: string, avatarImg: string, event: Event): void {
@@ -63,8 +66,13 @@ export class AvatarComponent implements OnInit {
 
   createAvatar(){
     if (this.selectedAvatar) {
-      console.log('Ready', this.user.id, this.selectedAvatarImg)
       this.userService.updateUserAvatar(this.user.id, this.selectedAvatarImg);
+      this.avatarCreated = true;
+      setTimeout(() => {
+        this.navigateTo('');
+        this.avatarCreated = false;
+        localStorage.removeItem('user')
+      }, 1300);
     }
   }
 

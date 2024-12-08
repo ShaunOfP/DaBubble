@@ -87,7 +87,8 @@
                     <img src="/img/general-view/workspace-menu/arrow_drop_down_thin.svg">
                 </button>
                 <mat-menu #menu="matMenu">
-                    <app-user-profile></app-user-profile>
+                    <button mat-menu-item (click)="showProfileInfo()">Profil</button>
+                    <button mat-menu-item (click)="navigateTo('')">Log out</button>
                 </mat-menu>
             </div>
         </div>
