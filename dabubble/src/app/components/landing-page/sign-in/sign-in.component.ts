@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { Router, RouterModule } from '@angular/router';
 import { UserDatasService } from '../../../services/firebase-services/user-datas.service';
 import { User } from '../../../models/user.class';
@@ -19,17 +19,22 @@ interface InputField {
 @Component({
   selector: 'app-sign-in',
   standalone: true,
-  imports: [CommonModule ,MatCardModule, FormsModule, MatCheckboxModule, RouterModule],
+  imports: [
+    CommonModule,
+    MatCardModule,
+    FormsModule,
+    MatCheckboxModule,
+    RouterModule,
+  ],
   templateUrl: './sign-in.component.html',
-  styleUrl: './sign-in.component.scss'
+  styleUrl: './sign-in.component.scss',
 })
 export class SignInComponent {
-  
-  accountData: User = new User
+  accountData: User = new User();
   acceptTerms: boolean = false;
-  
+
   constructor(private userService: UserDatasService, private router: Router) {}
- /*  accountData = {
+  /*  accountData = {
     name: "",
     mail: "",
     password: "",
@@ -39,7 +44,7 @@ export class SignInComponent {
   mailFocused: boolean = false;
   passwordFocused: boolean = false;
 
-  onFocus(currentState: boolean, field: string){
+  onFocus(currentState: boolean, field: string) {
     switch (field) {
       case 'name':
         this.nameFocused = currentState;
@@ -53,8 +58,8 @@ export class SignInComponent {
     }
   }
 
-  onSubmit(ngForm: NgForm){
-    if(ngForm.valid && ngForm.submitted){
+  onSubmit(ngForm: NgForm) {
+    if (ngForm.valid && ngForm.submitted) {
       this.userService.saveUser(this.accountData);
       this.navigateTo('create-avatar');
     }
@@ -63,6 +68,9 @@ export class SignInComponent {
   navigateTo(route: string) {
     this.router.navigate([route]);
   }
-
+ /*  navigateTo(route: string) {
+    this.router.navigate([route], {
+      state: { newUser: this.accountData },
+    });
+  } */
 }
-
