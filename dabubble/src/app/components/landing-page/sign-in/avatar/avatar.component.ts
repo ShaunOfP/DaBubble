@@ -17,7 +17,7 @@ export class AvatarComponent implements OnInit {
   selectedAvatar: string | null = null;
   selectedAvatarImg: string = '/img/general-view/create-avatar/default-avatar.svg';
   avatarCreated: boolean = false;
-  user: any = null;
+  user: any;
 
 
   /* public accountData: User;
