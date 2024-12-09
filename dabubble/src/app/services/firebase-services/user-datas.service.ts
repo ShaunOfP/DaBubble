@@ -74,6 +74,21 @@ export class UserDatasService {
     }
   }
 
+  async updateUserData(userId: string, newPassword: string){
+    try{
+      const UserUpdate = doc(this.userDatasRef(), userId);
+      await updateDoc(UserUpdate, {
+        password: newPassword
+      })
+      console.log('succses', newPassword);
+      
+    }
+    catch (err){
+      console.error('Error updation User!', err);
+      
+    }
+  }
+
   saveLocalStorage(id: string, name:string){
     const user = { id, name };
     localStorage.setItem('user', JSON.stringify(user));

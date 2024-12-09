@@ -3,7 +3,8 @@ import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
+import { UserDatasService } from '../../../services/firebase-services/user-datas.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -19,17 +20,30 @@ import { RouterModule } from '@angular/router';
   styleUrl: './reset-password.component.scss',
 })
 export class ResetPasswordComponent {
+  id: string = '';
+  constructor(
+    private userService: UserDatasService,
+    private route: ActivatedRoute
+  ) {}
+
   Passwords = {
-    newPassword: "",
-    confirmedPassword: "",
+    newPassword: '',
+    confirmedPassword: '',
   };
   onSubmit(ngForm: NgForm) {
-    if (
+    if (this.formValidation(ngForm)) {
+      this.route.params.subscribe((params) => {
+        this.id = params['id'];
+      });
+      this.userService.updateUserData(this.id, this.Passwords.newPassword);
+    }
+  }
+
+  formValidation(ngForm: NgForm) {
+    return (
       ngForm.valid &&
       ngForm.submitted &&
       this.Passwords.newPassword === this.Passwords.confirmedPassword
-    ) {
-      console.log('neues Passwort:', this.Passwords.newPassword);
-    }
+    );
   }
 }

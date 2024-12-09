@@ -34,12 +34,7 @@ export class SignInComponent {
   acceptTerms: boolean = false;
 
   constructor(private userService: UserDatasService, private router: Router) {}
-  /*  accountData = {
-    name: "",
-    mail: "",
-    password: "",
-  }
- */
+ 
   nameFocused: boolean = false;
   mailFocused: boolean = false;
   passwordFocused: boolean = false;
