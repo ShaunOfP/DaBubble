@@ -74,7 +74,7 @@ export class UserDatasService {
     }
   }
 
-  async updateUserData(userId: string, newPassword: string){
+  async updateUserPassword(userId: string, newPassword: string){
     try{
       const UserUpdate = doc(this.userDatasRef(), userId);
       await updateDoc(UserUpdate, {

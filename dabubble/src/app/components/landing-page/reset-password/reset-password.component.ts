@@ -35,7 +35,7 @@ export class ResetPasswordComponent {
       this.route.params.subscribe((params) => {
         this.id = params['id'];
       });
-      this.userService.updateUserData(this.id, this.Passwords.newPassword);
+      this.userService.updateUserPassword(this.id, this.Passwords.newPassword);
     }
   }
 
