@@ -19,6 +19,15 @@ export class AvatarComponent implements OnInit {
   avatarCreated: boolean = false;
   user: any = null;
 
+
+  /* public accountData: User;
+
+  constructor(private router: Router) {
+    const navigation = this.router.getCurrentNavigation();
+    this.accountData = navigation?.extras?.state?.['accountData'];
+    console.log('User in AvatarComponent:', this.accountData);
+  } */
+
   constructor(private router: Router, private userService: UserDatasService,) {}
 
   avatarList = [
