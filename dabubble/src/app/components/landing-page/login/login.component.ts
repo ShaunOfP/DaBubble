@@ -22,7 +22,7 @@ import { Observable, Subject, take, takeUntil } from 'rxjs';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit {
   animationPlayed: boolean = false;
   newGuest: boolean = false;
 
@@ -47,11 +47,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   async ngOnInit(): Promise<void> {
     this.guestLogin = localStorage.getItem('guestLogin');
     sessionStorage.setItem('animation', 'true');
-  }
-
-  ngOnDestroy(): void {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
   }
 
   navigateTo(route: string) {
