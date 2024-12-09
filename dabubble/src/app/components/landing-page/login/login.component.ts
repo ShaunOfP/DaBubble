@@ -13,7 +13,7 @@ import {
   getDocs,
   where,
 } from '@angular/fire/firestore';
-import { Observable, Subject, take } from 'rxjs';
+import { Observable, Subject, take, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   animationPlayed: boolean = false;
   newGuest: boolean = false;
 
-  private users$: Observable<any[]> | undefined;
+  private users: User[] = [];
   private unsubscribe$ = new Subject<void>();
   private userCount: number | undefined;
   private guestLogin: string | null | undefined;
@@ -47,8 +47,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   async ngOnInit(): Promise<void> {
     this.guestLogin = localStorage.getItem('guestLogin');
     sessionStorage.setItem('animation', 'true');
-    const userCollection = collection(this.userService.firestore, 'userDatas');
-    this.users$ = collectionData(userCollection);
   }
 
   ngOnDestroy(): void {
@@ -60,11 +58,52 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.router.navigate([route]);
   }
 
+  async loadFireStore(): Promise<void> {
+    const userCollection: CollectionReference = collection(
+      this.userService.firestore,
+      'userDatas'
+    );
+
+    try {
+      const result = await collectionData(userCollection, { idField: 'id' })
+        .pipe(take(1))
+        .toPromise();
+      this.users = result;
+      console.log(this.users);
+    } catch (error) {
+      console.error('Fehler beim Laden der Benutzerdaten:', error);
+      throw error;
+    }
+  }
+
+  async logIn(event: Event): Promise<void> {
+    event.preventDefault();
+
+    const mail = (document.getElementById('mail') as HTMLInputElement).value;
+    const password = (document.getElementById('password') as HTMLInputElement)
+      .value;
+    const validLogIn = await this.checkLogIn(mail, password);
+    console.log(validLogIn);
+
+    if (validLogIn) {
+      console.log(validLogIn);
+    }
+  }
+
+  async checkLogIn(mail: string, password: string): Promise<any | null> {
+    await this.loadFireStore();
+
+    const userMail = this.users.find(
+      (u) => u.mail === mail && u.password === password
+    );
+
+    return userMail || null;
+  }
+
   logInGuest() {
     if (this.guestLogin === 'true') {
       console.log('log in as guest');
-    }
-    else {
+    } else {
       this.createGuestUser();
     }
   }
@@ -77,16 +116,19 @@ export class LoginComponent implements OnInit, OnDestroy {
         name: `Gast${this.userCount}`,
         mail: `guest_${this.userCount}@example.com`,
         password: `guestUser${this.userCount}`,
-      }
+      };
       this.checkGuestUser(guestUser);
-
     } catch (err) {
       console.error('Fehler beim Gast-Login:', err);
       throw err;
     }
   }
 
-  async checkGuestUser(guestUser: { name: string; mail: string; password: string; }) {
+  async checkGuestUser(guestUser: {
+    name: string;
+    mail: string;
+    password: string;
+  }) {
     if (await this.checkExistingGuest(guestUser)) {
       await this.userService.saveUser(guestUser);
       localStorage.setItem('mail', guestUser.mail);
@@ -97,12 +139,19 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
   }
 
-  async checkExistingGuest(userData: { name?: string; mail: any; password?: string }): Promise<boolean> {
-    return new Promise((resolve) => {
-      this.users$?.pipe(take(1)).subscribe((users) => {
-        const user = users.find((u) => u.mail === userData.mail);
-        resolve(!user); 
-      });
-    });
+  async checkExistingGuest(userData: {
+    name?: string;
+    mail: string;
+    password?: string;
+  }): Promise<boolean> {
+    await this.loadFireStore();
+
+    try {
+      const user = this.users.find((u) => u.mail === userData.mail);
+      return !user;
+    } catch (error) {
+      console.error('Fehler bei der Gastbenutzerüberprüfung:', error);
+      throw error;
+    }
   }
 }

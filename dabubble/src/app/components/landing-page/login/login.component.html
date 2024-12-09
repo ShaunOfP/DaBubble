@@ -18,7 +18,7 @@
   </div>
 </div>
 
-<div class="login-card">
+<form class="login-card" (submit)="logIn($event)">
     <mat-card>
         <div class="card-header">
           <h2>Anmeldung</h2>
@@ -29,12 +29,16 @@
 
           <div class="input-field">
             <img src="/img/public/mail.svg" alt="">
-            <input type="email" placeholder="beispielname@email.com">
+            <input type="email" placeholder="beispielname@email.com" id="mail">
+          </div>
+
+          <div>
+            <span></span>
           </div>
 
           <div class="input-field">
             <img src="/img/public/password-lock.svg" alt="">
-            <input type="text" placeholder="Passwort">
+            <input type="text" placeholder="Passwort" id="password">
           </div>
 
         </div>
@@ -55,12 +59,12 @@
         </div>
 
         <div class="login-button">
-          <button class="btn-primary--default">Anmelden</button>
-          <button class="btn-secondary--default" (click)="logInGuest()">Gäste-Login</button>
+          <button class="btn-primary--default" type="submit">Anmelden</button>
+          <button class="btn-secondary--default" (click)="logInGuest()" type="button">Gäste-Login</button>
         </div>
 
     </mat-card>
-</div>
+  </form>
 
 <p>login works!</p>
 <button
