@@ -24,7 +24,7 @@ interface UserData {
 export class UserDatasService {
   public firestore = inject(Firestore);
   userDatas$: Observable<User>;
-  found: boolean = false
+  found: boolean = false;
   private userSubject = new BehaviorSubject<any>(null);
   user$ = this.userSubject.asObservable();
 

@@ -11,7 +11,7 @@ import { Router, RouterModule } from '@angular/router';
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   @ViewChild('menu') menu!: MatMenu;
   @ViewChild('menuTrigger') menuTrigger!: MatMenuTrigger;
@@ -43,9 +43,7 @@ export class HeaderComponent {
    * Closes the Dropdown Menu and also closes the Profile Info Container if it is still open
    */
   closeDropdownMenu() {
-    let profileInfoContainer = document.getElementById(
-      'profile-info-container'
-    );
+    let profileInfoContainer = document.getElementById('profile-info-container');
 
     this.menuTrigger.closeMenu();
     if (!profileInfoContainer?.classList.contains('d-none')) {
@@ -54,9 +52,7 @@ export class HeaderComponent {
   }
 
   openEditForm() {
-    document
-      .getElementById('edit-profile-container')
-      ?.classList.remove('d-none');
+    document.getElementById('edit-profile-container')?.classList.remove('d-none');
   }
 
   closeEditForm() {
@@ -64,9 +60,7 @@ export class HeaderComponent {
   }
 
   showProfileInfo() {
-    document
-      .getElementById('profile-info-container')
-      ?.classList.remove('d-none');
+    document.getElementById('profile-info-container')?.classList.remove('d-none');
   }
 
   /**

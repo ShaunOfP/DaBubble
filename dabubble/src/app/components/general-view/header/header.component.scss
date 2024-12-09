@@ -279,10 +279,7 @@ header {
 
     &:focus {
         border: 1px solid var(--color-purple-secondary-hover);
-    }
-
-    &:focus-visible {
-        border: 1px solid var(--color-purple-primary-default);
+        outline: none;
     }
 }
 
@@ -317,20 +314,4 @@ form {
 
 .d-none {
     display: none;
-}
-
-.btn-secondary {
-    background-color: transparent;
-    border: 1px solid;
-    border-radius: 30px;
-
-    &:hover {
-        cursor: pointer;
-        background-color: var(--color-purple-primary-default);
-        color: var(--color-white);
-    }
-}
-
-.btn-primary {
-    
 }
