@@ -69,7 +69,7 @@ h3 {
 
 .input-container {
     position: relative;
-    padding: 0 50px 40px 50px; //0 20 40 20
+    padding: 0 50px 40px 50px;
     display: flex;
     flex-direction: column;
 }
@@ -94,8 +94,8 @@ textarea {
     justify-content: space-between;
     position: absolute;
     bottom: 60px;
-    left: 70px; //40
-    right: 70px; //40
+    left: 70px;
+    right: 70px;
 
     >div {
         display: flex;
