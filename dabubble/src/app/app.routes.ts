@@ -19,7 +19,7 @@ export const routes: Routes = [
       {path: '', component: LoginComponent},
       {path: 'sign-in', component: SignInComponent},
       {path: 'forgot-password', component: ForgotPasswordComponent},
-      {path: 'reset-password', component: ResetPasswordComponent},
+      {path: 'reset-password/:id', component: ResetPasswordComponent},
       {path: 'create-avatar', component: AvatarComponent}
     ]
   },
