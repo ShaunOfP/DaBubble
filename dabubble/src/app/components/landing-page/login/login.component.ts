@@ -66,6 +66,7 @@ export class LoginComponent implements OnInit {
   async guestLogIn() {
     try {
       await this.authService.guestSignIn();
+      /* this.router.navigate(['/general/', this.authService.currentUser?.uid]); */
     } catch (error) {
       console.error('Fehler beim Gast log in:', error);
     }
