@@ -42,7 +42,6 @@ export class AvatarComponent /* implements OnInit */ {
       console.log(this.accountData);
       setTimeout(() => {
         this.authService.createUserWithEmail(this.accountData)
-        this.navigateTo('')
       }, 1000);
     }
   }
