@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../services/firebase-services/auth.service';
@@ -69,21 +69,6 @@ export class LoginComponent implements OnInit {
     }
   } */
 
-/*   async createGuestUser() {
-    this.userCount = Math.floor(Math.random() * 1000000) + 1;
-    console.log(this.userCount);
-    try {
-      const guestUser = {
-        name: `Gast${this.userCount}`,
-        mail: `guest_${this.userCount}@example.com`,
-        password: `guestUser${this.userCount}`,
-      };
-      this.checkGuestUser(guestUser);
-    } catch (err) {
-      console.error('Fehler beim Gast-Login:', err);
-      throw err;
-    }
-  } */
 
 /*   async checkGuestUser(guestUser: {
     name: string;

@@ -1,0 +1,28 @@
+<section>
+    <div>
+        <header>
+            <h3>Channel erstellen</h3>
+            <div class="img-container change-image-on-hover" (click)="closeCreateChannel()">
+                <img src="/img/general-view/workspace-menu/close.svg">
+                <img class="d-none" src="/img/general-view/workspace-menu/hover_close.svg">
+            </div>
+        </header>
+        <div class="description">
+            Channels dienen deinem Team zur Kommunikation. Am besten sollten sie themenbezogen sein<br>
+            #marketing zum Beispiel
+        </div>
+        <form onsubmit="formSubmit(); return false;">
+            <div class="form-input-container">
+                <span>Channel-Name</span>
+                <input class="input-field" placeholder="z.B. Kooperationsprojekte">
+            </div>
+            <div class="form-input-container">
+                <span>Beschreibung <span class="optional">(optional)</span></span>
+                <input class="input-field" placeholder="Dein Text hier">
+            </div>
+            <div class="form-submit-button-container">
+                <button class="btn-primary--default" type="submit">Erstellen</button>
+            </div>
+        </form>
+    </div>
+</section>
