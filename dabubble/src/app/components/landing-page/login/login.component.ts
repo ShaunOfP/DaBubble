@@ -14,34 +14,39 @@ import {
   where,
 } from '@angular/fire/firestore';
 import { Observable, Subject, take, takeUntil } from 'rxjs';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterModule, CommonModule, MatCardModule],
+  imports: [RouterModule, CommonModule, MatCardModule, ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
 export class LoginComponent implements OnInit {
+  loginForm: FormGroup;
   animationPlayed: boolean = false;
   newGuest: boolean = false;
 
   private users: User[] = [];
-  private unsubscribe$ = new Subject<void>();
   private userCount: number | undefined;
   private guestLogin: string | null | undefined;
-  private guestMail: string | undefined;
-  private guestPassword: string | undefined;
 
   guestUser: User = new User();
 
   constructor(
     private router: Router,
     private userService: UserDatasService,
-    private authService: AuthService
+    private authService: AuthService,
+    private fb: FormBuilder
   ) {
     const animation = sessionStorage.getItem('animation');
     this.animationPlayed = animation === 'true';
+
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+    });
   }
 
   async ngOnInit(): Promise<void> {
@@ -71,19 +76,24 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  async logIn(event: Event): Promise<void> {
-    event.preventDefault();
+  async logIn(): Promise<void> {
+    if (this.loginForm.valid) {
+      const { email, password } = this.loginForm.value;
 
-    const mail = (document.getElementById('mail') as HTMLInputElement).value;
-    const password = (document.getElementById('password') as HTMLInputElement)
-      .value;
-    const validLogIn = await this.checkLogIn(mail, password);
-    console.log(validLogIn);
-
-    if (validLogIn) {
-      console.log(validLogIn);
+      try {
+        await this.authService.signInWithEmail(email, password);
+        console.log('Login erfolgreich!');
+        const uid = this.authService.getUid();
+        console.log(uid);
+      } catch (error) {
+        console.error('Fehler beim Login:', error);
+      }
+    } else {
+      console.error('Formular ist ungültig!');
     }
   }
+
+ 
 
   async checkLogIn(mail: string, password: string): Promise<any | null> {
     await this.loadFireStore();

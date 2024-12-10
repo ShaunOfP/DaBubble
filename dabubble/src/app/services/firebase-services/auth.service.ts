@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Auth, signInWithPopup, GoogleAuthProvider, signOut, User, getAuth, createUserWithEmailAndPassword } from '@angular/fire/auth';
+import { Auth, signInWithPopup, GoogleAuthProvider, signOut, User, getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from '@angular/fire/auth';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -9,7 +9,7 @@ export class AuthService {
   private userSubject = new BehaviorSubject<User | null>(null);
   user$ = this.userSubject.asObservable();
 
-  constructor(private auth: Auth) {}
+  constructor(private auth: Auth) { }
 
   // Google Login
   async googleSignIn(): Promise<void> {
@@ -33,19 +33,34 @@ export class AuthService {
     return this.auth.currentUser;
   }
 
-  createUserWithEmail(email:string, password: string){
+  createUserWithEmail(email: string, password: string) {
     const auth = getAuth();
-createUserWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {
-    // Signed up 
-    const user = userCredential.user;
-    // ...
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // ..
-  });
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed up 
+        const user = userCredential.user;
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
+      });
+  }
+
+  async signInWithEmail(email: string, password: string): Promise<void> {
+    try {
+      const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
+      this.userSubject.next(userCredential.user);
+      console.log('User log in');
+    } catch (error: any) {
+      console.error('Error during login:', error.message);
+    }
+  }
+
+  getUid(): string | null {
+    const user = this.currentUser;
+    return user ? user.uid : null;
   }
 
 }

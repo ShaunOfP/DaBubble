@@ -18,7 +18,7 @@
   </div>
 </div>
 
-<form class="login-card" (submit)="logIn($event)">
+<form [formGroup]="loginForm" class="login-card" (ngSubmit)="logIn()">
     <mat-card>
         <div class="card-header">
           <h2>Anmeldung</h2>
@@ -29,7 +29,7 @@
 
           <div class="input-field">
             <img src="/img/public/mail.svg" alt="">
-            <input type="email" placeholder="beispielname@email.com" id="mail">
+            <input type="email" placeholder="beispielname@email.com" formControlName="email">
           </div>
 
           <div>
@@ -38,7 +38,7 @@
 
           <div class="input-field">
             <img src="/img/public/password-lock.svg" alt="">
-            <input type="text" placeholder="Passwort" id="password">
+            <input type="password" placeholder="Passwort" formControlName="password">
           </div>
 
         </div>
