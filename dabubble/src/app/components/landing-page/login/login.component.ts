@@ -3,6 +3,17 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../services/firebase-services/auth.service';
+import { UserDatasService } from '../../../services/firebase-services/user-datas.service';
+import { UserDatas } from '../../../models/user.class';
+import {
+  addDoc,
+  collection,
+  collectionData,
+  CollectionReference,
+  getDocs,
+  where,
+} from '@angular/fire/firestore';
+import { Observable, Subject, take, takeUntil } from 'rxjs';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
@@ -17,21 +28,22 @@ export class LoginComponent /* implements OnInit */ {
   animationPlayed: boolean = false;
   newGuest: boolean = false;
 
-  private users: User[] = [];
+  private users: UserDatas[] = [];
   private userCount: number | undefined;
   private guestLogin: string | null | undefined;
 
-  guestUser: User = new User();
+  guestUser: UserDatas = new UserDatas();
 
   constructor(
     private router: Router,
+    private userService: UserDatasService,
     private authService: AuthService,
-    private form: FormBuilder
+    private fb: FormBuilder
   ) {
     const animation = sessionStorage.getItem('animation');
     this.animationPlayed = animation === 'true';
 
-    this.loginForm = this.form.group({
+    this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
@@ -44,6 +56,24 @@ export class LoginComponent /* implements OnInit */ {
 
   navigateTo(route: string) {
     this.router.navigate([route]);
+  }
+
+  async loadFireStore(): Promise<void> {
+    const userCollection: CollectionReference = collection(
+      this.userService.firestore,
+      'userDatas'
+    );
+
+    try {
+      const result = await collectionData(userCollection, { idField: 'id' })
+        .pipe(take(1))
+        .toPromise();
+      this.users = result;
+      console.log(this.users);
+    } catch (error) {
+      console.error('Fehler beim Laden der Benutzerdaten:', error);
+      throw error;
+    }
   }
 
   async logIn(): Promise<void> {
@@ -75,15 +105,15 @@ export class LoginComponent /* implements OnInit */ {
     return userMail || null;
   }
 
-  logInGuest() {
+  /* logInGuest() {
     if (this.guestLogin === 'true') {
       console.log('log in as guest');
     } else {
       this.createGuestUser();
     }
-  } */
+  }
 
-/*   async createGuestUser() {
+  async createGuestUser() {
     this.userCount = Math.floor(Math.random() * 1000000) + 1;
     console.log(this.userCount);
     try {
@@ -97,9 +127,9 @@ export class LoginComponent /* implements OnInit */ {
       console.error('Fehler beim Gast-Login:', err);
       throw err;
     }
-  } */
+  }
 
-/*   async checkGuestUser(guestUser: {
+  async checkGuestUser(guestUser: {
     name: string;
     mail: string;
     password: string;
@@ -114,12 +144,12 @@ export class LoginComponent /* implements OnInit */ {
     }
   } */
 
-/*   async checkExistingGuest(userData: {
+  async checkExistingGuest(userData: {
     name?: string;
     mail: string;
     password?: string;
   }): Promise<boolean> {
-  
+    await this.loadFireStore();
 
     try {
       const user = this.users.find((u) => u.mail === userData.mail);
@@ -128,5 +158,5 @@ export class LoginComponent /* implements OnInit */ {
       console.error('Fehler bei der Gastbenutzerüberprüfung:', error);
       throw error;
     }
-  } */
+  }
 }
