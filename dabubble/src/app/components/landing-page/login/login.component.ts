@@ -4,7 +4,7 @@ import { MatCardModule } from '@angular/material/card';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../services/firebase-services/auth.service';
 import { UserDatasService } from '../../../services/firebase-services/user-datas.service';
-import { User } from '../../../models/user.class';
+import { UserDatas } from '../../../models/user.class';
 import {
   addDoc,
   collection,
@@ -23,16 +23,16 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent /* implements OnInit */ {
   loginForm: FormGroup;
   animationPlayed: boolean = false;
   newGuest: boolean = false;
 
-  private users: User[] = [];
+  private users: UserDatas[] = [];
   private userCount: number | undefined;
   private guestLogin: string | null | undefined;
 
-  guestUser: User = new User();
+  guestUser: UserDatas = new UserDatas();
 
   constructor(
     private router: Router,
@@ -49,10 +49,10 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  async ngOnInit(): Promise<void> {
+/*   async ngOnInit(): Promise<void> {
     this.guestLogin = localStorage.getItem('guestLogin');
     sessionStorage.setItem('animation', 'true');
-  }
+  } */
 
   navigateTo(route: string) {
     this.router.navigate([route]);
@@ -105,7 +105,7 @@ export class LoginComponent implements OnInit {
     return userMail || null;
   }
 
-  logInGuest() {
+  /* logInGuest() {
     if (this.guestLogin === 'true') {
       console.log('log in as guest');
     } else {
@@ -142,7 +142,7 @@ export class LoginComponent implements OnInit {
     } else {
       this.createGuestUser();
     }
-  }
+  } */
 
   async checkExistingGuest(userData: {
     name?: string;

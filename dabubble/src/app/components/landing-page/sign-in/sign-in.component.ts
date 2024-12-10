@@ -4,8 +4,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { Router, RouterModule } from '@angular/router';
-import { UserDatasService } from '../../../services/firebase-services/user-datas.service';
-import { User } from '../../../models/user.class';
+import { UserDatas } from '../../../models/user.class';
 
 interface InputField {
   placeholder: string;
@@ -30,10 +29,10 @@ interface InputField {
   styleUrl: './sign-in.component.scss',
 })
 export class SignInComponent {
-  accountData: User = new User();
+  accountData: UserDatas = new UserDatas();
   acceptTerms: boolean = false;
 
-  constructor(private userService: UserDatasService, private router: Router) {}
+  constructor(private router: Router) {}
  
   nameFocused: boolean = false;
   mailFocused: boolean = false;
@@ -55,17 +54,19 @@ export class SignInComponent {
 
   onSubmit(ngForm: NgForm) {
     if (ngForm.valid && ngForm.submitted) {
-      this.userService.saveUser(this.accountData);
-      this.navigateTo('create-avatar');
+       this.navigateTo('create-avatar');
     }
   }
 
   navigateTo(route: string) {
-    this.router.navigate([route]);
-  }
- /*  navigateTo(route: string) {
     this.router.navigate([route], {
-      state: { newUser: this.accountData },
+      state: { accountData: this.accountData },
     });
-  } */
+  } 
 }
+
+/*   navigateTo(route: string) {
+    this.router.navigate([route]);
+  } */
+
+    /*this.userService.saveUser(this.accountData); */

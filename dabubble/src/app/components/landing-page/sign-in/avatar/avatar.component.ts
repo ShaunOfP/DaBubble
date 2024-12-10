@@ -1,10 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormsModule} from '@angular/forms';
+import { FormsModule, NgForm} from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { Router, RouterModule } from '@angular/router';
-import { UserDatasService } from '../../../../services/firebase-services/user-datas.service';
+import { UserDatas } from '../../../../models/user.class';
+import { AuthService } from '../../../../services/firebase-services/auth.service';
+
 
 @Component({
   selector: 'app-avatar',
@@ -13,24 +15,51 @@ import { UserDatasService } from '../../../../services/firebase-services/user-da
   templateUrl: './avatar.component.html',
   styleUrl: './avatar.component.scss'
 })
-export class AvatarComponent implements OnInit {
-  selectedAvatar: string | null = null;
-  selectedAvatarImg: string = '/img/general-view/create-avatar/default-avatar.svg';
+export class AvatarComponent /* implements OnInit */ {
+/*   selectedAvatar: string | null = null; */
+ /*  selectedAvatar: string = 'default-avatar'; */
   avatarCreated: boolean = false;
-  user: any;
 
+  public accountData!: UserDatas;
 
-  /* public accountData: User;
-
-  constructor(private router: Router) {
+  constructor(private router: Router, private authService : AuthService) {
     const navigation = this.router.getCurrentNavigation();
     this.accountData = navigation?.extras?.state?.['accountData'];
     console.log('User in AvatarComponent:', this.accountData);
-  } */
+    this.checkInput()
+  }
+  
+  avatarList: Array<string> = ['avatar1','avatar2','avatar3','avatar4','avatar5','avatar6']
 
-  constructor(private router: Router, private userService: UserDatasService,) {}
+  selectAvatar(avatar: string, event: Event): void {
+    event.preventDefault();
+    this.accountData.accountImg = avatar;
+  }
 
-  avatarList = [
+  createUser(ngForm:NgForm){
+    if(ngForm.valid && ngForm.submitted){
+      this.avatarCreated = true;
+      console.log(this.accountData);
+      setTimeout(() => {
+        this.authService.createUserWithEmail(this.accountData)
+        this.navigateTo('')
+      }, 1000);
+    }
+  }
+
+  navigateTo(route: string) {
+    this.router.navigate([route]);
+  }
+
+  checkInput(){
+    if(this.accountData == undefined) this.navigateTo('sign-in')
+    return
+  }
+}
+
+
+ /*  constructor(private router: Router, private userService: UserDatasService,) {} */
+/*   avatarList = [
     {
       name: 'avatar1',
       img: '/img/general-view/create-avatar/avatar1.svg'
@@ -55,9 +84,9 @@ export class AvatarComponent implements OnInit {
       name: 'avatar6',
       img: '/img/general-view/create-avatar/avatar6.svg'
     },
-  ]
+  ] */
 
-  ngOnInit(){
+ /*  ngOnInit(){
     this.userService.user$.subscribe(user => {
       if (user) {
         this.user = user;
@@ -66,14 +95,11 @@ export class AvatarComponent implements OnInit {
       }
     });
   }
+ */
 
-  selectAvatar(avatarName: string, avatarImg: string, event: Event): void {
-    event.preventDefault();
-    this.selectedAvatar = avatarName;
-    this.selectedAvatarImg = avatarImg;
-  }
 
-  createAvatar(){
+  
+ /*  createAvatar(){
     if (this.selectedAvatar) {
       this.userService.updateUserAvatar(this.user.id, this.selectedAvatarImg);
       this.avatarCreated = true;
@@ -84,9 +110,4 @@ export class AvatarComponent implements OnInit {
       }, 1300);
     }
   }
-
-  navigateTo(route: string) {
-    this.router.navigate([route]);
-  }
-
-}
+ */

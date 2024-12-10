@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Auth, signInWithPopup, GoogleAuthProvider, signOut, User, getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from '@angular/fire/auth';
 import { BehaviorSubject } from 'rxjs';
+import { UserDatas } from '../../models/user.class';
 
 @Injectable({
   providedIn: 'root',
@@ -33,9 +34,9 @@ export class AuthService {
     return this.auth.currentUser;
   }
 
-  createUserWithEmail(email: string, password: string) {
+  createUserWithEmail(accountData:UserDatas) {
     const auth = getAuth();
-    createUserWithEmailAndPassword(auth, email, password)
+    createUserWithEmailAndPassword(auth,accountData.mail, accountData.password)
       .then((userCredential) => {
         // Signed up 
         const user = userCredential.user;

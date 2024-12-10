@@ -11,28 +11,27 @@
                 </div>
             </mat-card-header>
 
-            <form (ngSubmit)="createAvatar()" #createAvatarForm="ngForm">
+            <form (ngSubmit)="createUser(createAvatarForm)" #createAvatarForm="ngForm">
 
                 <div class="main-content">
 
                     <div class="avatar-container">
-                        <img [src]="selectedAvatarImg" alt="back"/>
-                        <span>{{user?.name}}</span>
+                        <img [src]="'/img/general-view/create-avatar/'+ accountData.accountImg + '.svg'" alt="back"/>
+                        <span>{{accountData.name}}</span>
                     </div>
     
                     <div class="avatar-list-container">
                         <span>Aus der Liste wählen</span>
                         <div>
-                            @for (avatar of avatarList; track avatar.name; let index = $index) {
+                            <div *ngFor="let avatar of avatarList; let index = index">
                                 <input type="image" 
-                                        src="{{avatar.img}}" 
-                                        alt="{{avatar.name}}" 
-                                        name="avatarSelection" 
-                                        value="{{avatar.name}}"
-                                        [ngClass]="{'selected': selectedAvatar === avatar.name}"
-                                        (click)="selectAvatar(avatar.name, avatar.img, $event)"
-                                        >
-                            }
+                                       [src]="'/img/general-view/create-avatar/' + avatar + '.svg'" 
+                                       [alt]="avatar" 
+                                       name="avatarSelection" 
+                                       [value]="avatar"
+                                       [ngClass]="{'selected': accountData.accountImg === avatar}"
+                                       (click)="selectAvatar(avatar, $event)">
+                              </div>
                         </div>
                     </div>
                 
@@ -40,10 +39,10 @@
                         <input
                         type="submit" 
                         value="Weiter" 
-                        [disabled]="!selectedAvatar" 
+                        [disabled]="!accountData.accountImg" 
                         [ngClass]="{
-                          'btn-primary--disable': !selectedAvatar,
-                          'btn-primary--default': selectedAvatar
+                          'btn-primary--disable': !accountData.accountImg,
+                          'btn-primary--default': accountData.accountImg
                         }"
                         >
                     </div>

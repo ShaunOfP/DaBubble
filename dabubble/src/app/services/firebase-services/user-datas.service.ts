@@ -12,7 +12,7 @@ import {
   updateDoc
 } from '@angular/fire/firestore';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { User } from './../../models/user.class';
+import { UserDatas } from './../../models/user.class';
 
 interface UserData {
   mail: string;
@@ -23,7 +23,7 @@ interface UserData {
 })
 export class UserDatasService {
   public firestore = inject(Firestore);
-  userDatas$: Observable<User>;
+  userDatas$: Observable<UserDatas>;
   found: boolean = false;
   private userSubject = new BehaviorSubject<any>(null);
   user$ = this.userSubject.asObservable();
@@ -33,7 +33,7 @@ export class UserDatasService {
     this.getUserDatas('Test@test.de', '123');
   }
 
-  async saveUser(user: User): Promise<void> {
+  async saveUser(user: UserDatas): Promise<void> {
     try {
       const userPlainObject = { ...user }; // Important!! Firebase need a plainobject to read, otherwise its not working!
       const docRef = await addDoc(this.userDatasRef(), userPlainObject);
