@@ -38,10 +38,11 @@ export class AvatarComponent /* implements OnInit */ {
 
   createUser(ngForm:NgForm){
     if(ngForm.valid && ngForm.submitted){
-      this.avatarCreated = true;
+      this.authService.createUserWithEmail(this.accountData)
+     
       console.log(this.accountData);
       setTimeout(() => {
-        this.authService.createUserWithEmail(this.accountData)
+        this.avatarCreated = true;
       }, 1000);
     }
   }
