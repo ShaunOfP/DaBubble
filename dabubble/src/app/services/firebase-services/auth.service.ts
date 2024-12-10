@@ -39,7 +39,10 @@ export class AuthService {
     createUserWithEmailAndPassword(auth,accountData.mail, accountData.password)
       .then((userCredential) => {
         // Signed up 
+        debugger
         const user = userCredential.user;
+        console.log(user.uid);
+        
         // ...
       })
       .catch((error) => {
