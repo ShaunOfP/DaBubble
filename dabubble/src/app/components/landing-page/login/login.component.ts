@@ -3,17 +3,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../services/firebase-services/auth.service';
-import { UserDatasService } from '../../../services/firebase-services/user-datas.service';
-import { UserDatas } from '../../../models/user.class';
-import {
-  addDoc,
-  collection,
-  collectionData,
-  CollectionReference,
-  getDocs,
-  where,
-} from '@angular/fire/firestore';
-import { Observable, Subject, take, takeUntil } from 'rxjs';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
@@ -23,57 +12,36 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
-export class LoginComponent /* implements OnInit */ {
+export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   animationPlayed: boolean = false;
   newGuest: boolean = false;
 
-  private users: UserDatas[] = [];
   private userCount: number | undefined;
   private guestLogin: string | null | undefined;
 
-  guestUser: UserDatas = new UserDatas();
 
   constructor(
     private router: Router,
-    private userService: UserDatasService,
     private authService: AuthService,
-    private fb: FormBuilder
+    private form: FormBuilder
   ) {
     const animation = sessionStorage.getItem('animation');
     this.animationPlayed = animation === 'true';
 
-    this.loginForm = this.fb.group({
+    this.loginForm = this.form.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
-/*   async ngOnInit(): Promise<void> {
+  async ngOnInit(): Promise<void> {
     this.guestLogin = localStorage.getItem('guestLogin');
     sessionStorage.setItem('animation', 'true');
-  } */
+  }
 
   navigateTo(route: string) {
     this.router.navigate([route]);
-  }
-
-  async loadFireStore(): Promise<void> {
-    const userCollection: CollectionReference = collection(
-      this.userService.firestore,
-      'userDatas'
-    );
-
-    try {
-      const result = await collectionData(userCollection, { idField: 'id' })
-        .pipe(take(1))
-        .toPromise();
-      this.users = result;
-      console.log(this.users);
-    } catch (error) {
-      console.error('Fehler beim Laden der Benutzerdaten:', error);
-      throw error;
-    }
   }
 
   async logIn(): Promise<void> {
@@ -93,27 +61,15 @@ export class LoginComponent /* implements OnInit */ {
     }
   }
 
- 
-
-  async checkLogIn(mail: string, password: string): Promise<any | null> {
-    await this.loadFireStore();
-
-    const userMail = this.users.find(
-      (u) => u.mail === mail && u.password === password
-    );
-
-    return userMail || null;
-  }
-
-  /* logInGuest() {
+/*   logInGuest() {
     if (this.guestLogin === 'true') {
       console.log('log in as guest');
     } else {
       this.createGuestUser();
     }
-  }
+  } */
 
-  async createGuestUser() {
+/*   async createGuestUser() {
     this.userCount = Math.floor(Math.random() * 1000000) + 1;
     console.log(this.userCount);
     try {
@@ -127,9 +83,9 @@ export class LoginComponent /* implements OnInit */ {
       console.error('Fehler beim Gast-Login:', err);
       throw err;
     }
-  }
+  } */
 
-  async checkGuestUser(guestUser: {
+/*   async checkGuestUser(guestUser: {
     name: string;
     mail: string;
     password: string;
@@ -144,12 +100,12 @@ export class LoginComponent /* implements OnInit */ {
     }
   } */
 
-  async checkExistingGuest(userData: {
+/*   async checkExistingGuest(userData: {
     name?: string;
     mail: string;
     password?: string;
   }): Promise<boolean> {
-    await this.loadFireStore();
+  
 
     try {
       const user = this.users.find((u) => u.mail === userData.mail);
@@ -158,5 +114,5 @@ export class LoginComponent /* implements OnInit */ {
       console.error('Fehler bei der Gastbenutzerüberprüfung:', error);
       throw error;
     }
-  }
+  } */
 }
