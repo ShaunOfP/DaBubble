@@ -177,3 +177,9 @@ h3 {
 .d-none {
   display: none;
 }
+
+.cursor-no-change{
+  &:hover {
+    cursor: default;
+  }
+}
