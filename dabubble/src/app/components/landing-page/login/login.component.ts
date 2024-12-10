@@ -54,8 +54,7 @@ export class LoginComponent implements OnInit {
       try {
         await this.authService.signInWithEmail(email, password);
         console.log('Login erfolgreich!');
-        const uid = this.authService.getUid();
-        console.log(uid);
+        /* this.router.navigate(['/general/', this.authService.currentUser?.uid]); */
       } catch (error) {
         console.error('Fehler beim Login:', error);
       }
