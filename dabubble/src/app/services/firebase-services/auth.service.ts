@@ -7,7 +7,8 @@ import {
   User,
   getAuth,
   createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
+  signInWithEmailAndPassword, 
+  signInAnonymously
 } from '@angular/fire/auth';
 import { BehaviorSubject } from 'rxjs';
 import { UserDatas } from '../../models/user.class';
@@ -70,6 +71,15 @@ export class AuthService {
       console.log('User log in');
     } catch (error: any) {
       console.error('Error during login:', error.message);
+    }
+  }
+
+  async guestSignIn() {
+    try {
+      const result = await signInAnonymously(this.auth);
+      console.log(result.user.uid);
+    } catch (error) {
+      console.error('Gast login nicht verfügbar:', error);
     }
   }
 

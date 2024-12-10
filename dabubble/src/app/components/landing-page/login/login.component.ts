@@ -3,7 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../services/firebase-services/auth.service';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -16,10 +21,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   animationPlayed: boolean = false;
   newGuest: boolean = false;
-
-  private userCount: number | undefined;
-  private guestLogin: string | null | undefined;
-
+  guestId: string = '';
 
   constructor(
     private router: Router,
@@ -36,8 +38,9 @@ export class LoginComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.guestLogin = localStorage.getItem('guestLogin');
+    this.guestId = localStorage.getItem('guest-id') as string;
     sessionStorage.setItem('animation', 'true');
+    console.log(this.guestId);
   }
 
   navigateTo(route: string) {
@@ -61,43 +64,17 @@ export class LoginComponent implements OnInit {
     }
   }
 
-/*   logInGuest() {
-    if (this.guestLogin === 'true') {
-      console.log('log in as guest');
-    } else {
-      this.createGuestUser();
-    }
-  } */
-
-
-/*   async checkGuestUser(guestUser: {
-    name: string;
-    mail: string;
-    password: string;
-  }) {
-    if (await this.checkExistingGuest(guestUser)) {
-      await this.userService.saveUser(guestUser);
-      localStorage.setItem('mail', guestUser.mail);
-      localStorage.setItem('password', guestUser.password);
-      localStorage.setItem('guestLogin', 'true');
-    } else {
-      this.createGuestUser();
-    }
-  } */
-
-/*   async checkExistingGuest(userData: {
-    name?: string;
-    mail: string;
-    password?: string;
-  }): Promise<boolean> {
-  
-
+  async guestLogIn() {
     try {
-      const user = this.users.find((u) => u.mail === userData.mail);
-      return !user;
+      if (this.guestId == null) {
+        await this.authService.guestSignIn();
+        const newGuestId = this.authService.currentUser?.uid as string;
+        localStorage.setItem('guest-id', newGuestId);
+      } else {
+        /* this.router.navigate(['/general/', this.authService.currentUser?.uid]); */
+      }
     } catch (error) {
-      console.error('Fehler bei der Gastbenutzerüberprüfung:', error);
-      throw error;
+      console.error('Fehler beim Gast log in:', error);
     }
-  } */
+  }
 }
