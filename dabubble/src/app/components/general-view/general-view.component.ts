@@ -6,6 +6,7 @@ import { HeaderComponent } from './header/header.component';
 import { ThreadComponent } from './thread/thread.component';
 import { ChatComponent } from './chat/chat.component';
 import { CommonModule } from '@angular/common';
+import { CreateChannelComponent } from "./create-channel/create-channel.component";
 
 @Component({
   selector: 'app-general-view',
@@ -19,7 +20,8 @@ import { CommonModule } from '@angular/common';
     HeaderComponent,
     ThreadComponent,
     ChatComponent,
-  ],
+    CreateChannelComponent
+],
   templateUrl: './general-view.component.html',
   styleUrl: './general-view.component.scss',
 })
