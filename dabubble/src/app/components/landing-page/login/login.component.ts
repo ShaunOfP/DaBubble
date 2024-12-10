@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.guestId = localStorage.getItem('guest-id') as string;
+    
     sessionStorage.setItem('animation', 'true');
     console.log(this.guestId);
   }
@@ -65,13 +65,7 @@ export class LoginComponent implements OnInit {
 
   async guestLogIn() {
     try {
-      if (this.guestId == null) {
-        await this.authService.guestSignIn();
-        const newGuestId = this.authService.currentUser?.uid as string;
-        localStorage.setItem('guest-id', newGuestId);
-      } else {
-        /* this.router.navigate(['/general/', this.authService.currentUser?.uid]); */
-      }
+      await this.authService.guestSignIn();
     } catch (error) {
       console.error('Fehler beim Gast log in:', error);
     }
