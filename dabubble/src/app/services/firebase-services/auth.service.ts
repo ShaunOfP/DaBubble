@@ -11,6 +11,7 @@ import {
 } from '@angular/fire/auth';
 import { BehaviorSubject } from 'rxjs';
 import { UserDatas } from '../../models/user.class';
+import { UserDatasService } from './user-datas.service';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +20,7 @@ export class AuthService {
   private userSubject = new BehaviorSubject<User | null>(null);
   user$ = this.userSubject.asObservable();
 
-  constructor(private auth: Auth) {}
+  constructor(private auth: Auth, private userDataService: UserDatasService) {}
 
   // Google Login
   async googleSignIn(): Promise<void> {
@@ -47,17 +48,14 @@ export class AuthService {
     const auth = getAuth();
     createUserWithEmailAndPassword(auth, accountData.mail, accountData.password)
       .then((userCredential) => {
-        // Signed up 
         debugger
         const user = userCredential.user;
         console.log(user.uid);
-        
-        // ...
+        this.userDataService.saveUser(accountData.name, accountData.accountImg, user.uid)
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        // ..
       });
   }
 

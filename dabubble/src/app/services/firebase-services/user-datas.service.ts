@@ -4,7 +4,7 @@ import {
   Firestore,
   collection,
   collectionData,
-  addDoc,
+  setDoc,
   getDocs,
   where, 
   query,
@@ -33,17 +33,22 @@ export class UserDatasService {
     this.getUserDatas('Test@test.de', '123');
   }
 
-  async saveUser(user: UserDatas): Promise<void> {
+  async saveUser(username: string, useravatar: string, userId: string): Promise<void> {
     try {
-      const userPlainObject = { ...user }; // Important!! Firebase need a plainobject to read, otherwise its not working!
-      const docRef = await addDoc(this.userDatasRef(), userPlainObject);
-      console.log('Document written with ID: ', docRef.id);
-      this.saveLocalStorage(docRef.id, user.name);
-    } catch (err) {
-      console.error('Error adding document: ', err);
+      const userDocRef = doc(this.userDatasRef(), userId);
+      const userData = {
+        username: username,
+        avatar: useravatar,
+        createdAt: new Date()
+      };
+      await setDoc(userDocRef, userData);
+  
+      console.log('✅ Benutzer erfolgreich gespeichert:', userData);
+    } catch (error) {
+      console.error('❌ Fehler beim Speichern des Benutzers:', error);
     }
   }
-
+  
   async getUserDatas(email:string, password:string) {
     const q = query(this.userDatasRef(), where("mail", "==", email))    
     try {
