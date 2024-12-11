@@ -8,7 +8,8 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword, 
-  signInAnonymously
+  signInAnonymously,
+  sendPasswordResetEmail
 } from '@angular/fire/auth';
 import { BehaviorSubject } from 'rxjs';
 import { UserDatas } from '../../models/user.class';
@@ -80,6 +81,16 @@ export class AuthService {
       console.log(result.user.uid);
     } catch (error) {
       console.error('Gast login nicht verfügbar:', error);
+    }
+  }
+
+  async resetPassword(email: string): Promise<void> {
+    try {
+      await sendPasswordResetEmail(this.auth, email);
+      console.log('Passwort-Zurücksetzungs-E-Mail wurde gesendet.');
+    } catch (error) {
+      console.error('Fehler beim Senden der Passwort-Zurücksetzungs-E-Mail:', error);
+      throw error;
     }
   }
 

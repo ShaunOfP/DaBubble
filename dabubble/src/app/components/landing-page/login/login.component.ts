@@ -38,7 +38,6 @@ export class LoginComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    
     sessionStorage.setItem('animation', 'true');
     console.log(this.guestId);
   }
