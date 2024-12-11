@@ -70,4 +70,13 @@ export class LoginComponent implements OnInit {
       console.error('Fehler beim Gast log in:', error);
     }
   }
+
+  async googleLogIn() {
+    try {
+      await this.authService.googleSignIn();
+      console.log('Erfolgreich mit Google eingelogt');
+    } catch (error) {
+      console.error('Google Log In fehlgeschlagen.', error);
+    }
+  }
 }
