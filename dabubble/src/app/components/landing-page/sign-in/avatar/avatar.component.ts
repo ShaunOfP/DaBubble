@@ -52,7 +52,7 @@ export class AvatarComponent /* implements OnInit */ {
   }
 
   checkInput(){
-    if(this.accountData == undefined) this.navigateTo('sign-in')
+    if(this.accountData.name == undefined) this.navigateTo('sign-in')
     return
   }
 }
