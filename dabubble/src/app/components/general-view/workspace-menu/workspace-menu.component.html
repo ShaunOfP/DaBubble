@@ -4,7 +4,7 @@
             <img class="radius-30 devspace-logo" src="/img/general-view/workspace-menu/logo_devspace.svg">
             <h3 class="flex cursor-no-change">Devspace</h3>
         </div>
-        <div class="hover height-width-40 flex center img-switch radius-30">
+        <div class="hover height-width-40 flex center img-switch radius-30" (click)="openCreateChannelOverlay()">
             <img class="height-width-24" src="/img/general-view/workspace-menu/edit.svg">
             <img style="height: 27px; margin-bottom: 3px; margin-right: 3px;" class="d-none"
                 src="/img/general-view/workspace-menu/hover_edit.svg">
@@ -26,7 +26,7 @@
                         <span>Channels</span>
                     </div>
                 </div>
-                <div class="hover height-width-40 flex center img-switch radius-30">
+                <div class="hover height-width-40 flex center img-switch radius-30" (click)="openCreateChannelOverlay()">
                     <img class="height-width-24" src="/img/general-view/workspace-menu/add.svg">
                     <img class="height-width-24 d-none" src="/img/general-view/workspace-menu/hover_add.svg">
                 </div>

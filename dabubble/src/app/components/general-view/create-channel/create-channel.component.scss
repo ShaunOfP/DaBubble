@@ -85,11 +85,16 @@ span {
 }
 
 .img-container {
-    height: 24px;
-    width: 24px;
+    height: 40px;
+    width: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
+
+    &:hover{
+        border-radius: 30px;
+        background-color: var(--color-blue-bg);
+    }
 }
 
 .change-image-on-hover {

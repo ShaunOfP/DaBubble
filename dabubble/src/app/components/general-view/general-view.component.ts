@@ -21,7 +21,7 @@ import { CreateChannelComponent } from "./create-channel/create-channel.componen
     ThreadComponent,
     ChatComponent,
     CreateChannelComponent
-],
+  ],
   templateUrl: './general-view.component.html',
   styleUrl: './general-view.component.scss',
 })
@@ -42,8 +42,8 @@ export class GeneralViewComponent {
   /**
    * Calls different functions to allow the toggling of the Workspace menu
    */
-  toggle(){
-    if (this.toggleNumber == 0){
+  toggle() {
+    if (this.toggleNumber == 0) {
       this.closeWorkspaceMenu();
       this.toggleNumberIncrease();
     } else {
@@ -56,7 +56,7 @@ export class GeneralViewComponent {
   /**
    * Opens the Workspace menu
    */
-  openWorkspaceMenu(){
+  openWorkspaceMenu() {
     this.workspaceMenuIsVisible = true;
   }
 
@@ -82,5 +82,9 @@ export class GeneralViewComponent {
    */
   toggleNumberDecrease() {
     this.toggleNumber--;
+  }
+
+  toggleClassForCreateChannelOverlay() {
+    document.getElementById('create-channel-overlay')?.classList.toggle('d-none');
   }
 }

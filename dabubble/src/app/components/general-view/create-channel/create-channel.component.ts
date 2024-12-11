@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-create-channel',
@@ -8,8 +8,10 @@ import { Component } from '@angular/core';
   styleUrl: './create-channel.component.scss'
 })
 export class CreateChannelComponent {
+  @Output() callParentToClose: EventEmitter<void> = new EventEmitter();
+  
   closeCreateChannel(){
-    
+    this.callParentToClose.emit();
   }
 
   formSubmit(){
