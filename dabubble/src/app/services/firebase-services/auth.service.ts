@@ -48,6 +48,7 @@ export class AuthService {
 
   createUserWithEmail(accountData: UserDatas) {
     const auth = getAuth();
+    
     createUserWithEmailAndPassword(auth, accountData.mail, accountData.password)
       .then((userCredential) => {
         debugger
@@ -84,14 +85,17 @@ export class AuthService {
     }
   }
 
-  async resetPassword(email: string): Promise<void> {
-    try {
-      await sendPasswordResetEmail(this.auth, email);
-      console.log('Passwort-Zurücksetzungs-E-Mail wurde gesendet.');
-    } catch (error) {
-      console.error('Fehler beim Senden der Passwort-Zurücksetzungs-E-Mail:', error);
-      throw error;
-    }
+  resetPassword(email: string, onSuccess: () => void, onError: (errorCode: string, errorMessage: string) => void) {
+    const auth = getAuth();
+    sendPasswordResetEmail(auth, email)
+      .then(() => {
+        onSuccess();
+       })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        onError(errorCode, errorMessage)
+      });
   }
 
   getUid(): string | null {
