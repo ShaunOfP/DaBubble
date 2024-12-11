@@ -7,10 +7,11 @@ import {
   User,
   getAuth,
   createUserWithEmailAndPassword,
-  signInWithEmailAndPassword, 
+  signInWithEmailAndPassword,
   signInAnonymously,
   sendPasswordResetEmail,
-  UserCredential
+  UserCredential,
+  updatePassword,
 } from '@angular/fire/auth';
 import { BehaviorSubject } from 'rxjs';
 import { UserDatas } from '../../models/user.class';
@@ -25,7 +26,6 @@ export class AuthService {
 
   constructor(private auth: Auth, private userDataService: UserDatasService) {}
 
-
   // Logout
   async logout(): Promise<void> {
     await signOut(this.auth);
@@ -39,13 +39,17 @@ export class AuthService {
 
   createUserWithEmail(accountData: UserDatas) {
     const auth = getAuth();
-    
+
     createUserWithEmailAndPassword(auth, accountData.mail, accountData.password)
       .then((userCredential) => {
-        debugger
+        debugger;
         const user = userCredential.user;
         console.log(user.uid);
-        this.userDataService.saveUser(accountData.name, accountData.accountImg, user.uid)
+        this.userDataService.saveUser(
+          accountData.name,
+          accountData.accountImg,
+          user.uid
+        );
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -88,19 +92,25 @@ export class AuthService {
     }
   }
 
-  resetPassword(email: string, onSuccess: () => void, onError: (errorCode: string, errorMessage: string) => void) {
+  resetPassword(
+    email: string,
+    onSuccess: () => void,
+    onError: (errorCode: string, errorMessage: string) => void
+  ) {
     const auth = getAuth();
     sendPasswordResetEmail(auth, email)
       .then(() => {
         onSuccess();
-       })
+      })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        onError(errorCode, errorMessage)
+        onError(errorCode, errorMessage);
       });
   }
 
+  changeUserPassword(newPasword: string) {
+   }
   getUid(): string | null {
     const user = this.currentUser;
     return user ? user.uid : null;
