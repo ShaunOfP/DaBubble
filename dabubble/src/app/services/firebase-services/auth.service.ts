@@ -9,7 +9,8 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword, 
   signInAnonymously,
-  sendPasswordResetEmail
+  sendPasswordResetEmail,
+  UserCredential
 } from '@angular/fire/auth';
 import { BehaviorSubject } from 'rxjs';
 import { UserDatas } from '../../models/user.class';
@@ -24,16 +25,6 @@ export class AuthService {
 
   constructor(private auth: Auth, private userDataService: UserDatasService) {}
 
-  // Google Login
-  async googleSignIn(): Promise<void> {
-    const provider = new GoogleAuthProvider();
-    try {
-      const result = await signInWithPopup(this.auth, provider);
-      this.userSubject.next(result.user);
-    } catch (error) {
-      console.error('Error during Google Sign-In', error);
-    }
-  }
 
   // Logout
   async logout(): Promise<void> {
@@ -72,6 +63,18 @@ export class AuthService {
       console.log('User log in');
     } catch (error: any) {
       console.error('Error during login:', error.message);
+    }
+  }
+
+  async googleSignIn(): Promise<UserCredential | null> {
+    const provider = new GoogleAuthProvider();
+    try {
+      const result = await signInWithPopup(this.auth, provider);
+      console.log('Google Login erfolgreich:', result.user.uid);
+      return result; // Gibt UserCredential zurück
+    } catch (error) {
+      console.error('Fehler beim Google Login:', error);
+      return null;
     }
   }
 
