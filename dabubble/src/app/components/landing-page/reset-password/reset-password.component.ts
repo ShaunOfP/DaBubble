@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { AuthService } from '../../../services/firebase-services/auth.service';
+import { getAuth, confirmPasswordReset } from 'firebase/auth';
 
 @Component({
   selector: 'app-reset-password',
@@ -17,33 +17,57 @@ import { AuthService } from '../../../services/firebase-services/auth.service';
     RouterModule,
   ],
   templateUrl: './reset-password.component.html',
-  styleUrl: './reset-password.component.scss',
+  styleUrls: ['./reset-password.component.scss'],
 })
-export class ResetPasswordComponent {
-  id: string = '';
-  constructor(
-    private authService: AuthService,
-    private route: ActivatedRoute
-  ) {}
-
+export class ResetPasswordComponent implements OnInit {
+  oobCode: string = '';
   Passwords = {
     newPassword: '',
-    confirmedPassword: '',
+    confirmedPassword: ''
   };
-  onSubmit(ngForm: NgForm) {
+
+  constructor(private route: ActivatedRoute) {}
+
+  ngOnInit(): void {
+    this.route.queryParams.subscribe((params) => {
+      this.oobCode = params['oobCode'] || '';
+      
+      if (!this.oobCode) {
+        alert('Ungültiger oder abgelaufener Link. Bitte fordere einen neuen Link an.');
+      }
+    });
+  }
+
+  onSubmit(ngForm: NgForm): void {
     if (this.formValidation(ngForm)) {
-      this.route.params.subscribe((params) => {
-        this.id = params['id'];
-      });
-      this.authService.changeUserPassword(this.Passwords.newPassword);
+      this.resetUserPassword();
+    } else {
+      alert('Bitte stelle sicher, dass alle Felder korrekt ausgefüllt sind und die Passwörter übereinstimmen.');
     }
   }
 
   formValidation(ngForm: NgForm) {
     return (
-      ngForm.valid &&
-      ngForm.submitted &&
-      this.Passwords.newPassword === this.Passwords.confirmedPassword
+      ngForm.valid && 
+      ngForm.submitted && 
+      this.Passwords.newPassword === this.Passwords.confirmedPassword && 
+      this.Passwords.newPassword.length >= 6 
     );
+  }
+
+  resetUserPassword(): void {
+    if (!this.oobCode) {
+      alert('Ungültiger oder abgelaufener Link. Bitte fordere einen neuen Link an.');
+      return;
+    }
+
+    const auth = getAuth();
+    confirmPasswordReset(auth, this.oobCode, this.Passwords.newPassword)
+      .then(() => {
+        alert('Dein Passwort wurde erfolgreich zurückgesetzt. Du kannst dich jetzt mit deinem neuen Passwort anmelden.');
+      })
+      .catch((error) => {
+        alert(`Fehler beim Zurücksetzen des Passworts: ${error.message}`);
+      });
   }
 }
