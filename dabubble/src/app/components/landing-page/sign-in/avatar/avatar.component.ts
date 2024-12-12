@@ -6,12 +6,13 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { Router, RouterModule } from '@angular/router';
 import { UserDatas } from '../../../../models/user.class';
 import { AuthService } from '../../../../services/firebase-services/auth.service';
+import { HeaderSectionComponent } from "../../header-section/header-section.component";
 
 
 @Component({
   selector: 'app-avatar',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatCardModule, MatCheckboxModule, RouterModule ],
+  imports: [CommonModule, FormsModule, MatCardModule, MatCheckboxModule, RouterModule, HeaderSectionComponent],
   templateUrl: './avatar.component.html',
   styleUrl: './avatar.component.scss'
 })

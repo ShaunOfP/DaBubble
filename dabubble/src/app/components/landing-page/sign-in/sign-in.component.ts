@@ -5,6 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { Router, RouterModule } from '@angular/router';
 import { UserDatas } from '../../../models/user.class';
+import { HeaderSectionComponent } from "../header-section/header-section.component";
 
 interface InputField {
   placeholder: string;
@@ -24,7 +25,8 @@ interface InputField {
     FormsModule,
     MatCheckboxModule,
     RouterModule,
-  ],
+    HeaderSectionComponent
+],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.scss',
 })
