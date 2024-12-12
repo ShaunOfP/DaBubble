@@ -1,0 +1,22 @@
+@import "../../../../styles.scss";
+@import "../../../../templates/mixins.scss";
+
+.login-header {
+    @include arrangement($d: flex, $jc: space-between, $ai: center, $fd: row);
+    width: calc(100vw - 32px);
+    margin: 32px 0 32px 32px;
+    
+    @media (max-height: 725px) {
+        margin: 32px 0 0 32px;
+    }
+  
+    .login-header-logo {
+      @include arrangement($d: flex, $jc: center, $ai: center, $fd: row);
+      gap: 8px;
+      font-size: 28px;
+  
+      img {
+        height: 75px;
+      }
+    }
+}
