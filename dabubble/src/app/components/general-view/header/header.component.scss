@@ -80,6 +80,18 @@ header {
     &:hover {
         color: var(--color-purple-primary-disabled);
         cursor: pointer;
+
+        >div {
+            >button {
+                :first-child {
+                    display: none;
+                }
+
+                :last-child {
+                    display: flex;
+                }
+            }
+        }
     }
 }
 
