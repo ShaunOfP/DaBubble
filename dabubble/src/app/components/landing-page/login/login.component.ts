@@ -49,6 +49,7 @@ export class LoginComponent implements OnInit {
   async logIn(): Promise<void> {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
+      console.log(this.loginForm.value.mail);
 
       try {
         await this.authService.signInWithEmail(email, password);
@@ -75,8 +76,17 @@ export class LoginComponent implements OnInit {
     try {
       await this.authService.googleSignIn();
       console.log('Erfolgreich mit Google eingelogt');
+      /* this.router.navigate(['create-avatar']); */
     } catch (error) {
       console.error('Google Log In fehlgeschlagen.', error);
     }
+  }
+
+  get email() {
+    return this.loginForm.get('email')!;
+  }
+
+  get password() {
+    return this.loginForm.get('password')!;
   }
 }

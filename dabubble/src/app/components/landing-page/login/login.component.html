@@ -1,8 +1,5 @@
 <div class="login-header">
-  <div
-    [ngClass]="{ 'header-animation': !animationPlayed }"
-    class="login-header-logo"
-  >
+  <div [ngClass]="{ 'header-animation': !animationPlayed }" class="login-header-logo">
     <img src="/img/general-view/workspace-menu/Logo.svg" alt="Logo" />
     <h1>DABubble</h1>
     <div class="header-logo-overlay"></div>
@@ -16,11 +13,7 @@
 </div>
 
 <div [ngClass]="{ 'd-none': animationPlayed }" class="overlay"></div>
-<div
-  [ngClass]="{ 'd-none': animationPlayed }"
-  class="overlay"
-  class="logo-wrapper"
->
+<div [ngClass]="{ 'd-none': animationPlayed }" class="overlay" class="logo-wrapper">
   <img src="/img/general-view/workspace-menu/Logo.svg" alt="Logo" />
   <div class="animated-text">
     <p>DABubble</p>
@@ -31,33 +24,33 @@
   <mat-card>
     <div class="card-header">
       <h2>Anmeldung</h2>
-      <span
-        >Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit
-        verwendest.</span
-      >
+      <span>Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit
+        verwendest.</span>
     </div>
 
     <div class="login-input">
       <div class="input-field">
         <img src="/img/public/mail.svg" alt="" />
-        <input
-          type="email"
-          placeholder="beispielname@email.com"
-          formControlName="email"
-        />
+        <input type="email" placeholder="beispielname@email.com" formControlName="email" />
       </div>
 
-      <div>
-        <span></span>
+      <div class="error-message" *ngIf="email.invalid && email.touched">
+        <span *ngIf="email.errors?.['required']">Passwort ist erforderlich.</span>
+        <span *ngIf="email.errors?.['minlength']">
+          Passwort muss mindestens 6 Zeichen lang sein.
+        </span>
       </div>
 
       <div class="input-field">
         <img src="/img/public/password-lock.svg" alt="" />
-        <input
-          type="password"
-          placeholder="Passwort"
-          formControlName="password"
-        />
+        <input type="password" placeholder="Passwort" formControlName="password" />
+      </div>
+
+      <div class="error-message" *ngIf="password.invalid && password.touched">
+        <span *ngIf="password.errors?.['required']">Passwort ist erforderlich.</span>
+        <span *ngIf="password.errors?.['minlength']">
+          Passwort muss mindestens 6 Zeichen lang sein.
+        </span>
       </div>
     </div>
 
@@ -84,10 +77,7 @@
 </form>
 
 <p>login works!</p>
-<button
-  class="btn-primary--default"
-  (click)="navigateTo('general/public-chat')"
->
+<button class="btn-primary--default" (click)="navigateTo('general/public-chat')">
   Go to chat
 </button>
 <button class="btn-secondary--disable">secondary--disable</button>
