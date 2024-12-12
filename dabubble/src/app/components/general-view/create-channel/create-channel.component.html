@@ -11,14 +11,23 @@
             Channels dienen deinem Team zur Kommunikation. Am besten sollten sie themenbezogen sein<br>
             #marketing zum Beispiel
         </div>
-        <form onsubmit="formSubmit(); return false;">
+        <form (ngSubmit)="formSubmit(form)" #form="ngForm">
             <div class="form-input-container">
-                <span>Channel-Name</span>
-                <input class="input-field" placeholder="z.B. Kooperationsprojekte">
+                <div class="form-input-container-header">
+                    <span>Channel-Name</span>
+                    <span class="error-message" *ngIf="name.invalid && name.touched">Der Channel-Name wird benötigt</span>
+                </div>                
+                <div class="input-image-container">
+                    <img src="/img/public/hash.svg">
+                    <input [class.is-invalid]="name.invalid && name.touched" class="input-field"
+                        placeholder="z.B. Kooperationsprojekte" [(ngModel)]="newChannelName" #name="ngModel"
+                        name="newChannelName" required="required">
+                </div>
             </div>
             <div class="form-input-container">
                 <span>Beschreibung <span class="optional">(optional)</span></span>
-                <input class="input-field" placeholder="Dein Text hier">
+                <input class="input-field" placeholder="Dein Text hier" [(ngModel)]="newChannelDescription"
+                    name="newChannelDescription">
             </div>
             <div class="form-submit-button-container">
                 <button class="btn-primary--default" type="submit">Erstellen</button>
