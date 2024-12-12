@@ -48,6 +48,21 @@ form {
     gap: 20px;
 }
 
+.input-image-container {
+    display: flex;
+
+    >img {
+        position: relative;
+        z-index: 1;
+        padding-left: 20px;
+    }
+
+    >input {
+        margin-left: -40px;
+        padding-left: 52px;
+    }
+}
+
 span {
     font-size: 18px;
     font-weight: 700;
@@ -91,7 +106,7 @@ span {
     justify-content: center;
     align-items: center;
 
-    &:hover{
+    &:hover {
         border-radius: 30px;
         background-color: var(--color-blue-bg);
     }
@@ -116,4 +131,17 @@ span {
     color: var(--color-grey-primary-disable);
     font-size: 18px;
     font-weight: 400;
+}
+
+.is-invalid {
+    border: 1px solid var(--color-purple-error);
+}
+
+.error-message {
+    color: var(--color-purple-error)
+}
+
+.form-input-container-header {
+    justify-content: space-between;
+    display: flex;
 }
