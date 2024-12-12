@@ -30,7 +30,7 @@ export class ForgotPasswordComponent {
 
   onSubmit(ngForm: NgForm) {
     if (ngForm.submitted && ngForm.form.valid) {
-      this.authService.resetPassword(this.email, () => {
+      this.authService.resetPasswordLink(this.email, () => {
         this.sendPassword = true;
       }, (errorCode: string , errorMessage: string) => {
         this.sendingError = true;

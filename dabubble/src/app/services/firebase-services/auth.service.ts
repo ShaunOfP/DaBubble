@@ -92,7 +92,7 @@ export class AuthService {
     }
   }
 
-  resetPassword(
+  resetPasswordLink(
     email: string,
     onSuccess: () => void,
     onError: (errorCode: string, errorMessage: string) => void
@@ -108,33 +108,10 @@ export class AuthService {
         onError(errorCode, errorMessage);
       });
   } 
-/* 
-      resetPassword(
-        email: string,
-        onSuccess: () => void,
-        onError: (errorCode: string, errorMessage: string) => void
-    ) {
-        const auth = getAuth();
-        const actionCodeSettings = {
-            // Diese URL verweist auf deine Reset-Route
-            url: 'http://localhost:4200/reset-password',
-            handleCodeInApp: true // Das ist wichtig, um sicherzustellen, dass die URL geöffnet bleibt
-        };
-    
-        sendPasswordResetEmail(auth, email, actionCodeSettings)
-          .then(() => {
-            onSuccess();
-          })
-          .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            onError(errorCode, errorMessage);
-          });
-    } */
-    
 
   changeUserPassword(newPasword: string) {
    }
+
   getUid(): string | null {
     const user = this.currentUser;
     return user ? user.uid : null;
