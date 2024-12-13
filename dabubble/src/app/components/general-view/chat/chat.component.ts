@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ChatDetailsComponent } from "../chat-details/chat-details.component";
 
 @Component({
@@ -9,5 +9,11 @@ import { ChatDetailsComponent } from "../chat-details/chat-details.component";
   styleUrl: './chat.component.scss'
 })
 export class ChatComponent {
+  openChatDetails() {
+    document.getElementById('chatDetailsOverlay')?.classList.remove('d-none');
+  }
 
+  closeChatDetails(){
+    document.getElementById('chatDetailsOverlay')?.classList.add('d-none');
+  }
 }

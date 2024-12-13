@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-chat-details',
@@ -8,5 +8,9 @@ import { Component } from '@angular/core';
   styleUrl: './chat-details.component.scss'
 })
 export class ChatDetailsComponent {
+  @Output() callParent: EventEmitter<void> = new EventEmitter();
 
+  closeChatDetails() {
+    this.callParent.emit();
+  }
 }

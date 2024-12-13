@@ -14,8 +14,6 @@ export class CreateChannelComponent {
   newChannelName: string = '';
   newChannelDescription: string | null = '';
 
-
-
   closeCreateChannel() {
     this.callParentToClose.emit();
   }
