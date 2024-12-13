@@ -1,10 +1,6 @@
 @import "./../../landing-page.component.scss";
 @import "./../sign-in.component.scss";
 
-// .mat-mdc-card-content {
-//   padding: 16px !important;
-// }
-
 .header-content {
   gap: 16px;
 }
@@ -12,6 +8,10 @@
 .main-content {
   @include arrangement($d: flex, $jc: normal, $ai: normal, $fd: column);
   gap: 36px;
+
+  @media (max-height: 725px) {
+    gap: 0;
+    }
 
   @media (max-width: 450px) {
     gap: 20px;
@@ -36,6 +36,10 @@
       height: 100px;
     }
   }
+
+  @media (max-height: 725px) {
+    gap: 0;
+    }
 
   @media (max-width: 450px) {
     gap: 20px;
