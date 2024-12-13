@@ -84,6 +84,10 @@ export class GeneralViewComponent {
     this.toggleNumber--;
   }
 
+
+  /**
+   * Toggles visibility for the Create Channel Component
+   */
   toggleClassForCreateChannelOverlay() {
     document.getElementById('create-channel-overlay')?.classList.toggle('d-none');
   }

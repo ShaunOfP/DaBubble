@@ -1,0 +1,137 @@
+@import './../../../../styles.scss';
+@import './../../../../templates/input.scss';
+@import './../../../../templates/styles/button.scss';
+
+section {
+    position: absolute;
+    inset: 0;
+    z-index: 999;
+    background-color: rgba(0, 0, 0, 0.4);
+
+    >div {
+        background-color: var(--color-white);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 40px;
+        gap: 20px;
+        border-radius: 0px 30px 30px 30px;
+        position: relative;
+        left: 520px;
+        top: 190px;
+        width: 832px;
+    }
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-headline {
+    display: flex;
+    gap: 20px;
+}
+
+h3 {
+    margin: 0;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.input-image-container {
+    display: flex;
+
+    >img{
+        position: relative;
+        z-index: 1;
+    }
+
+    >input{
+        margin-left: -20px;
+    }
+}
+
+.fs18 {
+    font-size: 18px;
+}
+
+.bold {
+    font-weight: 700;
+}
+
+::placeholder {
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.input-field {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-blue-border);
+    font-size: 18px;
+    font-weight: 400;
+
+    &:hover {
+        border: 1px solid var(--color-purple-primary-disabled);
+    }
+
+    &:focus {
+        border: 1px solid var(--color-purple-secondary-hover);
+        outline: none;
+    }
+}
+
+.form-submit-button-container {
+    display: flex;
+    justify-content: end;
+}
+
+.btn-primary {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.img-container {
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+        border-radius: 30px;
+        background-color: var(--color-blue-bg);
+    }
+}
+
+.change-image-on-hover {
+    &:hover {
+        cursor: pointer;
+
+        >:first-child {
+            display: none;
+        }
+
+        >:last-child {
+            display: flex;
+            cursor: pointer;
+        }
+    }
+}
+
+.optional {
+    color: var(--color-grey-primary-disable);
+    font-size: 18px;
+    font-weight: 400;
+}
