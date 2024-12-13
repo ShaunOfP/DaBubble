@@ -25,9 +25,9 @@ section{
     @include arrangement($d: flex, $jc: center, $ai: center, $fd: column);
     padding: 24px;
     max-width: 600px;
-    margin: 16px;
 
     @media (max-width: 700px) {
+      margin: 16px;
       max-width: 450px;
     }
 
@@ -37,12 +37,8 @@ section{
   }
   
   .mat-mdc-card-content {
-    padding: 36px !important;
+    padding: 0!important;
     width: 100%!important;
-
-    @media (max-width: 700px) {
-      padding: 0 !important;
-    }
   }
   
   .mat-mdc-card-header {

@@ -60,6 +60,7 @@ export class LoginComponent implements OnInit {
       }
     } else {
       console.error('Formular ist ungültig!');
+      this.loginForm.markAllAsTouched();
     }
   }
 
@@ -77,6 +78,8 @@ export class LoginComponent implements OnInit {
       await this.authService.googleSignIn();
       console.log('Erfolgreich mit Google eingelogt');
       /* this.router.navigate(['create-avatar']); */
+      const googleUser = this.authService.currentUser;
+      console.log(googleUser);
     } catch (error) {
       console.error('Google Log In fehlgeschlagen.', error);
     }
