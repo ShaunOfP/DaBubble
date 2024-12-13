@@ -5,6 +5,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { getAuth, confirmPasswordReset } from 'firebase/auth';
+import { HeaderSectionComponent } from "../header-section/header-section.component";
+import { FooterComponent } from "../footer/footer.component";
 
 @Component({
   selector: 'app-reset-password',
@@ -15,7 +17,9 @@ import { getAuth, confirmPasswordReset } from 'firebase/auth';
     MatCardModule,
     MatInputModule,
     RouterModule,
-  ],
+    HeaderSectionComponent,
+    FooterComponent
+],
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.scss'],
 })

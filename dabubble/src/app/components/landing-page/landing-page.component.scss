@@ -1,9 +1,13 @@
 @import './../../../styles.scss';
 
-section{
-    @include arrangement($fd:column, $jc:space-around);
-    height: 100vh;
-}
+// section{
+//     @include arrangement($fd:column, $jc:space-around);
+//     height: 100vh;
+// }
+
+// .legal {
+//   @include arrangement($g: 16px);
+// }
 
 .arrow-back{
   @include arrangement($d: flex, $ai: center);
@@ -60,7 +64,3 @@ section{
       }
     }
   }
-
-.legal {
-  @include arrangement($g: 16px);
-}

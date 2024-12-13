@@ -1,0 +1,10 @@
+@import './../landing-page.component.scss';
+
+section{
+    @include arrangement($fd:column, $jc:space-around);
+    height: 100vh;
+}
+
+.legal {
+  @include arrangement($g: 16px);
+}

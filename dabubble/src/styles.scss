@@ -92,8 +92,8 @@ h3 {
 }
 
 .app-wrapper {
-  @include arrangement($d: flex, $jc: center, $ai: center, $fd: column);
-  height: 100%;
+  @include arrangement($d: flex, $jc: space-between, $ai: center, $fd: column);
+  height: 100vh;
 }
 
 .mdc-checkbox
