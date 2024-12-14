@@ -65,10 +65,13 @@
 
 .login-header {
   @include arrangement($d: flex, $jc: space-between, $ai: center, $fd: row);
-  position: absolute;
-  top: 32px;
-  left: 32px;
-  right: 32px;
+  width: 100%;
+  padding: 32px;
+  box-sizing: border-box;
+  // position: absolute;
+  // top: 32px;
+  // left: 32px;
+  // right: 32px;
 
   .login-header-logo {
     @include arrangement($d: flex, $jc: center, $ai: center, $fd: row);
