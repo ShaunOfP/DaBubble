@@ -4,7 +4,7 @@
 .login-header {
     @include arrangement($d: flex, $jc: space-between, $ai: center, $fd: row);
     width: 100vw;
-    margin: 32px;
+    margin: 32px 0 0 64px;
     box-sizing: border-box;
     
     @media (max-height: 725px) {
