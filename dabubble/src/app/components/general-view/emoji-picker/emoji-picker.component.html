@@ -1,31 +1,31 @@
 <mat-card class="emoji-card"> 
     <mat-card-content>
-      <div class="emoji-container">
-        <button class="icon-btn" (click)="showEmojiCard('😁')">😁</button>
-        <button class="icon-btn" (click)="showEmojiCard('😀')">😀</button>
-        <button class="icon-btn" (click)="showEmojiCard('😃')">😃</button>
-        <button class="icon-btn" (click)="showEmojiCard('😄')">😄</button>
-        <button class="icon-btn" (click)="showEmojiCard('😉')">😉</button>
-        <button class="icon-btn" (click)="showEmojiCard('😊')">😊</button>
-        <button class="icon-btn" (click)="showEmojiCard('😋')">😋</button>
-        <button class="icon-btn" (click)="showEmojiCard('😎')">😎</button>
-        <button class="icon-btn" (click)="showEmojiCard('🙂')">🙂</button>
-        <button class="icon-btn" (click)="showEmojiCard('😚')">😚</button>
-        <button class="icon-btn" (click)="showEmojiCard('😪')">😪</button>
-        <button class="icon-btn" (click)="showEmojiCard('😴')">😴</button>
-        <button class="icon-btn" (click)="showEmojiCard('😌')">😌</button>
-        <button class="icon-btn" (click)="showEmojiCard('😛')">😛</button>
-        <button class="icon-btn" (click)="showEmojiCard('🤐')">🤐</button>
-        <button class="icon-btn" (click)="showEmojiCard('😂')">😂</button>
-        <button class="icon-btn" (click)="showEmojiCard('🤣')">🤣</button>
-        <button class="icon-btn" (click)="showEmojiCard('😐')">😐</button>
-        <button class="icon-btn" (click)="showEmojiCard('🤔')">🤔</button>
-        <button class="icon-btn" (click)="showEmojiCard('😮')">😮</button>
-        <button class="icon-btn" (click)="showEmojiCard('😬')">😬</button>
-        <button class="icon-btn" (click)="showEmojiCard('🤯')">🤯</button>
-        <button class="icon-btn" (click)="showEmojiCard('😇')">😇</button>
-        <button class="icon-btn" (click)="showEmojiCard('🥳')">🥳</button>
-      </div>
+    <div class="emoji-container">
+      <button (click)="showEmojiCard('😁')">😁</button>
+      <button (click)="showEmojiCard('😀')">😀</button>
+      <button (click)="showEmojiCard('😃')">😃</button>
+      <button (click)="showEmojiCard('😄')">😄</button>
+      <button (click)="showEmojiCard('😉')">😉</button>
+      <button (click)="showEmojiCard('😊')">😊</button>
+      <button (click)="showEmojiCard('😋')">😋</button>
+      <button (click)="showEmojiCard('😎')">😎</button>
+      <button (click)="showEmojiCard('🙂')">🙂</button>
+      <button (click)="showEmojiCard('😚')">😚</button>
+      <button (click)="showEmojiCard('😪')">😪</button>
+      <button (click)="showEmojiCard('😴')">😴</button>
+      <button (click)="showEmojiCard('😌')">😌</button>
+      <button (click)="showEmojiCard('😛')">😛</button>
+      <button (click)="showEmojiCard('🤐')">🤐</button>
+      <button (click)="showEmojiCard('😂')">😂</button>
+      <button (click)="showEmojiCard('🤣')">🤣</button>
+      <button (click)="showEmojiCard('😐')">😐</button>
+      <button (click)="showEmojiCard('🤔')">🤔</button>
+      <button (click)="showEmojiCard('😮')">😮</button>
+      <button (click)="showEmojiCard('😬')">😬</button>
+      <button (click)="showEmojiCard('🤯')">🤯</button>
+      <button (click)="showEmojiCard('😇')">😇</button>
+      <button (click)="showEmojiCard('🥳')">🥳</button>
+    </div>
   
       <div *ngIf="selectedEmoji">
         <span class="emoji">{{ selectedEmoji }}</span> 
