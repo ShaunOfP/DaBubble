@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../services/firebase-services/auth.service';
+import { UserDatas } from "../../../models/user.class";
+import { UserDatasService } from "../../../services/firebase-services/user-datas.service";
 import {
   FormBuilder,
   FormGroup,
@@ -21,11 +23,13 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   animationPlayed: boolean = false;
   newGuest: boolean = false;
+  user: UserDatas = new UserDatas()
   guestId: string = '';
 
   constructor(
     private router: Router,
     private authService: AuthService,
+    private userService: UserDatasService,
     private form: FormBuilder
   ) {
     const animation = sessionStorage.getItem('animation');
@@ -80,6 +84,15 @@ export class LoginComponent implements OnInit {
       /* this.router.navigate(['create-avatar']); */
       const googleUser = this.authService.currentUser;
       console.log(googleUser);
+      console.log(this.user);
+      if (googleUser) {
+        const newUser: UserDatas = {
+          name: googleUser.displayName ?? '',
+          mail: googleUser.email ?? '',
+          accountImg: googleUser.photoURL ?? '',
+          password: ''
+        }
+      }
     } catch (error) {
       console.error('Google Log In fehlgeschlagen.', error);
     }
