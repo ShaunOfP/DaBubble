@@ -1,3 +1,4 @@
+<div class="app-wrapper">
 <div class="login-header">
   <div [ngClass]="{ 'header-animation': !animationPlayed }" class="login-header-logo">
     <img src="/img/general-view/workspace-menu/Logo.svg" alt="Logo" />
@@ -76,20 +77,26 @@
   </mat-card>
 </form>
 
-<p>login works!</p>
-<button class="btn-primary--default" (click)="navigateTo('general/public-chat')">
-  Go to chat
-</button>
-<button class="btn-secondary--disable">secondary--disable</button>
-<button class="btn-primary--default" (click)="navigateTo('imprint')">
-  Impressum
-</button>
-<button class="btn-primary--default" (click)="navigateTo('sign-in')">
-  Konto erstellen
-</button>
-<button class="btn-primary--default" (click)="navigateTo('forgot-password')">
-  Passwort vergessen
-</button>
-<button class="btn-primary--default" (click)="navigateTo('create-avatar')">
-  Avatar
-</button>
+<div>
+  <p>login works!</p>
+  <button class="btn-primary--default" (click)="navigateTo('general/public-chat')">
+    Go to chat
+  </button>
+  <button class="btn-secondary--disable">secondary--disable</button>
+  <button class="btn-primary--default" (click)="navigateTo('imprint')">
+    Impressum
+  </button>
+  <button class="btn-primary--default" (click)="navigateTo('sign-in')">
+    Konto erstellen
+  </button>
+  <button class="btn-primary--default" (click)="navigateTo('forgot-password')">
+    Passwort vergessen
+  </button>
+  <button class="btn-primary--default" (click)="navigateTo('create-avatar')">
+    Avatar
+  </button>
+</div>
+
+<app-footer></app-footer>
+
+</div>

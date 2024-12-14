@@ -5,6 +5,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../../services/firebase-services/auth.service';
+import { HeaderSectionComponent } from "../header-section/header-section.component";
+import { FooterComponent } from "../footer/footer.component";
 @Component({
   selector: 'app-forgot-password',
   standalone: true,
@@ -14,7 +16,9 @@ import { AuthService } from '../../../services/firebase-services/auth.service';
     RouterModule,
     FormsModule,
     CommonModule,
-  ],
+    HeaderSectionComponent,
+    FooterComponent
+],
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.scss',
 })

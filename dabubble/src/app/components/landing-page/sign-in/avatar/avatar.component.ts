@@ -7,12 +7,13 @@ import { Router, RouterModule } from '@angular/router';
 import { UserDatas } from '../../../../models/user.class';
 import { AuthService } from '../../../../services/firebase-services/auth.service';
 import { HeaderSectionComponent } from "../../header-section/header-section.component";
+import { FooterComponent } from "../../footer/footer.component";
 
 
 @Component({
   selector: 'app-avatar',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatCardModule, MatCheckboxModule, RouterModule, HeaderSectionComponent],
+  imports: [CommonModule, FormsModule, MatCardModule, MatCheckboxModule, RouterModule, HeaderSectionComponent, FooterComponent],
   templateUrl: './avatar.component.html',
   styleUrl: './avatar.component.scss'
 })

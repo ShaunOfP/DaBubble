@@ -11,11 +11,12 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { FooterComponent } from "../footer/footer.component";
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterModule, CommonModule, MatCardModule, ReactiveFormsModule],
+  imports: [RouterModule, CommonModule, MatCardModule, ReactiveFormsModule, FooterComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
