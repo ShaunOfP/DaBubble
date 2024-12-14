@@ -10,26 +10,64 @@
                 <img class="d-none" src="/img/general-view/workspace-menu/hover_close.svg">
             </div>
         </header>
-        <form id="input-form" onsubmit="x(); return false;">
-            <div class="form-input-container">
-                <div class="">
+        <form id="input-form">
+            <div class="form-info-container" #channelNameEditContainer>
+                <div class="channel-name-container">
+                    <div>
+                        <span class="fs18 bold">Channel-Name</span>
+                        <span class="fs18 purple hover" (click)="openNewChannelInput()">Bearbeiten</span>
+                    </div>
+                    <div>
+                        <span class="fs18 bold">#</span>
+                        <span class="fs18">Entwicklerteam</span>
+                    </div>
+                </div>
+            </div>
+            <div class="new-channel-name-container d-none" #newChannelInputContainer>
+                <div>
                     <span class="fs18 bold">Channel-Name</span>
-                    <span class="fs18 ">Bearbeiten</span>
+                    <span class="fs18 purple hover" (click)="saveChanges()">Speichern</span>
                 </div>
-                <div class="">
-                    <span class="">#</span>
-                    <span class="">Entwicklerteam</span>
+                <div>
+                    <span class="fs18 bold z1 padding-left-20">#</span>
+                    <input class="input-field margin-left-negative-50 padding-left-50" placeholder="Entwicklerteam">
                 </div>
-                <!-- <input class="input-field" placeholder="Entwicklerteam"> -->
             </div>
-            <div class="form-input-container">
-                <span>Beschreibung <span class="optional">(optional)</span></span>
-                <input class="input-field" placeholder="Dein Text hier">
+
+            <div class="description-container" #descpritionContainer>
+                <div class="d-flex gap-20 column">
+                    <div class="d-flex justify-between">
+                        <span class="fs18 bold">Beschreibung</span>
+                        <span class="fs18 purple hover" (click)="openDesciptionEdit()">Bearbeiten</span>
+                    </div>
+                    <p class="fs18">Dieser Channel ist für alles rund um #asdas vorgesehen. Hier kannst du zusammen
+                        mit deinem Team
+                        Meetings abhalten, Dokumente teilen und Entscheidungen treffen.</p>
+                </div>
+                <span class="separator"></span>
+                <div class="d-flex column gap-20">
+                    <span class="fs18 bold">Erstellt von</span>
+                    <span class="fs24 purple">Noah Braun</span>
+                </div>
             </div>
-            
+
+            <div class="d-flex column gap-30 d-none" #editDescriptionContainer>
+                <div class="d-flex column gap-20">
+                    <div class="d-flex justify-between">
+                        <span class="fs18">Beschreibung</span>
+                        <span class="fs18 purple hover" (click)="saveDescChanges()">Speichern</span>
+                    </div>
+                    <input class="input-field" placeholder="Dein Text hier">
+                </div>
+                <span class="separator"></span>
+                <div class="d-flex column gap-20">
+                    <span class="fs18 bold">Erstellt von</span>
+                    <span class="fs24 purple">Noah Braun</span>
+                </div>
+            </div>
         </form>
-        <div class="form-submit-button-container">
-            <button class="btn-primary--default" type="submit">Erstellen</button>
+        <div class="leave-channel-button-container">
+            <button class="btn-primary--default">Channel verlassen</button>
         </div>
     </div>
 </section>

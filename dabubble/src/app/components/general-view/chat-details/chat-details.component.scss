@@ -44,21 +44,75 @@ form {
     gap: 20px;
 }
 
-.form-input-container {
+.form-info-container {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    border: 1px solid var(--color-blue-border);
+    border-radius: 30px;
+}
+
+.channel-name-container {
+    display: flex;
+    padding: 20px;
+    flex-direction: column;
+    gap: 20px;
+
+    :first-child {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    :last-child {
+        display: flex;
+        gap: 10px;
+    }
+}
+
+.new-channel-name-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    :first-child {
+        display: flex;
+        justify-content: space-between;
+        padding-right: 20px;
+    }
+
+    :last-child {
+        display: flex;
+        align-items: center;
+
+    }
+}
+
+.margin-left-negative-50 {
+    margin-left: -50px;
+}
+
+.z1 {
+    position: relative;
+    z-index: 1;
+}
+
+.padding-left-20 {
+    padding-left: 20px;
+}
+
+.padding-left-50 {
+    padding-left: 50px;
 }
 
 .input-image-container {
     display: flex;
 
-    >img{
+    >img {
         position: relative;
         z-index: 1;
     }
 
-    >input{
+    >input {
         margin-left: -20px;
     }
 }
@@ -92,7 +146,7 @@ form {
     }
 }
 
-.form-submit-button-container {
+.leave-channel-button-container {
     display: flex;
     justify-content: end;
 }
@@ -130,8 +184,56 @@ form {
     }
 }
 
-.optional {
-    color: var(--color-grey-primary-disable);
-    font-size: 18px;
-    font-weight: 400;
+.purple {
+    color: var(--color-purple-secondary-hover);
+}
+
+.hover {
+    &:hover {
+        cursor: pointer;
+        color: var(--color-purple-primary-default);
+        font-weight: 700;
+        transition: all 0.15s;
+    }
+}
+
+.description-container {
+    display: flex;
+    gap: 30px;
+    padding: 20px;
+    border: 1px solid var(--color-blue-border);
+    border-radius: 20px;
+    flex-direction: column;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.column {
+    flex-direction: column;
+}
+
+.gap-20 {
+    gap: 20px;
+}
+
+.gap-30 {
+    gap: 30px;
+}
+
+.fs24 {
+    font-size: 24px;
+}
+
+.separator {
+    border: 1px solid var(--color-blue-border);
+}
+
+.d-none {
+    display: none;
 }
