@@ -38,13 +38,7 @@ h3 {
     margin: 0;
 }
 
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.form-info-container {
+.channel-name-info-container {
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -224,6 +218,10 @@ form {
 
 .gap-30 {
     gap: 30px;
+}
+
+.padding-right-20 {
+    padding-right: 20px;
 }
 
 .fs24 {
