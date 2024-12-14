@@ -111,9 +111,4 @@ export class AuthService {
 
   changeUserPassword(newPasword: string) {
    }
-
-  getUid(): string | null {
-    const user = this.currentUser;
-    return user ? user.uid : null;
-  }
 }
