@@ -1,10 +1,11 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ChatDetailsComponent } from "../chat-details/chat-details.component";
+import { EmojiPickerComponent } from '../emoji-picker/emoji-picker.component';
 
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [ChatDetailsComponent],
+  imports: [ChatDetailsComponent, EmojiPickerComponent],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss'
 })
