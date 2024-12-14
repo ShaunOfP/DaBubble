@@ -3,20 +3,26 @@ import { Component, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../services/firebase-services/auth.service';
-import { UserDatas } from "../../../models/user.class";
-import { UserDatasService } from "../../../services/firebase-services/user-datas.service";
+import { UserDatas } from '../../../models/user.class';
+import { UserDatasService } from '../../../services/firebase-services/user-datas.service';
 import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { FooterComponent } from "../footer/footer.component";
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterModule, CommonModule, MatCardModule, ReactiveFormsModule, FooterComponent],
+  imports: [
+    RouterModule,
+    CommonModule,
+    MatCardModule,
+    ReactiveFormsModule,
+    FooterComponent,
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
@@ -24,7 +30,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   animationPlayed: boolean = false;
   newGuest: boolean = false;
-  user: UserDatas = new UserDatas()
+  user: UserDatas = new UserDatas();
   guestId: string = '';
 
   constructor(
@@ -87,12 +93,11 @@ export class LoginComponent implements OnInit {
       console.log(googleUser);
       console.log(this.user);
       if (googleUser) {
-        const newUser: UserDatas = {
-          name: googleUser.displayName ?? '',
-          mail: googleUser.email ?? '',
-          accountImg: googleUser.photoURL ?? '',
-          password: ''
-        }
+        await this.userService.saveUser(
+          googleUser.displayName ?? 'Unbekannter Nutzer',
+          googleUser.photoURL ?? '',
+          googleUser.uid
+        );
       }
     } catch (error) {
       console.error('Google Log In fehlgeschlagen.', error);
