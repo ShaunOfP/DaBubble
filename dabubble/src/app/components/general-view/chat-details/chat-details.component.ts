@@ -77,10 +77,12 @@ export class ChatDetailsComponent {
   }
 
   submitNewName(ngForm: NgForm) {
-
+    this.saveChanges();
   }
 
   submitNewDescription(ngForm: NgForm) {
 
+
+    this.saveDescChanges();
   }
 }

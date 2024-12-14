@@ -26,11 +26,11 @@
             <div class="new-channel-name-container d-none" #newChannelInputContainer>
                 <div>
                     <span class="fs18 bold">Channel-Name</span>
-                    <button class="fs18 purple hover" (click)="saveChanges()" type="submit">Speichern</button>
+                    <button class="fs18 purple hover" type="submit">Speichern</button>
                 </div>
-                <form (ngSubmit)="submitNewName(form)" #form="ngForm">
+                <form (ngSubmit)="submitNewName(form)" #form="ngForm" name="newName">
                     <span class="fs18 bold z1 padding-left-20">#</span>
-                    <input class="input-field margin-left-negative-50 padding-left-50" placeholder="Entwicklerteam" [(ngModel)]="newChannelNameInput">
+                    <input class="input-field margin-left-negative-50 padding-left-50" placeholder="Entwicklerteam" [(ngModel)]="newChannelNameInput" name="newChannelNameInput">
                 </form>
             </div>
 
@@ -52,12 +52,12 @@
             </div>
 
             <div class="d-flex column gap-30 d-none" #editDescriptionContainer>
-                <form (ngSubmit)="submitNewDescription(form)" #form="ngForm" class="d-flex column gap-20">
+                <form (ngSubmit)="submitNewDescription(form)" #form="ngForm" name="newDescription" class="d-flex column gap-20">
                     <div class="d-flex justify-between">
                         <span class="fs18">Beschreibung</span>
-                        <span class="fs18 purple hover padding-right-20" (click)="saveDescChanges()">Speichern</span>
+                        <button class="fs18 purple hover padding-right-20" type="submit">Speichern</button>
                     </div>
-                    <input class="input-field" placeholder="Dein Text hier" [(ngModel)]="newDescriptionInput">
+                    <input class="input-field" placeholder="Dein Text hier" [(ngModel)]="newDescriptionInput" name="newChannelDescriptionInput">
                 </form>
                 <span class="separator"></span>
                 <div class="d-flex column gap-20">
