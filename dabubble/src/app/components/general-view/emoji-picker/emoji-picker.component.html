@@ -1,34 +1,8 @@
-<mat-card class="emoji-card"> 
-    <mat-card-content>
+<mat-card class="emoji-card">
+  <mat-card-title>Emoji Picker</mat-card-title>
+  <mat-card-content>
     <div class="emoji-container">
-      <button (click)="showEmojiCard('😁')">😁</button>
-      <button (click)="showEmojiCard('😀')">😀</button>
-      <button (click)="showEmojiCard('😃')">😃</button>
-      <button (click)="showEmojiCard('😄')">😄</button>
-      <button (click)="showEmojiCard('😉')">😉</button>
-      <button (click)="showEmojiCard('😊')">😊</button>
-      <button (click)="showEmojiCard('😋')">😋</button>
-      <button (click)="showEmojiCard('😎')">😎</button>
-      <button (click)="showEmojiCard('🙂')">🙂</button>
-      <button (click)="showEmojiCard('😚')">😚</button>
-      <button (click)="showEmojiCard('😪')">😪</button>
-      <button (click)="showEmojiCard('😴')">😴</button>
-      <button (click)="showEmojiCard('😌')">😌</button>
-      <button (click)="showEmojiCard('😛')">😛</button>
-      <button (click)="showEmojiCard('🤐')">🤐</button>
-      <button (click)="showEmojiCard('😂')">😂</button>
-      <button (click)="showEmojiCard('🤣')">🤣</button>
-      <button (click)="showEmojiCard('😐')">😐</button>
-      <button (click)="showEmojiCard('🤔')">🤔</button>
-      <button (click)="showEmojiCard('😮')">😮</button>
-      <button (click)="showEmojiCard('😬')">😬</button>
-      <button (click)="showEmojiCard('🤯')">🤯</button>
-      <button (click)="showEmojiCard('😇')">😇</button>
-      <button (click)="showEmojiCard('🥳')">🥳</button>
+      <button class="hover" *ngFor="let emoji of emojis" (click)="addEmoji(emoji)">{{ emoji }}</button>
     </div>
-  
-      <div *ngIf="selectedEmoji">
-        <span class="emoji">{{ selectedEmoji }}</span> 
-      </div>
-    </mat-card-content>
-  </mat-card>
+  </mat-card-content>
+</mat-card>
