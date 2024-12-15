@@ -65,10 +65,13 @@
 
 .login-header {
   @include arrangement($d: flex, $jc: space-between, $ai: center, $fd: row);
-  position: absolute;
-  top: 32px;
-  left: 32px;
-  right: 32px;
+  width: 100%;
+  padding: 32px;
+  box-sizing: border-box;
+  // position: absolute;
+  // top: 32px;
+  // left: 32px;
+  // right: 32px;
 
   .login-header-logo {
     @include arrangement($d: flex, $jc: center, $ai: center, $fd: row);
@@ -175,7 +178,7 @@
 
     .card-header,
     .login-input {
-      @include arrangement($d: flex, $jc: center, $ai: center, $fd: column);
+      @include arrangement($d: flex, $jc: center, $ai: unset, $fd: column);
       flex-direction: column;
       gap: 24px;
     }
@@ -221,6 +224,15 @@
   .input-field {
     &:hover {
       cursor: pointer;
+    }
+  }
+
+  .error-message {
+    margin-top: -23px;
+    margin-bottom: -23px;
+    label {
+      padding-left: 16px;
+      color: var(--color-purple-error);
     }
   }
 }

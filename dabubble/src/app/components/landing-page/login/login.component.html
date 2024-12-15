@@ -36,10 +36,7 @@
       </div>
 
       <div class="error-message" *ngIf="email.invalid && email.touched">
-        <span *ngIf="email.errors?.['required']">Bitte gib hier deine Email ein.</span>
-        <span *ngIf="email.errors?.['minlength']">
-          Passwort muss mindestens 6 Zeichen lang sein.
-        </span>
+        <label *ngIf="email.errors?.['required']">Bitte gib hier deine Email ein</label>
       </div>
 
       <div class="input-field">
@@ -48,10 +45,7 @@
       </div>
 
       <div class="error-message" *ngIf="password.invalid && password.touched">
-        <span *ngIf="password.errors?.['required']">Bitte gib ein gültiges Passwort ein.</span>
-        <span *ngIf="password.errors?.['minlength']">
-          Passwort muss mindestens 6 Zeichen lang sein.
-        </span>
+        <label *ngIf="password.errors?.['required']">Bitte gib ein gültiges Passwort ein</label>
       </div>
     </div>
 

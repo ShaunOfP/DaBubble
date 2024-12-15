@@ -10,6 +10,7 @@ import {
   query,
   doc,
   updateDoc,
+  getDoc,
 } from '@angular/fire/firestore';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { UserDatas } from './../../models/user.class';
@@ -36,14 +37,21 @@ export class UserDatasService {
   async saveUser( username: string, useravatar: string, userId: string): Promise<void> {
     try {
       const userDocRef = doc(this.userDatasRef(), userId);
-      const userData = {
-        username: username,
-        avatar: useravatar,
-        createdAt: new Date().getTime(),
-      };
-      await setDoc(userDocRef, userData);
+      const userSnap = await getDoc(userDocRef);
 
-      console.log('✅ Benutzer erfolgreich gespeichert:', userData);
+      if (userSnap.exists()) {
+        console.log('Benutzer schon vorhanden', userSnap.data());
+      } else {
+        const userData = {
+          username: username,
+          avatar: useravatar,
+          createdAt: new Date().getTime(),
+        };
+        await setDoc(userDocRef, userData);
+  
+        console.log('✅ Benutzer erfolgreich gespeichert:', userData);
+      }
+      
     } catch (error) {
       console.error('❌ Fehler beim Speichern des Benutzers:', error);
     }

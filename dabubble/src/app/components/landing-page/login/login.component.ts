@@ -3,18 +3,26 @@ import { Component, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../services/firebase-services/auth.service';
+import { UserDatas } from '../../../models/user.class';
+import { UserDatasService } from '../../../services/firebase-services/user-datas.service';
 import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { FooterComponent } from "../footer/footer.component";
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterModule, CommonModule, MatCardModule, ReactiveFormsModule, FooterComponent],
+  imports: [
+    RouterModule,
+    CommonModule,
+    MatCardModule,
+    ReactiveFormsModule,
+    FooterComponent,
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
@@ -22,11 +30,13 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   animationPlayed: boolean = false;
   newGuest: boolean = false;
+  user: UserDatas = new UserDatas();
   guestId: string = '';
 
   constructor(
     private router: Router,
     private authService: AuthService,
+    private userService: UserDatasService,
     private form: FormBuilder
   ) {
     const animation = sessionStorage.getItem('animation');
@@ -68,6 +78,10 @@ export class LoginComponent implements OnInit {
   async guestLogIn() {
     try {
       await this.authService.guestSignIn();
+      const guestUser = this.authService.currentUser;
+      if (guestUser) {
+        await this.userService.saveUser('Gast', '', guestUser.uid);
+      }
       /* this.router.navigate(['/general/', this.authService.currentUser?.uid]); */
     } catch (error) {
       console.error('Fehler beim Gast log in:', error);
@@ -81,6 +95,14 @@ export class LoginComponent implements OnInit {
       /* this.router.navigate(['create-avatar']); */
       const googleUser = this.authService.currentUser;
       console.log(googleUser);
+      console.log(this.user);
+      if (googleUser) {
+        await this.userService.saveUser(
+          googleUser.displayName ?? 'Unbekannter Nutzer',
+          googleUser.photoURL ?? '',
+          googleUser.uid
+        );
+      }
     } catch (error) {
       console.error('Google Log In fehlgeschlagen.', error);
     }
