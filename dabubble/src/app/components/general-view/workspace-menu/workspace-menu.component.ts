@@ -1,10 +1,13 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import {ChangeDetectionStrategy, signal} from '@angular/core';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 @Component({
   selector: 'app-workspace-menu',
   standalone: true,
-  imports: [MatSidenavModule],
+  imports: [MatSidenavModule, MatExpansionModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './workspace-menu.component.html',
   styleUrl: './workspace-menu.component.scss'
 })
@@ -14,4 +17,7 @@ export class WorkspaceMenuComponent {
   openCreateChannelOverlay() {
     this.callParent.emit();
   }
+
+  readonly panelOpenState = signal(false);
+  
 }
