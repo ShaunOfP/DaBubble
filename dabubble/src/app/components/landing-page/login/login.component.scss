@@ -178,7 +178,7 @@
 
     .card-header,
     .login-input {
-      @include arrangement($d: flex, $jc: center, $ai: center, $fd: column);
+      @include arrangement($d: flex, $jc: center, $ai: unset, $fd: column);
       flex-direction: column;
       gap: 24px;
     }
@@ -224,6 +224,15 @@
   .input-field {
     &:hover {
       cursor: pointer;
+    }
+  }
+
+  .error-message {
+    margin-top: -23px;
+    margin-bottom: -23px;
+    label {
+      padding-left: 16px;
+      color: var(--color-purple-error);
     }
   }
 }
