@@ -1,51 +1,51 @@
-import { Component } from '@angular/core';
-import { ChatDetailsComponent } from "../chat-details/chat-details.component";
+import {
+  Component,
+  AfterViewInit,
+  ViewChild,
+  ElementRef,
+  ChangeDetectorRef,
+} from '@angular/core';
+import { ChatDetailsComponent } from '../chat-details/chat-details.component';
 import { ChannelMembersComponent } from "../channel-members/channel-members.component";
 import { AddMembersComponent } from "../add-members/add-members.component";
+import { CommonModule } from '@angular/common';
+import { EmojiPickerComponent } from '../emoji-picker/emoji-picker.component';
 
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [ChatDetailsComponent, ChannelMembersComponent, AddMembersComponent],
+  imports: [
+    ChatDetailsComponent, 
+    ChannelMembersComponent, 
+    AddMembersComponent, 
+    CommonModule, 
+    EmojiPickerComponent
+  ],
   templateUrl: './chat.component.html',
-  styleUrl: './chat.component.scss'
+  styleUrl: './chat.component.scss',
 })
-export class ChatComponent {
-  /**
-   * Removes class to display the Chat Details Menu
-   */
+export class ChatComponent implements AfterViewInit {
+  @ViewChild(EmojiPickerComponent) emojiPicker!: EmojiPickerComponent;
+  @ViewChild('emojiTarget', { static: true }) emojiTarget!: ElementRef;
+
+  constructor(private cdRef: ChangeDetectorRef) {} 
+
   openChatDetails() {
     document.getElementById('chatDetailsOverlay')?.classList.remove('d-none');
   }
 
-
-  /**
-   * Adds class to no longer display the Chat Details Menu
-   */
   closeChatDetails() {
     document.getElementById('chatDetailsOverlay')?.classList.add('d-none');
   }
 
-
-  /**
-   * Removes class to display the Members Info Menu
-   */
   openMembersInfo() {
     document.getElementById('channelMembersMenu')?.classList.remove('d-none');
   }
 
-
-  /**
-   * Adds class to no longer display the Members Info Menu
-   */
   closeMembersInfo(){
     document.getElementById('channelMembersMenu')?.classList.add('d-none');
   }
 
-  
-  /**
-   * Removes class to display the Add Members menu; "closes" the Members Info Menu if still open
-   */
   openAddMembersMenu() {
     if (!document.getElementById('channelMembersMenu')?.classList.contains('d-none')){
       this.closeMembersInfo();
@@ -53,11 +53,25 @@ export class ChatComponent {
     document.getElementById('addMembersMenu')?.classList.remove('d-none');
   }
 
-
-  /**
-   * Adds class to no longer display Add Members menu
-   */
   closeAddMembersMenu(){
     document.getElementById('addMembersMenu')?.classList.add('d-none');
+  }
+
+  ngAfterViewInit() {
+    this.emojiPicker.emojiSelected.subscribe((emoji: string) => {
+      this.insertEmoji(emoji);
+    });
+  }
+
+  insertEmoji(emoji: string) {
+    this.emojiTarget.nativeElement.value += emoji;
+    this.toggleEmojiPicker();
+  }
+
+  toggleEmojiPicker() {
+    const emojiPickerElement = document.querySelector('app-emoji-picker');
+    if (emojiPickerElement) {
+      emojiPickerElement.classList.toggle('d-none');
+    }
   }
 }

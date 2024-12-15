@@ -1,54 +1,56 @@
 <section class="radius-30">
     <header>
-        <div class="header-chat-info-container radius-30 ">
-            <h3>#</h3>
-            <h3>Entwicklerteam</h3>
-            <button (click)="openChatDetails()">
-                <img class="d-flex center" src="/img/general-view/workspace-menu/arrow_drop_down_thin.svg">
-                <img class="d-none center" src="/img/general-view/workspace-menu/hover_arrow_drop_down_thin.svg">
-            </button>
-        </div>
-        <app-chat-details class="d-none" id="chatDetailsOverlay" (callParent)="closeChatDetails()"></app-chat-details>
+      <div class="header-chat-info-container radius-30 ">
+        <h3>#</h3>
+        <h3>Entwicklerteam</h3>
+        <button (click)="openChatDetails()">
+          <img class="d-flex center" src="/img/general-view/workspace-menu/arrow_drop_down_thin.svg">
+          <img class="d-none center" src="/img/general-view/workspace-menu/hover_arrow_drop_down_thin.svg">
+        </button>
+      </div>
+      <app-chat-details class="d-none" id="chatDetailsOverlay" (callParent)="closeChatDetails()"></app-chat-details>
         <app-channel-members class="d-none" id="channelMembersMenu" (closeMe)="closeMembersInfo()" (openAddMembers)="openAddMembersMenu()"></app-channel-members>
         <app-add-members class="d-none" id="addMembersMenu" (closeMe)="closeAddMembersMenu()"></app-add-members>
-        <div class="header-user-container d-flex gap-10 align-center">
-            <div class="d-flex center gap-10 radius-30 hover padding-3-10 number-hover" (click)="openMembersInfo()">
-                <div class="d-flex center">
-                    <img class="user-icon radius-30" src="/img/public/user_icon_male_2.svg">
-                    <img class="user-icon radius-30 margin-left-minus-10" src="/img/public/user_icon_male_2.svg">
-                    <img class="user-icon radius-30 margin-left-minus-10" src="/img/public/user_icon_male_2.svg">
-                </div>
-                <span class="count">3</span>
-            </div>
-            <div class="change-image-on-hover d-flex center b-grey-circle radius-30 height-width-40 pointer"
-                (click)="openAddMembersMenu()">
-                <img src="/img/general-view/workspace-menu/add_person.svg">
-                <img class="d-none" src="/img/general-view/workspace-menu/hover_add_person.svg">
-            </div>
+      <div class="header-user-container d-flex gap-10 align-center">
+        <div class="d-flex center gap-10 radius-30 hover padding-3-10 number-hover" (click)="openMembersInfo()">
+          <div class="d-flex center">
+            <img class="user-icon radius-30" src="/img/public/user_icon_male_2.svg">
+            <img class="user-icon radius-30 margin-left-minus-10" src="/img/public/user_icon_male_2.svg">
+            <img class="user-icon radius-30 margin-left-minus-10" src="/img/public/user_icon_male_2.svg">
+          </div>
+          <span class="count">3</span>
         </div>
+        <div class="change-image-on-hover d-flex center b-grey-circle radius-30 height-width-40 pointer"
+                (click)="openAddMembersMenu()">
+          <img src="/img/general-view/workspace-menu/add_person.svg">
+          <img class="d-none" src="/img/general-view/workspace-menu/hover_add_person.svg">
+        </div>
+      </div>
     </header>
     <div class="chat-container">
-        <div class="chat">
-            Chat
-        </div>
-        <div class="input-container">
-            <textarea [placeholder]="'Nachricht an #Entwicklerteam'"></textarea>
-            <div class="textarea-icon-bar">
-                <div>
-                    <div class="height-width-40 d-flex center radius-30 hover change-image-on-hover">
-                        <img src="/img/general-view/workspace-menu/smiley.svg">
-                        <img class="d-none" src="/img/general-view/workspace-menu/hover_smiley.svg">
-                    </div>
-                    <div class="height-width-40 d-flex center radius-30 hover change-image-on-hover">
-                        <img src="/img/general-view/workspace-menu/aet.svg">
-                        <img class="d-none" src="/img/general-view/workspace-menu/hover_aet.svg">
-                    </div>
-                </div>
-                <div class="change-image-on-hover">
-                    <img class="height-width-40" src="/img/general-view/workspace-menu/send.svg">
-                    <img class="d-none height-width-40" src="/img/general-view/workspace-menu/hover_send.svg">
-                </div>
+      <div class="chat">
+        Chat
+      </div>
+      <div class="input-container">
+        <textarea #emojiTarget [placeholder]="'Nachricht an #Entwicklerteam'"></textarea> 
+        <div class="textarea-icon-bar">
+          <div>
+            <app-emoji-picker class="d-none"></app-emoji-picker> 
+            <div class="height-width-40 d-flex center radius-30 hover change-image-on-hover" (click)="toggleEmojiPicker()"> 
+
+              <img src="/img/general-view/workspace-menu/smiley.svg">
+              <img class="d-none" src="/img/general-view/workspace-menu/hover_smiley.svg">
             </div>
+            <div class="height-width-40 d-flex center radius-30 hover change-image-on-hover">
+              <img src="/img/general-view/workspace-menu/aet.svg">
+              <img class="d-none" src="/img/general-view/workspace-menu/hover_aet.svg">
+            </div>
+          </div>
+          <div class="change-image-on-hover">
+            <img class="height-width-40" src="/img/general-view/workspace-menu/send.svg">
+            <img class="d-none height-width-40" src="/img/general-view/workspace-menu/hover_send.svg">
+          </div>
         </div>
+      </div>
     </div>
-</section>
+  </section>

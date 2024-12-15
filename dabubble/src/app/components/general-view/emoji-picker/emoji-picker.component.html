@@ -1,1 +1,8 @@
-<p>emoji-picker works!</p>
+<mat-card class="emoji-card">
+  <mat-card-title>Emoji Picker</mat-card-title>
+  <mat-card-content>
+    <div class="emoji-container">
+      <button class="hover" *ngFor="let emoji of emojis" (click)="addEmoji(emoji)">{{ emoji }}</button>
+    </div>
+  </mat-card-content>
+</mat-card>

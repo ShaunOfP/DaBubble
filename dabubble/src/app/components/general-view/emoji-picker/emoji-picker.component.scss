@@ -1,0 +1,29 @@
+@import './../../../../styles.scss';
+@import './../chat/chat.component.scss';
+
+.emoji-container {
+@include arrangement($d: flex, $jc: space-between, $ai: left, $fd: row, $g: 0);
+flex-wrap: wrap;
+}
+
+button {
+    font-size: 18px;
+    height: 40px;
+    width: 40px;
+    border: unset;
+    border-radius: 50%;
+    transition: all 75ms;
+    background-color: unset;
+    cursor: pointer;
+}
+
+.mat-mdc-card {
+    border-bottom-left-radius: 0;
+}
+
+.mat-mdc-card-title {
+    @include arrangement($d: flex, $jc: center, $ai: center, $fd: row, $g: 0);
+    font-size: 18px;
+    font-weight: 700;
+    padding: 10px 0 10px 0;
+}
