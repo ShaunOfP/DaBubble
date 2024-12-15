@@ -29,10 +29,12 @@
         Chat
       </div>
       <div class="input-container">
-        <textarea #textarea [placeholder]="'Nachricht an #Entwicklerteam'"></textarea> 
+        <textarea #emojiTarget [placeholder]="'Nachricht an #Entwicklerteam'"></textarea> 
         <div class="textarea-icon-bar">
           <div>
+            <app-emoji-picker class="d-none"></app-emoji-picker> 
             <div class="height-width-40 d-flex center radius-30 hover change-image-on-hover" (click)="toggleEmojiPicker()"> 
+
               <img src="/img/general-view/workspace-menu/smiley.svg">
               <img class="d-none" src="/img/general-view/workspace-menu/hover_smiley.svg">
             </div>
@@ -48,5 +50,5 @@
         </div>
       </div>
     </div>
-    <app-emoji-picker class="d-none"></app-emoji-picker> 
+
   </section>

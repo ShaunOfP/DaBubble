@@ -6,7 +6,6 @@ import {
   ChangeDetectorRef,
 } from '@angular/core';
 import { ChatDetailsComponent } from '../chat-details/chat-details.component';
-
 import { CommonModule } from '@angular/common';
 import { EmojiPickerComponent } from '../emoji-picker/emoji-picker.component';
 
@@ -19,7 +18,7 @@ import { EmojiPickerComponent } from '../emoji-picker/emoji-picker.component';
 })
 export class ChatComponent implements AfterViewInit {
   @ViewChild(EmojiPickerComponent) emojiPicker!: EmojiPickerComponent;
-  @ViewChild('textarea') textarea!: ElementRef;
+  @ViewChild('emojiTarget', { static: true }) emojiTarget!: ElementRef;
 
   showEmojiPicker: boolean = false;
 
@@ -40,7 +39,7 @@ export class ChatComponent implements AfterViewInit {
   }
 
   insertEmoji(emoji: string) {
-    this.textarea.nativeElement.value += emoji;
+    this.emojiTarget.nativeElement.value += emoji;
     this.toggleEmojiPicker();
   }
 
