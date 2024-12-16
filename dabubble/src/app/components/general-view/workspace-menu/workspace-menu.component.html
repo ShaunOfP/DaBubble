@@ -12,15 +12,15 @@
     </div>
     <div class="channels-and-chat-container">
         <div class="channels-container flex">
-                <!--Panel Start-->
-                    <mat-expansion-panel hideToggle [expanded]="true" (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
+                <!--Panel Channels Start-->
+                    <mat-expansion-panel hideToggle [expanded]="true" (opened)="channelOpenState.set(true)" (closed)="channelOpenState.set(false)">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
                             <div class="header gap-15 flex justify-space-between">
                                 <div class="flex gap-15 hover-text-color">
                                     <div class="flex">
                                         <img 
-                                            [src]="panelOpenState()
+                                            [src]="channelOpenState()
                                             ? '/img/general-view/workspace-menu/arrow_drop_down.svg'
                                             : '/img/general-view/workspace-menu/arrow_drop_up.svg'
                                         ">
@@ -49,7 +49,7 @@
                         </div>
                         <!-- Channels End -->
                     </mat-expansion-panel>
-                <!--Panel End-->
+                <!--Panel Channels End-->
 
                 <div class="hover height-width-40 flex center img-switch radius-30" (click)="openCreateChannelOverlay()">
                     <img class="height-width-24" src="/img/general-view/workspace-menu/add.svg">
@@ -57,100 +57,112 @@
                 </div>
         </div>
         <div class="dm-container flex">
-            <div class="header gap-15 flex hover-text-color">
-                <img src="/img/general-view/workspace-menu/arrow_drop_down.svg">
-                <div class="header-middle flex gap-10">
-                    <img class="height-width-24" src="/img/general-view/workspace-menu/person_circle.svg">
-                    <span>Direktnachrichten</span>
+            <!--Panel Messages Start-->
+            <mat-expansion-panel hideToggle [expanded]="true" (opened)="messagesOpenState.set(true)" (closed)="messagesOpenState.set(false)">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <div class="header gap-15 flex hover-text-color">
+                            <img 
+                                [src]="messagesOpenState()
+                                ? '/img/general-view/workspace-menu/arrow_drop_down.svg'
+                                : '/img/general-view/workspace-menu/arrow_drop_up.svg'
+                            ">
+                            <div class="header-middle flex gap-10">
+                                <img class="height-width-24" src="/img/general-view/workspace-menu/person_circle.svg">
+                                <span>Direktnachrichten</span>
+                            </div>
+                        </div>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="contacts-container flex">
+                    <div class="contact flex center gap-15">
+                        <!-- Dummy profile -->
+                        <img src="xy">
+                        <span>Karsten Stahl</span>
+                    </div>
+                    <div class="contact flex center gap-15">
+                        <!-- Dummy profile -->
+                        <img src="xy">
+                        <span>Shauna Vayne</span>
+                    </div>
+                    <div class="contact flex center gap-15">
+                        <!-- Dummy profile -->
+                        <img src="xy">
+                        <span>Stivka Bartel</span>
+                    </div>
+                    <div class="contact flex center gap-15">
+                        <!-- Dummy profile -->
+                        <img src="xy">
+                        <span>Charles Vincent VII</span>
+                    </div>
+                    <div class="contact flex center gap-15">
+                        <!-- Dummy profile -->
+                        <img src="xy">
+                        <span>Charles Vincent VII</span>
+                    </div>
+                    <div class="contact flex center gap-15">
+                        <!-- Dummy profile -->
+                        <img src="xy">
+                        <span>Charles Vincent VII</span>
+                    </div>
+                    <div class="contact flex center gap-15">
+                        <!-- Dummy profile -->
+                        <img src="xy">
+                        <span>Charles Vincent VII</span>
+                    </div>
+                    <div class="contact flex center gap-15">
+                        <!-- Dummy profile -->
+                        <img src="xy">
+                        <span>Charles Vincent VII</span>
+                    </div>
+                    <div class="contact flex center gap-15">
+                        <!-- Dummy profile -->
+                        <img src="xy">
+                        <span>Charles Vincent VII</span>
+                    </div>
+                    <div class="contact flex center gap-15">
+                        <!-- Dummy profile -->
+                        <img src="xy">
+                        <span>Charles Vincent VII</span>
+                    </div>
+                    <div class="contact flex center gap-15">
+                        <!-- Dummy profile -->
+                        <img src="xy">
+                        <span>Charles Vincent VII</span>
+                    </div>
+                    <div class="contact flex center gap-15">
+                        <!-- Dummy profile -->
+                        <img src="xy">
+                        <span>Charles Vincent VII</span>
+                    </div>
+                    <div class="contact flex center gap-15">
+                        <!-- Dummy profile -->
+                        <img src="xy">
+                        <span>Charles Vincent VII</span>
+                    </div>
+                    <div class="contact flex center gap-15">
+                        <!-- Dummy profile -->
+                        <img src="xy">
+                        <span>Charles Vincent VII</span>
+                    </div>
+                    <div class="contact flex center gap-15">
+                        <!-- Dummy profile -->
+                        <img src="xy">
+                        <span>Charles Vincent VII</span>
+                    </div>
+                    <div class="contact flex center gap-15">
+                        <!-- Dummy profile -->
+                        <img src="xy">
+                        <span>Charles Vincent VII</span>
+                    </div>
+                    <div class="contact flex center gap-15">
+                        <!-- Dummy profile -->
+                        <img src="xy">
+                        <span>Charles Vincent Johann Karl von Gutenberg sein Sohn der Bruder</span>
+                    </div>
                 </div>
-            </div>
-            <div class="contacts-container flex">
-                <div class="contact flex center gap-15">
-                    <!-- Dummy profile -->
-                    <img src="xy">
-                    <span>Karsten Stahl</span>
-                </div>
-                <div class="contact flex center gap-15">
-                    <!-- Dummy profile -->
-                    <img src="xy">
-                    <span>Shauna Vayne</span>
-                </div>
-                <div class="contact flex center gap-15">
-                    <!-- Dummy profile -->
-                    <img src="xy">
-                    <span>Stivka Bartel</span>
-                </div>
-                <div class="contact flex center gap-15">
-                    <!-- Dummy profile -->
-                    <img src="xy">
-                    <span>Charles Vincent VII</span>
-                </div>
-                <div class="contact flex center gap-15">
-                    <!-- Dummy profile -->
-                    <img src="xy">
-                    <span>Charles Vincent VII</span>
-                </div>
-                <div class="contact flex center gap-15">
-                    <!-- Dummy profile -->
-                    <img src="xy">
-                    <span>Charles Vincent VII</span>
-                </div>
-                <div class="contact flex center gap-15">
-                    <!-- Dummy profile -->
-                    <img src="xy">
-                    <span>Charles Vincent VII</span>
-                </div>
-                <div class="contact flex center gap-15">
-                    <!-- Dummy profile -->
-                    <img src="xy">
-                    <span>Charles Vincent VII</span>
-                </div>
-                <div class="contact flex center gap-15">
-                    <!-- Dummy profile -->
-                    <img src="xy">
-                    <span>Charles Vincent VII</span>
-                </div>
-                <div class="contact flex center gap-15">
-                    <!-- Dummy profile -->
-                    <img src="xy">
-                    <span>Charles Vincent VII</span>
-                </div>
-                <div class="contact flex center gap-15">
-                    <!-- Dummy profile -->
-                    <img src="xy">
-                    <span>Charles Vincent VII</span>
-                </div>
-                <div class="contact flex center gap-15">
-                    <!-- Dummy profile -->
-                    <img src="xy">
-                    <span>Charles Vincent VII</span>
-                </div>
-                <div class="contact flex center gap-15">
-                    <!-- Dummy profile -->
-                    <img src="xy">
-                    <span>Charles Vincent VII</span>
-                </div>
-                <div class="contact flex center gap-15">
-                    <!-- Dummy profile -->
-                    <img src="xy">
-                    <span>Charles Vincent VII</span>
-                </div>
-                <div class="contact flex center gap-15">
-                    <!-- Dummy profile -->
-                    <img src="xy">
-                    <span>Charles Vincent VII</span>
-                </div>
-                <div class="contact flex center gap-15">
-                    <!-- Dummy profile -->
-                    <img src="xy">
-                    <span>Charles Vincent VII</span>
-                </div>
-                <div class="contact flex center gap-15">
-                    <!-- Dummy profile -->
-                    <img src="xy">
-                    <span>Charles Vincent Johann Karl von Gutenberg sein Sohn der Bruder</span>
-                </div>
-            </div>
+            </mat-expansion-panel>
+            <!--Panel Messages Start-->
         </div>
     </div>
 </section>

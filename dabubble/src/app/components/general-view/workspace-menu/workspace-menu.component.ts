@@ -18,6 +18,7 @@ export class WorkspaceMenuComponent {
     this.callParent.emit();
   }
 
-  readonly panelOpenState = signal(false);
+  readonly channelOpenState = signal(false);
+  readonly messagesOpenState = signal(false);
   
 }
