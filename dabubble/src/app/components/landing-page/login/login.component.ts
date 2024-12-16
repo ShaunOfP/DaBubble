@@ -74,7 +74,7 @@ export class LoginComponent implements OnInit {
       this.loginForm.markAllAsTouched();
     }
   }
-
+/* 
   async guestLogIn() {
     try {
       await this.authService.guestSignIn();
@@ -82,17 +82,17 @@ export class LoginComponent implements OnInit {
       if (guestUser) {
         await this.userService.saveUser('Gast', '', guestUser.uid);
       }
-      /* this.router.navigate(['/general/', this.authService.currentUser?.uid]); */
+      // this.router.navigate(['/general/', this.authService.currentUser?.uid]); 
     } catch (error) {
       console.error('Fehler beim Gast log in:', error);
     }
-  }
+  } */
 
-  async googleLogIn() {
+/*   async googleLogIn() {
     try {
       await this.authService.googleSignIn();
       console.log('Erfolgreich mit Google eingelogt');
-      /* this.router.navigate(['create-avatar']); */
+      //this.router.navigate(['create-avatar']); 
       const googleUser = this.authService.currentUser;
       console.log(googleUser);
       console.log(this.user);
@@ -107,7 +107,7 @@ export class LoginComponent implements OnInit {
       console.error('Google Log In fehlgeschlagen.', error);
     }
   }
-
+ */
   get email() {
     return this.loginForm.get('email')!;
   }

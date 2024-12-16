@@ -46,8 +46,7 @@ export class AuthService {
         const user = userCredential.user;
         console.log(user.uid);
         this.userDataService.saveUser(
-          accountData.name,
-          accountData.accountImg,
+          accountData,
           user.uid
         );
       })

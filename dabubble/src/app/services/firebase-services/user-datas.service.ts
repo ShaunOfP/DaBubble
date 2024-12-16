@@ -15,7 +15,7 @@ import {
 import { Observable, BehaviorSubject } from 'rxjs';
 import { UserDatas } from './../../models/user.class';
 
-interface UserData {
+interface SingleUserData {
   mail: string;
   password: string;
 }
@@ -34,7 +34,7 @@ export class UserDatasService {
     this.getUserDatas('Test@test.de', '123');
   }
 
-  async saveUser( username: string, useravatar: string, userId: string): Promise<void> {
+  async saveUser( accountData:UserDatas, userId: string): Promise<void> {
     try {
       const userDocRef = doc(this.userDatasRef(), userId);
       const userSnap = await getDoc(userDocRef);
@@ -43,9 +43,12 @@ export class UserDatasService {
         console.log('Benutzer schon vorhanden', userSnap.data());
       } else {
         const userData = {
-          username: username,
-          avatar: useravatar,
-          createdAt: new Date().getTime(),
+          username: accountData.name,
+          avatar: accountData.accountImg,
+          mail: accountData.mail,
+          online: accountData.online,
+          channels: accountData.channels,
+          privateChats: accountData.privateChats,
         };
         await setDoc(userDocRef, userData);
   
@@ -62,7 +65,7 @@ export class UserDatasService {
     try {
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
-        const userData = doc.data() as UserData;
+        const userData = doc.data() as SingleUserData;
         if (userData.password === password) {
           console.log('ID:', doc.id);
           console.log('Data:', userData);
