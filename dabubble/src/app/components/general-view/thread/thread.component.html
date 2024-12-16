@@ -18,10 +18,11 @@
             Chat
         </div>
         <div class="input-container">
-            <textarea [placeholder]="'Antworten...'"></textarea>
+            <textarea #emojiTarget [placeholder]="'Antworten...'"></textarea>
             <div class="textarea-icon-bar">
                 <div>
-                    <div class="height-width-40 d-flex center hover change-image-on-hover">
+                    <app-emoji-picker id="emojiThreads" (emojiSelected)="onEmojiReceived($event)" class="d-none"></app-emoji-picker>
+                    <div class="height-width-40 d-flex center hover change-image-on-hover" (click)="toggleEmojiPicker()">
                         <img src="/img/general-view/workspace-menu/smiley.svg">
                         <img class="d-none" src="/img/general-view/workspace-menu/hover_smiley.svg">
                     </div>
