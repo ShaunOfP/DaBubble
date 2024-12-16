@@ -8,15 +8,6 @@ import { UserDatas } from '../../../models/user.class';
 import { HeaderSectionComponent } from "../header-section/header-section.component";
 import { FooterComponent } from "../footer/footer.component";
 
-interface InputField {
-  placeholder: string;
-  icon: string;
-  value: string;
-  focused: boolean;
-  type: string;
-  name: string;
-}
-
 @Component({
   selector: 'app-sign-in',
   standalone: true,
@@ -74,3 +65,12 @@ export class SignInComponent {
   } */
 
     /*this.userService.saveUser(this.accountData); */
+
+/* interface InputField {
+  placeholder: string;
+  icon: string;
+  value: string;
+  focused: boolean;
+  type: string;
+  name: string;
+} */

@@ -14,8 +14,9 @@ import {
 } from '@angular/fire/firestore';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { UserDatas } from './../../models/user.class';
+import { user } from '@angular/fire/auth';
 
-interface UserData {
+interface SingleUserData {
   mail: string;
   password: string;
 }
@@ -34,18 +35,22 @@ export class UserDatasService {
     this.getUserDatas('Test@test.de', '123');
   }
 
-  async saveUser( username: string, useravatar: string, userId: string): Promise<void> {
+  async saveUser( accountData:UserDatas, userId: string): Promise<void> {
     try {
       const userDocRef = doc(this.userDatasRef(), userId);
       const userSnap = await getDoc(userDocRef);
-
+      const chatsId = await this.createPrivateChat(userId)
+      accountData.privateChats.push(chatsId)
       if (userSnap.exists()) {
         console.log('Benutzer schon vorhanden', userSnap.data());
       } else {
         const userData = {
-          username: username,
-          avatar: useravatar,
-          createdAt: new Date().getTime(),
+          username: accountData.name,
+          avatar: accountData.accountImg,
+          mail: accountData.mail,
+          online: accountData.online,
+          channels: accountData.channels,
+          privateChats: accountData.privateChats,
         };
         await setDoc(userDocRef, userData);
   
@@ -57,12 +62,24 @@ export class UserDatasService {
     }
   }
 
+  async createPrivateChat(userId: String){
+    const userDocRef = doc(collection(this.firestore, 'privateChats'));
+    const chatData = {
+      createdAt: new Date().getTime(),
+      participants: [userId]
+    }
+    setDoc(userDocRef, chatData)
+    const docRef = doc(collection(this.firestore, 'privateChats'));
+    const docSnap = await getDoc(docRef);
+    return docSnap.id
+  }
+
   async getUserDatas(email: string, password: string) {
     const q = query(this.userDatasRef(), where('mail', '==', email));
     try {
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
-        const userData = doc.data() as UserData;
+        const userData = doc.data() as SingleUserData;
         if (userData.password === password) {
           console.log('ID:', doc.id);
           console.log('Data:', userData);

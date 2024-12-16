@@ -42,12 +42,10 @@ export class AuthService {
 
     createUserWithEmailAndPassword(auth, accountData.mail, accountData.password)
       .then((userCredential) => {
-        debugger;
         const user = userCredential.user;
         console.log(user.uid);
         this.userDataService.saveUser(
-          accountData.name,
-          accountData.accountImg,
+          accountData,
           user.uid
         );
       })

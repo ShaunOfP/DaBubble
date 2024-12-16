@@ -1,10 +1,4 @@
-import {
-  Component,
-  AfterViewInit,
-  ViewChild,
-  ElementRef,
-  ChangeDetectorRef,
-} from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { ChatDetailsComponent } from '../chat-details/chat-details.component';
 import { ChannelMembersComponent } from "../channel-members/channel-members.component";
 import { AddMembersComponent } from "../add-members/add-members.component";
@@ -24,11 +18,9 @@ import { EmojiPickerComponent } from '../emoji-picker/emoji-picker.component';
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss',
 })
-export class ChatComponent implements AfterViewInit {
-  @ViewChild(EmojiPickerComponent) emojiPicker!: EmojiPickerComponent;
+export class ChatComponent  { 
   @ViewChild('emojiTarget', { static: true }) emojiTarget!: ElementRef;
-
-  constructor(private cdRef: ChangeDetectorRef) {} 
+  selectedEmoji: string = '';
 
   openChatDetails() {
     document.getElementById('chatDetailsOverlay')?.classList.remove('d-none');
@@ -57,19 +49,14 @@ export class ChatComponent implements AfterViewInit {
     document.getElementById('addMembersMenu')?.classList.add('d-none');
   }
 
-  ngAfterViewInit() {
-    this.emojiPicker.emojiSelected.subscribe((emoji: string) => {
-      this.insertEmoji(emoji);
-    });
-  }
-
-  insertEmoji(emoji: string) {
+  onEmojiReceived(emoji: string) {
+    this.selectedEmoji = emoji;
     this.emojiTarget.nativeElement.value += emoji;
     this.toggleEmojiPicker();
   }
 
-  toggleEmojiPicker() {
-    const emojiPickerElement = document.querySelector('app-emoji-picker');
+    toggleEmojiPicker() {
+    const emojiPickerElement = document.getElementById('emojiChat');
     if (emojiPickerElement) {
       emojiPickerElement.classList.toggle('d-none');
     }
