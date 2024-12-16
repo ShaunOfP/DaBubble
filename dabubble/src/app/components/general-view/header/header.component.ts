@@ -60,6 +60,7 @@ export class HeaderComponent {
   }
 
   showProfileInfo() {
+    this.closeDropdownMenu();
     document.getElementById('profile-info-container')?.classList.remove('d-none');
   }
 
@@ -75,11 +76,5 @@ export class HeaderComponent {
       this.closeDropdownMenu();
       this.closeEditForm();
     }
-  }
-
-  toggleDisplayNone() {
-    let element = document.getElementById('user-profile');
-
-    element?.classList.toggle('d-none');
   }
 }
