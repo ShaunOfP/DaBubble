@@ -14,6 +14,7 @@ import {
 } from '@angular/fire/firestore';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { UserDatas } from './../../models/user.class';
+import { user } from '@angular/fire/auth';
 
 interface SingleUserData {
   mail: string;
@@ -38,7 +39,8 @@ export class UserDatasService {
     try {
       const userDocRef = doc(this.userDatasRef(), userId);
       const userSnap = await getDoc(userDocRef);
-
+      const chatsId = await this.createPrivateChat(userId)
+      accountData.privateChats.push(chatsId)
       if (userSnap.exists()) {
         console.log('Benutzer schon vorhanden', userSnap.data());
       } else {
@@ -58,6 +60,18 @@ export class UserDatasService {
     } catch (error) {
       console.error('❌ Fehler beim Speichern des Benutzers:', error);
     }
+  }
+
+  async createPrivateChat(userId: String){
+    const userDocRef = doc(collection(this.firestore, 'privateChats'));
+    const chatData = {
+      createdAt: new Date().getTime(),
+      participants: [userId]
+    }
+    setDoc(userDocRef, chatData)
+    const docRef = doc(collection(this.firestore, 'privateChats'));
+    const docSnap = await getDoc(docRef);
+    return docSnap.id
   }
 
   async getUserDatas(email: string, password: string) {
