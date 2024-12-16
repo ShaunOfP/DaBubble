@@ -2,66 +2,89 @@
 @import "../../../../templates/mixins.scss";
 @import "../../../../templates/input.scss";
 @import "../../../../templates/styles/button.scss";
+@import "../../landing-page/landing-page.component.scss";
 
 @keyframes fadeOut {
-  0% {
+  from {
     opacity: 1;
   }
 
-  100% {
+  to {
     opacity: 0;
     display: none;
   }
 }
 
 @keyframes fadeIn {
-  0% {
+  from {
     opacity: 0;
   }
-  100% {
+  to {
     opacity: 1;
   }
 }
 
 @keyframes slideText {
-  0% {
+  from {
     left: -100%;
   }
 
-  100% {
+  to {
     left: 0%;
   }
 }
 
 @keyframes slideImage {
-  0% {
+  from {
     right: -40%;
   }
 
-  100% {
+  to {
     right: 0%;
   }
 }
 
 @keyframes textColor {
-  0% {
+  from {
     color: white;
   }
 
-  100% {
+  to {
     color: black;
   }
 }
 
-@keyframes slideAndShrink {
-  0% {
+@keyframes slideAndShrinkFull {
+  from {
     transform: scale(1) translate(0);
   }
 
-  100% {
+  to {
     transform: scale(0.5) translate(-82vw, -85vh);
   }
 }
+
+
+  @keyframes slideAndShrinkMid {
+    from {
+      transform: scale(1) translate(0);
+    }
+  
+    to {
+      transform: scale(0.5) translate(-65vw, -85vh);
+    }
+  }
+
+  @keyframes slideAndShrinkSmall {
+    from {
+      transform: scale(1) translate(0);
+    }
+  
+    to {
+      transform: scale(0.5) translate(-55vw, -85vh);
+    }
+  }
+
 
 .login-header {
   @include arrangement($d: flex, $jc: space-between, $ai: center, $fd: row);
@@ -136,7 +159,15 @@
   height: 200px;
   overflow: hidden;
   gap: 16px;
-  animation: slideAndShrink 0.2s forwards 4s, fadeOut 0.1s forwards 4.2s;
+  animation: slideAndShrinkFull 0.2s forwards 4s, fadeOut 0.1s forwards 4.2s;
+
+  @media (max-width: 1550px) {
+    animation: slideAndShrinkMid 0.2s forwards 4s, fadeOut 0.1s forwards 4.2s;
+  }
+
+  @media (max-width: 900px) {
+    animation: slideAndShrinkSmall 0.2s forwards 4s, fadeOut 0.1s forwards 4.2s;
+  }
 
   img {
     object-fit: cover;
@@ -210,7 +241,7 @@
       width: 100%;
 
       .border-line {
-        width: 240px;
+        width: 200px;
         height: 1px;
         background-color: lightgray;
       }
@@ -262,7 +293,7 @@
 
 .login-button {
   @include arrangement($d: flex, $jc: space-between, $ai: center, $fd: row);
-  width: 60%;
+  gap: 16px;
 
   button {
     font-size: 18px;
