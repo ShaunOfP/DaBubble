@@ -1,96 +1,137 @@
 <div class="app-wrapper">
-<div class="login-header">
-  <div [ngClass]="{ 'header-animation': !animationPlayed }" class="login-header-logo">
-    <img src="/img/general-view/workspace-menu/Logo.svg" alt="Logo" />
-    <h1>DABubble</h1>
-    <div class="header-logo-overlay"></div>
-  </div>
-  <div class="login-header-link">
-    <span>Neu bei DA Bubble?</span>
-    <button class="btn-glass--default" [routerLink]="['sign-in']">
-      Konto erstellen
-    </button>
-  </div>
-</div>
-
-<div [ngClass]="{ 'd-none': animationPlayed }" class="overlay"></div>
-<div [ngClass]="{ 'd-none': animationPlayed }" class="overlay" class="logo-wrapper">
-  <img src="/img/general-view/workspace-menu/Logo.svg" alt="Logo" />
-  <div class="animated-text">
-    <p>DABubble</p>
-  </div>
-</div>
-
-<form [formGroup]="loginForm" class="login-card" (ngSubmit)="logIn()">
-  <mat-card>
-    <div class="card-header">
-      <h2>Anmeldung</h2>
-      <span>Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit
-        verwendest.</span>
+  <div class="login-header">
+    <div
+      [ngClass]="{ 'header-animation': !animationPlayed }"
+      class="login-header-logo"
+    >
+      <img src="/img/general-view/workspace-menu/Logo.svg" alt="Logo" />
+      <h1>DABubble</h1>
+      <div class="header-logo-overlay"></div>
     </div>
-
-    <div class="login-input">
-      <div class="input-field">
-        <img src="/img/public/mail.svg" alt="" />
-        <input type="email" placeholder="beispielname@email.com" formControlName="email" />
-      </div>
-
-      <div class="error-message" *ngIf="email.invalid && email.touched">
-        <label *ngIf="email.errors?.['required']">Bitte gib hier deine Email ein</label>
-      </div>
-
-      <div class="input-field">
-        <img src="/img/public/password-lock.svg" alt="" />
-        <input type="password" placeholder="Passwort" formControlName="password" />
-      </div>
-
-      <div class="error-message" *ngIf="password.invalid && password.touched">
-        <label *ngIf="password.errors?.['required']">Bitte gib ein gültiges Passwort ein</label>
-      </div>
-    </div>
-
-    <a [routerLink]="['forgot-password']">Passwort vergessen?</a>
-
-    <div class="login-border">
-      <div class="border-line"></div>
-      <span>ODER</span>
-      <div class="border-line"></div>
-    </div>
-
-    <div class="google-login">
-      <button class="input-field" type="button" (click)="googleLogIn()">
-        <img src="/img/general-view/log-in/google-logo.svg" alt="" />
-        <span>Anmelden mit Google</span>
+    <div class="login-header-link">
+      <span>Neu bei DA Bubble?</span>
+      <button class="btn-glass--default" [routerLink]="['sign-in']">
+        Konto erstellen
       </button>
     </div>
+  </div>
 
-    <div class="login-button">
-      <button class="btn-primary--default" type="submit">Anmelden</button>
-      <button class="btn-secondary--default" type="button" (click)="guestLogIn()">Gäste-Login</button>
+  <div class="responsive-login-footer">
+    <div class="login-header-link">
+      <span>Neu bei DA Bubble?</span>
+      <button class="btn-glass--default" [routerLink]="['sign-in']">
+        Konto erstellen
+      </button>
     </div>
-  </mat-card>
-</form>
+  </div>
 
-<div>
-  <p>login works!</p>
-  <button class="btn-primary--default" (click)="navigateTo('general/public-chat')">
-    Go to chat
-  </button>
-  <button class="btn-secondary--disable">secondary--disable</button>
-  <button class="btn-primary--default" (click)="navigateTo('imprint')">
-    Impressum
-  </button>
-  <button class="btn-primary--default" (click)="navigateTo('sign-in')">
-    Konto erstellen
-  </button>
-  <button class="btn-primary--default" (click)="navigateTo('forgot-password')">
-    Passwort vergessen
-  </button>
-  <button class="btn-primary--default" (click)="navigateTo('create-avatar')">
-    Avatar
-  </button>
-</div>
+  <div [ngClass]="{ 'd-none': animationPlayed }" class="overlay"></div>
+  <div
+    [ngClass]="{ 'd-none': animationPlayed }"
+    class="overlay"
+    class="logo-wrapper"
+  >
+    <img src="/img/general-view/workspace-menu/Logo.svg" alt="Logo" />
+    <div class="animated-text">
+      <p>DABubble</p>
+    </div>
+  </div>
 
-<app-footer></app-footer>
+  <form [formGroup]="loginForm" class="login-card" (ngSubmit)="logIn()">
+    <mat-card>
+      <div class="card-header">
+        <h2>Anmeldung</h2>
+        <span
+          >Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der
+          Arbeit verwendest.</span
+        >
+      </div>
 
+      <div class="login-input">
+        <div class="input-field">
+          <img src="/img/public/mail.svg" alt="" />
+          <input
+            type="email"
+            placeholder="beispielname@email.com"
+            formControlName="email"
+          />
+        </div>
+
+        <div class="error-message" *ngIf="email.invalid && email.touched">
+          <label *ngIf="email.errors?.['required']"
+            >Bitte gib hier deine Email ein</label
+          >
+        </div>
+
+        <div class="input-field">
+          <img src="/img/public/password-lock.svg" alt="" />
+          <input
+            type="password"
+            placeholder="Passwort"
+            formControlName="password"
+          />
+        </div>
+
+        <div class="error-message" *ngIf="password.invalid && password.touched">
+          <label *ngIf="password.errors?.['required']"
+            >Bitte gib ein gültiges Passwort ein</label
+          >
+        </div>
+      </div>
+
+      <a [routerLink]="['forgot-password']">Passwort vergessen?</a>
+
+      <div class="login-border">
+        <div class="border-line"></div>
+        <span>ODER</span>
+        <div class="border-line"></div>
+      </div>
+
+      <div class="google-login">
+        <button class="input-field" type="button" (click)="googleLogIn()">
+          <img src="/img/general-view/log-in/google-logo.svg" alt="" />
+          <span>Anmelden mit Google</span>
+        </button>
+      </div>
+
+      <div class="login-button">
+        <button class="btn-primary--default" type="submit">Anmelden</button>
+        <button
+          class="btn-secondary--default"
+          type="button"
+          (click)="guestLogIn()"
+        >
+          Gäste-Login
+        </button>
+      </div>
+    </mat-card>
+  </form>
+
+  <div>
+    <p>login works!</p>
+    <button
+      class="btn-primary--default"
+      (click)="navigateTo('general/public-chat')"
+    >
+      Go to chat
+    </button>
+    <button class="btn-secondary--disable">secondary--disable</button>
+    <button class="btn-primary--default" (click)="navigateTo('imprint')">
+      Impressum
+    </button>
+    <button class="btn-primary--default" (click)="navigateTo('sign-in')">
+      Konto erstellen
+    </button>
+    <button
+      class="btn-primary--default"
+      (click)="navigateTo('forgot-password')"
+    >
+      Passwort vergessen
+    </button>
+    <button class="btn-primary--default" (click)="navigateTo('create-avatar')">
+      Avatar
+    </button>
+  </div>
+
+  <app-footer></app-footer>
 </div>

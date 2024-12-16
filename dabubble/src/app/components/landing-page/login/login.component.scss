@@ -64,26 +64,35 @@
   }
 }
 
-
-  @keyframes slideAndShrinkMid {
-    from {
-      transform: scale(1) translate(0);
-    }
-  
-    to {
-      transform: scale(0.5) translate(-65vw, -85vh);
-    }
+@keyframes slideAndShrinkMid {
+  from {
+    transform: scale(1) translate(0);
   }
 
-  @keyframes slideAndShrinkSmall {
-    from {
-      transform: scale(1) translate(0);
-    }
-  
-    to {
-      transform: scale(0.5) translate(-55vw, -85vh);
-    }
+  to {
+    transform: scale(0.5) translate(-65vw, -85vh);
   }
+}
+
+@keyframes slideAndShrinkSmall {
+  from {
+    transform: scale(1) translate(0);
+  }
+
+  to {
+    transform: scale(0.5) translate(-55vw, -85vh);
+  }
+}
+
+@keyframes slideAndShrinkMobile {
+  from {
+    transform: scale(1) translate(0);
+  }
+
+  to {
+    transform: scale(0.5) translate(-85vh);
+  }
+}
 
 
 .login-header {
@@ -125,7 +134,16 @@
         var(--color-purple-primary-default)
       );
     }
+
+    @media (max-width: 700px) {
+      display: none;
+    }
   }
+}
+
+.responsive-login-footer {
+  display: none;
+
 }
 
 .header-animation {
@@ -267,7 +285,6 @@
     }
   }
 }
-
 
 .google-login {
   @include arrangement($d: flex, $jc: center, $ai: center, $fd: row);
