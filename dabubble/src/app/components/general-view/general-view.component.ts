@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, ViewChild } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { WorkspaceMenuComponent } from './workspace-menu/workspace-menu.component';
 import { WorkspaceMenuCloseButtonComponent } from './workspace-menu-close-button/workspace-menu-close-button.component';
@@ -29,6 +29,7 @@ export class GeneralViewComponent {
   workspaceMenuIsVisible: boolean = true;
   threadIsVisible: boolean = true;
   toggleNumber: number = 0;
+  @ViewChild(ChatComponent) chatComponent!: ChatComponent;
 
 
   /**
@@ -90,5 +91,10 @@ export class GeneralViewComponent {
    */
   toggleClassForCreateChannelOverlay() {
     document.getElementById('create-channel-overlay')?.classList.toggle('d-none');
+  }
+
+
+  openNewMessage(){
+    this.chatComponent.openNewMessageWindow();
   }
 }
