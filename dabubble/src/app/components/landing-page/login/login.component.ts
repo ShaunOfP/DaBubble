@@ -74,40 +74,44 @@ export class LoginComponent implements OnInit {
       this.loginForm.markAllAsTouched();
     }
   }
-/* 
+
   async guestLogIn() {
     try {
       await this.authService.guestSignIn();
       const guestUser = this.authService.currentUser;
       if (guestUser) {
-        await this.userService.saveUser('Gast', '', guestUser.uid);
+        /* await this.userService.saveUser('Gast', '', guestUser.uid); */
       }
-      // this.router.navigate(['/general/', this.authService.currentUser?.uid]); 
+      /* this.router.navigate(['/general/', this.authService.currentUser?.uid]); */
     } catch (error) {
       console.error('Fehler beim Gast log in:', error);
     }
-  } */
+  }
 
-/*   async googleLogIn() {
+  async googleLogIn() {
     try {
       await this.authService.googleSignIn();
       console.log('Erfolgreich mit Google eingelogt');
-      //this.router.navigate(['create-avatar']); 
+      /* this.router.navigate(['create-avatar']); */
       const googleUser = this.authService.currentUser;
-      console.log(googleUser);
       console.log(this.user);
       if (googleUser) {
-        await this.userService.saveUser(
-          googleUser.displayName ?? 'Unbekannter Nutzer',
-          googleUser.photoURL ?? '',
-          googleUser.uid
-        );
+        const newUser: UserDatas = new UserDatas({
+          name: googleUser.displayName ?? '',
+          mail: googleUser.email ?? '',
+          password: '', 
+          accountImg: googleUser.photoURL ?? 'default-avatar',
+          channels: ['ER84UOYc0F2jptDjWxFo'], 
+          privateChats: [], 
+          online: false
+        });
+        await this.userService.saveUser(newUser, googleUser.uid);
       }
     } catch (error) {
       console.error('Google Log In fehlgeschlagen.', error);
     }
   }
- */
+
   get email() {
     return this.loginForm.get('email')!;
   }
