@@ -4,6 +4,7 @@ import { MatCardModule } from '@angular/material/card';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../services/firebase-services/auth.service';
 import { UserDatas } from '../../../models/user.class';
+import { GuestDatas } from "../../../models/guest.class";
 import { UserDatasService } from '../../../services/firebase-services/user-datas.service';
 import {
   FormBuilder,
@@ -12,8 +13,15 @@ import {
   Validators,
 } from '@angular/forms';
 import { FooterComponent } from '../footer/footer.component';
-import { collection, collectionData, doc, Firestore, getDoc } from '@angular/fire/firestore';
+import {
+  collection,
+  collectionData,
+  doc,
+  Firestore,
+  getDoc,
+} from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+import { User } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-login',
@@ -32,9 +40,8 @@ export class LoginComponent implements OnInit {
   userDatas$: Observable<UserDatas>;
   loginForm: FormGroup;
   animationPlayed: boolean = false;
-  newGuest: boolean = false;
   user: UserDatas = new UserDatas();
-  guestId: string = '';
+  guest: GuestDatas = new GuestDatas();
 
   constructor(
     private router: Router,
@@ -55,7 +62,6 @@ export class LoginComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     sessionStorage.setItem('animation', 'true');
-    console.log(this.guestId);
   }
 
   navigateTo(route: string) {
@@ -84,9 +90,23 @@ export class LoginComponent implements OnInit {
     try {
       await this.authService.guestSignIn();
       const guestUser = this.authService.currentUser;
-      if (guestUser) {
-        /* await this.userService.saveUser('Gast', '', guestUser.uid); */
+      const guestDocRef = doc(this.guestDatasRef(), guestUser?.uid);
+      const guestSnap = await getDoc(guestDocRef);
+      if (guestSnap.exists()) {
+        console.log('Gast schon vorhanden', guestSnap.data());
+      } else {
+        if (guestUser) {
+          const newGuest: GuestDatas = new GuestDatas({
+            name: 'Gast',
+            accountImg: 'default-avatar',
+            channels: ['ER84UOYc0F2jptDjWxFo'],
+          })
+          console.log(newGuest)
+          console.log(guestUser.uid);
+        }
       }
+
+
       /* this.router.navigate(['/general/', this.authService.currentUser?.uid]); */
     } catch (error) {
       console.error('Fehler beim Gast log in:', error);
@@ -102,21 +122,29 @@ export class LoginComponent implements OnInit {
       const userDocRef = doc(this.userDatasRef(), googleUser?.uid);
       const userSnap = await getDoc(userDocRef);
       console.log(this.user);
-      if (googleUser) {
-        const newUser: UserDatas = new UserDatas({
-          name: googleUser.displayName ?? '',
-          mail: googleUser.email ?? '',
-          password: '', 
-          accountImg: googleUser.photoURL ?? 'default-avatar',
-          channels: ['ER84UOYc0F2jptDjWxFo'], 
-          privateChats: [], 
-          online: false
-        });
-        await this.userService.saveUser(newUser, googleUser.uid);
+      if (userSnap.exists()) {
+        console.log('Benutzer schon vorhanden', userSnap.data());
+      } else {
+        if (googleUser) {
+          this.setNewUser(googleUser);
+        }
       }
     } catch (error) {
       console.error('Google Log In fehlgeschlagen.', error);
     }
+  }
+
+  async setNewUser(user: User) {
+    const newUser: UserDatas = new UserDatas({
+      name: user.displayName ?? '',
+      mail: user.email ?? '',
+      password: '',
+      accountImg: user.photoURL ?? 'default-avatar',
+      channels: ['ER84UOYc0F2jptDjWxFo'],
+      privateChats: [],
+      online: false,
+    });
+    await this.userService.saveUser(newUser, user.uid);
   }
 
   get email() {
@@ -129,5 +157,9 @@ export class LoginComponent implements OnInit {
 
   userDatasRef() {
     return collection(this.firestore, 'userDatas');
+  }
+
+  guestDatasRef() {
+    return collection(this.firestore, 'guestDatas');
   }
 }

@@ -35,53 +35,51 @@ export class UserDatasService {
     this.userDatas$ = collectionData(this.userDatasRef());
   }
 
-  async saveUser( accountData:UserDatas, userId: string): Promise<void> {
+  async saveUser(accountData: UserDatas, userId: string): Promise<void> {
     try {
       const userDocRef = doc(this.userDatasRef(), userId);
       const userSnap = await getDoc(userDocRef);
-      const chatsId = await this.createPrivateChat(userId)
-      accountData.privateChats.push(chatsId)
-      if (userSnap.exists()) {
-        console.log('Benutzer schon vorhanden', userSnap.data());
-      } else {
-        const userData = {
-          username: accountData.name,
-          avatar: accountData.accountImg,
-          mail: accountData.mail,
-          online: accountData.online,
-          channels: accountData.channels,
-          privateChats: accountData.privateChats,
-        };
-        await setDoc(userDocRef, userData);
-  
-        console.log('✅ Benutzer erfolgreich gespeichert:', userData);
-      }
-      
+      const chatsId = await this.createPrivateChat(userId);
+      accountData.privateChats.push(chatsId);
+
+      const userData = {
+        username: accountData.name,
+        avatar: accountData.accountImg,
+        mail: accountData.mail,
+        online: accountData.online,
+        channels: accountData.channels,
+        privateChats: accountData.privateChats,
+      };
+      await setDoc(userDocRef, userData);
+
+      console.log('✅ Benutzer erfolgreich gespeichert:', userData);
     } catch (error) {
       console.error('❌ Fehler beim Speichern des Benutzers:', error);
     }
   }
 
-  async createPrivateChat(userId:string){
-    const generatedId = this.generateRandomId()
+  async createPrivateChat(userId: string) {
+    const generatedId = this.generateRandomId();
     const userDocRef = doc(this.firestore, 'privateChats', generatedId);
     const chatData = {
       createdAt: new Date().getTime(),
-      participants: [userId]
-    }
-    await setDoc(userDocRef, chatData)
-    return generatedId
+      participants: [userId],
+    };
+    await setDoc(userDocRef, chatData);
+    return generatedId;
   }
 
-generateRandomId(){
-  const array = new Uint8Array(22);
-  crypto.getRandomValues(array);
-  const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
-  const randomId = Array.from(array, byte => characters[byte % characters.length]).join('');
-  const generatedRandomId = "pC" + randomId;
-  return generatedRandomId
-}
-
+  generateRandomId() {
+    const array = new Uint8Array(22);
+    crypto.getRandomValues(array);
+    const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    const randomId = Array.from(
+      array,
+      (byte) => characters[byte % characters.length]
+    ).join('');
+    const generatedRandomId = 'pC' + randomId;
+    return generatedRandomId;
+  }
 
   async getUserDatas(email: string, password: string) {
     const q = query(this.userDatasRef(), where('mail', '==', email));
@@ -112,7 +110,7 @@ generateRandomId(){
     }
   }
 
-/*   async updateUserPassword(userId: string, newPassword: string) {
+  /*   async updateUserPassword(userId: string, newPassword: string) {
     try {
       const UserUpdate = doc(this.userDatasRef(), userId);
       await updateDoc(UserUpdate, {
