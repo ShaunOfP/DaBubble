@@ -11,6 +11,7 @@ import {
   doc,
   updateDoc,
   getDoc,
+  addDoc,
 } from '@angular/fire/firestore';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { UserDatas } from './../../models/user.class';
@@ -32,7 +33,6 @@ export class UserDatasService {
 
   constructor() {
     this.userDatas$ = collectionData(this.userDatasRef());
-    this.getUserDatas('Test@test.de', '123');
   }
 
   async saveUser( accountData:UserDatas, userId: string): Promise<void> {
@@ -62,17 +62,26 @@ export class UserDatasService {
     }
   }
 
-  async createPrivateChat(userId: String){
-    const userDocRef = doc(collection(this.firestore, 'privateChats'));
+  async createPrivateChat(userId:string){
+    const generatedId = this.generateRandomId()
+    const userDocRef = doc(this.firestore, 'privateChats', generatedId);
     const chatData = {
       createdAt: new Date().getTime(),
       participants: [userId]
     }
-    setDoc(userDocRef, chatData)
-    const docRef = doc(collection(this.firestore, 'privateChats'));
-    const docSnap = await getDoc(docRef);
-    return docSnap.id
+    await setDoc(userDocRef, chatData)
+    return generatedId
   }
+
+generateRandomId(){
+  const array = new Uint8Array(22);
+  crypto.getRandomValues(array);
+  const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+  const randomId = Array.from(array, byte => characters[byte % characters.length]).join('');
+  const generatedRandomId = "pC" + randomId;
+  return generatedRandomId
+}
+
 
   async getUserDatas(email: string, password: string) {
     const q = query(this.userDatasRef(), where('mail', '==', email));
