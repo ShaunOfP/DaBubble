@@ -12,6 +12,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { FooterComponent } from '../footer/footer.component';
+import { collection, collectionData, doc, Firestore, getDoc } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -27,6 +29,7 @@ import { FooterComponent } from '../footer/footer.component';
   styleUrl: './login.component.scss',
 })
 export class LoginComponent implements OnInit {
+  userDatas$: Observable<UserDatas>;
   loginForm: FormGroup;
   animationPlayed: boolean = false;
   newGuest: boolean = false;
@@ -35,10 +38,12 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private firestore: Firestore,
     private authService: AuthService,
     private userService: UserDatasService,
     private form: FormBuilder
   ) {
+    this.userDatas$ = collectionData(this.userDatasRef());
     const animation = sessionStorage.getItem('animation');
     this.animationPlayed = animation === 'true';
 
@@ -94,6 +99,8 @@ export class LoginComponent implements OnInit {
       console.log('Erfolgreich mit Google eingelogt');
       /* this.router.navigate(['create-avatar']); */
       const googleUser = this.authService.currentUser;
+      const userDocRef = doc(this.userDatasRef(), googleUser?.uid);
+      const userSnap = await getDoc(userDocRef);
       console.log(this.user);
       if (googleUser) {
         const newUser: UserDatas = new UserDatas({
@@ -118,5 +125,9 @@ export class LoginComponent implements OnInit {
 
   get password() {
     return this.loginForm.get('password')!;
+  }
+
+  userDatasRef() {
+    return collection(this.firestore, 'userDatas');
   }
 }
