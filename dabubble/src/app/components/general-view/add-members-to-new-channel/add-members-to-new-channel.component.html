@@ -1,0 +1,26 @@
+<section>
+    <header>
+        <h3>Leute einladen</h3>
+        <div class="close-button" (click)="close()">
+            <img src="/img/general-view/workspace-menu/close.svg">
+            <img class="d-none" src="/img/general-view/workspace-menu/hover_close.svg">
+        </div>
+    </header>
+    <form class="user-input-container">
+        <div class="user-input">
+            <div>
+                <input type="radio" name="members" checked="checked" (change)="toggleStatus()" id="input-one">
+                <input type="radio" name="members" (change)="toggleStatus()" id="input-two">
+            </div>
+            <div>
+                <span>Alle Mitglieder von <a class="">OfficeTeam</a> hinzufügen</span>
+                <span>Bestimmte Leute hinzufügen</span>
+            </div>
+        </div>
+        <input class="input-field d-none" placeholder="Namen eingeben" #nameInput>
+    </form>
+    <div class="btn-container">
+        <button *ngIf="firstSelected" class="btn-primary--default" type="submit">Erstellen</button>
+        <button *ngIf="!firstSelected" class="btn-primary--disable" type="submit" id="submit-btn">Erstellen</button>
+    </div>
+</section>
