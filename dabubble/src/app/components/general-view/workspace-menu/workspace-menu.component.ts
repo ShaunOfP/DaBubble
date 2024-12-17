@@ -13,9 +13,14 @@ import {MatExpansionModule} from '@angular/material/expansion';
 })
 export class WorkspaceMenuComponent {
   @Output() callParent: EventEmitter<void> = new EventEmitter();
+  @Output() newMessage: EventEmitter<void> = new EventEmitter();
 
   openCreateChannelOverlay() {
     this.callParent.emit();
+  }
+
+  openNewMessage(){
+    this.newMessage.emit();
   }
 
   readonly channelOpenState = signal(false);
