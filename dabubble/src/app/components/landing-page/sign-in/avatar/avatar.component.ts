@@ -25,10 +25,14 @@ export class AvatarComponent /* implements OnInit */ {
   public accountData!: UserDatas;
 
   constructor(private router: Router, private authService : AuthService) {
+    try{
     const navigation = this.router.getCurrentNavigation();
     this.accountData = navigation?.extras?.state?.['accountData'];
     console.log('User in AvatarComponent:', this.accountData);
+    }
+    catch(err){
     this.checkInput()
+    }
   }
   
   avatarList: Array<string> = ['avatar1','avatar2','avatar3','avatar4','avatar5','avatar6']
@@ -41,11 +45,11 @@ export class AvatarComponent /* implements OnInit */ {
   createUser(ngForm:NgForm){
     if(ngForm.valid && ngForm.submitted){
       this.authService.createUserWithEmail(this.accountData)
-     
-      console.log(this.accountData);
-      setTimeout(() => {
-        this.avatarCreated = true;
+      this.avatarCreated = true;
+      setTimeout(() => {        
+        this.navigateTo('/')
       }, 1000);
+
     }
   }
 
@@ -54,7 +58,7 @@ export class AvatarComponent /* implements OnInit */ {
   }
 
   checkInput(){
-    if(this.accountData.name == undefined) this.navigateTo('sign-in')
+    if(this.accountData == undefined) this.navigateTo('sign-in')
     return
   }
 }

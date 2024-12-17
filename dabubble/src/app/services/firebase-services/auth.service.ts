@@ -37,10 +37,10 @@ export class AuthService {
     return this.auth.currentUser;
   }
 
-  createUserWithEmail(accountData: UserDatas) {
+  async createUserWithEmail(accountData: UserDatas) {
+    debugger
     const auth = getAuth();
-
-    createUserWithEmailAndPassword(auth, accountData.mail, accountData.password)
+    await createUserWithEmailAndPassword(auth, accountData.mail, accountData.password)
       .then((userCredential) => {
         const user = userCredential.user;
         console.log(user.uid);
@@ -52,6 +52,10 @@ export class AuthService {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+        console.error('error Code' + errorCode);
+        console.error('error Message' + errorMessage);
+        
+        
       });
   }
 

@@ -70,7 +70,7 @@
                             placeholder="Passwort"
                             (focus)="onFocus(true, 'password')"
                             (blur)="onFocus(false, 'password')"
-                            minlength="1"
+                            minlength="6"
                             required>
                     </div>
                     @if (!password.valid && password.touched && !password.hasError('minlength')) {
