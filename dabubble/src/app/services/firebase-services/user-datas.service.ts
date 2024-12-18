@@ -16,6 +16,7 @@ import {
 import { Observable, BehaviorSubject } from 'rxjs';
 import { UserDatas } from './../../models/user.class';
 import { user } from '@angular/fire/auth';
+import { GuestDatas } from '../../models/guest.class';
 
 interface SingleUserData {
   mail: string;
@@ -38,7 +39,6 @@ export class UserDatasService {
   async saveUser(accountData: UserDatas, userId: string): Promise<void> {
     try {
       const userDocRef = doc(this.userDatasRef(), userId);
-      const userSnap = await getDoc(userDocRef);
       const chatsId = await this.createPrivateChat(userId);
       accountData.privateChats.push(chatsId);
 
@@ -55,6 +55,23 @@ export class UserDatasService {
       console.log('✅ Benutzer erfolgreich gespeichert:', userData);
     } catch (error) {
       console.error('❌ Fehler beim Speichern des Benutzers:', error);
+    }
+  }
+
+  async saveGuest(accountData: GuestDatas, userId: string): Promise<void> {
+    try {
+      const guestDocRef = doc(this.guestDatasRef(), userId);
+
+      const guestData = {
+        username: accountData.username,
+        avatar: accountData.avatar,
+        channels: accountData.channels
+      };
+      await setDoc(guestDocRef, guestData);
+
+      console.log('✅ Gast erfolgreich gespeichert:', guestData);
+    } catch (error) {
+      console.error('❌ Fehler beim Speichern des Gastes:', error);
     }
   }
 
@@ -137,5 +154,9 @@ export class UserDatasService {
 
   userDatasRef() {
     return collection(this.firestore, 'userDatas');
+  }
+
+  guestDatasRef() {
+    return collection(this.firestore, 'guestDatas');
   }
 }

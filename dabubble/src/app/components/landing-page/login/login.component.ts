@@ -97,11 +97,12 @@ export class LoginComponent implements OnInit {
       } else {
         if (guestUser) {
           const newGuest: GuestDatas = new GuestDatas({
-            name: 'Gast',
-            accountImg: 'default-avatar',
+            username: 'Gast',
+            avatar: 'default-avatar',
             channels: ['ER84UOYc0F2jptDjWxFo'],
-          })
-          console.log(newGuest)
+          });
+          this.userService.saveGuest(newGuest, guestUser.uid);
+          console.log(newGuest);
           console.log(guestUser.uid);
         }
       }
