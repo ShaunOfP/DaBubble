@@ -5,6 +5,7 @@ import { AddMembersComponent } from "../add-members/add-members.component";
 import { CommonModule } from '@angular/common';
 import { EmojiPickerComponent } from '../emoji-picker/emoji-picker.component';
 import { NewMessageComponent } from "../new-message/new-message.component";
+import { SharedModule } from '../../../shared/shared.module';
 
 @Component({
   selector: 'app-chat',
@@ -15,7 +16,8 @@ import { NewMessageComponent } from "../new-message/new-message.component";
     AddMembersComponent,
     CommonModule,
     EmojiPickerComponent,
-    NewMessageComponent
+    NewMessageComponent,
+    SharedModule
 ],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss',
@@ -54,13 +56,20 @@ export class ChatComponent {
   onEmojiReceived(emoji: string) {
     this.selectedEmoji = emoji;
     this.emojiTarget.nativeElement.value += emoji;
-    this.toggleEmojiPicker();
+    this.hideEmojiPicker();
   }
 
   toggleEmojiPicker() {
     const emojiPickerElement = document.getElementById('emojiChat');
     if (emojiPickerElement) {
       emojiPickerElement.classList.toggle('d-none');
+    }
+  }
+
+  hideEmojiPicker() {
+    const emojiPickerElement = document.getElementById('emojiChat');
+    if (emojiPickerElement) {
+      emojiPickerElement.classList.add('d-none');
     }
   }
 
