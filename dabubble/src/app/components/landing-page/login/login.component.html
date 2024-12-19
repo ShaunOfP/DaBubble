@@ -74,7 +74,7 @@
 
         <div class="error-message" *ngIf="password.invalid && password.touched">
           <label *ngIf="password.errors?.['required']"
-            >Bitte gib ein gültiges Passwort ein</label
+            >{{ loginError || 'Bitte gib ein gültiges Passwort ein' }}</label
           >
         </div>
       </div>

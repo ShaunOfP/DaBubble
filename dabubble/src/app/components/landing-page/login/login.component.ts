@@ -42,6 +42,7 @@ export class LoginComponent implements OnInit {
   animationPlayed: boolean = false;
   user: UserDatas = new UserDatas();
   guest: GuestDatas = new GuestDatas();
+  loginError: string | undefined;
 
   constructor(
     private router: Router,
@@ -74,11 +75,14 @@ export class LoginComponent implements OnInit {
       console.log(this.loginForm.value.mail);
 
       try {
-        await this.authService.signInWithEmail(email, password);
+        const auth = await this.authService.signInWithEmail(email, password);
+        console.log(auth);
         console.log('Login erfolgreich!');
         /* this.router.navigate(['/general/', this.authService.currentUser?.uid]); */
       } catch (error) {
         console.error('Fehler beim Login:', error);
+        this.loginForm.markAllAsTouched();
+        this.handleLoginError(error);
       }
     } else {
       console.error('Formular ist ungültig!');
@@ -146,6 +150,30 @@ export class LoginComponent implements OnInit {
       online: false,
     });
     await this.userService.saveUser(newUser, user.uid);
+  }
+
+  private handleLoginError(error: any) {
+    switch (error.code) {
+      case 'auth/user-not-found':
+        this.loginError = 'Es existiert kein Benutzer mit dieser E-Mail-Adresse.';
+        break;
+      case 'auth/wrong-password':
+        this.loginError = 'Das eingegebene Passwort ist falsch.';
+        console.log('falsches Passwort');
+        break;
+      case 'auth/invalid-email':
+        this.loginError = 'Bitte geben Sie eine gültige E-Mail-Adresse ein.';
+        console.log('Email-Adresse existiert nicht');
+        break;
+      case 'auth/user-disabled':
+        this.loginError = 'Dieser Benutzer wurde deaktiviert.';
+        break;
+      case 'auth/too-many-requests':
+        this.loginError = 'Zu viele fehlgeschlagene Anmeldeversuche. Versuchen Sie es später erneut.';
+        break;
+      default:
+        this.loginError = 'Ein unbekannter Fehler ist aufgetreten. Bitte versuchen Sie es erneut.';
+    }
   }
 
   get email() {

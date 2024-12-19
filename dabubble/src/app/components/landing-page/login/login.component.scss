@@ -277,10 +277,12 @@
   }
 
   .error-message {
+    min-height: 21.5px;
     margin-top: -23px;
     margin-bottom: -23px;
     label {
-      padding-left: 16px;
+      font-size: 14px;
+      padding-left: 24px;
       color: var(--color-purple-error);
     }
   }
