@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
+import { Component} from '@angular/core';
+import { FormControl, FormGroup, FormsModule, NgForm, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { RouterModule } from '@angular/router';
@@ -17,24 +17,29 @@ import { FooterComponent } from "../footer/footer.component";
     FormsModule,
     CommonModule,
     HeaderSectionComponent,
-    FooterComponent
+    FooterComponent,
+    ReactiveFormsModule
 ],
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.scss',
 })
 export class ForgotPasswordComponent {
   constructor(private authService: AuthService) {}
+  emailForm:FormControl = new FormControl('', [
+    Validators.required,
+    Validators.email,
+    Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
+  ])
 
-  email: string = '';
   submitForm: boolean = false;
   sendPassword: boolean = false;
   sendingError: boolean = false
   errorCode:string = ''
   errorMessage: string = ''
 
-  onSubmit(ngForm: NgForm) {
-    if (ngForm.submitted && ngForm.form.valid) {
-      this.authService.resetPasswordLink(this.email, () => {
+  onSubmit() {
+    if (this.emailForm.valid) {
+      this.authService.resetPasswordLink(this.emailForm.value, () => {
         this.sendPassword = true;
       }, (errorCode: string , errorMessage: string) => {
         this.sendingError = true;
