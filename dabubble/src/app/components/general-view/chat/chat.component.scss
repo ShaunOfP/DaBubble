@@ -22,7 +22,7 @@ h3 {
   gap: 10px;
   padding: 6px 10px 6px 10px;
 
-  > button {
+  >button {
     border: none;
     background-color: transparent;
     height: 30px;
@@ -38,11 +38,11 @@ h3 {
     cursor: pointer;
     background-color: #eceefe;
 
-    > h3 {
+    >h3 {
       color: var(--color-purple-primary-default);
     }
 
-    > button {
+    >button {
       :first-child {
         display: none;
       }
@@ -69,13 +69,20 @@ h3 {
 .chat-container {
   display: flex;
   flex-direction: column;
+  justify-content: end;
   gap: 25px;
   height: calc(100% - 94px);
 }
 
-.chat {
-  height: 100%;
+.height-normal-header {
+  height: calc(100% - 94px);
 }
+
+.height-new-message {
+  height: calc(100% - 160px);
+}
+
+.chat {}
 
 .input-container {
   position: relative;
@@ -107,7 +114,7 @@ textarea {
   left: 70px;
   right: 70px;
 
-  > div {
+  >div {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -187,5 +194,3 @@ textarea {
     cursor: pointer;
   }
 }
-
-

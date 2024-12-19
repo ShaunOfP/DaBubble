@@ -18,7 +18,7 @@ import { SharedModule } from '../../../shared/shared.module';
     EmojiPickerComponent,
     NewMessageComponent,
     SharedModule
-],
+  ],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss',
 })
@@ -73,9 +73,15 @@ export class ChatComponent {
     }
   }
 
-  openNewMessageWindow(){
+  openNewMessageWindow() {
     document.getElementById('header')?.classList.add('d-none');
-    document.getElementById('chat')?.classList.add('d-none');
+    document.getElementById('chat')!.innerHTML = ``;
+    this.changeHeaders();
     document.getElementById('new-message-component')?.classList.remove('d-none');
+  }
+
+  changeHeaders() {
+    document.getElementById('chat-container')?.classList.remove('height-normal-header');
+    document.getElementById('chat-container')?.classList.add('height-new-message');
   }
 }

@@ -8,5 +8,11 @@ import { Component } from '@angular/core';
   styleUrl: './new-message.component.scss'
 })
 export class NewMessageComponent {
-
+  
+  
+  //Called when search is finished
+  changeHeaders(){
+    document.getElementById('chat-container')?.classList.add('height-normal-header');
+    document.getElementById('chat-container')?.classList.remove('height-new-message');
+  }
 }
