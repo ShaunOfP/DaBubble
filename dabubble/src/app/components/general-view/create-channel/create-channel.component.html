@@ -2,7 +2,7 @@
     <div id="create-channel-container">
         <header>
             <h3>Channel erstellen</h3>
-            <div class="img-container change-image-on-hover" (click)="closeCreateChannel()">
+            <div class="close-button" (click)="closeCreateChannel()">
                 <img src="/img/general-view/workspace-menu/close.svg">
                 <img class="d-none" src="/img/general-view/workspace-menu/hover_close.svg">
             </div>
@@ -15,8 +15,9 @@
             <div class="form-input-container">
                 <div class="form-input-container-header">
                     <span>Channel-Name</span>
-                    <span class="error-message" *ngIf="name.invalid && name.touched">Der Channel-Name wird benötigt</span>
-                </div>                
+                    <span class="error-message" *ngIf="name.invalid && name.touched">Der Channel-Name wird
+                        benötigt</span>
+                </div>
                 <div class="input-image-container">
                     <img src="/img/public/hash.svg">
                     <input [class.is-invalid]="name.invalid && name.touched" class="input-field"
@@ -34,5 +35,6 @@
             </div>
         </form>
     </div>
-    <app-add-members-to-new-channel class="d-none" id="addMembersToNewChannel" (closeAll)="closeCreateChannelAndChangeClasses()"></app-add-members-to-new-channel>
+    <app-add-members-to-new-channel class="d-none" id="addMembersToNewChannel"
+        (closeAll)="closeCreateChannelAndChangeClasses()"></app-add-members-to-new-channel>
 </section>
