@@ -4,7 +4,7 @@ import { MatCardModule } from '@angular/material/card';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../services/firebase-services/auth.service';
 import { UserDatas } from '../../../models/user.class';
-import { GuestDatas } from "../../../models/guest.class";
+import { GuestDatas } from '../../../models/guest.class';
 import { UserDatasService } from '../../../services/firebase-services/user-datas.service';
 import {
   FormBuilder,
@@ -22,6 +22,7 @@ import {
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { User } from '@angular/fire/auth';
+import { FirebaseError } from '@angular/fire/app';
 
 @Component({
   selector: 'app-login',
@@ -42,6 +43,8 @@ export class LoginComponent implements OnInit {
   animationPlayed: boolean = false;
   user: UserDatas = new UserDatas();
   guest: GuestDatas = new GuestDatas();
+  loginErrorMail: string | null = null;
+  loginErrorPassword: string | null = null;
 
   constructor(
     private router: Router,
@@ -69,21 +72,45 @@ export class LoginComponent implements OnInit {
   }
 
   async logIn(): Promise<void> {
+    this.loginErrorMail = '';
+    this.loginErrorPassword = ''; 
+  
     if (this.loginForm.valid) {
+      this.loginForm.markAllAsTouched();
       const { email, password } = this.loginForm.value;
-      console.log(this.loginForm.value.mail);
-
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      
+      // Überprüfe, ob die E-Mail-Adresse gültig ist
+      if (!emailRegex.test(email)) {
+        this.loginErrorMail = 'Bitte geben Sie eine gültige E-Mail-Adresse ein.';
+      }
+  
       try {
-        await this.authService.signInWithEmail(email, password);
-        console.log('Login erfolgreich!');
-        /* this.router.navigate(['/general/', this.authService.currentUser?.uid]); */
-      } catch (error) {
-        console.error('Fehler beim Login:', error);
+        const user = await this.authService.signInWithEmail(email, password);
+
+      } catch (error: any) {
+
+        const errorCode = error.code;
+        console.error('Fehlercode:', errorCode);
+  
+        if (errorCode === 'auth/user-not-found') {
+          this.loginErrorMail = 'Die E-Mail-Adresse ist nicht angemeldet!';
+          console.log(this.loginErrorMail);
+        } else if (errorCode === 'auth/wrong-password') {
+          this.loginErrorPassword = 'Das Passwort ist ungültig!';
+        } else {
+          this.router.navigate(['/general']); 
+        }
       }
     } else {
       console.error('Formular ist ungültig!');
       this.loginForm.markAllAsTouched();
     }
+  }
+  
+  
+  handleError() {
+
   }
 
   async guestLogIn() {
@@ -106,7 +133,6 @@ export class LoginComponent implements OnInit {
           console.log(guestUser.uid);
         }
       }
-
 
       /* this.router.navigate(['/general/', this.authService.currentUser?.uid]); */
     } catch (error) {

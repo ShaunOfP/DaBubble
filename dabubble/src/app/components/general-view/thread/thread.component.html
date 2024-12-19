@@ -20,7 +20,7 @@
         <div class="input-container">
             <textarea #emojiTarget [placeholder]="'Antworten...'"></textarea>
             <div class="textarea-icon-bar">
-                <div>
+                <div appClickOutside (appClickOutside)="hideEmojiPicker()">
                     <app-emoji-picker id="emojiThreads" (emojiSelected)="onEmojiReceived($event)" class="d-none"></app-emoji-picker>
                     <div class="height-width-40 d-flex center hover change-image-on-hover" (click)="toggleEmojiPicker()">
                         <img src="/img/general-view/workspace-menu/smiley.svg">

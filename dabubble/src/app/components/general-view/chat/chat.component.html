@@ -29,14 +29,14 @@
       </div>
     </div>
   </header>
-  <div class="chat-container">
+  <div class="chat-container height-normal-header" id="chat-container">
     <div class="chat" id="chat">
       Chat
     </div>
     <div class="input-container">
       <textarea #emojiTarget [placeholder]="'Nachricht an #Entwicklerteam'"></textarea>
       <div class="textarea-icon-bar">
-        <div>
+        <div appClickOutside (appClickOutside)="hideEmojiPicker()">
           <app-emoji-picker id="emojiChat" (emojiSelected)="onEmojiReceived($event)" class="d-none"></app-emoji-picker>
           <div class="height-width-40 d-flex center radius-30 hover change-image-on-hover"
             (click)="toggleEmojiPicker()">

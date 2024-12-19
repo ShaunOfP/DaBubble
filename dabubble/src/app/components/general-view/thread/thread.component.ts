@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
 import { EmojiPickerComponent } from '../emoji-picker/emoji-picker.component';
+import { SharedModule } from '../../../shared/shared.module';
 
 @Component({
   selector: 'app-thread',
   standalone: true,
-  imports: [EmojiPickerComponent],
+  imports: [EmojiPickerComponent, SharedModule],
   templateUrl: './thread.component.html',
   styleUrl: './thread.component.scss'
 })
@@ -30,6 +31,13 @@ export class ThreadComponent {
     const emojiPickerElement = document.getElementById('emojiThreads');
     if (emojiPickerElement) {
       emojiPickerElement.classList.toggle('d-none');
+    }
+  }
+
+  hideEmojiPicker() {
+    const emojiPickerElement = document.getElementById('emojiThreads');
+    if (emojiPickerElement) {
+      emojiPickerElement.classList.add('d-none');
     }
   }
 }

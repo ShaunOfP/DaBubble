@@ -59,7 +59,7 @@ export class AuthService {
       });
   }
 
-  async signInWithEmail(email: string, password: string): Promise<void> {
+  async signInWithEmail(email: string, password: string): Promise<any> {
     try {
       const userCredential = await signInWithEmailAndPassword(
         this.auth,
@@ -68,8 +68,12 @@ export class AuthService {
       );
       this.userSubject.next(userCredential.user);
       console.log('User log in');
+      return userCredential.user
     } catch (error: any) {
-      console.error('Error during login:', error.message);
+      const errorCode = error?.code;
+      const errorMessage = error?.message;
+      console.log(errorCode, errorMessage);
+      return errorCode;
     }
   }
 
@@ -78,7 +82,7 @@ export class AuthService {
     try {
       const result = await signInWithPopup(this.auth, provider);
       console.log('Google Login erfolgreich:', result.user.uid);
-      return result; // Gibt UserCredential zurück
+      return result; 
     } catch (error) {
       console.error('Fehler beim Google Login:', error);
       return null;

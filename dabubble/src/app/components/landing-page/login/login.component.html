@@ -53,13 +53,14 @@
           <input
             type="email"
             placeholder="beispielname@email.com"
-            formControlName="email"
+            formControlName="email" pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
+            required
           />
         </div>
 
-        <div class="error-message" *ngIf="email.invalid && email.touched">
-          <label *ngIf="email.errors?.['required']"
-            >Bitte gib hier deine Email ein</label
+        <div class="error-message">
+          <span 
+            >{{ loginErrorMail }}</span
           >
         </div>
 
@@ -69,12 +70,14 @@
             type="password"
             placeholder="Passwort"
             formControlName="password"
+            minlength="6"
+            req
           />
         </div>
 
-        <div class="error-message" *ngIf="password.invalid && password.touched">
-          <label *ngIf="password.errors?.['required']"
-            >Bitte gib ein gültiges Passwort ein</label
+        <div class="error-message">
+          <span 
+            >{{ loginErrorPassword }}</span
           >
         </div>
       </div>
