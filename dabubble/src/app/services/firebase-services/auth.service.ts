@@ -69,8 +69,11 @@ export class AuthService {
       this.userSubject.next(userCredential.user);
       console.log('User log in');
       return userCredential.user
-    } catch (error) {
-      console.error('Error during login:', error);
+    } catch (error: any) {
+      const errorCode = error?.code;
+      const errorMessage = error?.message;
+      console.log(errorCode, errorMessage);
+      return errorCode;
     }
   }
 

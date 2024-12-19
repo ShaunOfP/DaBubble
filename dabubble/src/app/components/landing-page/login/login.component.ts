@@ -4,7 +4,7 @@ import { MatCardModule } from '@angular/material/card';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../services/firebase-services/auth.service';
 import { UserDatas } from '../../../models/user.class';
-import { GuestDatas } from "../../../models/guest.class";
+import { GuestDatas } from '../../../models/guest.class';
 import { UserDatasService } from '../../../services/firebase-services/user-datas.service';
 import {
   FormBuilder,
@@ -22,6 +22,7 @@ import {
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { User } from '@angular/fire/auth';
+import { FirebaseError } from '@angular/fire/app';
 
 @Component({
   selector: 'app-login',
@@ -42,7 +43,8 @@ export class LoginComponent implements OnInit {
   animationPlayed: boolean = false;
   user: UserDatas = new UserDatas();
   guest: GuestDatas = new GuestDatas();
-  loginError: string | undefined;
+  loginErrorMail: string | null = null;
+  loginErrorPassword: string | null = null;
 
   constructor(
     private router: Router,
@@ -70,24 +72,45 @@ export class LoginComponent implements OnInit {
   }
 
   async logIn(): Promise<void> {
+    this.loginErrorMail = '';
+    this.loginErrorPassword = ''; 
+  
     if (this.loginForm.valid) {
+      this.loginForm.markAllAsTouched();
       const { email, password } = this.loginForm.value;
-      console.log(this.loginForm.value.mail);
-
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      
+      // Überprüfe, ob die E-Mail-Adresse gültig ist
+      if (!emailRegex.test(email)) {
+        this.loginErrorMail = 'Bitte geben Sie eine gültige E-Mail-Adresse ein.';
+      }
+  
       try {
-        const auth = await this.authService.signInWithEmail(email, password);
-        console.log(auth);
-        console.log('Login erfolgreich!');
-        /* this.router.navigate(['/general/', this.authService.currentUser?.uid]); */
-      } catch (error) {
-        console.error('Fehler beim Login:', error);
-        this.loginForm.markAllAsTouched();
-        this.handleLoginError(error);
+        const user = await this.authService.signInWithEmail(email, password);
+
+      } catch (error: any) {
+
+        const errorCode = error.code;
+        console.error('Fehlercode:', errorCode);
+  
+        if (errorCode === 'auth/user-not-found') {
+          this.loginErrorMail = 'Die E-Mail-Adresse ist nicht angemeldet!';
+          console.log(this.loginErrorMail);
+        } else if (errorCode === 'auth/wrong-password') {
+          this.loginErrorPassword = 'Das Passwort ist ungültig!';
+        } else {
+          this.router.navigate(['/general']); 
+        }
       }
     } else {
       console.error('Formular ist ungültig!');
       this.loginForm.markAllAsTouched();
     }
+  }
+  
+  
+  handleError() {
+
   }
 
   async guestLogIn() {
@@ -110,7 +133,6 @@ export class LoginComponent implements OnInit {
           console.log(guestUser.uid);
         }
       }
-
 
       /* this.router.navigate(['/general/', this.authService.currentUser?.uid]); */
     } catch (error) {
@@ -150,30 +172,6 @@ export class LoginComponent implements OnInit {
       online: false,
     });
     await this.userService.saveUser(newUser, user.uid);
-  }
-
-  private handleLoginError(error: any) {
-    switch (error.code) {
-      case 'auth/user-not-found':
-        this.loginError = 'Es existiert kein Benutzer mit dieser E-Mail-Adresse.';
-        break;
-      case 'auth/wrong-password':
-        this.loginError = 'Das eingegebene Passwort ist falsch.';
-        console.log('falsches Passwort');
-        break;
-      case 'auth/invalid-email':
-        this.loginError = 'Bitte geben Sie eine gültige E-Mail-Adresse ein.';
-        console.log('Email-Adresse existiert nicht');
-        break;
-      case 'auth/user-disabled':
-        this.loginError = 'Dieser Benutzer wurde deaktiviert.';
-        break;
-      case 'auth/too-many-requests':
-        this.loginError = 'Zu viele fehlgeschlagene Anmeldeversuche. Versuchen Sie es später erneut.';
-        break;
-      default:
-        this.loginError = 'Ein unbekannter Fehler ist aufgetreten. Bitte versuchen Sie es erneut.';
-    }
   }
 
   get email() {
