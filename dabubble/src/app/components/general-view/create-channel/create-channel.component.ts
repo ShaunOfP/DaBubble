@@ -19,19 +19,33 @@ export class CreateChannelComponent {
     this.callParentToClose.emit();
   }
 
-  openAddMembersToNewChannelMenu(){
+  closeCreateChannelAndChangeClasses() {
+    this.closeCreateChannel();
+    this.closeAddMembersToNewChannelMenu();
+    this.openCreateChannelContainer();
+  }
+
+  openAddMembersToNewChannelMenu() {
     document.getElementById('addMembersToNewChannel')?.classList.remove('d-none');
   }
 
-  closeCreateChannelContainer(){
+  closeCreateChannelContainer() {
     document.getElementById('create-channel-container')?.classList.add('d-none');
+  }
+
+  closeAddMembersToNewChannelMenu() {
+    document.getElementById('addMembersToNewChannel')?.classList.add('d-none');
+  }
+
+  openCreateChannelContainer() {
+    document.getElementById('create-channel-container')?.classList.remove('d-none');
   }
 
   formSubmit(ngForm: NgForm) {
     this.openAddMembersToNewChannelMenu();
     this.closeCreateChannelContainer();
 
-    if (ngForm.submitted && ngForm.form.valid){
+    if (ngForm.submitted && ngForm.form.valid) {
       // pass variables/upload
     }
   }
