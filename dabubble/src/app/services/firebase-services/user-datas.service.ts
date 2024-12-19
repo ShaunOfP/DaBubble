@@ -17,6 +17,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { UserDatas } from './../../models/user.class';
 import { user } from '@angular/fire/auth';
 import { GuestDatas } from '../../models/guest.class';
+import { Member } from '../../models/member';
 
 interface SingleUserData {
   mail: string;
@@ -158,5 +159,25 @@ export class UserDatasService {
 
   guestDatasRef() {
     return collection(this.firestore, 'guestDatas');
+  }
+
+  async searchUsers(queryString: string): Promise<Member[]> {
+    const userQuery = query(
+      this.userDatasRef(),
+      where('username', '>=', queryString),
+      where('username', '<', queryString + '\uf8ff')
+    );
+  
+    try {
+      const querySnapshot = await getDocs(userQuery);
+      const users: Member[] = [];
+      querySnapshot.forEach((doc) => {
+        users.push({...(doc.data() as Member) });
+      });
+      return users;
+    } catch (error) {
+      console.error('Fehler beim Suchen nach Nutzern:', error);
+      return [];
+    }
   }
 }

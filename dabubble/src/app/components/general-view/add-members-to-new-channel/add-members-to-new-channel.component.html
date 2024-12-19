@@ -17,7 +17,15 @@
                 <span>Bestimmte Leute hinzufügen</span>
             </div>
         </div>
-        <input class="input-field d-none" placeholder="Namen eingeben" #nameInput>
+        <div class="input-field-container">
+            <input 
+                class="input-field d-none" 
+                placeholder="Namen eingeben"
+                #nameInput
+                [formControl]="searchControl"
+            />
+            <app-all-members [ngClass]="{'d-none': searchControl.value == '' }" [searchQuery]="searchControl.value || ''"></app-all-members>
+        </div>
     </form>
     <div class="btn-container">
         <button *ngIf="firstSelected" class="btn-primary--default" (click)="addMembersToChannel()">Erstellen</button>

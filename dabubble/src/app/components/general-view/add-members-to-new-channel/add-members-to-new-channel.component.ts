@@ -1,10 +1,12 @@
 import { Component, ElementRef, EventEmitter, OnChanges, Output, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { AllMembersComponent } from '../all-members/all-members.component';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-add-members-to-new-channel',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, AllMembersComponent, ReactiveFormsModule],
   templateUrl: './add-members-to-new-channel.component.html',
   styleUrl: './add-members-to-new-channel.component.scss'
 })
@@ -15,6 +17,7 @@ export class AddMembersToNewChannelComponent implements OnChanges{
   firstSelected: boolean = true;
   currentlySelectedMembers: string[] = []; //eventuell kein string
   isMemberArrayEmpty = true;
+  searchControl = new FormControl('');
 
   toggleStatus() {
     let inputFieldOne = document.getElementById('input-one') as HTMLInputElement;
