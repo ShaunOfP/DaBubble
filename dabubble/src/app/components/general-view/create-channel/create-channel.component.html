@@ -22,7 +22,7 @@
                     <img src="/img/public/hash.svg">
                     <input [class.is-invalid]="name.invalid && name.touched" class="input-field"
                         placeholder="z.B. Kooperationsprojekte" [(ngModel)]="newChannelName" #name="ngModel"
-                        name="newChannelName" required="required">
+                        name="newChannelName" required="required" (ngModelChange)="checkInput()">
                 </div>
             </div>
             <div class="form-input-container">
@@ -31,7 +31,7 @@
                     name="newChannelDescription">
             </div>
             <div class="form-submit-button-container">
-                <button class="btn-primary--default" type="submit">Erstellen</button>
+                <button class="btn-primary--disable" type="submit" [disabled]="name.invalid" id="submit-btn">Erstellen</button>
             </div>
         </form>
     </div>

@@ -41,6 +41,24 @@ export class CreateChannelComponent {
     document.getElementById('create-channel-container')?.classList.remove('d-none');
   }
 
+  enableSubmitButton() {
+    document.getElementById('submit-btn')?.classList.remove('btn-primary--disable');
+    document.getElementById('submit-btn')?.classList.add('btn-primary--default');
+  }
+
+  disableSubmitButton() {
+    document.getElementById('submit-btn')?.classList.add('btn-primary--disable');
+    document.getElementById('submit-btn')?.classList.remove('btn-primary--default');
+  }
+
+  checkInput() {
+    if (this.newChannelName.length > 0) {
+      this.enableSubmitButton();
+    } else {
+      this.disableSubmitButton();
+    }
+  }
+
   formSubmit(ngForm: NgForm) {
     this.openAddMembersToNewChannelMenu();
     this.closeCreateChannelContainer();
