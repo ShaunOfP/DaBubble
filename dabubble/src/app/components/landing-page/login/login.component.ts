@@ -72,45 +72,47 @@ export class LoginComponent implements OnInit {
   }
 
   async logIn(): Promise<void> {
-    this.loginErrorMail = '';
-    this.loginErrorPassword = ''; 
+    this.resetLoginError();
   
     if (this.loginForm.valid) {
       this.loginForm.markAllAsTouched();
       const { email, password } = this.loginForm.value;
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       
-      // Überprüfe, ob die E-Mail-Adresse gültig ist
       if (!emailRegex.test(email)) {
         this.loginErrorMail = 'Bitte geben Sie eine gültige E-Mail-Adresse ein.';
       }
   
       try {
-        const user = await this.authService.signInWithEmail(email, password);
+        const result = await this.authService.signInWithEmail(email, password);
+        console.log(result);
+        this.handleLogin(result);
 
-      } catch (error: any) {
-
-        const errorCode = error.code;
-        console.error('Fehlercode:', errorCode);
-  
-        if (errorCode === 'auth/user-not-found') {
-          this.loginErrorMail = 'Die E-Mail-Adresse ist nicht angemeldet!';
-          console.log(this.loginErrorMail);
-        } else if (errorCode === 'auth/wrong-password') {
-          this.loginErrorPassword = 'Das Passwort ist ungültig!';
-        } else {
-          this.router.navigate(['/general']); 
-        }
+      } catch (error ) {
+        console.error('Fehler beim log in:', error);
       }
+
     } else {
-      console.error('Formular ist ungültig!');
-      this.loginForm.markAllAsTouched();
+      this.loginErrorMail = 'Gib hier deine gültige Email ein';
+      this.loginErrorPassword = 'Gib hier dein gültiges Passwort ein';
+    }
+  }
+
+  handleLogin(result: any) {
+    console.log(result.uid);
+    if (result === 'auth/user-not-found') {
+      this.loginErrorMail = 'Die E-Mail-Adresse ist nicht angemeldet!';
+      console.log(this.loginErrorMail);
+    } else if (result === 'auth/wrong-password') {
+      this.loginErrorPassword = 'Das Passwort ist ungültig!';
+    } else {
+      this.router.navigate(['/general']);
     }
   }
   
-  
-  handleError() {
-
+  resetLoginError() {
+    this.loginErrorMail = '';
+    this.loginErrorPassword = ''; 
   }
 
   async guestLogIn() {
@@ -121,6 +123,7 @@ export class LoginComponent implements OnInit {
       const guestSnap = await getDoc(guestDocRef);
       if (guestSnap.exists()) {
         console.log('Gast schon vorhanden', guestSnap.data());
+        this.router.navigate(['/general']);
       } else {
         if (guestUser) {
           const newGuest: GuestDatas = new GuestDatas({
@@ -129,6 +132,7 @@ export class LoginComponent implements OnInit {
             channels: ['ER84UOYc0F2jptDjWxFo'],
           });
           this.userService.saveGuest(newGuest, guestUser.uid);
+          this.router.navigate(['/general']);
           console.log(newGuest);
           console.log(guestUser.uid);
         }
@@ -151,6 +155,7 @@ export class LoginComponent implements OnInit {
       console.log(this.user);
       if (userSnap.exists()) {
         console.log('Benutzer schon vorhanden', userSnap.data());
+        this.router.navigate(['/general']);
       } else {
         if (googleUser) {
           this.setNewUser(googleUser);
@@ -172,6 +177,7 @@ export class LoginComponent implements OnInit {
       online: false,
     });
     await this.userService.saveUser(newUser, user.uid);
+    this.router.navigate(['/general']);
   }
 
   get email() {
