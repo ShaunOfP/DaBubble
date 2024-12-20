@@ -43,3 +43,13 @@ section {
         font-size: 18px;
     }
 }
+
+.member {
+    padding: 4px 20px 4px 20px;
+    gap: 15px;
+    border-radius: 30px;
+    &:hover {
+      cursor: pointer;
+      background-color: var(--color-blue-bg);
+    }
+  }

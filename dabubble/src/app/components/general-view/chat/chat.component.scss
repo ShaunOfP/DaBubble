@@ -164,7 +164,7 @@ textarea {
 .hover {
   &:hover {
     cursor: pointer;
-    background-color: #adb0d9;
+    background-color: var(--color-blue-bg);
   }
 }
 
