@@ -1,6 +1,7 @@
 <header>
     <div id="grey-screen" class="grey-layer d-none" (click)="toggleGreyScreen()">
     </div>
+    <!-- auf jeden fall mit *ng-if arbeiten -->
     <div id="profile-info-container" class="profile-info-container d-none">
         <div class="profile-info-header">
             <h3 class="cursor-no-change">Profil</h3>
@@ -15,7 +16,8 @@
         <div class="profile-info-name-status">
             <div class="profile-info-name-status-upper">
                 <span class="font-size-32 font-weight-700 cursor-no-change">Frederik Beck</span>
-                <span class="font-size-18 font-weight-700 color-purple-with-hover"
+                <!-- <span class="profile-info-name-status_prepare" (als eindeutigen namen). -->
+                <span class="font-size--700--18 color-purple-with-hover"
                     (click)="openEditForm()">Bearbeiten</span>
             </div>
             <div class="d-flex align-center">
@@ -44,6 +46,7 @@
         <div class="profile-info-image">
             <img src="/img/public/user_icon_male_2.svg">
         </div>
+        <!-- bei form bracuh es die klasse nicht. die ist ja schon direkt in dem class-tag "form{}" hinterlegt -->
         <form class="d-flex column" (ngSubmit)="submitForm(form)" #form="ngForm">
             <div class="gap-8 d-flex column">
                 <div class="d-flex align-center gap-20">
