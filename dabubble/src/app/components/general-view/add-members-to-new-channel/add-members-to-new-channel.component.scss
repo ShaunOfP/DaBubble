@@ -97,6 +97,34 @@ button {
     }
 }
 
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+}
+
+.member-container{
+    margin: 8px;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    gap: 15px;
+    padding: 3px 20px 3px 20px;
+    border-radius: 35px;
+    background-color: var(--color-blue-bg);
+    
+    .avatar{
+        width: 34px;
+    }
+
+    img{
+        width: 10px;
+    }
+
+}
+
 ::placeholder {
     font-size: 18px;
 }

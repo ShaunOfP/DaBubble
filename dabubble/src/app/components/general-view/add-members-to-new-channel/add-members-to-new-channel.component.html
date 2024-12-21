@@ -18,12 +18,19 @@
             </div>
         </div>
         <div class="input-field-container">
-            <input 
-                class="input-field d-none" 
-                placeholder="Namen eingeben"
-                #nameInput
-                [formControl]="searchControl"
-            />
+            <div class="input-wrapper">
+                <input 
+                    class="input-field" 
+                    placeholder="Namen eingeben"
+                    #nameInput
+                    [formControl]="searchControl"
+                />
+                <div class="member-container">
+                    <img class="avatar" src="/img/general-view/create-avatar/avatar1.svg">
+                    <span>Radon</span>
+                    <img src="/img/general-view/workspace-menu/close.svg">
+                </div>
+            </div>
             <app-all-members [ngClass]="{'d-none': searchControl.value == '' }" [searchQuery]="searchControl.value || ''"></app-all-members>
         </div>
     </form>
