@@ -327,3 +327,12 @@ form {
 .d-none {
     display: none;
 }
+
+.invalid {
+    border: 1px solid var(--color-purple-error);
+}
+
+.error-message {
+    font-size: 18px;
+    color: var(--color-purple-error);
+}
