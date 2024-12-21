@@ -104,9 +104,13 @@ button {
     padding: 5px;
 }
 
+.all-selected-member-container{
+    position: absolute;
+    display: flex;
+}
+
 .member-container{
     margin: 8px;
-    position: absolute;
     display: flex;
     align-items: center;
     width: fit-content;

@@ -32,6 +32,8 @@ export class UserDatasService {
   found: boolean = false;
   private userSubject = new BehaviorSubject<any>(null);
   user$ = this.userSubject.asObservable();
+  private memberList = new BehaviorSubject<Member[]>([]);
+  members$: Observable<Member[]> = this.memberList.asObservable();
 
   constructor() {
     this.userDatas$ = collectionData(this.userDatasRef());
@@ -179,5 +181,15 @@ export class UserDatasService {
       console.error('Fehler beim Suchen nach Nutzern:', error);
       return [];
     }
+  }
+
+  addMemberToList(member: Member){
+    const currentMembers = this.memberList.value;
+    this.memberList.next([...currentMembers, member]);
+  }
+
+  removeMemberFromList(member: Member){
+    const currentMembers = this.memberList.value;
+    this.memberList.next(currentMembers.filter(m => m !== member));
   }
 }

@@ -18,17 +18,19 @@
             </div>
         </div>
         <div class="input-field-container">
-            <div class="input-wrapper">
+            <div class="input-wrapper" [ngClass]="{'d-none': firstSelected}">
                 <input 
                     class="input-field" 
                     placeholder="Namen eingeben"
                     #nameInput
                     [formControl]="searchControl"
                 />
-                <div class="member-container">
-                    <img class="avatar" src="/img/general-view/create-avatar/avatar1.svg">
-                    <span>Radon</span>
-                    <img src="/img/general-view/workspace-menu/close.svg">
+                <div class="all-selected-member-container">
+                    <div class="member-container" *ngFor="let member of memberArray">
+                        <img class="avatar" [src]="'/img/general-view/create-avatar/' + member.avatar +'.svg'">
+                        <span>{{ member.username }}</span>
+                        <img src="/img/general-view/workspace-menu/close.svg" (click)="removeMember()">
+                    </div>
                 </div>
             </div>
             <app-all-members [ngClass]="{'d-none': searchControl.value == '' }" [searchQuery]="searchControl.value || ''"></app-all-members>

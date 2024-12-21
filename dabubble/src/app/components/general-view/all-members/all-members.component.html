@@ -3,7 +3,7 @@
       <div class="members-list-container">
         <div *ngIf="memberList.length > 0; else noMembers">
           <div class="members-list" *ngFor="let member of memberList">
-            <div class="member">
+            <div class="member" (click)="selectMember(member)">
               <img [src]="'/img/general-view/create-avatar/' + member.avatar + '.svg'" />
               <span>{{ member.username }}</span>
             </div>

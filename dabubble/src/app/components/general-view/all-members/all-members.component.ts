@@ -33,5 +33,8 @@ export class AllMembersComponent implements OnChanges{
     }
   }
 
+  selectMember(member: Member){
+    this.userService.addMemberToList(member);
+  }
 
 }

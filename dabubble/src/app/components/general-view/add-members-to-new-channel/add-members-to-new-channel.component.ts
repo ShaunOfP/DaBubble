@@ -1,7 +1,10 @@
-import { Component, ElementRef, EventEmitter, OnChanges, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AllMembersComponent } from '../all-members/all-members.component';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { UserDatasService } from '../../../services/firebase-services/user-datas.service';
+import { Member} from '../../../models/member';
+
 
 @Component({
   selector: 'app-add-members-to-new-channel',
@@ -10,7 +13,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
   templateUrl: './add-members-to-new-channel.component.html',
   styleUrl: './add-members-to-new-channel.component.scss'
 })
-export class AddMembersToNewChannelComponent implements OnChanges{
+export class AddMembersToNewChannelComponent implements OnChanges, OnInit{
   @ViewChild('nameInput') nameInputField!: ElementRef;
   @Output() closeAll: EventEmitter<void> = new EventEmitter();
 
@@ -18,6 +21,11 @@ export class AddMembersToNewChannelComponent implements OnChanges{
   currentlySelectedMembers: string[] = []; //eventuell kein string
   isMemberArrayEmpty = true;
   searchControl = new FormControl('');
+  memberArray: Member[] = [];
+
+  constructor(
+    private userService: UserDatasService,){
+  }
 
   toggleStatus() {
     let inputFieldOne = document.getElementById('input-one') as HTMLInputElement;
@@ -38,6 +46,13 @@ export class AddMembersToNewChannelComponent implements OnChanges{
     this.closeAll.emit();
   }
 
+  ngOnInit(): void {
+    this.userService.members$.subscribe(data => {
+      this.memberArray = [...data];
+    });
+    console.log(this.memberArray);
+  }
+
   ngOnChanges(): void {
     this.isMemberArrayEmpty = this.currentlySelectedMembers.length === 0;
 
@@ -45,6 +60,10 @@ export class AddMembersToNewChannelComponent implements OnChanges{
       document.getElementById('submit-btn')?.classList.remove('btn-primary--disable');
       document.getElementById('submit-btn')?.classList.add('btn-primary--default');
     }
+  }
+
+  removeMember(){
+
   }
 
   addMembersToChannel(){
