@@ -56,14 +56,26 @@ export class HeaderComponent {
     }
   }
 
+
+  /**
+   * Removes a class to show the Edit Form
+   */
   openEditForm() {
     document.getElementById('edit-profile-container')?.classList.remove('d-none');
   }
 
+
+  /**
+   * Adds a class to hide the Edit Form
+   */
   closeEditForm() {
     document.getElementById('edit-profile-container')?.classList.add('d-none');
   }
 
+
+  /**
+   * Closes the DropdownMenu and shows the Profile Info
+   */
   showProfileInfo() {
     this.closeDropdownMenu();
     document.getElementById('profile-info-container')?.classList.remove('d-none');
