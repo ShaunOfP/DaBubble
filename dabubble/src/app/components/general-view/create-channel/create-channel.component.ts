@@ -67,36 +67,6 @@ export class CreateChannelComponent {
 
 
   /**
-   * Changes the active class on the submit button to enable it
-   */
-  enableSubmitButton() {
-    document.getElementById('submit-btn')?.classList.remove('btn-primary--disable');
-    document.getElementById('submit-btn')?.classList.add('btn-primary--default');
-  }
-
-
-  /**
-   * Changes the active class on the submit button to disable it
-   */
-  disableSubmitButton() {
-    document.getElementById('submit-btn')?.classList.add('btn-primary--disable');
-    document.getElementById('submit-btn')?.classList.remove('btn-primary--default');
-  }
-
-
-  /**
-   * Checks, if there is any input in the newChannelName Input Element
-   */
-  checkInput() {
-    if (this.newChannelName.length > 0) {
-      this.enableSubmitButton();
-    } else {
-      this.disableSubmitButton();
-    }
-  }
-
-
-  /**
    * 
    * @param ngForm 
    */

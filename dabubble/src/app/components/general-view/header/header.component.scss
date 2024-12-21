@@ -2,6 +2,28 @@
 @import './../../../../templates/input.scss';
 @import './../../../../templates/styles/button.scss';
 
+// generell bessere eindeutige Klassennamen BEM nutzen https://kulturbanause.de/faq/bem-block-element-modifier/
+
+
+@mixin fontStyle($fz:18px , $fw:700){
+    font-size: $fz;
+    font-weight: $fw;
+}   
+
+.font-size--700--18{
+    @include fontStyle();
+}
+
+// font-size und color-purple-with-hover zusammengefasst.
+// .profile-info-name-status_prepare{
+//     @include fontStyle();
+//     color: var(--color-purple-primary-disabled);
+//     &:hover {
+//         cursor: pointer;
+//         color: var(--color-purple-secondary-hover);
+//     }
+// }
+
 h3 {
     margin: 0;
 }
@@ -267,6 +289,7 @@ header {
         }
     }
 }
+// gap ist auch schon mit @include arrangement($g:20px) (als beispiel) benutzbar. genau wie d-flex, flex-direction und align-items 
 
 .gap-20 {
     gap: 20px;
@@ -313,6 +336,7 @@ header {
 }
 
 form {
+    // hier @include arrangement()
     gap: 20px;
 }
 
@@ -326,4 +350,13 @@ form {
 
 .d-none {
     display: none;
+}
+
+.invalid {
+    border: 1px solid var(--color-purple-error);
+}
+
+.error-message {
+    font-size: 18px;
+    color: var(--color-purple-error);
 }
