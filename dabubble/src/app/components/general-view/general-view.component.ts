@@ -29,6 +29,7 @@ export class GeneralViewComponent {
   workspaceMenuIsVisible: boolean = true;
   threadIsVisible: boolean = true;
   toggleNumber: number = 0;
+  showCreateChannelOverlay: boolean = false;
   @ViewChild(ChatComponent) chatComponent!: ChatComponent;
 
 
@@ -89,8 +90,8 @@ export class GeneralViewComponent {
   /**
    * Toggles visibility for the Create Channel Component
    */
-  toggleClassForCreateChannelOverlay() {
-    document.getElementById('create-channel-overlay')?.classList.toggle('d-none');
+  toggleCreateChannelOverlay() {
+    this.showCreateChannelOverlay = !this.showCreateChannelOverlay;
   }
 
 
