@@ -5,12 +5,12 @@
 // generell bessere eindeutige Klassennamen BEM nutzen https://kulturbanause.de/faq/bem-block-element-modifier/
 
 
-@mixin fontStyle($fz:18px , $fw:700){
+@mixin fontStyle($fz: 18px, $fw: 700) {
     font-size: $fz;
     font-weight: $fw;
-}   
+}
 
-.font-size--700--18{
+.font-size--700--18 {
     @include fontStyle();
 }
 
@@ -60,8 +60,10 @@ header {
     min-width: 560px; //eventuell anpassen
 
     >input {
-        font-size: 24px;
-        font-weight: 400;
+        @include fontStyle($fz: 24px, $fw: 400);
+        //include anstelle von unterem?
+        // font-size: 24px;
+        // font-weight: 400;
         background-color: var(--color-white);
     }
 
@@ -87,8 +89,9 @@ header {
     align-items: center;
 
     >span {
-        font-weight: 700;
-        font-size: 32px;
+        @include fontStyle($fz: 32px);
+        // font-weight: 700;
+        // font-size: 32px;
         width: max-content;
         max-width: 250px;
         overflow: hidden;
@@ -289,8 +292,11 @@ header {
         }
     }
 }
+
 // gap ist auch schon mit @include arrangement($g:20px) (als beispiel) benutzbar. genau wie d-flex, flex-direction und align-items 
 
+
+//dann einfach einbinden per include?
 .gap-20 {
     gap: 20px;
 }
@@ -319,8 +325,7 @@ header {
 }
 
 ::placeholder {
-    font-size: 18px;
-    font-weight: 400;
+    @include fontStyle($fw: 400);
 }
 
 .height-100 {
@@ -336,8 +341,7 @@ header {
 }
 
 form {
-    // hier @include arrangement()
-    gap: 20px;
+    @include arrangement($ai: normal, $fd: column, $g: 20px);
 }
 
 .height-25 {
@@ -357,6 +361,6 @@ form {
 }
 
 .error-message {
-    font-size: 18px;
+    @include fontStyle($fz: 18px, $fw: 400);
     color: var(--color-purple-error);
 }

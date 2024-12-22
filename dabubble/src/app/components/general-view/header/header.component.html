@@ -46,8 +46,7 @@
         <div class="profile-info-image">
             <img src="/img/public/user_icon_male_2.svg">
         </div>
-        <!-- bei form bracuh es die klasse nicht. die ist ja schon direkt in dem class-tag "form{}" hinterlegt -->
-        <form class="d-flex column" (ngSubmit)="submitForm(form)" #form="ngForm">
+        <form (ngSubmit)="submitForm(form)" #form="ngForm">
             <div class="gap-8 d-flex column">
                 <div class="d-flex align-center gap-20">
                     <div class="height-30 width-30 d-flex align-center">
