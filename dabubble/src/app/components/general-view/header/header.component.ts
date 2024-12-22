@@ -18,8 +18,20 @@ export class HeaderComponent {
   @ViewChild('menu') menu!: MatMenu;
   @ViewChild('menuTrigger') menuTrigger!: MatMenuTrigger;
 
+  showProfileInfoVar: boolean = false;
+
   newNameInput: string = ``;
   newMailInput: string = ``;
+
+  toggleProfileInfo(){
+    if(this.showProfileInfoVar == true){
+      this.showProfileInfoVar = false;
+      this.openDropdownMenu();
+    } else {
+      this.showProfileInfoVar = true;
+    }
+  }
+
 
   /**
    * Navigating to a specific site via the router using a given route
@@ -29,13 +41,6 @@ export class HeaderComponent {
     this.router.navigate([route]);
   }
 
-  /**
-   * Closes the Info Container and calls the function to open the Dropdown Menu
-   */
-  closeProfileInfo() {
-    document.getElementById('profile-info-container')?.classList.add('d-none');
-    this.openDropdownMenu();
-  }
 
   /**
    * Opens the Dropdown Menu
@@ -44,6 +49,7 @@ export class HeaderComponent {
     this.menuTrigger.openMenu();
   }
 
+  
   /**
    * Closes the Dropdown Menu and also closes the Profile Info Container if it is still open
    */
@@ -90,6 +96,7 @@ export class HeaderComponent {
     element?.classList.toggle('d-none');
 
     if (element?.classList.contains('d-none')) {
+      this.showProfileInfoVar = false;
       this.closeDropdownMenu();
       this.closeEditForm();
     }

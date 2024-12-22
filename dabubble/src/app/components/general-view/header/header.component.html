@@ -2,10 +2,10 @@
     <div id="grey-screen" class="grey-layer d-none" (click)="toggleGreyScreen()">
     </div>
     <!-- auf jeden fall mit *ng-if arbeiten -->
-    <div id="profile-info-container" class="profile-info-container d-none">
+    <div *ngIf="showProfileInfoVar" id="profile-info-container" class="profile-info-container">
         <div class="profile-info-header">
             <h3 class="cursor-no-change">Profil</h3>
-            <div class="change-image-on-hover pointer" (click)="closeProfileInfo()">
+            <div class="change-image-on-hover pointer" (click)="toggleProfileInfo()">
                 <img src="/img/general-view/workspace-menu/close.svg">
                 <img class="d-none" src="/img/general-view/workspace-menu/hover_close.svg">
             </div>
@@ -97,7 +97,7 @@
                     <img class="d-none" src="/img/general-view/workspace-menu/hover_arrow_drop_down_thin.svg">
                 </button>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item (click)="showProfileInfo()">Profil</button>
+                    <button mat-menu-item (click)="toggleProfileInfo()">Profil</button>
                     <button mat-menu-item (click)="navigateTo('')">Log out</button>
                 </mat-menu>
             </div>
