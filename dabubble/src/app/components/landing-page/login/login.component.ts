@@ -22,7 +22,6 @@ import {
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { User } from '@angular/fire/auth';
-import { FirebaseError } from '@angular/fire/app';
 
 @Component({
   selector: 'app-login',
@@ -138,7 +137,6 @@ export class LoginComponent implements OnInit {
         }
       }
 
-      /* this.router.navigate(['/general/', this.authService.currentUser?.uid]); */
     } catch (error) {
       console.error('Fehler beim Gast log in:', error);
     }
@@ -148,7 +146,6 @@ export class LoginComponent implements OnInit {
     try {
       await this.authService.googleSignIn();
       console.log('Erfolgreich mit Google eingelogt');
-      /* this.router.navigate(['create-avatar']); */
       const googleUser = this.authService.currentUser;
       const userDocRef = doc(this.userDatasRef(), googleUser?.uid);
       const userSnap = await getDoc(userDocRef);
