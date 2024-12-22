@@ -24,7 +24,7 @@ export class HeaderComponent {
   newMailInput: string = ``;
 
   toggleProfileInfo(){
-    if(this.showProfileInfoVar == true){
+    if(this.showProfileInfoVar){
       this.showProfileInfoVar = false;
       this.openDropdownMenu();
     } else {
@@ -49,7 +49,7 @@ export class HeaderComponent {
     this.menuTrigger.openMenu();
   }
 
-  
+
   /**
    * Closes the Dropdown Menu and also closes the Profile Info Container if it is still open
    */
