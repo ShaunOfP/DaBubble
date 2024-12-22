@@ -18,17 +18,23 @@ export class HeaderComponent {
   @ViewChild('menu') menu!: MatMenu;
   @ViewChild('menuTrigger') menuTrigger!: MatMenuTrigger;
 
-  showProfileInfoVar: boolean = false;
+  showProfileInfo: boolean = false;
+  showGreyScreen: boolean = false;
+  showProfileEdit: boolean = false;
 
   newNameInput: string = ``;
   newMailInput: string = ``;
 
+
+  /**
+   * Changes bool of variable to display/hide the Profile Info (and open the DropdownMenu)
+   */
   toggleProfileInfo(){
-    if(this.showProfileInfoVar){
-      this.showProfileInfoVar = false;
+    if(this.showProfileInfo){
+      this.showProfileInfo = false;
       this.openDropdownMenu();
     } else {
-      this.showProfileInfoVar = true;
+      this.showProfileInfo = !this.showProfileInfo;
     }
   }
 
@@ -64,10 +70,14 @@ export class HeaderComponent {
 
 
   /**
-   * Removes a class to show the Edit Form
+   * Changes bool of variable to display/hide the Profile Edit
    */
-  openEditForm() {
-    document.getElementById('edit-profile-container')?.classList.remove('d-none');
+  toggleProfileEdit(){
+    if (this.showProfileEdit){
+      this.showProfileEdit = false;
+    } else {
+      this.showProfileEdit = true;
+    }
   }
 
 
@@ -75,32 +85,24 @@ export class HeaderComponent {
    * Adds a class to hide the Edit Form
    */
   closeEditForm() {
-    document.getElementById('edit-profile-container')?.classList.add('d-none');
+    this.showProfileEdit = false;
   }
 
-
+  
   /**
-   * Closes the DropdownMenu and shows the Profile Info
-   */
-  showProfileInfo() {
-    this.closeDropdownMenu();
-    document.getElementById('profile-info-container')?.classList.remove('d-none');
-  }
-
-  /**
-   * Toggles the grey screen for the dropdown menu, also closes the menu if the greyScreen is no longer displayed
+   * Changes bool of variable to hide/show GreyScreen; also hides all other elements when GreyScreen is hidden
    */
   toggleGreyScreen() {
-    let element = document.getElementById('grey-screen');
-
-    element?.classList.toggle('d-none');
-
-    if (element?.classList.contains('d-none')) {
-      this.showProfileInfoVar = false;
+    if (this.showGreyScreen){
+      this.showGreyScreen = false;
+      this.showProfileInfo = false;
       this.closeDropdownMenu();
-      this.closeEditForm();
+      this.showProfileEdit = false;
+    } else {
+      this.showGreyScreen = true;
     }
   }
+
 
   submitForm(form: NgForm) {
     console.log("hey");

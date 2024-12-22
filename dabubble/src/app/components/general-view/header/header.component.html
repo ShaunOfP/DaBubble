@@ -1,8 +1,7 @@
 <header>
-    <div id="grey-screen" class="grey-layer d-none" (click)="toggleGreyScreen()">
+    <div class="grey-layer" *ngIf="showGreyScreen" (click)="toggleGreyScreen()">
     </div>
-    <!-- auf jeden fall mit *ng-if arbeiten -->
-    <div *ngIf="showProfileInfoVar" id="profile-info-container" class="profile-info-container">
+    <div *ngIf="showProfileInfo" id="profile-info-container" class="profile-info-container">
         <div class="profile-info-header">
             <h3 class="cursor-no-change">Profil</h3>
             <div class="change-image-on-hover pointer" (click)="toggleProfileInfo()">
@@ -18,7 +17,7 @@
                 <span class="font-size-32 font-weight-700 cursor-no-change">Frederik Beck</span>
                 <!-- <span class="profile-info-name-status_prepare" (als eindeutigen namen). -->
                 <span class="font-size--700--18 color-purple-with-hover"
-                    (click)="openEditForm()">Bearbeiten</span>
+                    (click)="toggleProfileEdit()">Bearbeiten</span>
             </div>
             <div class="d-flex align-center">
                 <img class="active-circle">
@@ -35,7 +34,7 @@
             <a class="cursor-no-change">example.testmail.com</a>
         </div>
     </div>
-    <div id="edit-profile-container" class="edit-profile-container d-none">
+    <div *ngIf="showProfileEdit" class="edit-profile-container">
         <div class="profile-info-header">
             <h3>Dein Profil bearbeiten</h3>
             <div class="change-image-on-hover pointer" (click)="closeEditForm()">
