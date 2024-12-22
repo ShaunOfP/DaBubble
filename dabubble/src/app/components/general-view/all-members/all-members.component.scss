@@ -25,6 +25,7 @@ section {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    gap: 15px;
 }
 
 .member {
@@ -47,4 +48,10 @@ section {
       cursor: pointer;
       background-color: var(--color-blue-bg);
     }
+}
+
+.disable-div{
+    pointer-events: none;
+    opacity: 0.5;
+    background-color: var(--color-blue-bg);
 }

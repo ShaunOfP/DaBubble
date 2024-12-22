@@ -1,5 +1,6 @@
 export interface Member {
-    id: string;
+    privateChats: string;
     username: string;
     avatar: string;
+    selected: boolean;
 }

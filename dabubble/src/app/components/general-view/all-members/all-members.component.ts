@@ -14,6 +14,7 @@ import { UserDatasService } from '../../../services/firebase-services/user-datas
 export class AllMembersComponent implements OnChanges{
   @Input() searchQuery: string = '';
   memberList: Member[] = [];
+  selectedMembers: Map<string, boolean> = new Map();
 
   constructor(
     private userService: UserDatasService,){
@@ -27,14 +28,24 @@ export class AllMembersComponent implements OnChanges{
 
   private async updateMembersList(query: string): Promise<void> {
     if (query.trim() !== '') {
-      this.memberList = await this.userService.searchUsers(query);
+      const members = await this.userService.searchUsers(query);
+      this.memberList = members.map(member => ({
+        ...member,
+        id: member.privateChats[0] || null, 
+        selected: this.selectedMembers.get(member.privateChats[0]) || false
+      }));
     } else {
       this.memberList = [];
     }
   }
 
   selectMember(member: Member){
-    this.userService.addMemberToList(member);
+    const memberId = member.privateChats[0];
+    if (memberId) {
+      member.selected = true;
+      this.selectedMembers.set(memberId, true);
+      this.userService.addMemberToList(member);
+    }
   }
 
 }

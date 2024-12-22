@@ -186,10 +186,12 @@ export class UserDatasService {
   addMemberToList(member: Member){
     const currentMembers = this.memberList.value;
     this.memberList.next([...currentMembers, member]);
+    member.selected = true;
   }
 
   removeMemberFromList(member: Member){
     const currentMembers = this.memberList.value;
     this.memberList.next(currentMembers.filter(m => m !== member));
+    member.selected = false;
   }
 }
