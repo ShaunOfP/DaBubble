@@ -82,7 +82,7 @@ export class HeaderComponent {
 
 
   /**
-   * Adds a class to hide the Edit Form
+   * Changes the bool of a variable to hide the Profile Edit
    */
   closeEditForm() {
     this.showProfileEdit = false;
