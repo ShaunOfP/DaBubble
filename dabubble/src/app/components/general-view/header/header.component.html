@@ -31,7 +31,7 @@
                 </div>
                 <span class="font-size-20 font-weight-700 cursor-no-change">E-Mail-Adresse</span>
             </div>
-            <a class="cursor-no-change">example.testmail.com</a>
+            <a class="cursor-no-change">{{ (authService.user$ | async)?.email }}</a>
         </div>
     </div>
     <div *ngIf="showProfileEdit" class="edit-profile-container">
@@ -54,7 +54,7 @@
                     <span class="font-size-20 font-weight-700 cursor-no-change">Vollständiger Name</span>
                 </div>
                 <input class="input-field" [class.invalid]="name.touched && name.invalid" #name="ngModel"
-                    placeholder="Frederik Beck" required [(ngModel)]="newNameInput" name="newNameInputField">
+                    placeholder="{{ (authService.user$ | async)?.displayName }}" required [(ngModel)]="newNameInput" name="newNameInputField">
                 <span *ngIf="name.touched && name.invalid" class="error-message">This field is required</span>
             </div>
             <div class="gap-8 d-flex column">
@@ -64,7 +64,7 @@
                     </div>
                     <span class="font-size-20 font-weight-700 cursor-no-change">E-Mail-Adresse</span>
                 </div>
-                <input class="input-field" placeholder="fred.beck@email.com" required
+                <input class="input-field" placeholder="{{ (authService.user$ | async)?.email }}" required
                     [class.invalid]="mail.touched && mail.invalid" #mail="ngModel" [(ngModel)]="newMailInput"
                     name="newMailInputField">
                 <span *ngIf="mail.touched && mail.invalid" class="error-message">This field is required</span>
