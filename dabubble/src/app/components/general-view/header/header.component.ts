@@ -1,9 +1,11 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenu, MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { Router, RouterModule } from '@angular/router';
 import { NgForm, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { User } from '@angular/fire/auth';
+import { AuthService } from '../../../services/firebase-services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -12,8 +14,10 @@ import { CommonModule } from '@angular/common';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
-export class HeaderComponent {
-  constructor(private router: Router) { }
+export class HeaderComponent implements OnInit {
+  user: User | null = null;
+
+  constructor(private router: Router, public authService: AuthService) { }
 
   @ViewChild('menu') menu!: MatMenu;
   @ViewChild('menuTrigger') menuTrigger!: MatMenuTrigger;
@@ -25,6 +29,17 @@ export class HeaderComponent {
   newNameInput: string = ``;
   newMailInput: string = ``;
 
+  ngOnInit(): void {
+    this.authService.user$.subscribe(user => {
+      this.user = user;
+      if (this.user) {
+        console.log('User email:', this.user.email);
+        console.log('User display name:', this.user.displayName);
+      } else {
+        console.log('No user is logged in');
+      }
+    });
+  }
 
   /**
    * Changes bool of variable to display/hide the Profile Info (and open the DropdownMenu)

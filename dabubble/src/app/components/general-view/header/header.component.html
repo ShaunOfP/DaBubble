@@ -14,7 +14,7 @@
         </div>
         <div class="profile-info-name-status">
             <div class="profile-info-name-status-upper">
-                <span class="font-size-32 font-weight-700 cursor-no-change">Frederik Beck</span>
+                <span class="font-size-32 font-weight-700 cursor-no-change">{{ (authService.user$ | async)?.displayName }}</span>
                 <!-- <span class="profile-info-name-status_prepare" (als eindeutigen namen). -->
                 <span class="font-size--700--18 color-purple-with-hover"
                     (click)="toggleProfileEdit()">Bearbeiten</span>
@@ -88,7 +88,7 @@
             <button><img src="/img/general-view/workspace-menu/search.svg"></button>
         </div>
         <div class="account-info" (click)="toggleGreyScreen(); openDropdownMenu()">
-            <span>Frederik Beck</span>
+            <span>{{ (authService.user$ | async)?.displayName }}</span>
             <img src="/img/general-view/workspace-menu/person_circle.svg">
             <div class="dropdown">
                 <button mat-button [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger">

@@ -147,6 +147,7 @@ export class LoginComponent implements OnInit {
       await this.authService.googleSignIn();
       console.log('Erfolgreich mit Google eingelogt');
       const googleUser = this.authService.currentUser;
+      console.log('User is', googleUser?.displayName);
       const userDocRef = doc(this.userDatasRef(), googleUser?.uid);
       const userSnap = await getDoc(userDocRef);
       console.log(this.user);

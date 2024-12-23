@@ -82,6 +82,7 @@ export class AuthService {
     try {
       const result = await signInWithPopup(this.auth, provider);
       console.log('Google Login erfolgreich:', result.user.uid);
+      this.userSubject.next(result.user); // Push the user data to userSubject
       return result; 
     } catch (error) {
       console.error('Fehler beim Google Login:', error);
