@@ -26,10 +26,10 @@
                     [formControl]="searchControl"
                 />
                 <div class="all-selected-member-container">
-                    <div class="member-container" *ngFor="let member of memberArray">
+                    <div class="member-container" *ngFor="let member of selectedMembers">
                         <img class="avatar" [src]="'/img/general-view/create-avatar/' + member.avatar +'.svg'">
                         <span>{{ member.username }}</span>
-                        <img src="/img/general-view/workspace-menu/close.svg" (click)="removeMember()">
+                        <img src="/img/general-view/workspace-menu/close.svg" (click)="removeMember(member)">
                     </div>
                 </div>
             </div>

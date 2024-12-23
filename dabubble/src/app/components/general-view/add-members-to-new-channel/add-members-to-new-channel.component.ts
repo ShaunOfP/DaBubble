@@ -21,7 +21,7 @@ export class AddMembersToNewChannelComponent implements OnChanges, OnInit{
   currentlySelectedMembers: string[] = []; //eventuell kein string
   isMemberArrayEmpty = true;
   searchControl = new FormControl('');
-  memberArray: Member[] = [];
+  selectedMembers: Member[] = [];
 
   constructor(
     private userService: UserDatasService,){
@@ -47,10 +47,9 @@ export class AddMembersToNewChannelComponent implements OnChanges, OnInit{
   }
 
   ngOnInit(): void {
-    this.userService.members$.subscribe(data => {
-      this.memberArray = [...data];
+    this.userService.selectedMembers$.subscribe(members => {
+      this.selectedMembers = members;
     });
-    console.log(this.memberArray);
   }
 
   ngOnChanges(): void {
@@ -62,8 +61,8 @@ export class AddMembersToNewChannelComponent implements OnChanges, OnInit{
     }
   }
 
-  removeMember(){
-
+  removeMember(member: Member): void{
+    this.userService.removeMember(member);
   }
 
   addMembersToChannel(){

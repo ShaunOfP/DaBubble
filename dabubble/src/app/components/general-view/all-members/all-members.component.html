@@ -2,7 +2,7 @@
     <div>
       <div class="members-list-container">
         <ng-container *ngIf="memberList.length > 0; else noMembers">
-            <div class="member" *ngFor="let member of memberList" (click)="selectMember(member)" [ngClass]="{'disable-div': member.selected}">
+            <div class="member" *ngFor="let member of memberList" (click)="selectMember(member)">
               <img [src]="'/img/general-view/create-avatar/' + member.avatar + '.svg'" />
               <span>{{ member.username }}</span>
             </div>
