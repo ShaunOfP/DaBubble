@@ -10,7 +10,7 @@
             </div>
         </div>
         <div class="profile-info-image">
-            <img src="/img/public/user_icon_male_2.svg">
+            <img [src]="(authService.user$ | async)?.photoURL" alt="User Image">
         </div>
         <div class="profile-info-name-status">
             <div class="profile-info-name-status-upper">
@@ -43,7 +43,7 @@
             </div>
         </div>
         <div class="profile-info-image">
-            <img src="/img/public/user_icon_male_2.svg">
+            <img [src]="(authService.user$ | async)?.photoURL" alt="User Image">
         </div>
         <form (ngSubmit)="submitForm(form)" #form="ngForm">
             <div class="gap-8 d-flex column">
@@ -89,7 +89,7 @@
         </div>
         <div class="account-info" (click)="toggleGreyScreen(); openDropdownMenu()">
             <span>{{ (authService.user$ | async)?.displayName }}</span>
-            <img src="/img/general-view/workspace-menu/person_circle.svg">
+            <img [src]="(authService.user$ | async)?.photoURL" alt="User Image">
             <div class="dropdown">
                 <button mat-button [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger">
                     <img src="/img/general-view/workspace-menu/arrow_drop_down_thin.svg">
