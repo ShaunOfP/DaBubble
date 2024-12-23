@@ -1,4 +1,28 @@
 <header>
+    <div class="header-logo">
+        <img src="/img/general-view/workspace-menu/Logo.svg">
+        <h3 class="cursor-no-change">DABubble</h3>
+    </div>
+    <div class="bar-info-container">
+        <div class="searchbar input-field">
+            <input placeholder="Devspace durchsuchen">
+            <button><img src="/img/general-view/workspace-menu/search.svg"></button>
+        </div>
+        <div class="account-info" (click)="toggleGreyScreen(); openDropdownMenu()">
+            <span>{{ (authService.user$ | async)?.displayName }}</span>
+            <img [src]="(authService.user$ | async)?.photoURL" alt="User Image">
+            <div class="dropdown">
+                <button mat-button [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger">
+                    <img src="/img/general-view/workspace-menu/arrow_drop_down_thin.svg">
+                    <img class="d-none" src="/img/general-view/workspace-menu/hover_arrow_drop_down_thin.svg">
+                </button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="toggleProfileInfo()">Profil</button>
+                    <button mat-menu-item (click)="navigateTo('')">Log out</button>
+                </mat-menu>
+            </div>
+        </div>
+    </div>
     <div class="grey-layer" *ngIf="showGreyScreen" (click)="toggleGreyScreen()">
     </div>
     <div *ngIf="showProfileInfo" id="profile-info-container" class="profile-info-container">
@@ -14,10 +38,10 @@
         </div>
         <div class="profile-info-name-status">
             <div class="profile-info-name-status-upper">
-                <span class="font-size-32 font-weight-700 cursor-no-change">{{ (authService.user$ | async)?.displayName }}</span>
+                <span class="font-size-32 font-weight-700 cursor-no-change">{{ (authService.user$ | async)?.displayName
+                    }}</span>
                 <!-- <span class="profile-info-name-status_prepare" (als eindeutigen namen). -->
-                <span class="font-size--700--18 color-purple-with-hover"
-                    (click)="toggleProfileEdit()">Bearbeiten</span>
+                <span class="font-size--700--18 color-purple-with-hover" (click)="toggleProfileEdit()">Bearbeiten</span>
             </div>
             <div class="d-flex align-center">
                 <img class="active-circle">
@@ -54,7 +78,8 @@
                     <span class="font-size-20 font-weight-700 cursor-no-change">Vollständiger Name</span>
                 </div>
                 <input class="input-field" [class.invalid]="name.touched && name.invalid" #name="ngModel"
-                    placeholder="{{ (authService.user$ | async)?.displayName }}" required [(ngModel)]="newNameInput" name="newNameInputField">
+                    placeholder="{{ (authService.user$ | async)?.displayName }}" required [(ngModel)]="newNameInput"
+                    name="newNameInputField">
                 <span *ngIf="name.touched && name.invalid" class="error-message">This field is required</span>
             </div>
             <div class="gap-8 d-flex column">
@@ -73,33 +98,9 @@
                 <button class="btn-secondary--default font-size-18 font-weight-700"
                     (click)="closeEditForm()">Abbrechen</button>
                 <button class="font-size-18 font-weight-700" [class.btn-primary--default]="form.touched && form.valid"
-                    [class.btn-primary--disable]="form.invalid"
-                    [disabled]="form.invalid" type="submit">Speichern</button>
+                    [class.btn-primary--disable]="form.invalid" [disabled]="form.invalid"
+                    type="submit">Speichern</button>
             </div>
         </form>
-    </div>
-    <div class="header-logo">
-        <img src="/img/general-view/workspace-menu/Logo.svg">
-        <h3 class="cursor-no-change">DABubble</h3>
-    </div>
-    <div class="bar-info-container">
-        <div class="searchbar input-field">
-            <input placeholder="Devspace durchsuchen">
-            <button><img src="/img/general-view/workspace-menu/search.svg"></button>
-        </div>
-        <div class="account-info" (click)="toggleGreyScreen(); openDropdownMenu()">
-            <span>{{ (authService.user$ | async)?.displayName }}</span>
-            <img [src]="(authService.user$ | async)?.photoURL" alt="User Image">
-            <div class="dropdown">
-                <button mat-button [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger">
-                    <img src="/img/general-view/workspace-menu/arrow_drop_down_thin.svg">
-                    <img class="d-none" src="/img/general-view/workspace-menu/hover_arrow_drop_down_thin.svg">
-                </button>
-                <mat-menu #menu="matMenu">
-                    <button mat-menu-item (click)="toggleProfileInfo()">Profil</button>
-                    <button mat-menu-item (click)="navigateTo('')">Log out</button>
-                </mat-menu>
-            </div>
-        </div>
     </div>
 </header>

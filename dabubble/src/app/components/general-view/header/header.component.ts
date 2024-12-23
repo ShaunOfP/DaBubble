@@ -29,6 +29,7 @@ export class HeaderComponent implements OnInit {
   newNameInput: string = ``;
   newMailInput: string = ``;
 
+
   ngOnInit(): void {
     this.authService.user$.subscribe(user => {
       this.user = user;
@@ -40,6 +41,7 @@ export class HeaderComponent implements OnInit {
       }
     });
   }
+
 
   /**
    * Changes bool of variable to display/hide the Profile Info (and open the DropdownMenu)
@@ -119,6 +121,10 @@ export class HeaderComponent implements OnInit {
   }
 
 
+  /**
+   * 
+   * @param form 
+   */
   submitForm(form: NgForm) {
     console.log("hey");
     if (form.touched && form.valid) {
