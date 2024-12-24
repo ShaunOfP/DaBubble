@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { Member} from '../../../models/member';
-import { UserDatasService } from '../../../services/firebase-services/user-datas.service';
+import { ChannelMemberService, Member} from '../../../services/firebase-services/channel-member.service';
 
 
 @Component({
@@ -16,7 +15,7 @@ export class AllMembersComponent implements OnChanges{
   memberList: Member[] = [];
 
   constructor(
-    private userService: UserDatasService,){
+    private memberService: ChannelMemberService,){
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -27,14 +26,14 @@ export class AllMembersComponent implements OnChanges{
 
   private async updateMembersList(query: string): Promise<void> {
     if (query.trim() !== '') {
-      this.memberList = await this.userService.searchUsers(query);
+      this.memberList = await this.memberService.searchUsers(query);
     } else {
       this.memberList = [];
     }
   }
 
   selectMember(member: Member){
-    this.userService.selectMember(member);
+    this.memberService.selectMember(member);
   }
 
 }

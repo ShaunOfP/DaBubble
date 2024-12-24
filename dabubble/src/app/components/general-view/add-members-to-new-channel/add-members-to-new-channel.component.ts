@@ -2,8 +2,7 @@ import { Component, ElementRef, EventEmitter, OnChanges, OnInit, Output, ViewChi
 import { CommonModule } from '@angular/common';
 import { AllMembersComponent } from '../all-members/all-members.component';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { UserDatasService } from '../../../services/firebase-services/user-datas.service';
-import { Member} from '../../../models/member';
+import { ChannelMemberService, Member} from '../../../services/firebase-services/channel-member.service';
 
 
 @Component({
@@ -24,7 +23,7 @@ export class AddMembersToNewChannelComponent implements OnChanges, OnInit{
   selectedMembers: Member[] = [];
 
   constructor(
-    private userService: UserDatasService,){
+    private memberService: ChannelMemberService,){
   }
 
   toggleStatus() {
@@ -47,7 +46,7 @@ export class AddMembersToNewChannelComponent implements OnChanges, OnInit{
   }
 
   ngOnInit(): void {
-    this.userService.selectedMembers$.subscribe(members => {
+    this.memberService.selectedMembers$.subscribe(members => {
       this.selectedMembers = members;
     });
   }
@@ -62,7 +61,7 @@ export class AddMembersToNewChannelComponent implements OnChanges, OnInit{
   }
 
   removeMember(member: Member): void{
-    this.userService.removeMember(member);
+    this.memberService.removeMember(member);
   }
 
   addMembersToChannel(){
