@@ -151,9 +151,10 @@ export class LoginComponent implements OnInit {
       const userDocRef = doc(this.userDatasRef(), googleUser?.uid);
       const userSnap = await getDoc(userDocRef);
       console.log(this.user);
+      this.router.navigate(['/general'], { queryParams: { userID: googleUser?.uid } });
       if (userSnap.exists()) {
         console.log('Benutzer schon vorhanden', userSnap.data());
-        this.router.navigate(['/general']);
+
       } else {
         if (googleUser) {
           this.setNewUser(googleUser);
@@ -166,10 +167,10 @@ export class LoginComponent implements OnInit {
 
   async setNewUser(user: User) {
     const newUser: UserDatas = new UserDatas({
-      name: user.displayName ?? '',
+      username: user.displayName ?? '',
       mail: user.email ?? '',
       password: '',
-      accountImg: user.photoURL ?? 'default-avatar',
+      avatar: user.photoURL ?? 'default-avatar',
       channels: ['ER84UOYc0F2jptDjWxFo'],
       privateChats: [],
       online: false,

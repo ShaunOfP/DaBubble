@@ -12,12 +12,12 @@ import {
   updateDoc,
   getDoc,
   addDoc,
+  docData
 } from '@angular/fire/firestore';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { UserDatas } from './../../models/user.class';
 import { user } from '@angular/fire/auth';
 import { GuestDatas } from '../../models/guest.class';
-import { Member } from '../../models/member';
 import { initializeApp } from '@angular/fire/app';
 
 interface SingleUserData {
@@ -33,13 +33,15 @@ export class UserDatasService {
   found: boolean = false;
   private userSubject = new BehaviorSubject<any>(null);
   user$ = this.userSubject.asObservable();
-  private membersSubject = new BehaviorSubject<Member[]>([]);
-  members$: Observable<Member[]> = this.membersSubject.asObservable();
-  private selectedMembersSubject = new BehaviorSubject<Member[]>([]);
-  selectedMembers$ = this.selectedMembersSubject.asObservable();
 
   constructor() {
     this.userDatas$ = collectionData(this.userDatasRef());
+  }
+
+  async getUserDataById(userId: string): Promise<UserDatas | undefined> {
+    const userDocRef = doc(this.firestore, `userDatas/${userId}`);
+    const userDoc = await getDoc(userDocRef);
+    return userDoc.exists() ? (userDoc.data() as UserDatas) : undefined;
   }
 
   async saveUser(accountData: UserDatas, userId: string): Promise<void> {
@@ -49,8 +51,8 @@ export class UserDatasService {
       accountData.privateChats.push(chatsId);
 
       const userData = {
-        username: accountData.name,
-        avatar: accountData.accountImg,
+        username: accountData.username,
+        avatar: accountData.avatar,
         mail: accountData.mail,
         online: accountData.online,
         channels: accountData.channels,
@@ -166,51 +168,4 @@ export class UserDatasService {
     return collection(this.firestore, 'guestDatas');
   }
 
-  async searchUsers(queryString: string): Promise<Member[]> {
-    const userQuery = query(
-      this.userDatasRef(),
-      where('username', '>=', queryString),
-      where('username', '<', queryString + '\uf8ff')
-    );
-  
-    try {
-      const querySnapshot = await getDocs(userQuery);
-      const users: Member[] = [];
-      querySnapshot.forEach((doc) => {
-        users.push({...(doc.data() as Member) });
-      });
-      this.membersSubject.next(users);
-      return users;
-    } catch (error) {
-      console.error('Fehler beim Suchen nach Nutzern:', error);
-      return [];
-    }
-  }
-
-  selectMember(member: Member): void{
-    const members = this.membersSubject.getValue();
-    const updateMembers = members.map(m => 
-      m.privateChats[0] === member.privateChats[0] ? {...m, selected: true} : m);
-    
-    this.membersSubject.next(updateMembers);
-
-    const selectedMembers = this.selectedMembersSubject.getValue();
-    if (!selectedMembers.find(m => m.privateChats[0] === member.privateChats[0])) {
-      this.selectedMembersSubject.next([...selectedMembers, {...member, selected: true}])
-    }
-  }
-
-  removeMember(member: Member){
-    const selectedMembers = this.selectedMembersSubject.getValue();
-    const updateSelectedMembers = selectedMembers.filter(
-      m => m.privateChats[0] !== member.privateChats[0]
-    );
-    this.selectedMembersSubject.next(updateSelectedMembers);
-
-    const members = this.membersSubject.getValue();
-    const updateMembers = members.map(m => 
-      m.privateChats[0] === member.privateChats[0] ? {...m, selected: false} : m);
-
-    this.membersSubject.next(updateMembers);
-  }
 }
