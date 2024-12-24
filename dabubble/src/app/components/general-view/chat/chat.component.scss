@@ -21,7 +21,7 @@ h3 {
   align-items: center;
   gap: 10px;
   padding: 6px 10px 6px 10px;
-
+  border-radius: 30px;
   >button {
     border: none;
     background-color: transparent;
@@ -82,7 +82,11 @@ h3 {
   height: calc(100% - 160px);
 }
 
-.chat {}
+.chat {
+  height: 100%;
+  padding: 0 35px;
+  @include arrangement($jc:end, $fd:column)
+}
 
 .input-container {
   position: relative;

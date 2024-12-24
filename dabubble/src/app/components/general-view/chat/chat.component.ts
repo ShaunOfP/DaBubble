@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { EmojiPickerComponent } from '../emoji-picker/emoji-picker.component';
 import { NewMessageComponent } from "../new-message/new-message.component";
 import { SharedModule } from '../../../shared/shared.module';
+import { ChatAllComponent } from "./chat-all/chat-all.component";
 
 @Component({
   selector: 'app-chat',
@@ -17,21 +18,23 @@ import { SharedModule } from '../../../shared/shared.module';
     CommonModule,
     EmojiPickerComponent,
     NewMessageComponent,
-    SharedModule
-  ],
+    SharedModule,
+    ChatAllComponent
+],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss',
 })
 export class ChatComponent {
   @ViewChild('emojiTarget', { static: true }) emojiTarget!: ElementRef;
   selectedEmoji: string = '';
+  chatDetails:boolean =false
 
-  openChatDetails() {
-    document.getElementById('chatDetailsOverlay')?.classList.remove('d-none');
-  }
+  // openChatDetails() {
+  //   document.getElementById('chatDetailsOverlay')?.classList.remove('d-none');
+  // }
 
-  closeChatDetails() {
-    document.getElementById('chatDetailsOverlay')?.classList.add('d-none');
+  toggleChatDetails() {
+    this.chatDetails = !this.chatDetails
   }
 
   openMembersInfo() {
