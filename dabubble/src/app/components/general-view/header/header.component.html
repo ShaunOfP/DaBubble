@@ -9,8 +9,8 @@
             <button><img src="/img/general-view/workspace-menu/search.svg"></button>
         </div>
         <div class="account-info" (click)="toggleGreyScreen(); openDropdownMenu()">
-            <span>{{ (authService.user$ | async)?.displayName }}</span>
-            <img [src]="(authService.user$ | async)?.photoURL" alt="User Image">
+            <span>{{ this.userData?.username }}</span>
+            <img [src]="this.userData?.avatar" alt="User Image">
             <div class="dropdown">
                 <button mat-button [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger">
                     <img src="/img/general-view/workspace-menu/arrow_drop_down_thin.svg">
@@ -34,11 +34,11 @@
             </div>
         </div>
         <div class="profile-info-image">
-            <img [src]="(authService.user$ | async)?.photoURL" alt="User Image">
+            <img [src]="this.userData?.avatar" alt="User Image">
         </div>
         <div class="profile-info-name-status">
             <div class="profile-info-name-status-upper">
-                <span class="font-size-32 font-weight-700 cursor-no-change">{{ (authService.user$ | async)?.displayName
+                <span class="font-size-32 font-weight-700 cursor-no-change">{{ this.userData?.username
                     }}</span>
                 <!-- <span class="profile-info-name-status_prepare" (als eindeutigen namen). -->
                 <span class="font-size--700--18 color-purple-with-hover" (click)="toggleProfileEdit()">Bearbeiten</span>
@@ -55,7 +55,7 @@
                 </div>
                 <span class="font-size-20 font-weight-700 cursor-no-change">E-Mail-Adresse</span>
             </div>
-            <a class="cursor-no-change">{{ (authService.user$ | async)?.email }}</a>
+            <a class="cursor-no-change">{{ this.userData?.mail }}</a>
         </div>
     </div>
     <div *ngIf="showProfileEdit" class="edit-profile-container">
@@ -67,7 +67,7 @@
             </div>
         </div>
         <div class="profile-info-image">
-            <img [src]="(authService.user$ | async)?.photoURL" alt="User Image">
+            <img [src]="this.userData?.avatar" alt="User Image">
         </div>
         <form (ngSubmit)="submitForm(form)" #form="ngForm">
             <div class="gap-8 d-flex column">
@@ -78,7 +78,7 @@
                     <span class="font-size-20 font-weight-700 cursor-no-change">Vollständiger Name</span>
                 </div>
                 <input class="input-field" [class.invalid]="name.touched && name.invalid" #name="ngModel"
-                    placeholder="{{ (authService.user$ | async)?.displayName }}" required [(ngModel)]="newNameInput"
+                    placeholder="{{ this.userData?.username }}" required [(ngModel)]="newNameInput"
                     name="newNameInputField">
                 <span *ngIf="name.touched && name.invalid" class="error-message">This field is required</span>
             </div>
@@ -89,7 +89,7 @@
                     </div>
                     <span class="font-size-20 font-weight-700 cursor-no-change">E-Mail-Adresse</span>
                 </div>
-                <input class="input-field" placeholder="{{ (authService.user$ | async)?.email }}" required
+                <input class="input-field" placeholder="{{ this.userData?.mail }}" required
                     [class.invalid]="mail.touched && mail.invalid" #mail="ngModel" [(ngModel)]="newMailInput"
                     name="newMailInputField">
                 <span *ngIf="mail.touched && mail.invalid" class="error-message">This field is required</span>

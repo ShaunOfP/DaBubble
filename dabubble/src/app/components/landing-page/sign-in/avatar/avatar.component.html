@@ -17,8 +17,8 @@
                 <div class="main-content">
 
                     <div class="avatar-container">
-                        <img [src]="'/img/general-view/create-avatar/'+ accountData.accountImg + '.svg'" alt="back"/>
-                        <span>{{accountData.name}}</span>
+                        <img [src]="'/img/general-view/create-avatar/'+ accountData.avatar + '.svg'" alt="back"/>
+                        <span>{{accountData.username}}</span>
                     </div>
     
                     <div class="avatar-list-container">
@@ -30,7 +30,7 @@
                                        [alt]="avatar" 
                                        name="avatarSelection" 
                                        [value]="avatar"
-                                       [ngClass]="{'selected': accountData.accountImg === avatar}"
+                                       [ngClass]="{'selected': accountData.avatar === avatar}"
                                        (click)="selectAvatar(avatar, $event)">
                               </div>
                         </div>
@@ -40,10 +40,10 @@
                         <input
                         type="submit" 
                         value="Weiter" 
-                        [disabled]="!accountData.accountImg" 
+                        [disabled]="!accountData.avatar" 
                         [ngClass]="{
-                          'btn-primary--disable': !accountData.accountImg,
-                          'btn-primary--default': accountData.accountImg
+                          'btn-primary--disable': !accountData.avatar,
+                          'btn-primary--default': accountData.avatar
                         }"
                         >
                     </div>

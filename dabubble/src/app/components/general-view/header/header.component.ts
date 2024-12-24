@@ -1,23 +1,31 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenu, MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
-import { Router, RouterModule } from '@angular/router';
+import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { NgForm, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { User } from '@angular/fire/auth';
 import { AuthService } from '../../../services/firebase-services/auth.service';
+import { UserDatasService } from '../../../services/firebase-services/user-datas.service';
+import { UserDatas } from '../../../models/user.class';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-header',
   standalone: true,
   imports: [MatButtonModule, MatMenuModule, RouterModule, FormsModule, CommonModule],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss',
+  styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
   user: User | null = null;
+  userData: UserDatas | null = null;
 
-  constructor(private router: Router, public authService: AuthService) { }
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    public userDatasService: UserDatasService
+  ) {}
 
   @ViewChild('menu') menu!: MatMenu;
   @ViewChild('menuTrigger') menuTrigger!: MatMenuTrigger;
@@ -29,19 +37,34 @@ export class HeaderComponent implements OnInit {
   newNameInput: string = ``;
   newMailInput: string = ``;
 
-
   ngOnInit(): void {
-    this.authService.user$.subscribe(user => {
-      this.user = user;
-      if (this.user) {
-        console.log('User email:', this.user.email);
-        console.log('User display name:', this.user.displayName);
-      } else {
-        console.log('No user is logged in');
+    this.route.queryParams.subscribe(params => {
+      const userID = params['userID'];
+      if (userID) {
+        this.fetchUserData(userID);
+      }
+      else {
+        console.error('No user ID provided');
       }
     });
   }
 
+  async fetchUserData(userID: string): Promise<void> {
+    try {
+      const userData = await this.userDatasService.getUserDataById(userID);
+      this.userData = userData || null;
+      console.log('Fetched user data:', this.userData);
+      if (this.userData) {
+        console.log('Mail:', this.userData.mail);
+        console.log('Name:', this.userData.username); // Correctly log the name    
+        console.log('Account Image:', this.userData.avatar); // Correctly log the account image
+      } else {
+        console.log('User data is null or undefined');
+      }
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  }
 
   /**
    * Changes bool of variable to display/hide the Profile Info (and open the DropdownMenu)
@@ -55,7 +78,6 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-
   /**
    * Navigating to a specific site via the router using a given route
    * @param route A string containing the chosen route
@@ -64,14 +86,12 @@ export class HeaderComponent implements OnInit {
     this.router.navigate([route]);
   }
 
-
   /**
    * Opens the Dropdown Menu
    */
   openDropdownMenu() {
     this.menuTrigger.openMenu();
   }
-
 
   /**
    * Closes the Dropdown Menu and also closes the Profile Info Container if it is still open
@@ -85,7 +105,6 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-
   /**
    * Changes bool of variable to display/hide the Profile Edit
    */
@@ -97,7 +116,6 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-
   /**
    * Changes the bool of a variable to hide the Profile Edit
    */
@@ -105,7 +123,6 @@ export class HeaderComponent implements OnInit {
     this.showProfileEdit = false;
   }
 
-  
   /**
    * Changes bool of variable to hide/show GreyScreen; also hides all other elements when GreyScreen is hidden
    */
@@ -119,7 +136,6 @@ export class HeaderComponent implements OnInit {
       this.showGreyScreen = true;
     }
   }
-
 
   /**
    * 

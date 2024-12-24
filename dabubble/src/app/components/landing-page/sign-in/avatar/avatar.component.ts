@@ -39,7 +39,7 @@ export class AvatarComponent /* implements OnInit */ {
 
   selectAvatar(avatar: string, event: Event): void {
     event.preventDefault();
-    this.accountData.accountImg = avatar;
+    this.accountData.avatar = avatar;
   }
 
   createUser(ngForm:NgForm){

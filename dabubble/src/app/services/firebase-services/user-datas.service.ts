@@ -12,6 +12,7 @@ import {
   updateDoc,
   getDoc,
   addDoc,
+  docData
 } from '@angular/fire/firestore';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { UserDatas } from './../../models/user.class';
@@ -42,6 +43,12 @@ export class UserDatasService {
     this.userDatas$ = collectionData(this.userDatasRef());
   }
 
+  async getUserDataById(userId: string): Promise<UserDatas | undefined> {
+    const userDocRef = doc(this.firestore, `userDatas/${userId}`);
+    const userDoc = await getDoc(userDocRef);
+    return userDoc.exists() ? (userDoc.data() as UserDatas) : undefined;
+  }
+
   async saveUser(accountData: UserDatas, userId: string): Promise<void> {
     try {
       const userDocRef = doc(this.userDatasRef(), userId);
@@ -49,8 +56,8 @@ export class UserDatasService {
       accountData.privateChats.push(chatsId);
 
       const userData = {
-        username: accountData.name,
-        avatar: accountData.accountImg,
+        username: accountData.username,
+        avatar: accountData.avatar,
         mail: accountData.mail,
         online: accountData.online,
         channels: accountData.channels,

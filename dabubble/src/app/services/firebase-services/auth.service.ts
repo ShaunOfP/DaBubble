@@ -83,7 +83,7 @@ export class AuthService {
       const result = await signInWithPopup(this.auth, provider);
       console.log('Google Login erfolgreich:', result.user.uid);
       console.log('Google Account Image URL:', result.user.photoURL); // Log the image path
-      this.userSubject.next(result.user); // Push the user data to userSubject
+      // this.userSubject.next(result.user); // Push the user data to userSubject
       return result; 
     } catch (error) {
       console.error('Fehler beim Google Login:', error);
