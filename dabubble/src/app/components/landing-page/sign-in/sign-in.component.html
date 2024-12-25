@@ -21,7 +21,7 @@
                     <div [ngClass]="{'input-field-focused': nameFocused, 'input-field-valid': name.valid}" class="input-field">
                         <img [src]="(name.valid && name.touched) ? '/img/public/profile-black.svg' : '/img/public/profile.svg'" alt="name-icon"/>
                         <input  
-                            [(ngModel)]="accountData.name" 
+                            [(ngModel)]="accountData.username" 
                             type="text" 
                             name="name"
                             #name="ngModel"

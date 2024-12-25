@@ -13,6 +13,7 @@ import { ChannelMemberService, Member} from '../../../services/firebase-services
 export class AllMembersComponent implements OnChanges{
   @Input() searchQuery: string = '';
   memberList: Member[] = [];
+  lowerCaseQuery!: string;
 
   constructor(
     private memberService: ChannelMemberService,){
@@ -25,8 +26,9 @@ export class AllMembersComponent implements OnChanges{
   }
 
   private async updateMembersList(query: string): Promise<void> {
-    if (query.trim() !== '') {
-      this.memberList = await this.memberService.searchUsers(query);
+    this.lowerCaseQuery = query.toLowerCase();
+    if (this.lowerCaseQuery.trim() !== '') {
+      this.memberList = await this.memberService.searchUsers(this.lowerCaseQuery);
     } else {
       this.memberList = [];
     }
