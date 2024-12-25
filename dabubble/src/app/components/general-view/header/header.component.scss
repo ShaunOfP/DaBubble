@@ -61,9 +61,6 @@ header {
 
     >input {
         @include fontStyle($fz: 24px, $fw: 400);
-        //include anstelle von unterem?
-        // font-size: 24px;
-        // font-weight: 400;
         background-color: var(--color-white);
     }
 
@@ -90,8 +87,6 @@ header {
 
     >span {
         @include fontStyle($fz: 32px);
-        // font-weight: 700;
-        // font-size: 32px;
         width: max-content;
         max-width: 250px;
         overflow: hidden;
@@ -312,7 +307,7 @@ header {
 .input-field {
     background-color: var(--color-white);
     border: 1px solid var(--color-blue-border);
-    font-size: 18px;
+    @include fontStyle($fz: 18px, $fw: 400);
 
     &:hover {
         border: 1px solid var(--color-purple-primary-disabled);
