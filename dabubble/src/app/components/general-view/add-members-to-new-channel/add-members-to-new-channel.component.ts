@@ -21,6 +21,7 @@ export class AddMembersToNewChannelComponent implements OnChanges, OnInit{
   isMemberArrayEmpty = true;
   searchControl = new FormControl('');
   selectedMembers: Member[] = [];
+  searchFocus: boolean = false;
 
   constructor(
     private memberService: ChannelMemberService,){
@@ -41,7 +42,7 @@ export class AddMembersToNewChannelComponent implements OnChanges, OnInit{
     }
   }
 
-  close() {
+  close(): void {
     this.closeAll.emit();
   }
 
@@ -66,5 +67,16 @@ export class AddMembersToNewChannelComponent implements OnChanges, OnInit{
 
   addMembersToChannel(){
     //Do as name says
+  }
+
+  clearSearchField(){
+    this.searchControl.setValue('')
+    this.searchFocus = false;
+  }
+
+  hideSelectedMembers(){
+    if(this.selectedMembers.length > 0){
+      this.searchFocus = true;
+    }
   }
 }

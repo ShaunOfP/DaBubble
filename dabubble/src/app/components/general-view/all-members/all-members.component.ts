@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ChannelMemberService, Member} from '../../../services/firebase-services/channel-member.service';
 
 
@@ -12,6 +12,7 @@ import { ChannelMemberService, Member} from '../../../services/firebase-services
 })
 export class AllMembersComponent implements OnChanges{
   @Input() searchQuery: string = '';
+  @Output() memberClicked = new EventEmitter<void>();
   memberList: Member[] = [];
   lowerCaseQuery!: string;
 
@@ -35,6 +36,7 @@ export class AllMembersComponent implements OnChanges{
 
   selectMember(member: Member){
     this.memberService.selectMember(member);
+    this.memberClicked.emit();
   }
 
 }

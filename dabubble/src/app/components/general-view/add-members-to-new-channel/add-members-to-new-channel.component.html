@@ -24,16 +24,22 @@
                     placeholder="Namen eingeben"
                     #nameInput
                     [formControl]="searchControl"
+                    (focus)="hideSelectedMembers()"
                 />
-                <div class="all-selected-member-container">
-                    <div class="member-container" *ngFor="let member of selectedMembers">
+                <div class="all-selected-member-container" [ngClass]="{'d-none': searchFocus}">
+                    <div class="member-container" *ngFor="let member of selectedMembers | slice:0:2">
                         <img class="avatar" [src]="'/img/general-view/create-avatar/' + member.avatar +'.svg'">
                         <span>{{ member.username }}</span>
                         <img src="/img/general-view/workspace-menu/close.svg" (click)="removeMember(member)">
                     </div>
+                    <button class="b-grey-circle radius-30 height-width-40 pointer" *ngIf="selectedMembers.length > 2">+{{ selectedMembers.length - 2 }}</button>
                 </div>
             </div>
-            <app-all-members [ngClass]="{'d-none': searchControl.value == '' }" [searchQuery]="searchControl.value || ''"></app-all-members>
+            <app-all-members 
+                [ngClass]="{'d-none': searchControl.value == '' }" 
+                [searchQuery]="searchControl.value || ''"
+                (memberClicked)="clearSearchField()">
+            </app-all-members>
         </div>
     </form>
     <div class="btn-container">

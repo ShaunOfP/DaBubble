@@ -107,6 +107,16 @@ button {
 .all-selected-member-container{
     position: absolute;
     display: flex;
+    align-items: center;
+
+    button{
+        background-color: #eceefe;
+        border-radius: 30px;
+        height: fit-content;
+        width: fit-content;
+        padding: 8px;
+        border: none;
+    }
 }
 
 .member-container{
