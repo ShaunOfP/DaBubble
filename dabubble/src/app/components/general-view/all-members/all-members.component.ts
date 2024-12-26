@@ -26,9 +26,8 @@ export class AllMembersComponent implements OnChanges{
   }
 
   private async updateMembersList(query: string): Promise<void> {
-    this.lowerCaseQuery = query.toLowerCase();
-    if (this.lowerCaseQuery.trim() !== '') {
-      this.memberList = await this.memberService.searchUsers(this.lowerCaseQuery);
+    if (query.trim() !== '') {
+      this.memberList = await this.memberService.searchUsers(query);
     } else {
       this.memberList = [];
     }

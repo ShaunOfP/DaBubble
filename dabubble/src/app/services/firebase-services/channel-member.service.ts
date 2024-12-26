@@ -33,8 +33,8 @@ export class ChannelMemberService{
     async searchUsers(queryString: string): Promise<Member[]> {
         const userQuery = query(
           this.userDatasRef(),
-          where('usernameLower', '>=', queryString),
-          where('usernameLower', '<', queryString + '\uf8ff')
+          where('username', '>=', queryString),
+          where('username', '<', queryString + '\uf8ff')
         );
       
         try {
