@@ -10,18 +10,30 @@
 img {
     height: 70px;
     width: 70px;
-    padding-left: 40px;
 }
 
 .thread-content--primary {
     @include arrangement($jc: normal, $g: 20px);
+    transition: background-color 0.1s ease;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 40px;
+
+    &:hover {
+        background-color: var(--color-blue-bg);
+        cursor: pointer;
+
+        .thread-content_conversation--primary {
+            background-color: var(--color-white);
+        }
+    }
 }
 
-.chat-content_conversation {
+.thread-content_conversation {
     @include arrangement($ai: normal, $fd: column, $g: 8px);
 }
 
-.chat-content_header {
+.thread-content_header {
     @include arrangement($jc: flex-start, $g: 20px);
 
     >:first-child {
@@ -34,9 +46,30 @@ img {
     }
 }
 
-.chat-content_conversation--primary {
+.thread-content_conversation--primary {
     background-color: var(--color-blue-bg);
     border-radius: 0px 20px 20px 20px;
     padding: 15px;
     @include fontStyle();
+    transition: background-color 0.1s ease;
+}
+
+.thread-content_reactions {
+    @include arrangement($jc: flex-start, $g: 20px);
+}
+
+.thread-content_reactions--primary {
+    padding: 5px 10px;
+    @include arrangement($g: 10px);
+    border: 1px solid var(--color-blue-border);
+    border-radius: 20px;
+    background-color: var(--color-white);
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    >:last-child {
+        @include fontStyle($fs: 16px);
+    }
 }

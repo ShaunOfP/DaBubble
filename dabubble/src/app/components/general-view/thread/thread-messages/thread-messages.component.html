@@ -1,14 +1,22 @@
 <div *ngFor="let message of messages$ | async" class="thread-content--primary">
     <img src="img/general-view/create-avatar/avatar1.svg" alt="avatar" />
-    <div class="chat-content_conversation">
-        <div class="chat-content_header">
+    <div class="thread-content_conversation">
+        <div class="thread-content_header">
             <span>{{ message.sender }}</span>
             <span>{{ message.createdAt }}</span>
         </div>
-        <span class="chat-content_conversation--primary">
-
+        <span class="thread-content_conversation--primary">
             <p>{{ message.content }}</p>
-
         </span>
+        <div class="thread-content_reactions" *ngIf="">
+            <div class="thread-content_reactions--primary">
+                <span>😁</span>
+                <span>1</span>
+            </div>
+            <button>
+                <img>
+                <img *ngIf="">
+            </button>
+        </div>
     </div>
 </div>
