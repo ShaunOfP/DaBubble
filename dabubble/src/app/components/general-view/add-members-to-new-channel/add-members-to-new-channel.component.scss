@@ -116,6 +116,12 @@ button {
         width: fit-content;
         padding: 8px;
         border: none;
+
+        &:hover{
+            cursor: pointer;
+            color: var(--color-purple-secondary-hover);
+            zoom: 1.05;
+        }
     }
 }
 
