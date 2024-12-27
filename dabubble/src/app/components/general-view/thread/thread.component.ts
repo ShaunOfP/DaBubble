@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
 import { EmojiPickerComponent } from '../emoji-picker/emoji-picker.component';
 import { SharedModule } from '../../../shared/shared.module';
+import { ThreadMessagesComponent } from "./thread-messages/thread-messages.component";
 
 @Component({
   selector: 'app-thread',
   standalone: true,
-  imports: [EmojiPickerComponent, SharedModule],
+  imports: [EmojiPickerComponent, SharedModule, ThreadMessagesComponent],
   templateUrl: './thread.component.html',
   styleUrl: './thread.component.scss'
 })
