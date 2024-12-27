@@ -19,7 +19,7 @@ export class ChatService {
   constructor() { }
 
   getChatRef(){
-    return collection(this.firestore, 'chat')
+    return collection(this.firestore, 'chat');
   }
 
   getMessages(channelId: string): Observable<any[]> {
