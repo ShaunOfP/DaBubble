@@ -1,4 +1,15 @@
 @import './../../../../../styles.scss';
+@import './../../../../../templates/input.scss';
+@import './../../../../../templates/styles/button.scss';
+
+@mixin fontStyle($fs: 18px, $fw: 400) {
+    font-size: $fs;
+    font-weight: $fw;
+}
+
+.chat-feed {
+    @include arrangement($fd: column, $g: 20px, $ai: start);
+}
 
 .chat-date{
     @include arrangement();
@@ -20,9 +31,39 @@
 }
 
 .chat-content--primary{
-    @include arrangement();
-    .chat-content_conversation{
-        
+    @include arrangement($jc: normal, $g: 20px);
+    transition: background-color 0.1s ease;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 40px;
+
+    &:hover {
+        background-color: var(--color-blue-bg);
+        cursor: pointer;
+
+        .chat-content_conversation--primary {
+            background-color: var(--color-white);
+        }
+    }
+}
+
+.chat-content_header {
+    @include arrangement($jc: flex-start, $g: 20px);
+
+    >:first-child {
+        @include fontStyle($fw: 700);
     }
 
+    >:last-child {
+        color: var(--color-grey-primary-disable);
+        @include fontStyle($fs: 14px);
+    }
+}
+
+.chat-content_conversation--primary {
+    background-color: var(--color-blue-bg);
+    border-radius: 0px 20px 20px 20px;
+    padding: 15px;
+    @include fontStyle();
+    transition: background-color 0.1s ease;
 }

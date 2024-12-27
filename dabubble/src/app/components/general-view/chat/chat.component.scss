@@ -85,7 +85,7 @@ h3 {
 .chat {
   width: 100%;
   height: 100%;
-  padding: 0 35px;
+  // padding: 0 35px;
   box-sizing: border-box;
   @include arrangement($jc:end, $fd:column)
 }
