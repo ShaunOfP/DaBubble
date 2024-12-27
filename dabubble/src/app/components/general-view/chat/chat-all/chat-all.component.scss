@@ -31,11 +31,12 @@
 }
 
 .chat-content--primary{
-    @include arrangement($jc: normal, $g: 20px);
+    @include arrangement($jc: normal, $g: 20px, $fd: column, $ai: start);
     transition: background-color 0.1s ease;
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 40px;
+    width: 100%;
 
     &:hover {
         background-color: var(--color-blue-bg);
@@ -45,6 +46,15 @@
             background-color: var(--color-white);
         }
     }
+
+    >:first-child {
+        @include arrangement($jc: flex-start, $g: 20px);
+    }
+
+    >:last-child {
+        width: 100%;
+        @include arrangement($jc: flex-start, $g: 20px);
+}
 }
 
 .chat-content_header {
@@ -66,4 +76,8 @@
     padding: 15px;
     @include fontStyle();
     transition: background-color 0.1s ease;
+}
+
+.chat-content_conversation {
+    @include arrangement($fd: column, $jc: flex-start, $g: 8px);
 }
