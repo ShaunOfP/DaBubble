@@ -3,7 +3,7 @@
   <div class="line"></div>
   <div class="chat-date_create">Dienstag, 14 Januar</div>
 </div>
-<div *ngFor="let message of messages$ | async" class="chat-content--primary">
+<div *ngFor="let message of messages$ | async" class="chat-content--secondary">
   <div>
     <img src="img/general-view/create-avatar/avatar1.svg" alt="avatar" />
     <div class="chat-content_conversation">
@@ -11,7 +11,7 @@
         <span>{{ message.sender }}</span>
         <span>{{ formatTime(message.createdAt) }}</span>
       </div>
-      <span class="chat-content_message--primary">
+      <span class="chat-content_message--secondary">
         {{ message.content }}
       </span>
     </div>

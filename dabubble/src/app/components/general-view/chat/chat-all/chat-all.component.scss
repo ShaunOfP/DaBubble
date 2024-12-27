@@ -78,17 +78,19 @@
 }
 
 .chat-content_message {
-  border-radius: 0px 20px 20px 20px;
+ 
   padding: 15px;
   @include fontStyle();
   transition: background-color 0.1s ease;
   &--primary {
     @extend.chat-content_message;
     background-color: var(--color-blue-bg);
+    border-radius: 0px 20px 20px 20px;
   }
   &--secondary {
     @extend.chat-content_message;
     background-color: var(--color-purple-primary-disabled);
+    border-radius: 20px 0px 20px 20px;
   }
 }
 
