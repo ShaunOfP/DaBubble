@@ -33,7 +33,11 @@
                         <span>{{ member.username }}</span>
                         <img src="/img/general-view/workspace-menu/close.svg" (click)="removeMember(member)">
                     </div>
-                    <button class="b-grey-circle radius-30 height-width-40 pointer" *ngIf="selectedMembers.length > 2">+{{ selectedMembers.length - 2 }}</button>
+                    <div
+                        (click)="showSelectedMembers()"
+                        class="further-members-container" 
+                        *ngIf="selectedMembers.length > 2">+{{ selectedMembers.length - 2 }}
+                    </div>
                 </div>
             </div>
             <app-all-members 
@@ -48,3 +52,8 @@
         <button *ngIf="!firstSelected" class="btn-primary--disable" type="submit" id="submit-btn">Erstellen</button>
     </div>
 </section>
+<app-all-selected-members 
+    *ngIf="openSelectedMembers"
+    [members]="selectedMembers"
+    (closeWindow)="closeSelectedMembersWindow()">
+</app-all-selected-members>

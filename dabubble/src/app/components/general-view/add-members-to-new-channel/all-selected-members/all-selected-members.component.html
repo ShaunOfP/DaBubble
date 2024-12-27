@@ -1,0 +1,24 @@
+<section>
+    <div class="container-wrapper">
+        <header>
+            <h3>
+                Ausgewählte Channel-Mitglieder
+            </h3>
+            <div class="arrow-back" (click)="close()">
+                <img src="/img/general-view/workspace-menu/close.svg">
+            </div>
+        </header>
+        <div>
+            <div class="member-container" *ngFor="let member of members">
+                <img class="avatar" [src]="'/img/general-view/create-avatar/' + member.avatar +'.svg'">
+                <span>{{ member.username }}</span>
+                <div class="arrow-back"  (click)="removeMember(member)">
+                    <img src="/img/general-view/workspace-menu/close.svg">
+                </div>
+            </div>
+        </div>
+        <div class="btn-container">
+            <button class="btn-primary--default" (click)="close()">Fertig</button>
+        </div>
+    </div>
+</section>

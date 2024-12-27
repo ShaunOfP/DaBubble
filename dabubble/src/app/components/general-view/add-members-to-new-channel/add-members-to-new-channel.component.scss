@@ -108,20 +108,21 @@ button {
     position: absolute;
     display: flex;
     align-items: center;
+}
 
-    button{
-        background-color: #eceefe;
-        border-radius: 30px;
-        height: fit-content;
-        width: fit-content;
-        padding: 8px;
-        border: none;
 
-        &:hover{
-            cursor: pointer;
-            color: var(--color-purple-secondary-hover);
-            zoom: 1.05;
-        }
+.further-members-container{
+    background-color: var(--color-blue-bg);
+    border-radius: 30px;
+    height: fit-content;
+    width: fit-content;
+    padding: 8px;
+    border: none;
+
+    &:hover{
+        cursor: pointer;
+        color: var(--color-purple-secondary-hover);
+        zoom: 1.05;
     }
 }
 

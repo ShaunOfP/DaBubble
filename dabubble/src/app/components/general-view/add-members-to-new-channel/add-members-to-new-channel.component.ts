@@ -3,12 +3,13 @@ import { CommonModule } from '@angular/common';
 import { AllMembersComponent } from '../all-members/all-members.component';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ChannelMemberService, Member} from '../../../services/firebase-services/channel-member.service';
+import { AllSelectedMembersComponent } from './all-selected-members/all-selected-members.component';
 
 
 @Component({
   selector: 'app-add-members-to-new-channel',
   standalone: true,
-  imports: [CommonModule, AllMembersComponent, ReactiveFormsModule],
+  imports: [CommonModule, AllMembersComponent, ReactiveFormsModule, AllSelectedMembersComponent],
   templateUrl: './add-members-to-new-channel.component.html',
   styleUrl: './add-members-to-new-channel.component.scss'
 })
@@ -22,6 +23,7 @@ export class AddMembersToNewChannelComponent implements OnChanges, OnInit{
   searchControl = new FormControl('');
   selectedMembers: Member[] = [];
   searchFocus: boolean = false;
+  openSelectedMembers: boolean = false;
 
   constructor(
     private memberService: ChannelMemberService,){
@@ -80,5 +82,13 @@ export class AddMembersToNewChannelComponent implements OnChanges, OnInit{
     } else {
       this.searchFocus = false;
     }
+  }
+
+  showSelectedMembers(){
+    this.openSelectedMembers = !this.openSelectedMembers;
+  }
+
+  closeSelectedMembersWindow(): void {
+    this.openSelectedMembers = false;
   }
 }
