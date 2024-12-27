@@ -75,8 +75,10 @@ export class AddMembersToNewChannelComponent implements OnChanges, OnInit{
   }
 
   hideSelectedMembers(){
-    if(this.selectedMembers.length > 0){
+    if(this.selectedMembers.length > 0 && !this.searchFocus){
       this.searchFocus = true;
+    } else {
+      this.searchFocus = false;
     }
   }
 }

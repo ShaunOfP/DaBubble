@@ -25,6 +25,7 @@
                     #nameInput
                     [formControl]="searchControl"
                     (focus)="hideSelectedMembers()"
+                    (blur)="hideSelectedMembers()"
                 />
                 <div class="all-selected-member-container" [ngClass]="{'d-none': searchFocus}">
                     <div class="member-container" *ngFor="let member of selectedMembers | slice:0:2">
