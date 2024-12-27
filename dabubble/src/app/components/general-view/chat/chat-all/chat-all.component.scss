@@ -90,6 +90,7 @@
   &--secondary {
     @extend.chat-content_message;
     background-color: var(--color-purple-primary-disabled);
+    color: white;
     border-radius: 20px 0px 20px 20px;
   }
 }
