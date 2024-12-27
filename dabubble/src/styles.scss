@@ -14,11 +14,11 @@
   --color-purple-primary-disabled: #797ef3; //Purple color if text is disabled/grayed out
   --color-purple-secondary-hover: #535af1; //Hover over black text
   --filter-purple-secondary-hover: brightness(0) saturate(100%) invert(35%) sepia(91%) saturate(3601%) hue-rotate(229deg) brightness(97%) contrast(95%);
-  --color-transparent: rgba(255, 255, 255, 0);
+  --color-transparent: #ffffff00;
   --color-grey-bar: #d9d9d9;
   --color-grey-hover: #e6e6e6;
   --color-grey-primary-disable: #686868;
-  --color-grey-primary-overlay: rgba(104, 104, 104, 0.5);
+  --color-grey-primary-overlay: #68686880;
 
   --color-green: #92c83e; //Green color for online status
   --color-purple-error: #ed1e79; //Purple color for offline status

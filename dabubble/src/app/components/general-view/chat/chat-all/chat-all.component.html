@@ -3,24 +3,24 @@
   <div class="line"></div>
   <div class="chat-date_create">Dienstag, 14 Januar</div>
 </div>
-<div *ngFor="let message of messages$ | async"  class="chat-content--primary">
+<div *ngFor="let message of messages$ | async" class="chat-content--primary">
   <div>
-  <img src="img/general-view/create-avatar/avatar1.svg" alt="avatar" />
-  <div class="chat-content_conversation">
-    <div class="chat-content_header">	
-      <span>{{ message.sender }}</span>
-      <span>{{ message.createdAt }}</span>
-    </div>
-    <span class="chat-content_conversation--primary">
-
+    <img src="img/general-view/create-avatar/avatar1.svg" alt="avatar" />
+    <div class="chat-content_conversation">
+      <div class="chat-content_header">
+        <span>{{ message.sender }}</span>
+        <span>{{ message.createdAt }}</span>
+      </div>
+      <span class="chat-content_conversation--primary">
         {{ message.content }}
-
-    </span>
+      </span>
+    </div>
   </div>
-</div>
   <div>
     <span class="chat-content_conversation_reacts">2 Antworten</span>
-    <span class="chat-content_conversation_last-react">letzte Antwort 14:56 Uhr</span>
+    <span class="chat-content_conversation_last-react"
+      >letzte Antwort 14:56 Uhr</span
+    >
   </div>
 </div>
 <!-- </div> -->

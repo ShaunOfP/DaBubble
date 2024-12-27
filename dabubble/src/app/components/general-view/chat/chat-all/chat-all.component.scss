@@ -36,6 +36,7 @@
     padding-bottom: 10px;
     padding-left: 40px;
     width: 100%;
+    overflow: auto;
 
     &:hover {
         background-color: var(--color-blue-bg);
@@ -79,4 +80,13 @@
 
 .chat-content_conversation {
     @include arrangement($fd: column, $jc: flex-start, $g: 8px);
+}
+
+.chat-content_conversation_reacts{
+    color: var(--color-purple-secondary-hover);
+    font-size: 18px;
+}
+.chat-content_conversation_last-react{
+    color: var(--color-grey-primary-disable);
+    font-size: 14px;
 }
