@@ -9,7 +9,7 @@
     <div class="chat-content_conversation">
       <div class="chat-content_header">
         <span>{{ message.sender }}</span>
-        <span>{{ message.createdAt }}</span>
+        <span>{{ formatTime(message.createdAt) }}</span>
       </div>
       <span class="chat-content_conversation--primary">
         {{ message.content }}

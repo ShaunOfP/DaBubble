@@ -46,15 +46,9 @@
             background-color: var(--color-white);
         }
     }
-
-    >:first-child {
-        @include arrangement($jc: flex-start, $g: 20px);
+    >div{
+        @include arrangement($jc: flex-start, $g: 20px); 
     }
-
-    >:last-child {
-        width: 100%;
-        @include arrangement($jc: flex-start, $g: 20px);
-}
 }
 
 .chat-content_header {
