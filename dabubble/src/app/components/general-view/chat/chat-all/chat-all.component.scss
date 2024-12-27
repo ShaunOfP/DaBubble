@@ -1,6 +1,5 @@
 @import './../../../../../styles.scss';
-@import './../../../../../templates/input.scss';
-@import './../../../../../templates/styles/button.scss';
+
 
 @mixin fontStyle($fs: 18px, $fw: 400) {
     font-size: $fs;
