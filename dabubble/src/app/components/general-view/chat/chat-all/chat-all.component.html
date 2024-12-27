@@ -10,7 +10,9 @@
       <span>14:25 Uhr</span>
     </div>
     <span class="chat-content_conversation--primary">
-        Welche Version ist aktuell von Angular?
+      <div *ngFor="let message of messages$ | async">
+        <p>{{ message.content }}</p>
+      </div>
     </span>
   </div>
   <div>

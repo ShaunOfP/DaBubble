@@ -21,4 +21,9 @@ export class ChatService {
   getChatRef(){
     return collection(this.firestore, 'chat')
   }
+
+  getMessages(channelId: string): Observable<any[]> {
+    const messagesRef = collection(this.firestore, `channels/${channelId}/messages`);
+    return collectionData(messagesRef, { idField: 'id' }) as Observable<any[]>;
+  }
 }
