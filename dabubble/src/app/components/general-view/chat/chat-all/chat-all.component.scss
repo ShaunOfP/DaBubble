@@ -1,86 +1,106 @@
-@import './../../../../../styles.scss';
-
+@import "./../../../../../styles.scss";
 
 @mixin fontStyle($fs: 18px, $fw: 400) {
-    font-size: $fs;
-    font-weight: $fw;
+  font-size: $fs;
+  font-weight: $fw;
 }
 
 .chat-feed {
-    @include arrangement($fd: column, $g: 20px, $ai: start);
+  @include arrangement($fd: column, $g: 20px, $ai: start);
 }
 
-.chat-date{
-    @include arrangement();
-    position:relative;
+.chat-date {
+  @include arrangement();
+  position: relative;
+  width: 100%;
+  .line {
     width: 100%;
-    .line{
-        width: 100%;
-        height: 1px;
-        background-color: var(--color-blue-border);
-        position: absolute;
-    }
-    .chat-date_create{
-        padding: 5px 15px;
-        border-radius: 30px;
-        border: 1px solid var(--color-blue-border);
-        background-color: white;
-        z-index: 3;
-    }
+    height: 1px;
+    background-color: var(--color-blue-border);
+    position: absolute;
+  }
+  .chat-date_create {
+    padding: 5px 15px;
+    border-radius: 30px;
+    border: 1px solid var(--color-blue-border);
+    background-color: white;
+    z-index: 3;
+  }
 }
 
-.chat-content--primary{
+.chat-content {
+  transition: background-color 0.1s ease;
+  padding: 10px 40px;
+  box-sizing: border-box;
+  width: 100%;
+  cursor: pointer;
+
+  &--primary {
+    @extend .chat-content;
     @include arrangement($jc: normal, $g: 20px, $fd: column, $ai: start);
-    transition: background-color 0.1s ease;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 40px;
-    width: 100%;
-    overflow: auto;
-
+    > div {
+      @include arrangement($jc: flex-start, $g: 20px);
+    }
     &:hover {
-        background-color: var(--color-blue-bg);
-        cursor: pointer;
+      background-color: var(--color-blue-bg);
+      .chat-content_message {
+        background-color: var(--color-white);
+      }
+    }
+  }
 
-        .chat-content_conversation--primary {
-            background-color: var(--color-white);
-        }
+  &--secondary {
+    @extend .chat-content;
+    @include arrangement($jc: normal, $g: 20px, $fd: column, $ai: end);
+    > div {
+      @include arrangement($jc: flex-start, $g: 20px, $fd: row-reverse);
     }
-    >div{
-        @include arrangement($jc: flex-start, $g: 20px); 
+    &:hover {
+      background-color: var(--color-blue-bg);
     }
+    .chat-content_header{
+        flex-direction: row-reverse;
+    }
+  }
 }
 
 .chat-content_header {
-    @include arrangement($jc: flex-start, $g: 20px);
+  @include arrangement($jc: flex-start, $g: 20px);
 
-    >:first-child {
-        @include fontStyle($fw: 700);
-    }
+  > :first-child {
+    @include fontStyle($fw: 700);
+  }
 
-    >:last-child {
-        color: var(--color-grey-primary-disable);
-        @include fontStyle($fs: 14px);
-    }
+  > :last-child {
+    color: var(--color-grey-primary-disable);
+    @include fontStyle($fs: 14px);
+  }
 }
 
-.chat-content_conversation--primary {
+.chat-content_message {
+  border-radius: 0px 20px 20px 20px;
+  padding: 15px;
+  @include fontStyle();
+  transition: background-color 0.1s ease;
+  &--primary {
+    @extend.chat-content_message;
     background-color: var(--color-blue-bg);
-    border-radius: 0px 20px 20px 20px;
-    padding: 15px;
-    @include fontStyle();
-    transition: background-color 0.1s ease;
+  }
+  &--secondary {
+    @extend.chat-content_message;
+    background-color: var(--color-purple-primary-disabled);
+  }
 }
 
 .chat-content_conversation {
-    @include arrangement($fd: column, $jc: flex-start, $g: 8px);
+  @include arrangement($fd: column, $jc: flex-start, $g: 8px);
 }
 
-.chat-content_conversation_reacts{
-    color: var(--color-purple-secondary-hover);
-    font-size: 18px;
+.chat-content_conversation_reacts {
+  color: var(--color-purple-secondary-hover);
+  font-size: 18px;
 }
-.chat-content_conversation_last-react{
-    color: var(--color-grey-primary-disable);
-    font-size: 14px;
+.chat-content_conversation_last-react {
+  color: var(--color-grey-primary-disable);
+  font-size: 14px;
 }
