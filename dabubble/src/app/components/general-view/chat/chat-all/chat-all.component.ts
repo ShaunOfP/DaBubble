@@ -3,7 +3,7 @@ import { ChatService } from '../../../../services/firebase-services/chat.service
 import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { Message } from '../../../../models/interfaces';
-
+import { idToken } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-chat-all',
@@ -13,20 +13,19 @@ import { Message } from '../../../../models/interfaces';
   styleUrls: ['./chat-all.component.scss'],
 })
 export class ChatAllComponent implements OnInit {
-  // messages$!: Observable<any[]>;
-  chatMessages: Array<Message> = [];
+  messages$!: Observable<Message[]>;
+  // chatMessages: Array<Message> = [];
   threadMessages: string[] = [];
-  date: string[] = [];
-
+  channelId = 'dOCTHJxiNDhYvmqMokLv';
   constructor(private chatService: ChatService) {}
 
   ngOnInit(): void {
-    const channelId = 'dOCTHJxiNDhYvmqMokLv'; // Replace with your channel ID
-    //   this.messages$ = this.chatService.getMessages(channelId);
-    this.chatService.getMessages(channelId).subscribe((messages) => {
-      this.chatMessages = messages;
-      console.log('Messages updated:', this.chatMessages);
-    });
+    // const channelId = 'dOCTHJxiNDhYvmqMokLv'; // Replace with your channel ID
+    this.messages$ = this.chatService.getMessages(this.channelId);
+    // this.chatService.getMessages(channelId).subscribe((messages) => {
+    //   this.chatMessages = messages;
+    //   console.log('Messages updated:', this.chatMessages);
+    // });
   }
   formatTime(timestamp: string): string {
     const parsedTimestamp = parseInt(timestamp, 10);
@@ -37,5 +36,13 @@ export class ChatAllComponent implements OnInit {
       hour: '2-digit',
       minute: '2-digit',
     });
+  }
+
+  checkStyle() {
+    if (this.channelId == 'dOCTHJxiNDhYvmqMokLv') {
+      return 'primary';
+    } else {
+      return 'secondary';
+    }
   }
 }

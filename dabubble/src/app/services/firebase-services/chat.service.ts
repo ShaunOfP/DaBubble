@@ -28,26 +28,30 @@ export class ChatService {
     return collection(this.firestore, 'chat');
   }
 
-  // getMessages(channelId: string): Observable<any[]> {
-  //   const messagesRef = collection(this.firestore, `channels/${channelId}/messages`);
-  //   return collectionData(messagesRef, { idField: 'id' }) as Observable<any[]>;
-  // }
-
   getMessages(channelId: string): Observable<Message[]> {
-    return new Observable((observer) => {
-      const messagesCollectionRef = collection(this.firestore, `channels/${channelId}/messages`);
-      const messagesQuery = query(messagesCollectionRef, orderBy('createdAt', 'asc'));
-
-      const unsubscribe = onSnapshot(messagesQuery, (snapshot) => {
-        const messages: Message[] = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        })) as Message[];
-        observer.next(messages);
-      });
-      return () => unsubscribe();
-    });
+    const messagesRef = query(
+      collection(this.firestore, `channels/${channelId}/messages`),
+      orderBy('createdAt', 'asc')
+    );
+    return collectionData(messagesRef, { idField: 'id' }) as Observable<Message[]>;
   }
+  
+
+  // getMessages(channelId: string): Observable<Message[]> {
+  //   return new Observable((observer) => {
+  //     const messagesCollectionRef = collection(this.firestore, `channels/${channelId}/messages`);
+  //     const messagesQuery = query(messagesCollectionRef, orderBy('createdAt', 'asc'));
+
+  //     const unsubscribe = onSnapshot(messagesQuery, (snapshot) => {
+  //       const messages: Message[] = snapshot.docs.map((doc) => ({
+  //         id: doc.id,
+  //         ...doc.data(),
+  //       })) as Message[];
+  //       observer.next(messages);
+  //     });
+  //     return () => unsubscribe();
+  //   });
+  // }
   
 
   getThreadCollection(channelId: string, messageId: string): Observable<any[]> {
