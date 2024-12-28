@@ -3,4 +3,5 @@ export interface Message{
   sender: string,
   createdAt:string,
   content:string,
+  userId: string
 }
