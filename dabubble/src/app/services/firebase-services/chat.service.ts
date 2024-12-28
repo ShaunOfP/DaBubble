@@ -11,8 +11,11 @@ import {
   doc,
   getDoc,
   onSnapshot,
+  orderBy,
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+import { Message } from '../../models/interfaces';
+
 
 @Injectable({
   providedIn: 'root',
@@ -30,26 +33,20 @@ export class ChatService {
   //   return collectionData(messagesRef, { idField: 'id' }) as Observable<any[]>;
   // }
 
-  getMessages(channelId: string) {
-    const messagesData: Array<Object> = [];
-    const messagesCollectionRef = collection(this.firestore, `channels/${channelId}/messages`);
-    const unsubscribe = onSnapshot(messagesCollectionRef, (snapshot) => {
-      // Clear the array to avoid duplicate data on each snapshot update
-      messagesData.length = 0;
-  
-      snapshot.docs.forEach((doc) => {
-        // Combine doc.id with the document data
-        messagesData.push({
+  getMessages(channelId: string): Observable<Message[]> {
+    return new Observable((observer) => {
+      const messagesCollectionRef = collection(this.firestore, `channels/${channelId}/messages`);
+      const messagesQuery = query(messagesCollectionRef, orderBy('createdAt', 'asc'));
+
+      const unsubscribe = onSnapshot(messagesQuery, (snapshot) => {
+        const messages: Message[] = snapshot.docs.map((doc) => ({
           id: doc.id,
-          ...doc.data()
-        });
+          ...doc.data(),
+        })) as Message[];
+        observer.next(messages);
       });
-  
-      console.log(messagesData); // Log the updated messagesData array
+      return () => unsubscribe();
     });
-  
-    // Return the unsubscribe function to stop listening when no longer needed
-    return unsubscribe;
   }
   
 
