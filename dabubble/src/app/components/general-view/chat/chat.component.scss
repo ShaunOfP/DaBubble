@@ -88,7 +88,7 @@ h3 {
   height: 100%;
   // padding: 0 35px;
   // box-sizing: border-box;
-  @include arrangement($jc: normal, $fd: column);
+  @include arrangement($jc: normal, $fd: column, $g: 20px);
   overflow-y: scroll;
 }
 
