@@ -1,6 +1,7 @@
 @import './../../../../styles.scss';
 @import './../../../../templates/input.scss';
 @import './../../../../templates/styles/button.scss';
+@import '../../landing-page/landing-page.component.scss';
 
 section {
     background-color: var(--color-white);
@@ -66,14 +67,12 @@ button {
 }
 
 .user-input {
-    display: flex;
+    @include arrangement($d: flex, $jc: start, $ai: start, $fd: column);
     gap: 20px;
 
     >div {
-        display: flex;
+        @include arrangement($d: flex, $jc: start, $ai: center, $fd: row);
         gap: 20px;
-        flex-direction: column;
-        justify-content: center;
     }
 
     :first-child {
@@ -135,7 +134,7 @@ button {
     padding: 3px 20px 3px 20px;
     border-radius: 35px;
     background-color: var(--color-blue-bg);
-    
+
     .avatar{
         width: 34px;
     }
@@ -144,7 +143,6 @@ button {
         width: 10px;
         cursor: pointer;
     }
-
 }
 
 ::placeholder {
