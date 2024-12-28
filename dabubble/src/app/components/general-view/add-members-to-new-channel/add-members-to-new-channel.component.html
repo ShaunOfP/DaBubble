@@ -9,16 +9,24 @@
     <form class="user-input-container">
         <div class="user-input">
             <div>
-                <input type="radio" name="members" checked="checked" (change)="toggleStatus()" id="input-one">
-                <input type="radio" name="members" (change)="toggleStatus()" id="input-two">
+                <input 
+                    type="radio" 
+                    name="members" 
+                    [(ngModel)]="selectedOption"
+                    [value]="true">
+                    <span>Alle Mitglieder von <a class="">OfficeTeam</a> hinzufügen</span>
             </div>
             <div>
-                <span>Alle Mitglieder von <a class="">OfficeTeam</a> hinzufügen</span>
+                <input 
+                    type="radio" 
+                    name="members" 
+                    [(ngModel)]="selectedOption"
+                    [value]="false">
                 <span>Bestimmte Leute hinzufügen</span>
             </div>
         </div>
         <div class="input-field-container">
-            <div class="input-wrapper" [ngClass]="{'d-none': firstSelected}">
+            <div class="input-wrapper" *ngIf="!selectedOption">
                 <input 
                     class="input-field" 
                     placeholder="Namen eingeben"
@@ -31,7 +39,9 @@
                     <div class="member-container" *ngFor="let member of selectedMembers | slice:0:2">
                         <img class="avatar" [src]="'/img/general-view/create-avatar/' + member.avatar +'.svg'">
                         <span>{{ member.username }}</span>
-                        <img src="/img/general-view/workspace-menu/close.svg" (click)="removeMember(member)">
+                        <div class="arrow-back"  (click)="removeMember(member)">
+                            <img src="/img/general-view/workspace-menu/close.svg">
+                        </div>
                     </div>
                     <div
                         (click)="showSelectedMembers()"
@@ -48,8 +58,8 @@
         </div>
     </form>
     <div class="btn-container">
-        <button *ngIf="firstSelected" class="btn-primary--default" (click)="addMembersToChannel()">Erstellen</button>
-        <button *ngIf="!firstSelected" class="btn-primary--disable" type="submit" id="submit-btn">Erstellen</button>
+        <button *ngIf="selectedOption" class="btn-primary--default" (click)="addMembersToChannel()">Erstellen</button>
+        <button *ngIf="!selectedOption" class="btn-primary--disable" type="submit" id="submit-btn">Erstellen</button>
     </div>
 </section>
 <app-all-selected-members 
