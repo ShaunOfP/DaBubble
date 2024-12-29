@@ -1,9 +1,10 @@
-import { Component, ElementRef, EventEmitter, OnChanges, OnInit, Output, ViewChild} from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AllMembersComponent } from '../all-members/all-members.component';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ChannelMemberService, Member} from '../../../services/firebase-services/channel-member.service';
 import { AllSelectedMembersComponent } from './all-selected-members/all-selected-members.component';
+import { firstValueFrom } from 'rxjs';
 
 
 @Component({
@@ -18,9 +19,9 @@ export class AddMembersToNewChannelComponent implements OnInit{
   @Output() closeAll: EventEmitter<void> = new EventEmitter();
 
   selectedOption: boolean = true;
-  isMemberArrayEmpty = true;
   searchControl = new FormControl('');
   selectedMembers: Member[] = [];
+  allMembers: Member[] = [];
   searchFocus: boolean = false;
   openSelectedMembers: boolean = false;
 
@@ -42,8 +43,10 @@ export class AddMembersToNewChannelComponent implements OnInit{
     this.memberService.removeMember(member);
   }
 
-  addMembersToChannel(){
-    //Do as name says
+  async addMembersToChannel(): Promise<void> {
+    await this.memberService.selectAllMembers();
+    this.allMembers = await firstValueFrom(this.memberService.allMembersSubject$);
+    console.log(this.allMembers)
   }
 
   clearSearchField(){

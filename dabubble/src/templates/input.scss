@@ -1,9 +1,8 @@
 .input-field {
-    @include arrangement($d: flex, $jc: space-between, $ai: center);
+    @include arrangement($d: flex, $jc: space-between, $ai: center, $g:10px);
     background-color: var(--color-blue-bg);
     color: var(--color-grey-primary-disable);
     padding: 18px 32px;
-    gap: 10px;
     border-radius: 100px;
     border: 1px solid transparent;
     width: calc(100% - 64px);
