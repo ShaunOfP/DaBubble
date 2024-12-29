@@ -86,7 +86,7 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute, RouterModule, Router } from '@angular/router';
-import { getAuth, confirmPasswordReset } from 'firebase/auth';
+import { getAuth, updatePassword } from 'firebase/auth';
 import { HeaderSectionComponent } from "../header-section/header-section.component";
 import { FooterComponent } from "../footer/footer.component";
 
@@ -149,16 +149,5 @@ export class ResetPasswordComponent implements OnInit {
       alert('Ungültiger oder abgelaufener Link. Bitte fordere einen neuen Link an.');
       return;
     }
-    const auth = getAuth();
-    confirmPasswordReset(auth, this.oobCode, this.passwordForm.get('newPassword')?.value)
-      .then(() => {
-        this.resetPassword = true;
-        setTimeout(() => {
-          this.router.navigate(['/']);
-        }, 1000);
-      })
-      .catch((error) => {
-        alert(`Fehler beim Zurücksetzen des Passworts: ${error.message}`);
-      });
-  }
+   }
 }
