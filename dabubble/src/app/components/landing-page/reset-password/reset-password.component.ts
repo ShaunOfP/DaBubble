@@ -120,18 +120,21 @@ export class ResetPasswordComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
       this.oobCode = params['oobCode'] || '';
-
-      if (!this.oobCode) {
-        alert('Ungültiger oder abgelaufener Link. Bitte fordere einen neuen Link an.');
-      }
     });
   }
 
-  passwordMatchValidator(group: FormGroup) {
-    const newPassword = group.get('newPassword')?.value;
-    const confirmedPassword = group.get('confirmedPassword')?.value;
-    return newPassword === confirmedPassword ? null : { passwordMismatch: true };
+  passwordMatchValidator(group: FormGroup): null {
+    const newPassword = group.get('newPassword');
+    const confirmedPassword = group.get('confirmedPassword');
+    if (!newPassword || !confirmedPassword)  return null;
+    else if (newPassword.value !== confirmedPassword.value) {
+      confirmedPassword.setErrors({ passwordMismatch: true }); 
+    } else {
+      confirmedPassword.setErrors(null); 
+    }  
+    return null; 
   }
+  
 
   onSubmit(): void {
     if (this.passwordForm.valid) {
@@ -146,7 +149,6 @@ export class ResetPasswordComponent implements OnInit {
       alert('Ungültiger oder abgelaufener Link. Bitte fordere einen neuen Link an.');
       return;
     }
-
     const auth = getAuth();
     confirmPasswordReset(auth, this.oobCode, this.passwordForm.get('newPassword')?.value)
       .then(() => {
