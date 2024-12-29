@@ -1,6 +1,6 @@
 <section class="radius-30">
-  <app-new-message class="d-none" id="new-message-component"></app-new-message>
-  <header id="header">
+  <app-new-message *ngIf="showNewMessageHeader"></app-new-message>
+  <header *ngIf="!showNewMessageHeader">
     <div class="header-chat-info-container" (click)="toggleChatDetails()">
       <h3>#</h3>
       <h3>Entwicklerteam</h3>
@@ -9,7 +9,7 @@
         <img class="d-none center" src="/img/general-view/workspace-menu/hover_arrow_drop_down_thin.svg">
       </button>
     </div>
-    <app-chat-details  id="chatDetailsOverlay" *ngIf="chatDetails" (callParent)="toggleChatDetails()"></app-chat-details>
+    <app-chat-details id="chatDetailsOverlay" *ngIf="chatDetails" (callParent)="toggleChatDetails()"></app-chat-details>
     <app-channel-members class="d-none" id="channelMembersMenu" (closeMe)="closeMembersInfo()"
       (openAddMembers)="openAddMembersMenu()"></app-channel-members>
     <app-add-members class="d-none" id="addMembersMenu" (closeMe)="closeAddMembersMenu()"></app-add-members>
@@ -31,7 +31,7 @@
   </header>
   <div class="chat-container height-normal-header" id="chat-container">
     <!-- <div class="chat" id="chat"> -->
-      <app-chat-all class="chat"></app-chat-all>
+      <app-chat-all class="chat" *ngIf="!showNewMessageHeader"></app-chat-all>
     <!-- </div> -->
     <div class="input-container">
       <textarea #emojiTarget [placeholder]="'Nachricht an #Entwicklerteam'"></textarea>

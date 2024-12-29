@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { AddMembersToNewChannelComponent } from "../add-members-to-new-channel/add-members-to-new-channel.component";
+import { ChannelMemberService, Member} from '../../../services/firebase-services/channel-member.service';
 
 @Component({
   selector: 'app-create-channel',
@@ -13,8 +14,9 @@ import { AddMembersToNewChannelComponent } from "../add-members-to-new-channel/a
 export class CreateChannelComponent {
   @Output() callParentToClose: EventEmitter<void> = new EventEmitter();
   newChannelName: string = '';
-  newChannelDescription: string | null = '';
+  newChannelDescription: string  = '';
 
+  constructor(private memberService: ChannelMemberService,){}
 
   /**
    * Sends a call to the parent component to close the Component
@@ -75,7 +77,7 @@ export class CreateChannelComponent {
     this.closeCreateChannelContainer();
 
     if (ngForm.submitted && ngForm.form.valid) {
-      // pass variables/upload
+      this.memberService.setChannelData(this.newChannelName, this.newChannelDescription);
     }
   }
 }

@@ -7,17 +7,18 @@
     font-weight: $fw;
 }
 
-img {
-    height: 70px;
-    width: 70px;
-}
-
 .thread-content--primary {
-    @include arrangement($jc: normal, $g: 20px);
+    @include arrangement($jc: normal, $ai: normal, $g: 20px);
     transition: background-color 0.1s ease;
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 40px;
+    padding-right: 40px;
+
+    >img {
+        height: 70px;
+        width: 70px;
+    }
 
     &:hover {
         background-color: var(--color-blue-bg);
@@ -31,6 +32,7 @@ img {
 
 .thread-content_conversation {
     @include arrangement($ai: normal, $fd: column, $g: 8px);
+    width: 315px;
 }
 
 .thread-content_header {
@@ -52,6 +54,7 @@ img {
     padding: 15px;
     @include fontStyle();
     transition: background-color 0.1s ease;
+    width: fit-content;
 }
 
 .thread-content_reactions {
@@ -70,6 +73,81 @@ img {
     }
 
     >:last-child {
+        @include fontStyle($fs: 16px);
+    }
+}
+
+.add-reaction-button {
+    height: 35px;
+    width: 35px;
+    @include arrangement();
+    border: none;
+    background-color: var(--color-white);
+    border-radius: 20px;
+    cursor: pointer;
+
+    :last-child {
+        display: none;
+    }
+}
+
+.image-swap-on-hover {
+    &:hover {
+        :first-child {
+            display: none;
+        }
+
+        :last-child {
+            display: flex !important;
+        }
+    }
+}
+
+::-webkit-scrollbar {
+    height: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-purple-secondary-hover);
+    border-radius: 30px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-purple-primary-disabled);
+}
+
+.reaction-container {
+    @include arrangement($jc: flex-start, $g: 20px);
+}
+
+.reaction-container--primary {
+    position: relative;
+}
+
+.add-reaction {
+    position: relative;
+}
+
+.reaction-container-info {
+    position: absolute;
+    @include arrangement($fd: column, $g: 5px);
+    border-radius: 30px 30px 30px 0px;
+    background-color: var(--color-purple-primary-default);
+    padding: 15px 10px;
+    bottom: 35px;
+    left: 30px;
+    min-width: 110px;
+
+    >img {
+        height: 30px;
+        width: 30px;
+    }
+
+    >span {
+        @include fontStyle($fw: 700);
+    }
+
+    :last-child {
         @include fontStyle($fs: 16px);
     }
 }

@@ -34,4 +34,8 @@ export class ChatAllComponent implements OnInit {
   checkStyle(userId: string) {
     return userId === 'OI28qbeslOMfD5nSoQMw8vmU6uQ2' ? 'primary' : 'secondary';
   }
+
+  openThread(){
+    
+  }
 }

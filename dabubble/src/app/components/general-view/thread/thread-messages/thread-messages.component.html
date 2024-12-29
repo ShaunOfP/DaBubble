@@ -8,15 +8,28 @@
         <span class="thread-content_conversation--primary">
             <p>{{ message.content }}</p>
         </span>
-        <div class="thread-content_reactions" *ngIf="">
-            <div class="thread-content_reactions--primary">
-                <span>😁</span>
-                <span>1</span>
+        <div class="reaction-container" *ngIf="showReaction">
+            <div class="reaction-container--primary" *ngFor="let reaction of reactions">
+                <div class="reaction-container-info" *ngIf="showReactionInfo">
+                    <!-- <img src=""> -->😁
+                    <span>{{ reaction.sender }}</span>
+                    <span>hat reagiert</span>
+                </div>
+                <div class="thread-content_reactions" appClickOutside (appClickOutside)="hideEmojiPicker()"
+                    (mouseenter)="toggleReactionSender()" (mouseleave)="toggleReactionSender()">
+                    <div class="thread-content_reactions--primary">
+                        <span>{{ reaction.emoji }}</span>
+                        <span>1</span>
+                    </div>
+                </div>
             </div>
-            <button>
-                <img>
-                <img *ngIf="">
-            </button>
+            <div class="add-reaction">
+                <app-emoji-picker *ngIf="showEmojiPicker" (emojiSelected)="onEmojiReceived($event)"></app-emoji-picker>
+                <button class="add-reaction-button image-swap-on-hover" (click)="openEmojiPicker()">
+                    <img src="img/general-view/thread/add_reaction.svg">
+                    <img src="img/general-view/thread/hover_add_reaction.svg">
+                </button>
+            </div>
         </div>
     </div>
 </div>
