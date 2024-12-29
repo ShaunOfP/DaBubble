@@ -23,8 +23,7 @@ export class ChatAllComponent implements OnInit {
 
   formatTime(timestamp: string): string {
     const parsedTimestamp = parseInt(timestamp, 10);
-    const timestampInMs =
-      parsedTimestamp < 1e12 ? parsedTimestamp * 1000 : parsedTimestamp;
+    const timestampInMs = parsedTimestamp < 1e12 ? parsedTimestamp * 1000 : parsedTimestamp;
     const date = new Date(timestampInMs);
     return date.toLocaleTimeString('de-DE', {
       hour: '2-digit',
