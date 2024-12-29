@@ -6,6 +6,7 @@ import {
   where,
   query,
   doc,
+  setDoc,
 } from '@angular/fire/firestore';
 import { Observable, BehaviorSubject } from 'rxjs';
 
@@ -23,12 +24,16 @@ export interface Member {
 
 export class ChannelMemberService{
     public firestore = inject(Firestore);
-    private membersSubject = new BehaviorSubject<Member[]>([]);
-    members$: Observable<Member[]> = this.membersSubject.asObservable();
     private allMembersSubject = new BehaviorSubject<Member[]>([]);
     allMembersSubject$: Observable<Member[]> = this.allMembersSubject.asObservable();
+    private membersSubject = new BehaviorSubject<Member[]>([]);
+    members$: Observable<Member[]> = this.membersSubject.asObservable();
     private selectedMembersSubject = new BehaviorSubject<Member[]>([]);
     selectedMembers$ = this.selectedMembersSubject.asObservable();
+    private channelName = new BehaviorSubject<string>('');
+    channelName$ = this.channelName.asObservable();
+    private channelDescription = new BehaviorSubject<string>('');
+    channelDescription$ = this.channelDescription.asObservable();
 
     userDatasRef() {
         return collection(this.firestore, 'userDatas');
@@ -145,17 +150,23 @@ export class ChannelMemberService{
         this.membersSubject.next(updateMembers);
       }
 
+  setChannelData(name: string, description: string){
+    this.channelName.next(name);
+    this.channelDescription.next(description)
+  }
 
-
-  async createNewChannel() {
+  async createNewChannel(users: Member[]) {
     const generatedId = this.generateRandomId();
     const channelDocRef = doc(this.firestore, 'channels', generatedId);
     const channelData = {
       channelId: generatedId,
-      channelName: '',
+      channelName: this.channelName.value,
       createdAt: new Date().getTime(),
-      description: '',
+      description: this.channelName.value,
+      owner: '',
+      users: users.map(user => {user.id}),
     }
+    await setDoc(channelDocRef, channelData);
   }
 
   generateRandomId() {

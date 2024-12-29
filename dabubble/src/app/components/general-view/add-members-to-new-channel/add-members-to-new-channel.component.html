@@ -44,8 +44,18 @@
         </div>
     </form>
     <div class="btn-container">
-        <button *ngIf="selectedOption" class="btn-primary--default" (click)="addMembersToChannel()">Erstellen</button>
-        <button *ngIf="!selectedOption" class="btn-primary--disable" type="submit" id="submit-btn">Erstellen</button>
+        <button 
+            *ngIf="selectedOption" 
+            class="btn-primary--default" 
+            (click)="addAllMembersToChannel()">
+            Erstellen</button>
+        <button 
+            *ngIf="!selectedOption" 
+            class="btn-primary--default" 
+            [ngClass]="{'btn-primary--disable': selectedMembers.length <= 0}" 
+            type="submit"
+            (click)="addSelectedMembersToChannel()">
+            Erstellen</button>
     </div>
 </section>
 <app-all-selected-members *ngIf="openSelectedMembers" [members]="selectedMembers"

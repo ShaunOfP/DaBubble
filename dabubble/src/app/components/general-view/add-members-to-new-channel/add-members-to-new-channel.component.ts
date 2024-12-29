@@ -43,10 +43,14 @@ export class AddMembersToNewChannelComponent implements OnInit{
     this.memberService.removeMember(member);
   }
 
-  async addMembersToChannel(): Promise<void> {
+  async addAllMembersToChannel(): Promise<void> {
     await this.memberService.selectAllMembers();
     this.allMembers = await firstValueFrom(this.memberService.allMembersSubject$);
     console.log(this.allMembers)
+  }
+
+  addSelectedMembersToChannel(){
+    console.log(this.selectedMembers)
   }
 
   clearSearchField(){
