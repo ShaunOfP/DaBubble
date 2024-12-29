@@ -21,25 +21,6 @@
   overflow-y: auto;
 }
 
-.mat-mdc-card-content::-webkit-scrollbar {
-  /* Styles the overall scrollbar */
-  width: 7px; /* Adjust the width of the scrollbar */
-}
-
-.mat-mdc-card-content::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 30px;
-}
-
-.mat-mdc-card-content::-webkit-scrollbar-thumb {
-  background: var(--color-purple-secondary-hover);
-  border-radius: 30px;
-}
-
-.mat-mdc-card-content::-webkit-scrollbar-thumb:hover {
-  background: var(--color-purple-primary-disabled);
-}
-
 .mat-mdc-card-header {
   @include arrangement($d: flex, $jc: start, $ai: start, $fd: row, $g: 0);
   width: 100%;

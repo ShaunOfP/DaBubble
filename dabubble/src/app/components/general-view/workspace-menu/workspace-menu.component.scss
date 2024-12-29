@@ -164,24 +164,6 @@ h3 {
   overflow-y: scroll;
 }
 
-.contacts-container::-webkit-scrollbar {
-  width: 7px;
-}
-
-.contacts-container::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 30px;
-}
-
-.contacts-container::-webkit-scrollbar-thumb {
-  background: var(--color-purple-secondary-hover);
-  border-radius: 30px;
-}
-
-.contacts-container::-webkit-scrollbar-thumb:hover {
-  background: var(--color-purple-primary-disabled);
-}
-
 .contact {
   // padding: 4px 20px 4px 20px;
   // margin-left: 25px;

@@ -105,7 +105,7 @@ export class LoginComponent implements OnInit {
     } else if (result === 'auth/wrong-password') {
       this.loginErrorPassword = 'Das Passwort ist ungültig!';
     } else {
-      this.router.navigate(['/general']);
+      this.router.navigate([`/general`], { queryParams: { userID: result?.uid } });
     }
   }
   
@@ -151,7 +151,7 @@ export class LoginComponent implements OnInit {
       const userDocRef = doc(this.userDatasRef(), googleUser?.uid);
       const userSnap = await getDoc(userDocRef);
       console.log(this.user);
-      this.router.navigate(['/general'], { queryParams: { userID: googleUser?.uid } });
+      this.router.navigate([`/general/public-chat`], { queryParams: { userID: googleUser?.uid } });
       if (userSnap.exists()) {
         console.log('Benutzer schon vorhanden', userSnap.data());
 

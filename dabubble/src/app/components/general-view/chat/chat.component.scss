@@ -85,12 +85,13 @@ h3 {
 
 .chat {
   width: 100%;
-  height: 100%; //rausnehmen, damit chat unten startet
   // padding: 0 35px;
   // box-sizing: border-box;
   @include arrangement($jc: normal, $fd: column, $g: 20px);
   overflow-y: scroll;
 }
+
+
 
 .input-container {
   position: relative;

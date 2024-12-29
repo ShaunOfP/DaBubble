@@ -1,57 +1,59 @@
 section {
-    position: absolute;
-    margin-left: 32px;
-    margin-top: -20px;
+  position: absolute;
+  margin-left: 32px;
+  margin-top: -20px;
 
-    >div {
-        display: flex;
-        flex-direction: column;
-        padding: 20px 25px 20px 25px;
-        gap: 20px;
-        border: 1px solid var(--color-blue-border);
-        background-color: var(--color-white);
-        border-radius: 0px 20px 20px 20px;
-    }
+  > div {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 25px 20px 25px;
+    gap: 20px;
+    border: 1px solid var(--color-blue-border);
+    background-color: var(--color-white);
+    border-radius: 0px 20px 20px 20px;
+  }
 }
 
 .members-list-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
 }
 
 .members-list {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
 }
 
 .member {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    height: 58px;
-    padding: 4px 20px;
-    border-radius: 30px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  height: 58px;
+  padding: 4px 20px;
+  border-radius: 30px;
 
-    >img {
-        height: 50px;
-        width: 50px;
-    }
+  > img {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+  }
 
-    >span {
-        font-size: 18px;
-    }
-    &:hover {
-      cursor: pointer;
-      background-color: var(--color-blue-bg);
-    }
-}
-
-.disable-div{
-    pointer-events: none;
-    opacity: 0.5;
+  > span {
+    font-size: 18px;
+  }
+  &:hover {
+    cursor: pointer;
     background-color: var(--color-blue-bg);
+  }
 }
+
+.disable-div {
+  pointer-events: none;
+  opacity: 0.5;
+  background-color: var(--color-blue-bg);
+}
+
