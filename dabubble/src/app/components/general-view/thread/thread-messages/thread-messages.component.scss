@@ -7,17 +7,17 @@
     font-weight: $fw;
 }
 
-img {
-    height: 70px;
-    width: 70px;
-}
-
 .thread-content--primary {
     @include arrangement($jc: normal, $g: 20px);
     transition: background-color 0.1s ease;
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 40px;
+
+    >img {
+        height: 70px;
+        width: 70px;
+    }
 
     &:hover {
         background-color: var(--color-blue-bg);
@@ -71,5 +71,31 @@ img {
 
     >:last-child {
         @include fontStyle($fs: 16px);
+    }
+}
+
+.add-reaction-button {
+    height: 40px;
+    width: 40px;
+    @include arrangement();
+    border: none;
+    background-color: var(--color-white);
+    border-radius: 20px;
+    cursor: pointer;
+
+    :last-child {
+        display: none;
+    }
+}
+
+.image-swap-on-hover {
+    &:hover {
+        :first-child {
+            display: none;
+        }
+
+        :last-child {
+            display: flex !important;
+        }
     }
 }

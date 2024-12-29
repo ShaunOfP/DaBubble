@@ -8,14 +8,14 @@
         <span class="thread-content_conversation--primary">
             <p>{{ message.content }}</p>
         </span>
-        <div class="thread-content_reactions" *ngIf="">
+        <div class="thread-content_reactions" *ngIf="showReaction">
             <div class="thread-content_reactions--primary">
                 <span>😁</span>
                 <span>1</span>
             </div>
-            <button>
-                <img>
-                <img *ngIf="">
+            <button class="add-reaction-button image-swap-on-hover">
+                <img src="img/general-view/thread/add_reaction.svg">
+                <img src="img/general-view/thread/hover_add_reaction.svg">
             </button>
         </div>
     </div>

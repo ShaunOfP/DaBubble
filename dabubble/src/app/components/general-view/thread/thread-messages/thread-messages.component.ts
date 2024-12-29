@@ -12,10 +12,13 @@ import { ChatService } from '../../../../services/firebase-services/chat.service
 })
 export class ThreadMessagesComponent {
   messages$!: Observable<any[]>;
+  showReaction: boolean = true;
 
   constructor(private chatService: ChatService) { }
 
   ngOnInit(){
     this.messages$ = this.chatService.getThreadCollection('dOCTHJxiNDhYvmqMokLv', 'buM6uSAhw8snf948FEIh');
   }
+
+  //wenn reaktionen vorhanden dann showReactions auf true
 }
