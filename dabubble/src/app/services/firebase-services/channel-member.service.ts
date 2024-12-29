@@ -5,6 +5,7 @@ import {
   getDocs,
   where,
   query,
+  doc,
 } from '@angular/fire/firestore';
 import { Observable, BehaviorSubject } from 'rxjs';
 
@@ -13,6 +14,7 @@ export interface Member {
     username: string;
     avatar: string;
     selected: boolean;
+    id: string,
 }
 
 @Injectable({
@@ -35,8 +37,11 @@ export class ChannelMemberService{
     async selectAllMembers(){
       const querySnapshot = await getDocs(collection(this.firestore, 'userDatas'));
       const allUsers: Member[] = []
+      
       querySnapshot.forEach((doc)=> {
-        allUsers.push({...(doc.data() as Member)})
+        allUsers.push({...(doc.data() as Member),
+          id: doc.id
+        })
       });
       this.allMembersSubject.next(allUsers);
       return allUsers
@@ -139,5 +144,30 @@ export class ChannelMemberService{
     
         this.membersSubject.next(updateMembers);
       }
+
+
+
+  async createNewChannel() {
+    const generatedId = this.generateRandomId();
+    const channelDocRef = doc(this.firestore, 'channels', generatedId);
+    const channelData = {
+      channelId: generatedId,
+      channelName: '',
+      createdAt: new Date().getTime(),
+      description: '',
+    }
+  }
+
+  generateRandomId() {
+    const array = new Uint8Array(22);
+    crypto.getRandomValues(array);
+    const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    const randomId = Array.from(
+      array,
+      (byte) => characters[byte % characters.length]
+    ).join('');
+    const generatedRandomId = 'pC' + randomId;
+    return generatedRandomId;
+  }
 
 }
