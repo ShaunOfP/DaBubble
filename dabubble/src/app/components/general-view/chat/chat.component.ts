@@ -20,14 +20,15 @@ import { ChatAllComponent } from "./chat-all/chat-all.component";
     NewMessageComponent,
     SharedModule,
     ChatAllComponent
-],
+  ],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss',
 })
 export class ChatComponent {
   @ViewChild('emojiTarget', { static: true }) emojiTarget!: ElementRef;
   selectedEmoji: string = '';
-  chatDetails:boolean =false
+  chatDetails: boolean = false;
+  showNewMessageHeader: boolean = false;
 
   // openChatDetails() {
   //   document.getElementById('chatDetailsOverlay')?.classList.remove('d-none');
@@ -77,10 +78,8 @@ export class ChatComponent {
   }
 
   openNewMessageWindow() {
-    document.getElementById('header')?.classList.add('d-none');
-    document.getElementById('chat')!.innerHTML = ``;
+    this.showNewMessageHeader = true;
     this.changeHeaders();
-    document.getElementById('new-message-component')?.classList.remove('d-none');
   }
 
   changeHeaders() {
