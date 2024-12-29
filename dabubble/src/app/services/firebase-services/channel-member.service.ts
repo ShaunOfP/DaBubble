@@ -16,18 +16,30 @@ export interface Member {
 }
 
 @Injectable({
-  providedIn: 'root', // Dies sorgt dafür, dass der Service global verfügbar ist.
+  providedIn: 'root',
 })
 
 export class ChannelMemberService{
     public firestore = inject(Firestore);
     private membersSubject = new BehaviorSubject<Member[]>([]);
     members$: Observable<Member[]> = this.membersSubject.asObservable();
+    private allMembersSubject = new BehaviorSubject<Member[]>([]);
+    allMembersSubject$: Observable<Member[]> = this.allMembersSubject.asObservable();
     private selectedMembersSubject = new BehaviorSubject<Member[]>([]);
     selectedMembers$ = this.selectedMembersSubject.asObservable();
 
     userDatasRef() {
         return collection(this.firestore, 'userDatas');
+    }
+
+    async selectAllMembers(){
+      const querySnapshot = await getDocs(collection(this.firestore, 'userDatas'));
+      const allUsers: Member[] = []
+      querySnapshot.forEach((doc)=> {
+        allUsers.push({...(doc.data() as Member)})
+      });
+      this.allMembersSubject.next(allUsers);
+      return allUsers
     }
 
     async searchUsers(queryString: string): Promise<Member[]> {
