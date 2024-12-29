@@ -21,6 +21,7 @@ export class ThreadMessagesComponent {
     'emoji': '😁',
     'sender': 'Jake'
   }];
+  showReactionInfo: boolean = false;
 
   constructor(private chatService: ChatService) { }
 
@@ -46,5 +47,11 @@ export class ThreadMessagesComponent {
 
   hideEmojiPicker() {
     this.showEmojiPicker = false;
+  }
+
+  toggleReactionSender() {
+    if (!this.showEmojiPicker) {
+      this.showReactionInfo = !this.showReactionInfo;
+    }
   }
 }

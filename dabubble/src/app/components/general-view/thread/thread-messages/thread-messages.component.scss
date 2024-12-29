@@ -33,7 +33,6 @@
 .thread-content_conversation {
     @include arrangement($ai: normal, $fd: column, $g: 8px);
     width: 315px;
-    position: relative;
 }
 
 .thread-content_header {
@@ -60,7 +59,6 @@
 
 .thread-content_reactions {
     @include arrangement($jc: flex-start, $g: 20px);
-    overflow-x: scroll;
 }
 
 .thread-content_reactions--primary {
@@ -80,8 +78,8 @@
 }
 
 .add-reaction-button {
-    height: 40px;
-    width: 40px;
+    height: 35px;
+    width: 35px;
     @include arrangement();
     border: none;
     background-color: var(--color-white);
@@ -116,4 +114,40 @@
 
 ::-webkit-scrollbar-thumb:hover {
     background: var(--color-purple-primary-disabled);
+}
+
+.reaction-container {
+    @include arrangement($jc: flex-start, $g: 20px);
+}
+
+.reaction-container--primary {
+    position: relative;
+}
+
+.add-reaction {
+    position: relative;
+}
+
+.reaction-container-info {
+    position: absolute;
+    @include arrangement($fd: column, $g: 5px);
+    border-radius: 30px 30px 30px 0px;
+    background-color: var(--color-purple-primary-default);
+    padding: 15px 10px;
+    bottom: 35px;
+    left: 30px;
+    min-width: 110px;
+
+    >img {
+        height: 30px;
+        width: 30px;
+    }
+
+    >span {
+        @include fontStyle($fw: 700);
+    }
+
+    :last-child {
+        @include fontStyle($fs: 16px);
+    }
 }
