@@ -8,52 +8,38 @@
     </header>
     <form class="user-input-container">
         <div class="user-input">
-            <div>
-                <input 
-                    type="radio" 
-                    name="members" 
-                    [(ngModel)]="selectedOption"
-                    [value]="true">
+            <!-- <div> -->
+                <label>
+                    <input type="radio" name="members" [(ngModel)]="selectedOption" [value]="true">
                     <span>Alle Mitglieder von <a class="">OfficeTeam</a> hinzufügen</span>
+                </label>
+            <!-- </div> -->
+            <!-- <div> -->
+                <label>
+                    <input type="radio" name="members" [(ngModel)]="selectedOption" [value]="false">
+                    <span>Bestimmte Leute hinzufügen</span>
+                </label>
             </div>
-            <div>
-                <input 
-                    type="radio" 
-                    name="members" 
-                    [(ngModel)]="selectedOption"
-                    [value]="false">
-                <span>Bestimmte Leute hinzufügen</span>
-            </div>
-        </div>
+        <!-- </div> -->
         <div class="input-field-container">
             <div class="input-wrapper" *ngIf="!selectedOption">
-                <input 
-                    class="input-field" 
-                    placeholder="Namen eingeben"
-                    #nameInput
-                    [formControl]="searchControl"
-                    (focus)="hideSelectedMembers()"
-                    (blur)="hideSelectedMembers()"
-                />
+                <input class="input-field" placeholder="Namen eingeben" #nameInput [formControl]="searchControl"
+                    (focus)="hideSelectedMembers()" (blur)="hideSelectedMembers()" />
                 <div class="all-selected-member-container" [ngClass]="{'d-none': searchFocus}">
                     <div class="member-container" *ngFor="let member of selectedMembers | slice:0:2">
                         <img class="avatar" [src]="member.avatar">
                         <span>{{ member.username }}</span>
-                        <div class="arrow-back"  (click)="removeMember(member)">
+                        <div class="arrow-back" (click)="removeMember(member)">
                             <img src="/img/general-view/workspace-menu/close.svg">
                         </div>
                     </div>
-                    <div
-                        (click)="showSelectedMembers()"
-                        class="further-members-container" 
+                    <div (click)="showSelectedMembers()" class="further-members-container"
                         *ngIf="selectedMembers.length > 2">+{{ selectedMembers.length - 2 }}
                     </div>
                 </div>
             </div>
-            <app-all-members 
-                [ngClass]="{'d-none': searchControl.value == '' }" 
-                [searchQuery]="searchControl.value || ''"
-                (memberClicked)="clearSearchField()">
+            <app-all-members [ngClass]="{'d-none': searchControl.value == '' }"
+                [searchQuery]="searchControl.value || ''" (memberClicked)="clearSearchField()">
             </app-all-members>
         </div>
     </form>
@@ -62,8 +48,6 @@
         <button *ngIf="!selectedOption" class="btn-primary--disable" type="submit" id="submit-btn">Erstellen</button>
     </div>
 </section>
-<app-all-selected-members 
-    *ngIf="openSelectedMembers"
-    [members]="selectedMembers"
+<app-all-selected-members *ngIf="openSelectedMembers" [members]="selectedMembers"
     (closeWindow)="closeSelectedMembersWindow()">
 </app-all-selected-members>
