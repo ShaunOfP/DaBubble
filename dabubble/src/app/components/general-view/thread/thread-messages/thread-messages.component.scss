@@ -8,11 +8,12 @@
 }
 
 .thread-content--primary {
-    @include arrangement($jc: normal, $g: 20px);
+    @include arrangement($jc: normal, $ai: normal, $g: 20px);
     transition: background-color 0.1s ease;
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 40px;
+    padding-right: 40px;
 
     >img {
         height: 70px;
@@ -31,6 +32,8 @@
 
 .thread-content_conversation {
     @include arrangement($ai: normal, $fd: column, $g: 8px);
+    width: 315px;
+    position: relative;
 }
 
 .thread-content_header {
@@ -52,10 +55,12 @@
     padding: 15px;
     @include fontStyle();
     transition: background-color 0.1s ease;
+    width: fit-content;
 }
 
 .thread-content_reactions {
     @include arrangement($jc: flex-start, $g: 20px);
+    overflow-x: scroll;
 }
 
 .thread-content_reactions--primary {
@@ -98,4 +103,17 @@
             display: flex !important;
         }
     }
+}
+
+::-webkit-scrollbar {
+    height: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-purple-secondary-hover);
+    border-radius: 30px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-purple-primary-disabled);
 }
