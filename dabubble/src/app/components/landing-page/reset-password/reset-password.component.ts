@@ -74,16 +74,14 @@ export class ResetPasswordComponent implements OnInit {
       return;
     }
     if (!this.oobCode) {
-      alert(
-        'Ungültiger oder abgelaufener Link. Bitte fordere einen neuen Link an.'
-      );
+      this.showMessage = true
+      this.errorPassword = true
       return;
     }
     const newPassword = this.passwordForm.get('newPassword')?.value;
     this.authService
       .verifyCode(this.oobCode)
       .then((email) => {
-        console.log(email);
         this.email = email;
         this.showMessage = true
         this.resetPassword = true;
