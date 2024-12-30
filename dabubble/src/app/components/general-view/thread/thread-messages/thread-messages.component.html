@@ -9,17 +9,19 @@
             <p>{{ message.content }}</p>
         </span>
         <div class="reaction-container" *ngIf="showReaction">
-            <div class="reaction-container--primary" *ngFor="let reaction of reactions">
-                <div class="reaction-container-info" *ngIf="showReactionInfo">
-                    <!-- <img src=""> -->😁
-                    <span>{{ reaction.sender }}</span>
-                    <span>hat reagiert</span>
-                </div>
-                <div class="thread-content_reactions" appClickOutside (appClickOutside)="hideEmojiPicker()"
-                    (mouseenter)="toggleReactionSender()" (mouseleave)="toggleReactionSender()">
-                    <div class="thread-content_reactions--primary">
-                        <span>{{ reaction.emoji }}</span>
-                        <span>1</span>
+            <div class="reaction-container-wrapper">
+                <div class="reaction-container--primary" *ngFor="let reaction of reactions; let i = index">
+                    <div class="thread-content_reactions" appClickOutside (appClickOutside)="hideEmojiPicker()"
+                        (mouseenter)="toggleReactionSender(i)" (mouseleave)="toggleReactionSender(null)">
+                        <div class="reaction-container-info" [class.hovered]="hoverIndex === i">
+                            <span>{{ reaction.emoji }}</span>
+                            <span>{{ reaction.sender }}</span>
+                            <span>hat reagiert</span>
+                        </div>
+                        <div class="thread-content_reactions--primary">
+                            <span>{{ reaction.emoji }}</span>
+                            <span>1</span>
+                        </div>
                     </div>
                 </div>
             </div>

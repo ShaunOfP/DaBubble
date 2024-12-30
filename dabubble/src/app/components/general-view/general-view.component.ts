@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { WorkspaceMenuComponent } from './workspace-menu/workspace-menu.component';
 import { WorkspaceMenuCloseButtonComponent } from './workspace-menu-close-button/workspace-menu-close-button.component';
@@ -7,6 +7,7 @@ import { ThreadComponent } from './thread/thread.component';
 import { ChatComponent } from './chat/chat.component';
 import { CommonModule } from '@angular/common';
 import { CreateChannelComponent } from "./create-channel/create-channel.component";
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-general-view',
@@ -24,6 +25,18 @@ import { CreateChannelComponent } from "./create-channel/create-channel.componen
   ],
   templateUrl: './general-view.component.html',
   styleUrl: './general-view.component.scss',
+  animations: [
+    trigger('toggleWorkspaceMenu', [
+      state('opened', style({ transform: 'translateX(0)' })),
+      state('closed', style({ transform: 'translateX(-120%)' })),
+      transition('opened <=> closed', [animate('0.125s ease-in')])
+    ]),
+    trigger('toggleThread', [
+      state('opened', style({ transform: 'translateX(0)' })),
+      state('closed', style({ transform: 'translateX(120%)' })),
+      transition('opened <=> closed', [animate('0.125s ease-in')])
+    ])
+  ]
 })
 export class GeneralViewComponent {
   workspaceMenuIsVisible: boolean = true;
@@ -31,20 +44,24 @@ export class GeneralViewComponent {
   toggleNumber: number = 0;
   showCreateChannelOverlay: boolean = false;
   @ViewChild(ChatComponent) chatComponent!: ChatComponent;
-
+  workspaceMenuState: 'opened' | 'closed' = 'opened';
+  threadMenuState: 'opened' | 'closed' = 'opened';
 
   /**
    * Hides/Closes the Thread-Component
    */
   closeThread() {
-    this.threadIsVisible = false;
+    this.threadMenuState = 'closed';
+    setTimeout(() => {
+      this.threadIsVisible = false;
+    }, 125);
   }
 
 
   /**
    * Calls different functions to allow the toggling of the Workspace menu
    */
-  toggle() {
+  toggleWorkspaceMenu() {
     if (this.toggleNumber == 0) {
       this.closeWorkspaceMenu();
       this.toggleNumberIncrease();
@@ -60,6 +77,7 @@ export class GeneralViewComponent {
    */
   openWorkspaceMenu() {
     this.workspaceMenuIsVisible = true;
+    this.workspaceMenuState = 'opened';
   }
 
 
@@ -67,7 +85,10 @@ export class GeneralViewComponent {
    *Closes the Workspace menu
    */
   closeWorkspaceMenu() {
-    this.workspaceMenuIsVisible = false;
+    this.workspaceMenuState = 'closed';
+    setTimeout(() => {
+      this.workspaceMenuIsVisible = false;
+    }, 125);
   }
 
 
@@ -95,7 +116,7 @@ export class GeneralViewComponent {
   }
 
 
-  openNewMessage(){
+  openNewMessage() {
     this.chatComponent.openNewMessageWindow();
   }
 }

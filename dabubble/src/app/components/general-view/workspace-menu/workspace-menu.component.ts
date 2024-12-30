@@ -1,7 +1,7 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import {ChangeDetectionStrategy, signal} from '@angular/core';
-import {MatExpansionModule} from '@angular/material/expansion';
+import { ChangeDetectionStrategy, signal } from '@angular/core';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @Component({
   selector: 'app-workspace-menu',
@@ -19,11 +19,10 @@ export class WorkspaceMenuComponent {
     this.callParent.emit();
   }
 
-  openNewMessage(){
+  openNewMessage() {
     this.newMessage.emit();
   }
 
   readonly channelOpenState = signal(false);
   readonly messagesOpenState = signal(false);
-  
 }

@@ -130,7 +130,7 @@
 
 .reaction-container-info {
     position: absolute;
-    @include arrangement($fd: column, $g: 5px);
+    @include arrangement($d: none, $fd: column, $g: 5px);
     border-radius: 30px 30px 30px 0px;
     background-color: var(--color-purple-primary-default);
     padding: 15px 10px;
@@ -138,7 +138,8 @@
     left: 30px;
     min-width: 110px;
 
-    >img {
+    :first-child {
+        @include arrangement();
         height: 30px;
         width: 30px;
     }
@@ -150,4 +151,19 @@
     :last-child {
         @include fontStyle($fs: 16px);
     }
+}
+
+.hovered {
+    @extend .reaction-container-info;
+    display: flex;
+}
+
+.reaction-container-wrapper {
+    @include arrangement($jc: normal, $g: 20px);
+    // overflow-x: scroll;
+}
+
+app-emoji-picker {
+    left: -270px;
+    transform: scaleX(-1);
 }

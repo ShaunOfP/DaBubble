@@ -21,7 +21,7 @@ export class ThreadMessagesComponent {
     'emoji': '😁',
     'sender': 'Jake'
   }];
-  showReactionInfo: boolean = false;
+  hoverIndex: number | null = null;
 
   constructor(private chatService: ChatService) { }
 
@@ -32,7 +32,7 @@ export class ThreadMessagesComponent {
   //wenn reaktionen vorhanden dann showReactions auf true
 
   openEmojiPicker() {
-    this.showEmojiPicker = true;
+    this.showEmojiPicker ? this.hideEmojiPicker() : this.showEmojiPicker = true;
   }
 
   onEmojiReceived(emoji: string) {
@@ -49,9 +49,9 @@ export class ThreadMessagesComponent {
     this.showEmojiPicker = false;
   }
 
-  toggleReactionSender() {
+  toggleReactionSender(index: number | null) {
     if (!this.showEmojiPicker) {
-      this.showReactionInfo = !this.showReactionInfo;
+      this.hoverIndex = index;
     }
   }
 }
