@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 
 @Component({
@@ -11,6 +11,9 @@ import { MatCardModule } from '@angular/material/card';
 })
 export class EmojiPickerComponent {
   emojis = ['😁', '😀', '😃', '😄', '😉', '😊', '😋', '😎', '🙂', '😚', '😪', '😴', '😌', '😛', '🤐', '😂', '🤣', '😐', '🤔', '😮', '😬', '🤯', '😇', '🥳'];
+  reactions = ['🤯', '😇', '🥳'];
+
+  @Input() showReactionsOnly: boolean = false;
 
   @Output() emojiSelected = new EventEmitter<string>(); 
 
