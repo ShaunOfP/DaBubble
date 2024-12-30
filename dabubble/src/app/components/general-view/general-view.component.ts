@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { WorkspaceMenuComponent } from './workspace-menu/workspace-menu.component';
 import { WorkspaceMenuCloseButtonComponent } from './workspace-menu-close-button/workspace-menu-close-button.component';
@@ -26,12 +26,12 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
   templateUrl: './general-view.component.html',
   styleUrl: './general-view.component.scss',
   animations: [
-    trigger('slideLeftAnimation', [
+    trigger('toggleWorkspaceMenu', [
       state('opened', style({ transform: 'translateX(0)' })),
       state('closed', style({ transform: 'translateX(-120%)' })),
       transition('opened <=> closed', [animate('0.125s ease-in')])
     ]),
-    trigger('slideRightAnimation', [
+    trigger('toggleThread', [
       state('opened', style({ transform: 'translateX(0)' })),
       state('closed', style({ transform: 'translateX(120%)' })),
       transition('opened <=> closed', [animate('0.125s ease-in')])
@@ -78,9 +78,6 @@ export class GeneralViewComponent {
   openWorkspaceMenu() {
     this.workspaceMenuIsVisible = true;
     this.workspaceMenuState = 'opened';
-    // setTimeout(() => {
-    //   this.workspaceMenuIsVisible = true;
-    // }, 125);
   }
 
 
