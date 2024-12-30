@@ -19,7 +19,7 @@ header {
   align-items: center;
   justify-content: space-between;
 
-  > h3 {
+  >h3 {
     margin: 0;
   }
 }
@@ -70,7 +70,7 @@ button {
   @include arrangement($d: flex, $jc: start, $ai: start, $fd: column);
   gap: 20px;
 
-  > div {
+  >div {
     @include arrangement($d: flex, $jc: start, $ai: center, $fd: row);
     gap: 20px;
   }
@@ -155,10 +155,16 @@ button {
 
 label {
   cursor: pointer;
+
   span {
     margin-left: 18px;
   }
+
   input {
     cursor: pointer;
   }
+}
+
+.purple {
+  color: var(--color-purple-primary-default);
 }

@@ -1,6 +1,4 @@
 @import './../../../../../styles.scss';
-@import './../../../../../templates/input.scss';
-@import './../../../../../templates/styles/button.scss';
 
 @mixin fontStyle($fs: 18px, $fw: 400) {
     font-size: $fs;
@@ -165,5 +163,4 @@
 
 app-emoji-picker {
     left: -270px;
-    transform: scaleX(-1);
 }
