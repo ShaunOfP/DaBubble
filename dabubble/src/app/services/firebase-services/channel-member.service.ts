@@ -78,7 +78,7 @@ export class ChannelMemberService{
         const userIds = new Set<string>();
   
         capitalizedSnapshot.forEach((doc) => {
-          const user = doc.data() as Member;
+          const user = {...(doc.data() as Member), id: doc.id};
           if (!userIds.has(doc.id)) {
             users.push(user);
             userIds.add(doc.id);
@@ -86,7 +86,7 @@ export class ChannelMemberService{
         });
   
         lowercaseSnapshot.forEach((doc) => {
-          const user = doc.data() as Member;
+          const user = {...(doc.data() as Member), id: doc.id};
           if (!userIds.has(doc.id)) {
             users.push(user);
             userIds.add(doc.id);
