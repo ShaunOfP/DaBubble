@@ -7,6 +7,7 @@ import { ThreadComponent } from './thread/thread.component';
 import { ChatComponent } from './chat/chat.component';
 import { CommonModule } from '@angular/common';
 import { CreateChannelComponent } from "./create-channel/create-channel.component";
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-general-view',
@@ -24,6 +25,13 @@ import { CreateChannelComponent } from "./create-channel/create-channel.componen
   ],
   templateUrl: './general-view.component.html',
   styleUrl: './general-view.component.scss',
+  animations: [
+    trigger('slideAnimation', [
+      state('opened', style({ transform: 'translateX(0)' })),
+      state('closed', style({ transform: 'translateX(-120%)' })),
+      transition('opened <=> closed', [animate('.125s ease-in')])
+    ])
+  ]
 })
 export class GeneralViewComponent {
   workspaceMenuIsVisible: boolean = true;
@@ -31,6 +39,7 @@ export class GeneralViewComponent {
   toggleNumber: number = 0;
   showCreateChannelOverlay: boolean = false;
   @ViewChild(ChatComponent) chatComponent!: ChatComponent;
+  menuState: 'opened' | 'closed' = 'opened';
 
 
   /**
@@ -44,7 +53,7 @@ export class GeneralViewComponent {
   /**
    * Calls different functions to allow the toggling of the Workspace menu
    */
-  toggle() {
+  toggleWorkspaceMenu() {
     if (this.toggleNumber == 0) {
       this.closeWorkspaceMenu();
       this.toggleNumberIncrease();
@@ -60,6 +69,10 @@ export class GeneralViewComponent {
    */
   openWorkspaceMenu() {
     this.workspaceMenuIsVisible = true;
+    this.menuState = 'opened';
+    // setTimeout(() => {
+    //   this.workspaceMenuIsVisible = true;
+    // }, 125);
   }
 
 
@@ -67,7 +80,10 @@ export class GeneralViewComponent {
    *Closes the Workspace menu
    */
   closeWorkspaceMenu() {
-    this.workspaceMenuIsVisible = false;
+    this.menuState = 'closed';
+    setTimeout(() => {
+      this.workspaceMenuIsVisible = false;
+    }, 125);
   }
 
 
@@ -95,7 +111,7 @@ export class GeneralViewComponent {
   }
 
 
-  openNewMessage(){
+  openNewMessage() {
     this.chatComponent.openNewMessageWindow();
   }
 }

@@ -1,8 +1,8 @@
 <section style="width: 100%">
   <app-header></app-header>
   <div class="devspace-container">
-    <app-workspace-menu *ngIf="workspaceMenuIsVisible" (callParent)="toggleCreateChannelOverlay()" (newMessage)="openNewMessage()"></app-workspace-menu>
-    <app-workspace-menu-close-button (callParent)="toggle()"></app-workspace-menu-close-button>
+    <app-workspace-menu *ngIf="workspaceMenuIsVisible" [@slideAnimation]="menuState" (callParent)="toggleCreateChannelOverlay()" (newMessage)="openNewMessage()"></app-workspace-menu>
+    <app-workspace-menu-close-button (callParent)="toggleWorkspaceMenu()"></app-workspace-menu-close-button>
     <app-chat></app-chat>
     <app-thread *ngIf="threadIsVisible" (callParent)="closeThread()"></app-thread>
   </div>
