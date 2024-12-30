@@ -39,7 +39,6 @@ export class AuthService {
   }
 
   async createUserWithEmail(accountData: UserDatas) {
-    debugger
     const auth = getAuth();
     await createUserWithEmailAndPassword(auth, accountData.mail, accountData.password)
       .then((userCredential) => {
