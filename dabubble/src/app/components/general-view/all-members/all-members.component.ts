@@ -22,7 +22,7 @@ export class AllMembersComponent implements OnChanges{
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['searchQuery']) {
-      this.updateMembersList(this.searchQuery);
+      this.updateMembersList(this.searchQuery.toLocaleLowerCase());
     }
   }
 
