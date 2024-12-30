@@ -162,3 +162,8 @@
     @include arrangement($jc: normal, $g: 20px);
     // overflow-x: scroll;
 }
+
+app-emoji-picker {
+    left: -270px;
+    transform: scaleX(-1);
+}

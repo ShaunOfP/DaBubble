@@ -32,7 +32,7 @@ export class ThreadMessagesComponent {
   //wenn reaktionen vorhanden dann showReactions auf true
 
   openEmojiPicker() {
-    this.showEmojiPicker = true;
+    this.showEmojiPicker ? this.hideEmojiPicker() : this.showEmojiPicker = true;
   }
 
   onEmojiReceived(emoji: string) {
