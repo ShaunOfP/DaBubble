@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, ViewChild } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { WorkspaceMenuComponent } from './workspace-menu/workspace-menu.component';
 import { WorkspaceMenuCloseButtonComponent } from './workspace-menu-close-button/workspace-menu-close-button.component';
@@ -26,10 +26,15 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
   templateUrl: './general-view.component.html',
   styleUrl: './general-view.component.scss',
   animations: [
-    trigger('slideAnimation', [
+    trigger('slideLeftAnimation', [
       state('opened', style({ transform: 'translateX(0)' })),
       state('closed', style({ transform: 'translateX(-120%)' })),
-      transition('opened <=> closed', [animate('.125s ease-in')])
+      transition('opened <=> closed', [animate('0.125s ease-in')])
+    ]),
+    trigger('slideRightAnimation', [
+      state('opened', style({ transform: 'translateX(0)' })),
+      state('closed', style({ transform: 'translateX(120%)' })),
+      transition('opened <=> closed', [animate('0.125s ease-in')])
     ])
   ]
 })
@@ -39,14 +44,17 @@ export class GeneralViewComponent {
   toggleNumber: number = 0;
   showCreateChannelOverlay: boolean = false;
   @ViewChild(ChatComponent) chatComponent!: ChatComponent;
-  menuState: 'opened' | 'closed' = 'opened';
-
+  workspaceMenuState: 'opened' | 'closed' = 'opened';
+  threadMenuState: 'opened' | 'closed' = 'opened';
 
   /**
    * Hides/Closes the Thread-Component
    */
   closeThread() {
-    this.threadIsVisible = false;
+    this.threadMenuState = 'closed';
+    setTimeout(() => {
+      this.threadIsVisible = false;
+    }, 125);
   }
 
 
@@ -69,7 +77,7 @@ export class GeneralViewComponent {
    */
   openWorkspaceMenu() {
     this.workspaceMenuIsVisible = true;
-    this.menuState = 'opened';
+    this.workspaceMenuState = 'opened';
     // setTimeout(() => {
     //   this.workspaceMenuIsVisible = true;
     // }, 125);
@@ -80,7 +88,7 @@ export class GeneralViewComponent {
    *Closes the Workspace menu
    */
   closeWorkspaceMenu() {
-    this.menuState = 'closed';
+    this.workspaceMenuState = 'closed';
     setTimeout(() => {
       this.workspaceMenuIsVisible = false;
     }, 125);
