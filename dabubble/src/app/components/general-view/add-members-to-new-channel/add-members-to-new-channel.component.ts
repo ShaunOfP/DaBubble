@@ -25,7 +25,7 @@ export class AddMembersToNewChannelComponent implements OnInit{
   allMembers: Member[] = [];
   searchFocus: boolean = false;
   openSelectedMembers: boolean = false;
-  userID: string | null = null;
+  userID!: string;
 
   constructor(
     private memberService: ChannelMemberService, private route: ActivatedRoute){
@@ -40,7 +40,7 @@ export class AddMembersToNewChannelComponent implements OnInit{
       this.selectedMembers = members;
     });
     this.route.queryParams.subscribe(params => {
-      this.userID = params['userID'] || null;
+      this.userID = params['userID'];
       console.log('Extracted UID:', this.userID);
     });
   }
@@ -52,9 +52,11 @@ export class AddMembersToNewChannelComponent implements OnInit{
   async addAllMembersToChannel(): Promise<void> {
     await this.memberService.selectAllMembers();
     this.allMembers = await firstValueFrom(this.memberService.allMembersSubject$);
+    this.memberService.createNewChannel(this.allMembers, this.userID);
   }
 
   addSelectedMembersToChannel(){
+    this.memberService.createNewChannel(this.selectedMembers, this.userID);
   }
 
   clearSearchField(){

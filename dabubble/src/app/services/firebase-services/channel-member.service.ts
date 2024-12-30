@@ -7,6 +7,8 @@ import {
   query,
   doc,
   setDoc,
+  updateDoc,
+  arrayUnion,
 } from '@angular/fire/firestore';
 import { Observable, BehaviorSubject } from 'rxjs';
 
@@ -155,18 +157,21 @@ export class ChannelMemberService{
     this.channelDescription.next(description)
   }
 
-  async createNewChannel(users: Member[]) {
+  async createNewChannel(members: Member[], ownerId: string) {
     const generatedId = this.generateRandomId();
     const channelDocRef = doc(this.firestore, 'channels', generatedId);
     const channelData = {
       channelId: generatedId,
       channelName: this.channelName.value,
       createdAt: new Date().getTime(),
-      description: this.channelName.value,
-      owner: '',
-      users: users.map(user => {user.id}),
+      description: this.channelDescription.value,
+      owner: ownerId,
+      users: members.map(member => member.id),
     }
-    await setDoc(channelDocRef, channelData);
+    console.log(members[0], channelDocRef, channelData)
+    // await setDoc(channelDocRef, channelData);
+    // this.addNewChannelToMembers(members, generatedId);
+    // this.addNewChannelToOwner(ownerId, generatedId);
   }
 
   generateRandomId() {
@@ -177,8 +182,35 @@ export class ChannelMemberService{
       array,
       (byte) => characters[byte % characters.length]
     ).join('');
-    const generatedRandomId = 'pC' + randomId;
+    const generatedRandomId = 'channel' + randomId;
     return generatedRandomId;
   }
 
+  async addNewChannelToOwner(ownerId: string, channelId: string) {
+    try {
+      const ownerDocRef = doc(this.firestore, 'userDatas', ownerId);
+      await updateDoc(ownerDocRef, {
+        channels: arrayUnion(channelId),
+      });
+      console.log(`Channel ${channelId} successfully added to owner ${ownerId}`);
+    } catch (error) {
+      console.error(`Error adding channel ${channelId} to owner ${ownerId}:`, error);
+    }
+  }
+
+  async addNewChannelToMembers(members: Member[], channelId: string) {
+    const promises = members.map(member => {
+      const docRef = doc(this.firestore, 'userDatas', member.id);
+      return updateDoc(docRef, {
+        channels: arrayUnion(channelId),
+      });
+    });
+  
+    try {
+      await Promise.all(promises);
+      console.log('Channel added to all members successfully');
+    } catch (error) {
+      console.error('Error adding channel to members:', error);
+    }
+  }
 }
