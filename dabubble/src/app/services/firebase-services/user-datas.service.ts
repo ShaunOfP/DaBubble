@@ -51,6 +51,7 @@ export class UserDatasService {
       accountData.privateChats.push(chatsId);
 
       const userData = {
+        username_lowercase: accountData.username.toLowerCase(),
         username: accountData.username,
         avatar: accountData.avatar,
         mail: accountData.mail,
