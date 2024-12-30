@@ -11,7 +11,8 @@ import {
   signInAnonymously,
   sendPasswordResetEmail,
   UserCredential,
-  updatePassword,
+  confirmPasswordReset,
+  verifyPasswordResetCode,
 } from '@angular/fire/auth';
 import { BehaviorSubject } from 'rxjs';
 import { UserDatas } from '../../models/user.class';
@@ -117,6 +118,12 @@ export class AuthService {
       });
   } 
 
-  changeUserPassword(newPasword: string) {
-   }
+
+  verifyCode(oobCode: string): Promise<string> {
+    return verifyPasswordResetCode(this.auth, oobCode); // Gibt die E-Mail zurück
+  }
+
+  resetPassword(oobCode: string, newPassword: string): Promise<void> {
+    return confirmPasswordReset(this.auth, oobCode, newPassword);
+  }
 }

@@ -2,7 +2,7 @@
   <mat-card-title>Emoji Picker</mat-card-title>
   <mat-card-content>
     <div class="emoji-container">
-      <button class="hover" *ngFor="let emoji of emojis" (click)="addEmoji(emoji)">{{ emoji }}</button>
+      <button class="hover" *ngFor="let emoji of showReactionsOnly ? reactions : emojis" (click)="addEmoji(emoji)">{{ emoji }}</button>
     </div>
   </mat-card-content>
 </mat-card>
