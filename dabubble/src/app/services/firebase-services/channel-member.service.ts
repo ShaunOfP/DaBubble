@@ -54,76 +54,76 @@ export class ChannelMemberService{
       return allUsers
     }
 
-    async searchUsers(queryString: string): Promise<Member[]> {
-      const capitalizedQuery = queryString.charAt(0).toUpperCase() + queryString.slice(1);
-      const lowercaseQuery = queryString.toLowerCase();
+    // async searchUsers(queryString: string): Promise<Member[]> {
+    //   const capitalizedQuery = queryString.charAt(0).toUpperCase() + queryString.slice(1);
+    //   const lowercaseQuery = queryString.toLowerCase();
   
-      const capitalizedQueryRef = query(
-        this.userDatasRef(),
-        where('username', '>=', capitalizedQuery),
-        where('username', '<', capitalizedQuery + '\uf8ff')
-      );
+    //   const capitalizedQueryRef = query(
+    //     this.userDatasRef(),
+    //     where('username', '>=', capitalizedQuery),
+    //     where('username', '<', capitalizedQuery + '\uf8ff')
+    //   );
   
-      const lowercaseQueryRef = query(
-        this.userDatasRef(),
-        where('username', '>=', lowercaseQuery),
-        where('username', '<', lowercaseQuery + '\uf8ff')
-      );
+    //   const lowercaseQueryRef = query(
+    //     this.userDatasRef(),
+    //     where('username', '>=', lowercaseQuery),
+    //     where('username', '<', lowercaseQuery + '\uf8ff')
+    //   );
   
-      try {
-        const [capitalizedSnapshot, lowercaseSnapshot] = await Promise.all([
-          getDocs(capitalizedQueryRef),
-          getDocs(lowercaseQueryRef),
-        ]);
+    //   try {
+    //     const [capitalizedSnapshot, lowercaseSnapshot] = await Promise.all([
+    //       getDocs(capitalizedQueryRef),
+    //       getDocs(lowercaseQueryRef),
+    //     ]);
   
-        const users: Member[] = [];
-        const userIds = new Set<string>();
+    //     const users: Member[] = [];
+    //     const userIds = new Set<string>();
   
-        capitalizedSnapshot.forEach((doc) => {
-          const user = {...(doc.data() as Member), id: doc.id};
-          if (!userIds.has(doc.id)) {
-            users.push(user);
-            userIds.add(doc.id);
-          }
-        });
+    //     capitalizedSnapshot.forEach((doc) => {
+    //       const user = {...(doc.data() as Member), id: doc.id};
+    //       if (!userIds.has(doc.id)) {
+    //         users.push(user);
+    //         userIds.add(doc.id);
+    //       }
+    //     });
   
-        lowercaseSnapshot.forEach((doc) => {
-          const user = {...(doc.data() as Member), id: doc.id};
-          if (!userIds.has(doc.id)) {
-            users.push(user);
-            userIds.add(doc.id);
-          }
-        });
+    //     lowercaseSnapshot.forEach((doc) => {
+    //       const user = {...(doc.data() as Member), id: doc.id};
+    //       if (!userIds.has(doc.id)) {
+    //         users.push(user);
+    //         userIds.add(doc.id);
+    //       }
+    //     });
   
-        this.membersSubject.next(users);
-        return users;
-      } catch (error) {
-        console.error('Error searching for users:', error);
-        return [];
-      }
-    }
+    //     this.membersSubject.next(users);
+    //     return users;
+    //   } catch (error) {
+    //     console.error('Error searching for users:', error);
+    //     return [];
+    //   }
+    // }
 
     // Old search case sensitive
-    // async searchUsers(queryString: string): Promise<Member[]> {
-    //     const userQuery = query(
-    //       this.userDatasRef(),
-    //       where('username', '>=', queryString),
-    //       where('username', '<', queryString + '\uf8ff')
-    //     );
+    async searchUsers(queryString: string): Promise<Member[]> {
+        const userQuery = query(
+          this.userDatasRef(),
+          where('username', '>=', queryString),
+          where('username', '<', queryString + '\uf8ff')
+        );
       
-    //     try {
-    //       const querySnapshot = await getDocs(userQuery);
-    //       const users: Member[] = [];
-    //       querySnapshot.forEach((doc) => {
-    //         users.push({...(doc.data() as Member) });
-    //       });
-    //       this.membersSubject.next(users);
-    //       return users;
-    //     } catch (error) {
-    //       console.error('Fehler beim Suchen nach Nutzern:', error);
-    //       return [];
-    //     }
-    //   }
+        try {
+          const querySnapshot = await getDocs(userQuery);
+          const users: Member[] = [];
+          querySnapshot.forEach((doc) => {
+            users.push({...(doc.data() as Member) });
+          });
+          this.membersSubject.next(users);
+          return users;
+        } catch (error) {
+          console.error('Fehler beim Suchen nach Nutzern:', error);
+          return [];
+        }
+      }
     
       selectMember(member: Member): void{
         const members = this.membersSubject.getValue();
