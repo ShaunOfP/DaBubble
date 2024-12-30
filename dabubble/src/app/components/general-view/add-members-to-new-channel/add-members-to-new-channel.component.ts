@@ -5,6 +5,7 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ChannelMemberService, Member} from '../../../services/firebase-services/channel-member.service';
 import { AllSelectedMembersComponent } from './all-selected-members/all-selected-members.component';
 import { firstValueFrom } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -24,9 +25,10 @@ export class AddMembersToNewChannelComponent implements OnInit{
   allMembers: Member[] = [];
   searchFocus: boolean = false;
   openSelectedMembers: boolean = false;
+  userID: string | null = null;
 
   constructor(
-    private memberService: ChannelMemberService,){
+    private memberService: ChannelMemberService, private route: ActivatedRoute){
   }
 
   close(): void {
@@ -37,6 +39,10 @@ export class AddMembersToNewChannelComponent implements OnInit{
     this.memberService.selectedMembers$.subscribe(members => {
       this.selectedMembers = members;
     });
+    this.route.queryParams.subscribe(params => {
+      this.userID = params['userID'] || null;
+      console.log('Extracted UID:', this.userID);
+    });
   }
 
   removeMember(member: Member): void{
@@ -46,11 +52,9 @@ export class AddMembersToNewChannelComponent implements OnInit{
   async addAllMembersToChannel(): Promise<void> {
     await this.memberService.selectAllMembers();
     this.allMembers = await firstValueFrom(this.memberService.allMembersSubject$);
-    console.log(this.allMembers)
   }
 
   addSelectedMembersToChannel(){
-    console.log(this.selectedMembers)
   }
 
   clearSearchField(){
