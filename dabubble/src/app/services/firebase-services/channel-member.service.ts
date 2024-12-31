@@ -104,11 +104,16 @@ export class ChannelMemberService{
     // }
 
     // Old search case sensitive
+
+
+
+
     async searchUsers(queryString: string): Promise<Member[]> {
+      const normalizedQuery = queryString.toLowerCase();
         const userQuery = query(
           this.userDatasRef(),
-          where('username', '>=', queryString),
-          where('username', '<', queryString + '\uf8ff')
+          where('username_lowercase', '>=', normalizedQuery),
+          where('username_lowercase', '<', normalizedQuery + '\uf8ff')
         );
       
         try {

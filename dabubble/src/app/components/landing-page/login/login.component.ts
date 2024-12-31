@@ -169,6 +169,7 @@ export class LoginComponent implements OnInit {
     const newUser: UserDatas = new UserDatas({
       username_lowercase:'',
       username: user.displayName ?? '',
+      username_lowercase: user.displayName?.toLowerCase() ?? '',
       mail: user.email ?? '',
       password: '',
       avatar: user.photoURL ?? 'default-avatar',
