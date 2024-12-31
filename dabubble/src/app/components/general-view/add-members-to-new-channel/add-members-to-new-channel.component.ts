@@ -14,6 +14,7 @@ import { ActivatedRoute } from '@angular/router';
   imports: [CommonModule, AllMembersComponent, ReactiveFormsModule, AllSelectedMembersComponent, FormsModule],
   templateUrl: './add-members-to-new-channel.component.html',
   styleUrl: './add-members-to-new-channel.component.scss'
+
 })
 export class AddMembersToNewChannelComponent implements OnInit{
   @ViewChild('nameInput') nameInputField!: ElementRef;
@@ -27,9 +28,16 @@ export class AddMembersToNewChannelComponent implements OnInit{
   openSelectedMembers: boolean = false;
   userID!: string;
 
+
   constructor(
     private memberService: ChannelMemberService, private route: ActivatedRoute){
   }
+  
+
+  // getAvatarWithCacheBuster(avatarUrl: string): string {
+  //   const cacheBuster = new Date().getTime(); // Generate a timestamp
+  //   return avatarUrl ? `${avatarUrl}?v=${cacheBuster}` : 'default-avatar.png';
+  // }
 
   close(): void {
     this.closeAll.emit();

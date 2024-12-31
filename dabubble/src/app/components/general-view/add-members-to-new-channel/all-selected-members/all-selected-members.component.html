@@ -10,9 +10,12 @@
         </header>
         <div>
             <div class="member-container" *ngFor="let member of members">
-                <img class="avatar" [src]="'/img/general-view/create-avatar/' + member.avatar +'.svg'">
+                <!-- <img class="avatar" [src]="'/img/general-view/create-avatar/' + member.avatar +'.svg'"> -->
+                 
+                <img class="avatar" [src]="getAvatarWithCacheBuster(member.avatar)" alt="Member Avatar">
+                
                 <span>{{ member.username }}</span>
-                <div class="arrow-back"  (click)="removeMember(member)">
+                <div class="arrow-back" (click)="removeMember(member)">
                     <img src="/img/general-view/workspace-menu/close.svg">
                 </div>
             </div>

@@ -54,6 +54,7 @@ export class ChannelMemberService{
       return allUsers
     }
 
+
     // async searchUsers(queryString: string): Promise<Member[]> {
     //   const capitalizedQuery = queryString.charAt(0).toUpperCase() + queryString.slice(1);
     //   const lowercaseQuery = queryString.toLowerCase();
