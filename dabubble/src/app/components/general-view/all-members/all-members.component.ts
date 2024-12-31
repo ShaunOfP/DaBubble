@@ -22,9 +22,16 @@ export class AllMembersComponent implements OnChanges{
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['searchQuery']) {
-      this.updateMembersList(this.searchQuery.toLowerCase());
+      this.updateMembersList(this.searchQuery);
     }
   }
+
+  //To LowerCase
+  // ngOnChanges(changes: SimpleChanges): void {
+  //   if (changes['searchQuery']) {
+  //     this.updateMembersList(this.searchQuery.toLowerCase());
+  //   }
+  // }
 
   private async updateMembersList(query: string): Promise<void> {
     if (query.trim() !== '') {
