@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div class="add-reaction">
-                <app-emoji-picker *ngIf="showEmojiPicker" (emojiSelected)="onEmojiReceived($event)"></app-emoji-picker>
+                <app-emoji-picker class="right-corner-0" *ngIf="showEmojiPicker" (emojiSelected)="onEmojiReceived($event)"></app-emoji-picker>
                 <button class="add-reaction-button image-swap-on-hover" (click)="openEmojiPicker()">
                     <img src="img/general-view/thread/add_reaction.svg">
                     <img src="img/general-view/thread/hover_add_reaction.svg">
