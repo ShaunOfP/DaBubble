@@ -167,6 +167,7 @@ export class LoginComponent implements OnInit {
 
   async setNewUser(user: User) {
     const newUser: UserDatas = new UserDatas({
+      username_lowercase:'',
       username: user.displayName ?? '',
       mail: user.email ?? '',
       password: '',
