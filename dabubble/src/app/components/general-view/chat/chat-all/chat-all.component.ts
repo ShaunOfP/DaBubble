@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../../../../services/firebase-services/chat.service';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { Message } from '../../../../models/interfaces';
 
@@ -12,17 +12,41 @@ import { Message } from '../../../../models/interfaces';
   styleUrls: ['./chat-all.component.scss'],
 })
 export class ChatAllComponent implements OnInit {
-  messages$!: Observable<Message[]>;
+  messages$!: Observable<any[]>;
   channelId: string = 'dOCTHJxiNDhYvmqMokLv';
-  lastTimestamp: string = '';
 
   constructor(private chatService: ChatService) {}
 
   ngOnInit(): void {
-    this.messages$ = this.chatService.getMessages(this.channelId);
+    this.messages$ = this.chatService.getMessages(this.channelId).pipe(
+      map((messages: Message[]) => {
+        let lastTimestamp = 0;
+
+        return messages.map((message) => {
+          const showDate =
+            lastTimestamp === 0 || lastTimestamp < message.createdAt;
+
+          if (showDate) {
+            lastTimestamp = message.createdAt;
+          }
+
+          return {
+            ...message,
+            showDate,
+            formattedDate: showDate
+              ? new Date(message.createdAt).toLocaleDateString('de-DE', {
+                  day: '2-digit',
+                  month: '2-digit',
+                  year: '2-digit',
+                })
+              : null,
+          };
+        });
+      })
+    );
   }
 
-  formatTime(timestamp: number) {
+  formatTime(timestamp: number): string {
     const date = new Date(timestamp);
     return date.toLocaleTimeString('de-DE', {
       hour: '2-digit',
@@ -30,36 +54,11 @@ export class ChatAllComponent implements OnInit {
     });
   }
 
-  newDate(timestamp:number){
-    const date = new Date(timestamp).toLocaleDateString('de-DE', {
-      day: '2-digit',
-      month:'2-digit',
-      year: '2-digit',
-    })
-    console.log(date)
-    if(this.lastTimestamp === '' || this.lastTimestamp <= date)
-    {
-      this.lastTimestamp = date
-      return true
-    }
-    else{ return false}
-  }
-
-  // formatDate(timestamp: string){
-  //   const dateTime = this.parseTimestamp(timestamp) 
-  //   const date = new Date(dateTime)
-  //   return date.toLocaleTimeString('de-DE', {
-  //     day: '2-digit',
-  //     month:'2-digit',
-  //     year: '2-digit',
-  //   })
-  // }
-
-  checkStyle(userId: string) {
+  checkStyle(userId: string): string {
     return userId === 'OI28qbeslOMfD5nSoQMw8vmU6uQ2' ? 'primary' : 'secondary';
   }
 
-  openThread(){
-    
+  openThread(): void {
+    // Logik für Thread-Öffnung
   }
 }

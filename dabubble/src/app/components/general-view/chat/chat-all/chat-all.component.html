@@ -1,10 +1,8 @@
-<!-- <div class="chat-feed"> -->
-
 <div *ngFor="let message of messages$ | async" class="chat-content">
-<div class="chat-date" *ngIf="newDate(message.createdAt)">
-  <div class="line"></div>
-  <div class="chat-date_create">{{ this.lastTimestamp }}</div>
-</div>
+  <div class="chat-date" *ngIf="message.showDate">
+    <div class="line"></div>
+    <div class="chat-date_create">{{ message.formattedDate }}</div>
+  </div>
   <div class="chat-content--{{ checkStyle(message.userId) }}">
     <div>
       <img src="img/general-view/create-avatar/avatar1.svg" alt="avatar" />
@@ -27,4 +25,3 @@
     </div>
   </div>
 </div>
-<!-- </div> -->
