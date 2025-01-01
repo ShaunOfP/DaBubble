@@ -21,8 +21,8 @@ export class ChatAllComponent implements OnInit {
     this.messages$ = this.chatService.getMessages(this.channelId);
   }
 
-  formatTime(timestamp: string): string {
-    const parsedTimestamp = parseInt(timestamp, 10);
+  formatTime(timestamp: number): string {
+    const parsedTimestamp = parseInt(timestamp.toString(), 10);
     const timestampInMs = parsedTimestamp < 1e12 ? parsedTimestamp * 1000 : parsedTimestamp;
     const date = new Date(timestampInMs);
     return date.toLocaleTimeString('de-DE', {

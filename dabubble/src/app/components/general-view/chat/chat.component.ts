@@ -95,7 +95,7 @@ export class ChatComponent {
     const message: Message = {
       id: this.generateId(), // Generate a unique ID for the message
       sender: 'John Doe', // Replace with actual sender name
-      createdAt: new Date().toISOString(), // Use ISO string for timestamp
+      createdAt: new Date().getTime(),
       content: content,
       userId: 'user123' // Replace with actual user ID
     };
@@ -108,6 +108,9 @@ export class ChatComponent {
         console.error('Error saving message:', error);
       });
   }
+
+
+  
 
   private generateId(): string {
     // Generate a unique ID for the message (e.g., using a UUID library or custom logic)
