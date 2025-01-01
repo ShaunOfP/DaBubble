@@ -34,7 +34,7 @@
       <app-chat-all class="chat" *ngIf="!showNewMessageHeader"></app-chat-all>
     <!-- </div> -->
     <div class="input-container">
-      <textarea #emojiTarget [placeholder]="'Nachricht an #Entwicklerteam'"></textarea>
+      <textarea #messageInput #emojiTarget [placeholder]="'Nachricht an #Entwicklerteam'"></textarea>
       <div class="textarea-icon-bar">
         <div appClickOutside (appClickOutside)="hideEmojiPicker()">
           <app-emoji-picker id="emojiChat" (emojiSelected)="onEmojiReceived($event)" class="d-none left-corner-0"></app-emoji-picker>
@@ -48,7 +48,7 @@
             <img class="d-none" src="/img/general-view/workspace-menu/hover_aet.svg">
           </div>
         </div>
-        <div (click)="sendMessage('dOCTHJxiNDhYvmqMokLv', 'tst')" class="change-image-on-hover">
+        <div (click)="sendMessage('dOCTHJxiNDhYvmqMokLv', messageInput.value)" class="change-image-on-hover">
           <img class="height-width-40" src="/img/general-view/workspace-menu/send.svg">
           <img class="d-none height-width-40" src="/img/general-view/workspace-menu/hover_send.svg">
         </div>
