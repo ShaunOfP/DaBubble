@@ -28,9 +28,9 @@ export class AllSelectedMembersComponent {
     this.closeWindow.emit();
   }
 
-  getAvatarWithCacheBuster(avatarUrl: string): string {
-    const cacheBuster = new Date().getTime(); // Generate a timestamp
-    return avatarUrl ? `${avatarUrl}?v=${cacheBuster}` : 'default-avatar.png';
-  }
+  // getAvatarWithCacheBuster(avatarUrl: string): string {
+  //   const cacheBuster = new Date().getTime(); // Generate a timestamp
+  //   return avatarUrl ? `${avatarUrl}?v=${cacheBuster}` : 'default-avatar.png';
+  // }
 
  }

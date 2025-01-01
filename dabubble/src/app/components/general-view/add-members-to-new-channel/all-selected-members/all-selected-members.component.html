@@ -12,7 +12,7 @@
             <div class="member-container" *ngFor="let member of members">
                 <!-- <img class="avatar" [src]="'/img/general-view/create-avatar/' + member.avatar +'.svg'"> -->
                  
-                <img class="avatar" [src]="getAvatarWithCacheBuster(member.avatar)" alt="Member Avatar">
+                <!-- <img class="avatar" [src]="getAvatarWithCacheBuster(member.avatar)" alt="Member Avatar"> -->
                 
                 <span>{{ member.username }}</span>
                 <div class="arrow-back" (click)="removeMember(member)">
