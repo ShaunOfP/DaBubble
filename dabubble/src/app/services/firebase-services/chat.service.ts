@@ -36,6 +36,9 @@ export class ChatService {
     return collectionData(messagesRef, { idField: 'id' }) as Observable<Message[]>;
   }
   
+  saveMessage(channelId: string, message: Message) {
+    return addDoc(collection(this.firestore, `channels/${channelId}/messages`), message);
+  }
 
   // getMessages(channelId: string): Observable<Message[]> {
   //   return new Observable((observer) => {

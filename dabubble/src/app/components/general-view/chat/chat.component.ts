@@ -7,6 +7,9 @@ import { EmojiPickerComponent } from '../emoji-picker/emoji-picker.component';
 import { NewMessageComponent } from "../new-message/new-message.component";
 import { SharedModule } from '../../../shared/shared.module';
 import { ChatAllComponent } from "./chat-all/chat-all.component";
+import { ChatService } from '../../../services/firebase-services/chat.service';
+import { Message } from '../../../models/interfaces';
+
 
 @Component({
   selector: 'app-chat',
@@ -25,6 +28,7 @@ import { ChatAllComponent } from "./chat-all/chat-all.component";
   styleUrl: './chat.component.scss',
 })
 export class ChatComponent {
+  constructor(private chatService: ChatService) {}
   @ViewChild('emojiTarget', { static: true }) emojiTarget!: ElementRef;
   selectedEmoji: string = '';
   chatDetails: boolean = false;
@@ -86,4 +90,31 @@ export class ChatComponent {
     document.getElementById('chat-container')?.classList.remove('height-normal-header');
     document.getElementById('chat-container')?.classList.add('height-new-message');
   }
+
+  sendMessage(channelId: string, content: string): void {
+    const message: Message = {
+      id: this.generateId(), // Generate a unique ID for the message
+      sender: 'John Doe', // Replace with actual sender name
+      createdAt: new Date().getTime(),
+      content: content,
+      userId: 'user123' // Replace with actual user ID
+    };
+
+    this.chatService.saveMessage(channelId, message)
+      .then(() => {
+        console.log('Message saved successfully');
+      })
+      .catch((error) => {
+        console.error('Error saving message:', error);
+      });
+  }
+
+
+  
+
+  private generateId(): string {
+    // Generate a unique ID for the message (e.g., using a UUID library or custom logic)
+    return 'unique-id-' + Math.random().toString(36).substr(2, 9);
+  }
+
 }

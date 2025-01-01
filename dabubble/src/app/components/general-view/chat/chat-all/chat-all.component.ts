@@ -22,7 +22,7 @@ export class ChatAllComponent implements OnInit {
     this.messages$ = this.chatService.getMessages(this.channelId);
   }
 
-  parseTimestamp(timestamp:string){
+  formatTime(timestamp: string): string {
     const parsedTimestamp = parseInt(timestamp, 10);
     const timestampInMs = parsedTimestamp < 1e12 ? parsedTimestamp * 1000 : parsedTimestamp;
     return timestampInMs
