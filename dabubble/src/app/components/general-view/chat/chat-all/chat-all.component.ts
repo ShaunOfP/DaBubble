@@ -22,24 +22,16 @@ export class ChatAllComponent implements OnInit {
     this.messages$ = this.chatService.getMessages(this.channelId);
   }
 
-  formatTime(timestamp: string): string {
-    const parsedTimestamp = parseInt(timestamp, 10);
-    const timestampInMs = parsedTimestamp < 1e12 ? parsedTimestamp * 1000 : parsedTimestamp;
-    return timestampInMs
-  }
-
-  formatTime(timestamp: string) {
-    const timestampInMs = this.parseTimestamp(timestamp) 
-    const date = new Date(timestampInMs);
+  formatTime(timestamp: number) {
+    const date = new Date(timestamp);
     return date.toLocaleTimeString('de-DE', {
       hour: '2-digit',
       minute: '2-digit',
     });
   }
 
-  newDate(timestamp:string){
-    const dateTime = this.parseTimestamp(timestamp)
-    const date = new Date(dateTime).toLocaleDateString('de-DE', {
+  newDate(timestamp:number){
+    const date = new Date(timestamp).toLocaleDateString('de-DE', {
       day: '2-digit',
       month:'2-digit',
       year: '2-digit',
