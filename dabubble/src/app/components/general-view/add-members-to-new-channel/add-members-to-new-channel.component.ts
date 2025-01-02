@@ -40,6 +40,10 @@ export class AddMembersToNewChannelComponent implements OnInit{
   // }
 
   close(): void {
+    this.clearSearchField();
+    this.selectedMembers.forEach(member => this.removeMember(member))
+    this.searchFocus = false;
+    this.selectedOption = true;
     this.closeAll.emit();
   }
 

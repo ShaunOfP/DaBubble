@@ -177,7 +177,6 @@ export class ChannelMemberService{
       users: members.map(member => member.id),
     }
     await setDoc(channelDocRef, channelData);
-    console.log('channel erstellen erfolgreich', channelData)
     this.addNewChannelToMembers(members, generatedId);
     this.addNewChannelToOwner(ownerId, generatedId);
   }
