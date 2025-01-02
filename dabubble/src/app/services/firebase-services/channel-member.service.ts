@@ -121,7 +121,9 @@ export class ChannelMemberService{
           const querySnapshot = await getDocs(userQuery);
           const users: Member[] = [];
           querySnapshot.forEach((doc) => {
-            users.push({...(doc.data() as Member) });
+            users.push({...(doc.data() as Member),
+            id: doc.id
+             });
           });
           this.membersSubject.next(users);
           return users;
@@ -174,10 +176,10 @@ export class ChannelMemberService{
       owner: ownerId,
       users: members.map(member => member.id),
     }
-    console.log(members[0], channelDocRef, channelData)
-    // await setDoc(channelDocRef, channelData);
-    // this.addNewChannelToMembers(members, generatedId);
-    // this.addNewChannelToOwner(ownerId, generatedId);
+    await setDoc(channelDocRef, channelData);
+    console.log('channel erstellen erfolgreich', channelData)
+    this.addNewChannelToMembers(members, generatedId);
+    this.addNewChannelToOwner(ownerId, generatedId);
   }
 
   generateRandomId() {

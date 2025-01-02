@@ -49,7 +49,6 @@ export class AddMembersToNewChannelComponent implements OnInit{
     });
     this.route.queryParams.subscribe(params => {
       this.userID = params['userID'];
-      console.log('Extracted UID:', this.userID);
     });
   }
 
@@ -60,11 +59,14 @@ export class AddMembersToNewChannelComponent implements OnInit{
   async addAllMembersToChannel(): Promise<void> {
     await this.memberService.selectAllMembers();
     this.allMembers = await firstValueFrom(this.memberService.allMembersSubject$);
-    this.memberService.createNewChannel(this.allMembers, this.userID);
+    const filteredMembers = this.allMembers.filter(member => member.id !== this.userID);
+    console.log(filteredMembers);
+    this.memberService.createNewChannel(filteredMembers, this.userID);
   }
 
   addSelectedMembersToChannel(){
     this.memberService.createNewChannel(this.selectedMembers, this.userID);
+    console.log(this.selectedMembers)
   }
 
   clearSearchField(){
