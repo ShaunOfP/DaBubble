@@ -1,18 +1,19 @@
 <section class="radius-30">
+  <div *ngIf="showGreyScreen" class="grey-screen"></div>
   <app-new-message *ngIf="showNewMessageHeader"></app-new-message>
   <header *ngIf="!showNewMessageHeader">
     <div class="header-chat-info-container" (click)="toggleChatDetails()">
       <h3>#</h3>
       <h3>Entwicklerteam</h3>
-      <button >
+      <button>
         <img class="d-flex center" src="/img/general-view/workspace-menu/arrow_drop_down_thin.svg">
         <img class="d-none center" src="/img/general-view/workspace-menu/hover_arrow_drop_down_thin.svg">
       </button>
     </div>
     <app-chat-details id="chatDetailsOverlay" *ngIf="chatDetails" (callParent)="toggleChatDetails()"></app-chat-details>
-    <app-channel-members class="d-none" id="channelMembersMenu" (closeMe)="closeMembersInfo()"
+    <app-channel-members *ngIf="showMembersInfo" id="channelMembersMenu" (closeMe)="closeMembersInfo()"
       (openAddMembers)="openAddMembersMenu()"></app-channel-members>
-    <app-add-members class="d-none" id="addMembersMenu" (closeMe)="closeAddMembersMenu()"></app-add-members>
+    <app-add-members *ngIf="showAddMembers" id="addMembersMenu" (closeMe)="closeAddMembersMenu()"></app-add-members>
     <div class="header-user-container d-flex gap-10 align-center">
       <div class="d-flex center gap-10 radius-30 hover padding-3-10 number-hover" (click)="openMembersInfo()">
         <div class="d-flex center">
@@ -30,14 +31,13 @@
     </div>
   </header>
   <div class="chat-container height-normal-header" id="chat-container">
-    <!-- <div class="chat" id="chat"> -->
-      <app-chat-all class="chat" *ngIf="!showNewMessageHeader"></app-chat-all>
-    <!-- </div> -->
+    <app-chat-all class="chat" *ngIf="!showNewMessageHeader"></app-chat-all>
     <div class="input-container">
       <textarea #messageInput #emojiTarget [placeholder]="'Nachricht an #Entwicklerteam'"></textarea>
       <div class="textarea-icon-bar">
         <div appClickOutside (appClickOutside)="hideEmojiPicker()">
-          <app-emoji-picker id="emojiChat" (emojiSelected)="onEmojiReceived($event)" class="d-none left-corner-0"></app-emoji-picker>
+          <app-emoji-picker id="emojiChat" (emojiSelected)="onEmojiReceived($event)"
+            class="d-none left-corner-0"></app-emoji-picker>
           <div class="height-width-40 d-flex center radius-30 hover change-image-on-hover"
             (click)="toggleEmojiPicker()">
             <img src="/img/general-view/workspace-menu/smiley.svg">

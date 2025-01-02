@@ -36,7 +36,7 @@ export class ChatComponent implements OnInit {
     private chatService: ChatService,
     private userDatasService: UserDatasService,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
 
   @ViewChild(ChatAllComponent) chatAllComponent!: ChatAllComponent;
@@ -44,6 +44,9 @@ export class ChatComponent implements OnInit {
   selectedEmoji: string = '';
   chatDetails: boolean = false;
   showNewMessageHeader: boolean = false;
+  showMembersInfo: boolean = false;
+  showAddMembers: boolean = false;
+  showGreyScreen: boolean = false;
 
   // openChatDetails() {
   //   document.getElementById('chatDetailsOverlay')?.classList.remove('d-none');
@@ -60,38 +63,56 @@ export class ChatComponent implements OnInit {
     });
   }
 
+
+  activateGreyScreen() {
+    this.showGreyScreen = true;
+  }
+
+
+  hideGreyScreen() {
+    this.showGreyScreen = false;
+  }
+
+
   toggleChatDetails() {
+    this.showGreyScreen ? this.hideGreyScreen() : this.activateGreyScreen();
     this.chatDetails = !this.chatDetails;
   }
 
+
   openMembersInfo() {
-    document.getElementById('channelMembersMenu')?.classList.remove('d-none');
+    this.activateGreyScreen();
+    this.showMembersInfo = true;
   }
+
 
   closeMembersInfo() {
-    document.getElementById('channelMembersMenu')?.classList.add('d-none');
+    this.showMembersInfo = false;
+    this.hideGreyScreen();
   }
+
 
   openAddMembersMenu() {
-    if (
-      !document
-        .getElementById('channelMembersMenu')
-        ?.classList.contains('d-none')
-    ) {
+    if (this.showMembersInfo) {
       this.closeMembersInfo();
     }
-    document.getElementById('addMembersMenu')?.classList.remove('d-none');
+    this.activateGreyScreen();
+    this.showAddMembers = true;
   }
 
+
   closeAddMembersMenu() {
-    document.getElementById('addMembersMenu')?.classList.add('d-none');
+    this.showAddMembers = false;
+    this.hideGreyScreen();
   }
+
 
   onEmojiReceived(emoji: string) {
     this.selectedEmoji = emoji;
     this.emojiTarget.nativeElement.value += emoji;
     this.hideEmojiPicker();
   }
+
 
   toggleEmojiPicker() {
     const emojiPickerElement = document.getElementById('emojiChat');
@@ -100,6 +121,7 @@ export class ChatComponent implements OnInit {
     }
   }
 
+
   hideEmojiPicker() {
     const emojiPickerElement = document.getElementById('emojiChat');
     if (emojiPickerElement) {
@@ -107,10 +129,12 @@ export class ChatComponent implements OnInit {
     }
   }
 
+
   openNewMessageWindow() {
     this.showNewMessageHeader = true;
     this.changeHeaders();
   }
+
 
   changeHeaders() {
     document
@@ -120,6 +144,7 @@ export class ChatComponent implements OnInit {
       .getElementById('chat-container')
       ?.classList.add('height-new-message');
   }
+
 
   async sendMessage(channelId: string, content: string): Promise<void> {
     if (!this.userID) {
@@ -150,8 +175,9 @@ export class ChatComponent implements OnInit {
       .catch((error) => {
         console.error('Error saving message:', error);
       });
-    
+
   }
+
 
   private generateId(): string {
     // Generate a unique ID for the message (e.g., using a UUID library or custom logic)
