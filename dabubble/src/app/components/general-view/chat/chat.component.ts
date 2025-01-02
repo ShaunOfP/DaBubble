@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit, viewChild } from '@angular/core';
 import { ChatDetailsComponent } from '../chat-details/chat-details.component';
 import { ChannelMembersComponent } from '../channel-members/channel-members.component';
 import { AddMembersComponent } from '../add-members/add-members.component';
@@ -37,6 +37,9 @@ export class ChatComponent implements OnInit {
     private userDatasService: UserDatasService,
     private route: ActivatedRoute
   ) {}
+
+
+  @ViewChild(ChatAllComponent) chatAllComponent!: ChatAllComponent;
   @ViewChild('emojiTarget', { static: true }) emojiTarget!: ElementRef;
   selectedEmoji: string = '';
   chatDetails: boolean = false;
@@ -142,10 +145,12 @@ export class ChatComponent implements OnInit {
       .saveMessage(channelId, message)
       .then(() => {
         console.log('Message saved successfully');
+        this.chatAllComponent.scrollToElement();
       })
       .catch((error) => {
         console.error('Error saving message:', error);
       });
+    
   }
 
   private generateId(): string {

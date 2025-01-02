@@ -1,29 +1,34 @@
-
 <div #chatContainer class="chat-container">
-<div  *ngFor="let message of messages$ | async" class="chat-content">
-  <div class="chat-date" *ngIf="message.showDate">
-    <div class="line"></div>
-    <div class="chat-date_create">{{ message.formattedDate }}</div>
-  </div>
-<div>
-    <div class="chat-content--{{ checkStyle(message.userId) }}">
-      <div>
-        <img src="img/general-view/create-avatar/avatar1.svg" alt="avatar" />
-        <div class="chat-content_conversation">
-          <div class="chat-content_header">
-            <span>{{ message.sender }}</span>
-            <span>{{ formatTime(message.createdAt) }}</span>
+  <div *ngFor="let message of messages$ | async" class="chat-content">
+    <div class="chat-date" *ngIf="message.showDate">
+      <div class="line"></div>
+      <div class="chat-date_create">{{ message.formattedDate }}</div>
+    </div>
+    <div>
+      <div class="chat-content--{{ checkStyle(message.userId) }}">
+        <div>
+          <img src="img/general-view/create-avatar/avatar1.svg" alt="avatar" />
+          <div class="chat-content_conversation">
+            <div class="chat-content_header">
+              <span>{{ message.sender }}</span>
+              <span>{{ formatTime(message.createdAt) }}</span>
+            </div>
+            <span
+              class="chat-content_message--{{ checkStyle(message.userId) }}"
+            >
+              {{ message.content }}
+            </span>
           </div>
-          <span class="chat-content_message--{{ checkStyle(message.userId) }}">
-            {{ message.content }}
-          </span>
         </div>
-      </div>
-      <div>
-        <span class="chat-content_conversation_reacts" (click)="openThread()">2 Antworten</span>
-        <span class="chat-content_conversation_last-react">letzte Antwort 14:56 Uhr</span>
+        <div>
+          <span class="chat-content_conversation_reacts" (click)="openThread()"
+            >2 Antworten</span
+          >
+          <span class="chat-content_conversation_last-react"
+            >letzte Antwort 14:56 Uhr</span
+          >
+        </div>
       </div>
     </div>
   </div>
-</div>
 </div>
