@@ -21,7 +21,7 @@ export class AddMembersToNewChannelComponent implements OnInit{
   @Output() closeAll: EventEmitter<void> = new EventEmitter();
 
   selectedOption: boolean = true;
-  searchControl = new FormControl('');
+  searchQuery: string = '';
   selectedMembers: Member[] = [];
   allMembers: Member[] = [];
   searchFocus: boolean = false;
@@ -38,6 +38,16 @@ export class AddMembersToNewChannelComponent implements OnInit{
   //   const cacheBuster = new Date().getTime(); // Generate a timestamp
   //   return avatarUrl ? `${avatarUrl}?v=${cacheBuster}` : 'default-avatar.png';
   // }
+
+  onSubmit() {
+    if (this.selectedOption) {
+      this.addAllMembersToChannel();
+    } else {
+      this.addSelectedMembersToChannel();
+    }
+    this.close();
+  }
+  
 
   close(): void {
     this.clearSearchField();
@@ -74,12 +84,12 @@ export class AddMembersToNewChannelComponent implements OnInit{
   }
 
   clearSearchField(){
-    this.searchControl.setValue('')
+    this.searchQuery = '';
     this.searchFocus = false;
   }
 
   hideSelectedMembers(){
-    if(this.selectedMembers.length > 0 && !this.searchFocus){
+    if(this.selectedMembers.length > 0 && this.searchQuery === ''){
       this.searchFocus = true;
     } else {
       this.searchFocus = false;
