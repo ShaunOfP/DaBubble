@@ -42,7 +42,7 @@
     @include arrangement($jc: normal, $g: 20px, $fd: column, $ai: start);
     padding: 10px 40px;
 
-    >div {
+    > div {
       @include arrangement($jc: flex-start, $g: 20px);
     }
 
@@ -60,7 +60,7 @@
     @include arrangement($jc: normal, $g: 20px, $fd: column, $ai: end);
     padding: 10px 40px;
 
-    >div {
+    > div {
       @include arrangement($jc: flex-start, $g: 20px, $fd: row-reverse);
     }
 
@@ -88,7 +88,6 @@
 }
 
 .chat-content_message {
-
   padding: 15px;
   @include fontStyle();
   transition: background-color 0.1s ease;
@@ -128,12 +127,35 @@
   position: relative;
 }
 
-.new-message{
+.new-message {
   position: sticky;
   bottom: 0;
-  >button{
-    background-color: green;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  > button {
+    background-color: white;
     border: none;
-    color: orange;
+    color: rgb(255, 255, 255);
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+    animation: newMessage 4s infinite forwards ease-in-out;
+  }
+}
+
+@keyframes newMessage {
+  0% {
+    background-color: white;
+    color: black;
+  }
+  50% {
+    background-color: var(--color-purple-primary-disabled);
+    color: white;
+  }
+  100% {
+    background-color: white;
+    color: black;
   }
 }

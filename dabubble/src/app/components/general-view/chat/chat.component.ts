@@ -170,7 +170,7 @@ export class ChatComponent implements OnInit {
       .saveMessage(channelId, message)
       .then(() => {
         console.log('Message saved successfully');
-        this.chatAllComponent.scrollToElement();
+        this.chatAllComponent.scrollToElement('auto');
       })
       .catch((error) => {
         console.error('Error saving message:', error);

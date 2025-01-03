@@ -27,7 +27,7 @@ export class ChatAllComponent implements OnInit, AfterViewInit, OnDestroy {
         this.newMessage = true;
       })
     );
-    setTimeout(() => this.scrollToElement(), 1000);
+    setTimeout(() => this.scrollToElement('auto'), 1000);
   }
 
   ngAfterViewInit(): void {
@@ -43,13 +43,16 @@ export class ChatAllComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  scrollToElement(): void {
+  scrollToElement(behavior:string): void {
     if (this.chatContainer) {
       this.chatContainer.nativeElement.scroll({
         top: this.chatContainer.nativeElement.scrollHeight,
         left: 0,
+        behavior: behavior
+       
       });
       this.newMessage = false;
+
     }
   }
 
