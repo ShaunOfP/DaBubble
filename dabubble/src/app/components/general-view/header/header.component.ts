@@ -25,7 +25,7 @@ export class HeaderComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     public userDatasService: UserDatasService
-  ) {}
+  ) { }
 
   @ViewChild('menu') menu!: MatMenu;
   @ViewChild('menuTrigger') menuTrigger!: MatMenuTrigger;
@@ -37,11 +37,14 @@ export class HeaderComponent implements OnInit {
   newNameInput: string = ``;
   newMailInput: string = ``;
 
+  userId: string = ``;
+
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       const userID = params['userID'];
       if (userID) {
         this.fetchUserData(userID);
+        this.userId = userID;
       }
       else {
         console.error('No user ID provided');
@@ -69,8 +72,8 @@ export class HeaderComponent implements OnInit {
   /**
    * Changes bool of variable to display/hide the Profile Info (and open the DropdownMenu)
    */
-  toggleProfileInfo(){
-    if(this.showProfileInfo){
+  toggleProfileInfo() {
+    if (this.showProfileInfo) {
       this.showProfileInfo = false;
       this.openDropdownMenu();
     } else {
@@ -108,8 +111,8 @@ export class HeaderComponent implements OnInit {
   /**
    * Changes bool of variable to display/hide the Profile Edit
    */
-  toggleProfileEdit(){
-    if (this.showProfileEdit){
+  toggleProfileEdit() {
+    if (this.showProfileEdit) {
       this.showProfileEdit = false;
     } else {
       this.showProfileEdit = true;
@@ -127,7 +130,7 @@ export class HeaderComponent implements OnInit {
    * Changes bool of variable to hide/show GreyScreen; also hides all other elements when GreyScreen is hidden
    */
   toggleGreyScreen() {
-    if (this.showGreyScreen){
+    if (this.showGreyScreen) {
       this.showGreyScreen = false;
       this.showProfileInfo = false;
       this.closeDropdownMenu();
@@ -142,9 +145,9 @@ export class HeaderComponent implements OnInit {
    * @param form 
    */
   submitForm(form: NgForm) {
-    console.log("hey");
     if (form.touched && form.valid) {
-      console.log("valid");
+      this.userDatasService.updateUserData(this.userId, this.newMailInput, this.newNameInput);
+      console.log("successful");
     } else {
       console.log("invalid");
     }

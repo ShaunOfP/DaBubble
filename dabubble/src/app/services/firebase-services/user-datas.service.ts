@@ -169,4 +169,17 @@ export class UserDatasService {
     return collection(this.firestore, 'guestDatas');
   }
 
+
+  async updateUserData(userId: string, newMail: string, newUserName: string){
+    try {
+      const userData = doc(this.firestore, `userDatas/${userId}`);
+      await updateDoc(userData, {
+        mail: newMail,
+        username: newUserName,
+        username_lowercase: newUserName.toLowerCase()
+      });
+    } catch (err) {
+      console.log("Error updating user Data:", err);
+    }
+  }
 }
