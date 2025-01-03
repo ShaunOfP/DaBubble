@@ -1,4 +1,4 @@
-<div #chatContainer class="chat-container">
+<div #chatContainer class="all-chat-container">
   <div *ngFor="let message of messages$ | async" class="chat-content">
     <div class="chat-date" *ngIf="message.showDate">
       <div class="line"></div>
@@ -30,5 +30,8 @@
         </div>
       </div>
     </div>
+  </div>
+  <div class="new-message" *ngIf="newMessage">
+      <button (click)="scrollToElement()">neue Nachricht ⬇️</button>
   </div>
 </div>

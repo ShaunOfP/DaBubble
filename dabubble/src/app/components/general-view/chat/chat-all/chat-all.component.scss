@@ -121,8 +121,19 @@
   font-size: 14px;
 }
 
-.chat-container {
+.all-chat-container {
   width: 100%;
   overflow-y: auto;
   max-height: 100%; // Adjust this value as needed
+  position: relative;
+}
+
+.new-message{
+  position: sticky;
+  bottom: 0;
+  >button{
+    background-color: green;
+    border: none;
+    color: orange;
+  }
 }

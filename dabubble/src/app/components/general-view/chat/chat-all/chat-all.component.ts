@@ -1,6 +1,6 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { ChatService } from '../../../../services/firebase-services/chat.service';
-import { Observable, map, timeout } from 'rxjs';
+import { Observable, map, tap } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { Message } from '../../../../models/interfaces';
 
@@ -11,26 +11,36 @@ import { Message } from '../../../../models/interfaces';
   templateUrl: './chat-all.component.html',
   styleUrls: ['./chat-all.component.scss'],
 })
-export class ChatAllComponent implements OnInit{
+export class ChatAllComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('chatContainer') chatContainer!: ElementRef;
   messages$!: Observable<any[]>;
   channelId: string = 'dOCTHJxiNDhYvmqMokLv';
-  // private observer!: MutationObserver;
-  // private previousNumberOfChildren: number = 0;
+  newMessage: boolean = false;
+  private scrollListener!: () => void;
 
   constructor(private chatService: ChatService) {}
 
   ngOnInit(): void {
     this.messages$ = this.chatService.getMessages(this.channelId).pipe(
-      map((messages: Message[]) => {
-              return this.returnNewObservable(messages, null);
+      map((messages: Message[]) => this.returnNewObservable(messages, null)),
+      tap(() => {
+        this.newMessage = true;
       })
     );
-    setTimeout(() => {
-      this.scrollToElement()
-    }, 1000);
-    
-    
+    setTimeout(() => this.scrollToElement(), 1000);
+  }
+
+  ngAfterViewInit(): void {
+    if (this.chatContainer) {
+      this.scrollListener = this.onScroll.bind(this);
+      this.chatContainer.nativeElement.addEventListener('scroll', this.scrollListener);
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.chatContainer && this.scrollListener) {
+      this.chatContainer.nativeElement.removeEventListener('scroll', this.scrollListener);
+    }
   }
 
   scrollToElement(): void {
@@ -38,10 +48,20 @@ export class ChatAllComponent implements OnInit{
       this.chatContainer.nativeElement.scroll({
         top: this.chatContainer.nativeElement.scrollHeight,
         left: 0,
-        behavior: 'smooth',
       });
+      this.newMessage = false;
     }
-  }  
+  }
+
+  onScroll(): void {
+    if (this.chatContainer) {
+      const element = this.chatContainer.nativeElement;
+      const isAtBottom = element.scrollTop + element.clientHeight >= element.scrollHeight - 10;
+      if (isAtBottom) {
+        this.newMessage = false;        
+      }
+    }
+  }
 
   returnNewObservable(messages: Message[], lastDate: string | null) {
     return messages.map((message) => {
@@ -76,6 +96,8 @@ export class ChatAllComponent implements OnInit{
     // Logic for opening a thread
   }
 }
+
+
 
 
 
