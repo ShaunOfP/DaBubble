@@ -39,7 +39,10 @@
                         </mat-expansion-panel-header>
                         <!-- Channels Start -->
                         <div class="channels">
-                            # Entwicklerteam
+                            <div *ngFor="let channel of currentChannels" class="channel--primary">
+                                <b>#</b>
+                                <span>{{ channel }}</span>
+                            </div>
                         </div>
                         <div class="channels flex hover-text-color grow-img">
                             <div class="add-channel flex gap-10" (click)="openCreateChannelOverlay()">

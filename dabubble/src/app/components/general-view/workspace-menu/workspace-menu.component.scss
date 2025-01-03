@@ -94,20 +94,20 @@ h3 {
   gap: 25px;
 }
 
-.mat-expansion-panel{
+.mat-expansion-panel {
   max-height: fit-content;
   max-width: fit-content;
 }
 
-.mat-expansion-panel-header:not([aria-disabled=true]){
+.mat-expansion-panel-header:not([aria-disabled=true]) {
   cursor: auto;
 }
 
-.mat-expansion-panel:not([class*=mat-elevation-z]){
+.mat-expansion-panel:not([class*=mat-elevation-z]) {
   box-shadow: none;
 }
 
-.mat-expansion-panel-header{
+.mat-expansion-panel-header {
   padding: 0;
 }
 
@@ -176,5 +176,30 @@ h3 {
   >span {
     font-weight: 400;
     font-size: 18px;
+  }
+}
+
+
+.channel--primary {
+  padding: 4px 20px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  border-radius: 20px;
+  margin-left: 25px;
+
+  >b {
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  >span {
+    font-size: 18px;
+  }
+
+  &:hover {
+    cursor: pointer;
+    background-color: var(--color-blue-bg);
+    color: var(--color-purple-secondary-hover);
   }
 }
