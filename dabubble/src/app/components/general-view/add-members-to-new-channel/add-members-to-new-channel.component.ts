@@ -27,6 +27,7 @@ export class AddMembersToNewChannelComponent implements OnInit{
   searchFocus: boolean = false;
   openSelectedMembers: boolean = false;
   userID!: string;
+  channelCreated: boolean = false;
 
 
   constructor(
@@ -45,7 +46,10 @@ export class AddMembersToNewChannelComponent implements OnInit{
     } else {
       this.addSelectedMembersToChannel();
     }
-    this.close();
+    this.channelCreated = true;
+    setTimeout(() => {
+      this.close();
+    }, 2000);
   }
   
 
@@ -54,6 +58,7 @@ export class AddMembersToNewChannelComponent implements OnInit{
     this.selectedMembers.forEach(member => this.removeMember(member))
     this.searchFocus = false;
     this.selectedOption = true;
+    this.channelCreated = false;
     this.closeAll.emit();
   }
 
@@ -74,13 +79,11 @@ export class AddMembersToNewChannelComponent implements OnInit{
     await this.memberService.selectAllMembers();
     this.allMembers = await firstValueFrom(this.memberService.allMembersSubject$);
     const filteredMembers = this.allMembers.filter(member => member.id !== this.userID);
-    console.log(filteredMembers);
     this.memberService.createNewChannel(filteredMembers, this.userID);
   }
 
   addSelectedMembersToChannel(){
     this.memberService.createNewChannel(this.selectedMembers, this.userID);
-    console.log(this.selectedMembers)
   }
 
   clearSearchField(){

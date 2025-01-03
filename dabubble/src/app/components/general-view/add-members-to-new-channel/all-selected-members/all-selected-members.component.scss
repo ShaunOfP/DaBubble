@@ -23,6 +23,7 @@ header{
 .container-wrapper{
     @include arrangement($d: flex, $jc: start, $ai: start, $fd: column);
     gap: 20px;
+    max-height: 350px;
     width: fit-content;
     height: fit-content;
     padding: 40px;
@@ -38,4 +39,10 @@ header{
 
 .arrow-back{
     padding: 8px;
+}
+
+.all-members-container{
+    box-sizing: border-box;
+    overflow-y: scroll;
+    width: 100%;
 }

@@ -2,6 +2,7 @@
 @import "./../../../../templates/input.scss";
 @import "./../../../../templates/styles/button.scss";
 @import "../../landing-page/landing-page.component.scss";
+@import "../../landing-page/sign-in/avatar/avatar.component.scss";
 
 section {
   background-color: var(--color-white);
@@ -167,4 +168,8 @@ label {
 
 .purple {
   color: var(--color-purple-primary-default);
+}
+
+.overlay-container{
+  @include arrangement($d: flex, $jc: end, $ai: end, $fd: column);
 }

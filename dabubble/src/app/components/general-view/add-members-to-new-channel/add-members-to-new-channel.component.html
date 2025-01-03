@@ -80,6 +80,12 @@
  
 </section>
 
+<div class="overlay-container" *ngIf="channelCreated">
+    <span class="side-sheet">
+        Channel erfolgreich erstellt!
+    </span>
+</div>
+
 <!-- Dialog to show all selected Members -->
 <app-all-selected-members *ngIf="openSelectedMembers" [members]="selectedMembers"
     (closeWindow)="closeSelectedMembersWindow()">
