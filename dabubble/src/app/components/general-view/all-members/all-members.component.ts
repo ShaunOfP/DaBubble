@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { ChannelMemberService, Member} from '../../../services/firebase-services/channel-member.service';
 
 
@@ -10,14 +10,21 @@ import { ChannelMemberService, Member} from '../../../services/firebase-services
   templateUrl: './all-members.component.html',
   styleUrl: './all-members.component.scss'
 })
-export class AllMembersComponent implements OnChanges{
+export class AllMembersComponent implements OnChanges, OnInit{
   @Input() searchQuery: string = '';
   @Output() memberClicked = new EventEmitter<void>();
   memberList: Member[] = [];
+  selectedMembers: Member[] = [];
   lowerCaseQuery!: string;
 
   constructor(
     private memberService: ChannelMemberService,){
+  }
+
+  ngOnInit(): void {
+    this.memberService.selectedMembers$.subscribe(members => {
+      this.selectedMembers = members;
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -36,6 +43,15 @@ export class AllMembersComponent implements OnChanges{
   private async updateMembersList(query: string): Promise<void> {
     if (query.trim() !== '') {
       this.memberList = await this.memberService.searchUsers(query);
+      const selectedMembersSet = new Set(this.selectedMembers.map(m => m.id))
+      const updatedMembersList = this.memberList.map(m => {
+        return {
+          ... m, 
+          selected: selectedMembersSet.has(m.id)
+        }
+      });
+      this.memberList = updatedMembersList;
+      console.log(this.memberList)
     } else {
       this.memberList = [];
     }
@@ -47,3 +63,4 @@ export class AllMembersComponent implements OnChanges{
   }
 
 }
+
