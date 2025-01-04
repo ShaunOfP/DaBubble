@@ -107,23 +107,23 @@ export class UserDatasService {
     return generatedRandomId;
   }
 
-  async getUserDatas(email: string, password: string) {
-    const q = query(this.userDatasRef(), where('mail', '==', email));
-    try {
-      const querySnapshot = await getDocs(q);
-      querySnapshot.forEach((doc) => {
-        const userData = doc.data() as SingleUserData;
-        if (userData.password === password) {
-          console.log('ID:', doc.id);
-          console.log('Data:', userData);
-          this.found = true;
-        }
-      });
-      this.found ? false : console.log('falsche Email oder falsches Passwort');
-    } catch (error) {
-      console.error('Error fetching documents:', error);
-    }
-  }
+  // async getUserDatas(email: string, password: string) {
+  //   const q = query(this.userDatasRef(), where('mail', '==', email));
+  //   try {
+  //     const querySnapshot = await getDocs(q);
+  //     querySnapshot.forEach((doc) => {
+  //       const userData = doc.data() as SingleUserData;
+  //       if (userData.password === password) {
+  //         console.log('ID:', doc.id);
+  //         console.log('Data:', userData);
+  //         this.found = true;
+  //       }
+  //     });
+  //     this.found ? false : console.log('falsche Email oder falsches Passwort');
+  //   } catch (error) {
+  //     console.error('Error fetching documents:', error);
+  //   }
+  // }
 
   async updateUserAvatar(userId: string, avatarUrl: string) {
     try {
