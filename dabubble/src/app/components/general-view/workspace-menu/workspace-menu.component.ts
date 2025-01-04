@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit, ChangeDetectorRef } from '@angular/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { ChangeDetectionStrategy, signal } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -23,7 +23,7 @@ export class WorkspaceMenuComponent implements OnInit {
   currentUserId: string = ``;
   readableChannels: any[] = [];
 
-  constructor(public userDatasService: UserDatasService, private route: ActivatedRoute) {
+  constructor(public userDatasService: UserDatasService, private route: ActivatedRoute, private cd: ChangeDetectorRef) {
 
   }
 
@@ -38,15 +38,14 @@ export class WorkspaceMenuComponent implements OnInit {
       }
     });
     await this.fetchUserData(this.currentUserId);
-    console.log(this.readableChannels);
   }
 
 
   async fetchUserData(userID: string): Promise<void> {
     try {
       const userData = await this.userDatasService.getUserDataById(userID);
-      if (userData?.channels) {
-        this.fetchChannelNames(userData?.channels);
+      if (userData) {
+        this.fetchChannelNames(userData.channels);
       }
     } catch (error) {
       console.error('Error fetching user data:', error);
@@ -54,14 +53,17 @@ export class WorkspaceMenuComponent implements OnInit {
   }
 
 
-  async fetchChannelNames(channelIdArray: string[]) {
-    if (channelIdArray) {
-      for (const channelId of channelIdArray) {
-        await this.userDatasService.getChannelNames(channelId).then(result => {
-          this.readableChannels.push(result);
-        });
-      }
+  async fetchChannelNames(channelIdArray: string[]): Promise<void> {
+    let array: any[] = [];
+    for (const channelId of channelIdArray) {
+      await this.userDatasService.getChannelNames(channelId).then(result => {
+        if (result) {
+          array.push(result);
+        }
+      });
     }
+    this.readableChannels = array;
+    this.cd.detectChanges();
   }
 
 
