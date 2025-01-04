@@ -36,6 +36,7 @@
   box-sizing: border-box;
   width: 100%;
   cursor: pointer;
+  position: relative;
 
   &--primary {
     @extend .chat-content;
@@ -70,6 +71,29 @@
 
     .chat-content_header {
       flex-direction: row-reverse;
+    }
+    .chat-content_reaction{
+      flex-direction: unset;
+      left: 0;
+      right: unset
+    }
+  }
+}
+
+.chat-content_reaction{
+  position: absolute;
+  right: 0;
+  display: flex;
+  border: 1px solid var(--color-purple-primary-disabled);
+  padding: 3px 15px;
+  border-radius: 25px 25px 0 25px;
+  background-color: white;
+  >button{
+    background-color: transparent;
+    border: none;
+    &:hover{
+      border-radius: 50%;
+      background-color: #ECEEFE;
     }
   }
 }
@@ -109,6 +133,8 @@
 .chat-content_conversation {
   @include arrangement($fd: column, $jc: flex-start, $g: 8px);
 }
+
+
 
 .chat-content_conversation_reacts {
   color: var(--color-purple-secondary-hover);
