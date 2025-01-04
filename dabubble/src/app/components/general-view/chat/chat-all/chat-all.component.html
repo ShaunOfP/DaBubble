@@ -6,6 +6,13 @@
     </div>
     <div>
       <div class="chat-content--{{ checkStyle(message.userId) }}">
+        <div class="chat-content_reaction">
+            <button><img src="img/general-view/chat/green_check.svg" alt="check"></button>
+            <button><img src="img/general-view/chat/clap_hands.svg" alt="check"></button>
+            <button><img src="img/general-view/chat/add_reaction.svg" alt="check"></button>
+            <button><img src="img/general-view/chat/add_comment.svg" alt="check"></button>
+            <button *ngIf="checkStyle(message.userId) === 'secondary'"><img src="img/general-view/chat/menu_points.svg" alt="check"></button>
+        </div>
         <div>
           <img src="img/general-view/create-avatar/avatar1.svg" alt="avatar" />
           <div class="chat-content_conversation">
@@ -13,20 +20,15 @@
               <span>{{ message.sender }}</span>
               <span>{{ formatTime(message.createdAt) }}</span>
             </div>
-            <span
-              class="chat-content_message--{{ checkStyle(message.userId) }}"
-            >
+            <span class="chat-content_message--{{ checkStyle(message.userId) }}">
               {{ message.content }}
             </span>
           </div>
         </div>
+        
         <div>
-          <span class="chat-content_conversation_reacts" (click)="openThread()"
-            >2 Antworten</span
-          >
-          <span class="chat-content_conversation_last-react"
-            >letzte Antwort 14:56 Uhr</span
-          >
+          <span class="chat-content_conversation_reacts" (click)="openThread()">2 Antworten</span>
+          <span class="chat-content_conversation_last-react">letzte Antwort 14:56 Uhr</span>
         </div>
       </div>
     </div>
