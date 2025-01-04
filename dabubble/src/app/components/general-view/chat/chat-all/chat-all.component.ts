@@ -3,6 +3,7 @@ import { ChatService } from '../../../../services/firebase-services/chat.service
 import { Observable, map, tap } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { Message } from '../../../../models/interfaces';
+import { ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-chat-all',
@@ -18,7 +19,7 @@ export class ChatAllComponent implements OnInit, AfterViewInit, OnDestroy {
   newMessage: boolean = false;
   private scrollListener!: () => void;
 
-  constructor(private chatService: ChatService) {}
+  constructor(private chatService: ChatService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.messages$ = this.chatService.getMessages(this.channelId).pipe(
@@ -49,7 +50,6 @@ export class ChatAllComponent implements OnInit, AfterViewInit, OnDestroy {
         top: this.chatContainer.nativeElement.scrollHeight,
         left: 0,
         behavior: behavior
-       
       });
       this.newMessage = false;
 
@@ -92,8 +92,13 @@ export class ChatAllComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   checkStyle(userId: string): string {
-    return userId === 'OI28qbeslOMfD5nSoQMw8vmU6uQ2' ? 'primary' : 'secondary';
+    let currentUser: string = '';
+    this.route.queryParams.subscribe((params) => {
+      currentUser = params['userID'];
+    });
+    return userId === currentUser ? 'primary' : 'secondary';
   }
+  
 
   openThread(): void {
     // Logic for opening a thread
