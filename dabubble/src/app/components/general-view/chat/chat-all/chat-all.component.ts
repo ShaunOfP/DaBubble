@@ -96,7 +96,7 @@ export class ChatAllComponent implements OnInit, AfterViewInit, OnDestroy {
     this.route.queryParams.subscribe((params) => {
       currentUser = params['userID'];
     });
-    return userId === currentUser ? 'primary' : 'secondary';
+    return userId === currentUser ? 'secondary' : 'primary';
   }
   
 
