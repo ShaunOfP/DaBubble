@@ -12,7 +12,8 @@ import {
   updateDoc,
   getDoc,
   addDoc,
-  docData
+  docData,
+  onSnapshot,
 } from '@angular/fire/firestore';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { UserDatas } from './../../models/user.class';
@@ -180,6 +181,17 @@ export class UserDatasService {
       });
     } catch (err) {
       console.log("Error updating user Data:", err);
+    }
+  }
+
+
+  async getChannelNames(channelId: string){
+    const docRef = doc(this.firestore, `channels/${channelId}`);
+    const docSnapshot = await getDoc(docRef);
+    if (docSnapshot.exists()){
+      return docSnapshot.data();
+    } else {
+      return undefined;
     }
   }
 }

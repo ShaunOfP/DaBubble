@@ -12,61 +12,62 @@
     </div>
     <div class="channels-and-chat-container">
         <div class="channels-container flex">
-                <!--Panel Channels Start-->
-                    <mat-expansion-panel hideToggle [expanded]="true" (opened)="channelOpenState.set(true)" (closed)="channelOpenState.set(false)">
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                            <div class="header gap-15 flex justify-space-between">
-                                <div class="flex gap-15 hover-text-color">
-                                    <div class="flex">
-                                        <img 
-                                            [src]="channelOpenState()
+            <!--Panel Channels Start-->
+            <mat-expansion-panel hideToggle [expanded]="true" (opened)="channelOpenState.set(true)"
+                (closed)="channelOpenState.set(false)">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <div class="header gap-15 flex justify-space-between">
+                            <div class="flex gap-15 hover-text-color">
+                                <div class="flex">
+                                    <img [src]="channelOpenState()
                                             ? '/img/general-view/workspace-menu/arrow_drop_down.svg'
                                             : '/img/general-view/workspace-menu/arrow_drop_up.svg'
                                         ">
+                                </div>
+                                <div class="header-middle flex gap-10">
+                                    <div class="flex">
+                                        <img class="height-width-24"
+                                            src="/img/general-view/workspace-menu/dots_channels.svg">
+                                        <img class="height-width-24 d-none"
+                                            src="/img/general-view/workspace-menu/hover_dots_channels.svg">
                                     </div>
-                                    <div class="header-middle flex gap-10">
-                                        <div class="flex">
-                                            <img class="height-width-24" src="/img/general-view/workspace-menu/dots_channels.svg">
-                                            <img class="height-width-24 d-none"
-                                                src="/img/general-view/workspace-menu/hover_dots_channels.svg">
-                                        </div>
-                                        <span>Channels</span>
-                                    </div>
+                                    <span>Channels</span>
                                 </div>
                             </div>
-                            </mat-panel-title>
-                        </mat-expansion-panel-header>
-                        <!-- Channels Start -->
-                        <div class="channels">
-                            <div *ngFor="let channel of currentChannels" class="channel--primary">
-                                <b>#</b>
-                                <span>{{ channel }}</span>
-                            </div>
                         </div>
-                        <div class="channels flex hover-text-color grow-img">
-                            <div class="add-channel flex gap-10" (click)="openCreateChannelOverlay()">
-                                <img class="height-width-24 grow-img" src="/img/general-view/workspace-menu/add_circle.svg">
-                                <span>Channel hinzufügen</span>
-                            </div>
-                        </div>
-                        <!-- Channels End -->
-                    </mat-expansion-panel>
-                <!--Panel Channels End-->
-
-                <div class="hover height-width-40 flex center img-switch radius-30" (click)="openCreateChannelOverlay()">
-                    <img class="height-width-24" src="/img/general-view/workspace-menu/add.svg">
-                    <img class="height-width-24 d-none" src="/img/general-view/workspace-menu/hover_add.svg">
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <!-- Channels Start -->
+                <div class="channels">
+                    <div *ngFor="let channel of readableChannels" class="channel--primary">
+                        <b>#</b>
+                        <span>{{ channel.channelName }}</span>
+                    </div>
                 </div>
+                <div class="channels flex hover-text-color grow-img">
+                    <div class="add-channel flex gap-10" (click)="openCreateChannelOverlay()">
+                        <img class="height-width-24 grow-img" src="/img/general-view/workspace-menu/add_circle.svg">
+                        <span>Channel hinzufügen</span>
+                    </div>
+                </div>
+                <!-- Channels End -->
+            </mat-expansion-panel>
+            <!--Panel Channels End-->
+
+            <div class="hover height-width-40 flex center img-switch radius-30" (click)="openCreateChannelOverlay()">
+                <img class="height-width-24" src="/img/general-view/workspace-menu/add.svg">
+                <img class="height-width-24 d-none" src="/img/general-view/workspace-menu/hover_add.svg">
+            </div>
         </div>
         <div class="dm-container flex">
             <!--Panel Messages Start-->
-            <mat-expansion-panel hideToggle [expanded]="true" (opened)="messagesOpenState.set(true)" (closed)="messagesOpenState.set(false)">
+            <mat-expansion-panel hideToggle [expanded]="true" (opened)="messagesOpenState.set(true)"
+                (closed)="messagesOpenState.set(false)">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         <div class="header gap-15 flex hover-text-color">
-                            <img 
-                                [src]="messagesOpenState()
+                            <img [src]="messagesOpenState()
                                 ? '/img/general-view/workspace-menu/arrow_drop_down.svg'
                                 : '/img/general-view/workspace-menu/arrow_drop_up.svg'
                             ">
