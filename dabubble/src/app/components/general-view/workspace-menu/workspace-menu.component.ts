@@ -17,7 +17,7 @@ import { ActivatedRoute } from '@angular/router';
 export class WorkspaceMenuComponent implements OnInit {
   @Output() callParent: EventEmitter<void> = new EventEmitter();
   @Output() newMessage: EventEmitter<void> = new EventEmitter();
-  currentChannels: any[] = [];
+  currentChannels: string[] | undefined = [];
   currentUserId: string = ``;
 
   constructor(public userDatasService: UserDatasService, private route: ActivatedRoute) {
@@ -42,7 +42,8 @@ export class WorkspaceMenuComponent implements OnInit {
   async fetchUserData(userID: string): Promise<void> {
     try {
       const userData = await this.userDatasService.getUserDataById(userID);
-      this.currentChannels.push(userData?.channels);
+      this.currentChannels = userData?.channels
+      // this.currentChannels.push(userData?.channels);
     } catch (error) {
       console.error('Error fetching user data:', error);
     }
