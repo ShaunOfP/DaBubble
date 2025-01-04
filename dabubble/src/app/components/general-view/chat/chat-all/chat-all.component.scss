@@ -35,7 +35,6 @@
   padding: 10px 0px;
   box-sizing: border-box;
   width: 100%;
-  cursor: pointer;
   position: relative;
 
   &--primary {
@@ -61,7 +60,7 @@
     @include arrangement($jc: normal, $g: 20px, $fd: column, $ai: end);
     padding: 10px 40px;
 
-    > div {
+    .row-reverse {
       @include arrangement($jc: flex-start, $g: 20px, $fd: row-reverse);
     }
 
@@ -89,11 +88,16 @@
   border-radius: 25px 25px 0 25px;
   background-color: white;
   >button{
+    display: flex;
+    align-items: center;
     background-color: transparent;
     border: none;
+    cursor: pointer;
+    padding: 12px;
     &:hover{
       border-radius: 50%;
       background-color: #ECEEFE;
+      box-sizing: border-box;
     }
   }
 }
