@@ -43,8 +43,10 @@ export class AddMembersToNewChannelComponent implements OnInit{
   onSubmit() {
     if (this.selectedOption) {
       this.addAllMembersToChannel();
-    } else {
+    } else if(this.selectedMembers.length > 0) {
       this.addSelectedMembersToChannel();
+    } else {
+      return;
     }
     this.channelCreated = true;
     setTimeout(() => {
