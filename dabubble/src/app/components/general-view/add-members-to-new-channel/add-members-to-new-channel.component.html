@@ -53,7 +53,7 @@
                     
                     <!-- Search Results under search input field -->
                     <app-all-members 
-                        [ngClass]="{'d-none': searchQuery === ''}"
+                        [ngClass]="{'d-none': searchQuery === '' || selectedOption}"
                         [searchQuery]="searchQuery"
                         (memberClicked)="clearSearchField()">
                     </app-all-members>
