@@ -15,8 +15,13 @@
             <div class="form-input-container">
                 <div class="form-input-container-header">
                     <span>Channel-Name</span>
-                    <span class="error-message" *ngIf="name.invalid && name.touched">Der Channel-Name wird
-                        benötigt</span>
+                    @if (!name.valid && name.touched) {
+                        <label for="name" class="error-message">Der Channel-Name wird benötigt</label>
+                    } @else {
+                        <label for="name" class="empty-field"></label>
+                    }
+                    <!-- <span class="error-message" *ngIf="name.invalid && name.touched">Der Channel-Name wird
+                        benötigt</span> -->
                 </div>
                 <div class="input-image-container">
                     <img src="/img/public/hash.svg">
@@ -26,7 +31,7 @@
                 </div>
             </div>
             <div class="form-input-container">
-                <span>Beschreibung <span class="optional">(optional)</span></span>
+                <span>Beschreibung<span class="optional"> (optional)</span></span>
                 <input class="input-field" placeholder="Dein Text hier" [(ngModel)]="newChannelDescription"
                     name="newChannelDescription">
             </div>

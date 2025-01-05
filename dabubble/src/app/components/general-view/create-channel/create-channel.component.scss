@@ -62,6 +62,10 @@ form {
     display: flex;
     flex-direction: column;
     gap: 20px;
+
+    @media (max-width: 600px) {
+        gap: 8px;
+    }
 }
 
 .input-image-container {
@@ -148,12 +152,30 @@ span {
 }
 
 .error-message {
-    color: var(--color-purple-error)
+    color: var(--color-purple-error);
+    min-height: 22px;
 }
+
+.empty-field {
+    display: flex;
+    min-height: 22px;
+  
+    // @media (max-height: 725px) {
+    // min-height: 24px;
+    // }
+  
+    // @media (max-width: 450px) {
+    //   min-height: 20px;
+    // }
+  }
 
 .form-input-container-header {
     justify-content: space-between;
     display: flex;
+
+    @media (max-width: 600px) {
+        flex-direction: column;
+    }
 }
 
 .d-none {
