@@ -5,14 +5,18 @@
 @import "../../landing-page/sign-in/avatar/avatar.component.scss";
 
 section {
+  width: 100vw;
+}
+
+.main-content {
   background-color: var(--color-white);
   border-radius: 30px;
-  padding: 40px;
-  width: 710px;
+  padding: 40px;    
+  max-width: 65%;
+  margin: auto;
   gap: 20px;
   display: flex;
   flex-direction: column;
-  //dropshadow
 }
 
 header {
@@ -20,7 +24,7 @@ header {
   align-items: center;
   justify-content: space-between;
 
-  >h3 {
+  > h3 {
     margin: 0;
   }
 }
@@ -71,9 +75,8 @@ button {
   @include arrangement($d: flex, $jc: start, $ai: start, $fd: column);
   gap: 20px;
 
-  >div {
+  label {
     @include arrangement($d: flex, $jc: start, $ai: center, $fd: row);
-    gap: 20px;
   }
 
   :first-child {
@@ -170,6 +173,37 @@ label {
   color: var(--color-purple-primary-default);
 }
 
-.overlay-container{
+.overlay-container {
   @include arrangement($d: flex, $jc: end, $ai: end, $fd: column);
+}
+
+.members-container-mobile{
+  display: none;
+  background-color: var(--color-blue-bg);
+  border-radius: 30px;
+  height: fit-content;
+  width: fit-content;
+  padding: 8px 10px;
+  border: none;
+  margin: 10px;
+
+  &:hover {
+    cursor: pointer;
+    color: var(--color-purple-secondary-hover);
+    zoom: 1.05;
+  }
+}
+
+/* Media Queries */
+@media (max-width: 700px) {
+  .main-content {
+    padding: 32px;
+  }
+}
+
+@media (max-width: 450px) {
+  .main-content {
+    max-width: 80%;
+    padding: 24px;
+  }
 }

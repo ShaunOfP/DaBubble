@@ -1,15 +1,16 @@
 <section>
-    <header>
-        <h3>Leute einladen</h3>
-        <div class="close-button" (click)="close()">
-            <img src="/img/general-view/workspace-menu/close.svg">
-            <img class="d-none" src="/img/general-view/workspace-menu/hover_close.svg">
-        </div>
-    </header>
+    <div class="main-content">    
+        <header>
+            <h3>Leute einladen</h3>
+            <div class="close-button" (click)="close()">
+                <img src="/img/general-view/workspace-menu/close.svg">
+                <img class="d-none" src="/img/general-view/workspace-menu/hover_close.svg">
+            </div>
+        </header>
 
-    <form (ngSubmit)="onSubmit()">
+        <form (ngSubmit)="onSubmit()">
 
-        <div class="user-input-container">
+            <div class="user-input-container">
 
             <!-- Radio-Buttons -->
                 <div class="user-input">
@@ -48,6 +49,13 @@
                             <div (click)="showSelectedMembers()" class="further-members-container"
                                 *ngIf="selectedMembers.length > 2">+{{ selectedMembers.length - 2 }}
                             </div>
+
+                            <div
+                                (click)="showSelectedMembers()" 
+                                class="members-container-mobile"
+                                *ngIf="selectedMembers.length > 0">
+                                Mitglieder: {{ selectedMembers.length }}
+                            </div>
                         </div>
                     </div>
                     
@@ -76,7 +84,9 @@
                 </div>
             </div>
 
-    </form>
+        </form>
+
+    </div>
  
 </section>
 
