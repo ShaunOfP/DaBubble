@@ -51,7 +51,6 @@ export class AllMembersComponent implements OnChanges, OnInit{
         }
       });
       this.memberList = updatedMembersList;
-      console.log(this.memberList)
     } else {
       this.memberList = [];
     }

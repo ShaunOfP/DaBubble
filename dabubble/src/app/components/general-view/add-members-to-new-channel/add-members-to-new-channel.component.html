@@ -33,11 +33,11 @@
                             #nameInput 
                             [(ngModel)]="searchQuery"
                             name="searchQuery" 
-                            (focus)="hideSelectedMembers()" 
-                            (blur)="hideSelectedMembers()"
+                            (focus)="handleFocus()" 
+                            (blur)="handleBlur()"
                             />
         
-                        <div class="all-selected-member-container" [ngClass]="{'d-none': searchFocus}">
+                        <div class="all-selected-member-container" [ngClass]="{'d-none': !showSelectedMembersInSearchField()}">
                             <div class="member-container" *ngFor="let member of selectedMembers | slice:0:2">
                                 <img class="avatar" src="{{ member?.avatar }}" alt="Member Avatar">
                                 <span>{{ member.username }}</span>
@@ -53,7 +53,7 @@
                     
                     <!-- Search Results under search input field -->
                     <app-all-members 
-                        [ngClass]="{'d-none': searchQuery === ''}"
+                        [ngClass]="{'d-none': searchQuery === '' || selectedOption}"
                         [searchQuery]="searchQuery"
                         (memberClicked)="clearSearchField()">
                     </app-all-members>

@@ -24,21 +24,16 @@ export class AddMembersToNewChannelComponent implements OnInit{
   searchQuery: string = '';
   selectedMembers: Member[] = [];
   allMembers: Member[] = [];
-  searchFocus: boolean = false;
   openSelectedMembers: boolean = false;
   userID!: string;
   channelCreated: boolean = false;
+  searchFocus: boolean = false;
+  isFocused: boolean = false;
 
 
   constructor(
     private memberService: ChannelMemberService, private route: ActivatedRoute){
   }
-  
-
-  // getAvatarWithCacheBuster(avatarUrl: string): string {
-  //   const cacheBuster = new Date().getTime(); // Generate a timestamp
-  //   return avatarUrl ? `${avatarUrl}?v=${cacheBuster}` : 'default-avatar.png';
-  // }
 
   onSubmit() {
     if (this.selectedOption) {
@@ -52,8 +47,7 @@ export class AddMembersToNewChannelComponent implements OnInit{
     setTimeout(() => {
       this.close();
     }, 2000);
-  }
-  
+  }  
 
   close(): void {
     this.clearSearchField();
@@ -93,13 +87,31 @@ export class AddMembersToNewChannelComponent implements OnInit{
     this.searchFocus = false;
   }
 
-  hideSelectedMembers(){
-    if(this.selectedMembers.length > 0 && this.searchQuery === ''){
-      this.searchFocus = true;
-    } else {
+  handleFocus(){
+    this.isFocused = true;
+  }
+
+  handleBlur(){
+    this.isFocused = false;
+
+    if (this.selectedMembers.length > 0 && this.searchQuery === '') {
       this.searchFocus = false;
+    } else {
+      this.searchFocus = true;
     }
   }
+
+  showSelectedMembersInSearchField(): boolean {
+    return !this.isFocused && this.selectedMembers.length > 0;
+  }
+
+  // hideSelectedMembers(){
+  //   if(this.selectedMembers.length > 0 && this.searchQuery === ''){
+  //     this.searchFocus = true;
+  //   } else {
+  //     this.searchFocus = false;
+  //   }
+  // }
 
   showSelectedMembers(){
     this.openSelectedMembers = !this.openSelectedMembers;
