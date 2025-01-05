@@ -19,6 +19,18 @@ section {
         padding: 40px;
         gap: 20px;
         border-radius: 30px;
+        max-width: 750px;
+        margin: 32px;
+
+        @media (max-width: 700px) {
+            padding: 32px;
+            margin: 24px;
+        }
+
+        @media (max-width: 450px) {
+            padding: 16px;
+            margin: 8px;
+        }
     }
 }
 
@@ -30,6 +42,10 @@ header {
 .description {
     font-size: 18px;
     font-weight: 400;
+
+    span{
+        color: var(--color-purple-primary-default);
+    }
 }
 
 h3 {
