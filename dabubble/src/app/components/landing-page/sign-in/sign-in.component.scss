@@ -5,31 +5,12 @@ h2 {
   margin-top: 0;
   width: 100%;
   text-align: center;
-
-  @media (max-width: 700px) {
-    font-size: 33px !important;
-  }
-
-  @media (max-width: 450px) {
-    font-size: 28px !important;
-  }
 }
 
 .header-content {
   @include arrangement($d: flex, $jc: center, $ai: center, $fd: row);
   margin-bottom: 36px;
   width: 100%;
-
-  @media (max-height: 725px) {
-  margin-bottom: 24px;
-  }
-
-  @media (max-width: 700px) {
-    margin-bottom: 30px;
-  }
-  @media (max-width: 450px) {
-    margin-bottom: 20px;
-  }
 
   a {
     text-decoration: none;
@@ -48,29 +29,12 @@ h2 {
     color: var(--color-purple-error);
     font-size: 14px;
     min-height: 36px;
-
-      @media (max-height: 725px) {
-      min-height: 24px;
-      }
-
-    @media (max-width: 450px) {
-      font-size: 12px;
-      min-height: 20px;
-    }
   }
 }
 
 .empty-field {
   display: flex;
   min-height: 36px;
-
-  @media (max-height: 725px) {
-  min-height: 24px;
-  }
-
-  @media (max-width: 450px) {
-    min-height: 20px;
-  }
 }
 
 .mat-mdc-checkbox {
@@ -82,7 +46,6 @@ h2 {
 .privacy-policy-container {
   @include arrangement($d: flex, $jc: start, $ai: center, $fd: row);
   gap: 8px;
-  // margin-bottom: 36px;
 
   &:hover {
     .mat-mdc-checkbox {
@@ -104,17 +67,6 @@ h2 {
       padding: 0px 4px;
     }
   }
-
-  @media (max-width: 450px) {
-    margin-top: 8px;
-    margin-bottom: 20px;
-  }
-
-  span {
-    @media (max-width: 450px) {
-      font-size: 15px;
-    }
-  }
 }
 
 .button-container {
@@ -122,28 +74,69 @@ h2 {
 
   input {
     font-size: 18px;
-
-    @media (max-width: 450px) {
-      font-size: 15px;
-    }
   }
-
-  // @media (max-height: 725px) {
-  //   position: absolute;
-  //   right: 0;
-  //   bottom: 0;
-  //   margin: 16px;
-  // }
-
 }
 
 h3 {
   color: var(--color-purple-primary-default);
   margin-top: 0;
   margin-bottom: 36px;
+}
 
-  @media (max-height: 725px) {
-  min-height: 24px;
+/* Media Queries */
+@media (max-width: 700px) {
+  h2 {
+    font-size: 33px !important;
+  }
+
+  .header-content {
+    margin-bottom: 30px;
   }
 }
 
+@media (max-width: 450px) {
+  h2 {
+    font-size: 28px !important;
+  }
+
+  .header-content {
+    margin-bottom: 20px;
+  }
+
+  .required-text {
+    font-size: 12px;
+    min-height: 20px;
+  }
+
+  .empty-field {
+    min-height: 20px;
+  }
+
+  .privacy-policy-container {
+    margin-top: 8px;
+    margin-bottom: 20px;
+
+    span {
+      font-size: 15px;
+    }
+  }
+
+  .button-container input {
+    font-size: 15px;
+  }
+}
+
+@media (max-height: 725px) {
+  .header-content {
+    margin-bottom: 24px;
+  }
+
+  .required-text,
+  .empty-field {
+    min-height: 24px;
+  }
+
+  h3 {
+    min-height: 24px;
+  }
+}
