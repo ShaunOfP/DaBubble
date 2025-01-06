@@ -10,7 +10,7 @@
         </div>
     </header>
     <div id="input-form" class="d-flex column gap-20">
-        <div class="channel-name-info-container" #channelNameEditContainer>
+        <div class="channel-name-info-container" *ngIf="showChannelName">
             <div class="channel-name-container">
                 <div>
                     <span class="fs18 bold">Channel-Name</span>
@@ -22,7 +22,7 @@
                 </div>
             </div>
         </div>
-        <form class="new-channel-name-container d-none" #newChannelInputContainer (ngSubmit)="submitNewName(form)"
+        <form class="new-channel-name-container" *ngIf="showNewChannelNameForm" (ngSubmit)="submitNewName(form)"
             #form="ngForm" name="newName">
             <div>
                 <span class="fs18 bold">Channel-Name</span>
@@ -34,7 +34,7 @@
                     [(ngModel)]="newChannelNameInput" name="newChannelNameInput">
             </div>
         </form>
-        <div class="description-container" #descpritionContainer>
+        <div class="description-container" *ngIf="descriptionContainerVisible">
             <div class="d-flex gap-20 column">
                 <div class="d-flex justify-between">
                     <span class="fs18 bold">Beschreibung</span>
@@ -50,7 +50,7 @@
                 <span class="fs24 purple">Noah Braun</span>
             </div>
         </div>
-        <div class="d-flex column gap-30 d-none" #editDescriptionContainer>
+        <div class="d-flex column gap-30" *ngIf="newDescriptionContainerVisible">
             <form (ngSubmit)="submitNewDescription(form)" #form="ngForm" name="newDescription"
                 class="d-flex column gap-20">
                 <div class="d-flex justify-between">

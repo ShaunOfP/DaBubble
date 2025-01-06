@@ -1,88 +1,70 @@
+import { CommonModule } from '@angular/common';
 import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-chat-details',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './chat-details.component.html',
   styleUrl: './chat-details.component.scss'
 })
 export class ChatDetailsComponent {
   @Output() callParent: EventEmitter<void> = new EventEmitter();
-  @ViewChild('newChannelInputContainer') newInput!: ElementRef;
-  @ViewChild('channelNameEditContainer') channelNameContainer!: ElementRef;
-  @ViewChild('descpritionContainer') descpritionContainer!: ElementRef;
-  @ViewChild('editDescriptionContainer') editDescriptionContainer!: ElementRef;
 
   newDescriptionInput: string = '';
   newChannelNameInput: string = '';
+
+  showChannelName: boolean = true;
+  showNewChannelNameForm: boolean = false;
+  descriptionContainerVisible: boolean = true;
+  newDescriptionContainerVisible: boolean = false;
 
   closeChatDetails() {
     this.callParent.emit();
   }
 
   openNewChannelInput() {
-    this.showChannelInputContainer();
-    this.hideChannelNameContainer();
-  }
-
-  saveChanges() {
-    //save changes
-    this.hideChannelInputContainer();
-    this.showChannelNameContainer();
-  }
-
-  openDesciptionEdit() {
-    this.hideDescriptionContainer();
-    this.showDescriptionInputContainer();
-  }
-
-  saveDescChanges() {
-    //save changes
-    this.hideDescriptionInputContainer();
-    this.showDescriptionContainer();
+    this.toggleNewChannelNameInputVisibility();
+    this.toggleChannelNameContainerVisibility();
   }
 
   showChannelNameContainer() {
-    this.channelNameContainer.nativeElement.classList.remove('d-none');
+    this.toggleNewChannelNameInputVisibility();
+    this.toggleChannelNameContainerVisibility();
   }
 
-  hideChannelNameContainer() {
-    this.channelNameContainer.nativeElement.classList.add('d-none');
+  openDesciptionEdit() {
+    this.toggleChannelDescriptionVisibility();
+    this.toggleNewChannelDescriptionVisibility();
   }
 
-  showChannelInputContainer() {
-    this.newInput.nativeElement.classList.remove('d-none');
+  showChannelDescriptionContainer() {
+    this.toggleNewChannelDescriptionVisibility();
+    this.toggleChannelDescriptionVisibility();
   }
 
-  hideChannelInputContainer() {
-    this.newInput.nativeElement.classList.add('d-none');
+  toggleChannelNameContainerVisibility(){
+    this.showChannelName = !this.showChannelName;
   }
 
-  showDescriptionContainer() {
-    this.descpritionContainer.nativeElement.classList.remove('d-none');
+  toggleNewChannelNameInputVisibility(){
+    this.showNewChannelNameForm = !this.showNewChannelNameForm;
   }
 
-  hideDescriptionContainer() {
-    this.descpritionContainer.nativeElement.classList.add('d-none');
+  toggleChannelDescriptionVisibility(){
+    this.descriptionContainerVisible = !this.descriptionContainerVisible;
   }
 
-  showDescriptionInputContainer() {
-    this.editDescriptionContainer.nativeElement.classList.remove('d-none');
-  }
-
-  hideDescriptionInputContainer() {
-    this.editDescriptionContainer.nativeElement.classList.add('d-none');
+  toggleNewChannelDescriptionVisibility(){
+    this.newDescriptionContainerVisible = !this.newDescriptionContainerVisible;
   }
 
   submitNewName(ngForm: NgForm) {
-    this.saveChanges();
+    this.showChannelNameContainer();
   }
 
   submitNewDescription(ngForm: NgForm) {
-
-
-    this.saveDescChanges();
+    this.showChannelDescriptionContainer();
   }
 }
