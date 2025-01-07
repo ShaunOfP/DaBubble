@@ -12,6 +12,7 @@ import {
   getDoc,
   onSnapshot,
   orderBy,
+  updateDoc,
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { Message } from '../../models/interfaces';
@@ -64,5 +65,25 @@ export class ChatService {
         `channels/${channelId}/messages/${messageId}/thread`
       )
     ) as Observable<any[]>;
+  }
+
+
+  getChannelDocRef(channelId: string){
+    return doc(this.firestore, `channels/${channelId}`);
+  }
+
+  async getChannelDocSnapshot(channelId: string){
+    return await getDoc(this.getChannelDocRef(channelId));
+  }
+
+  async updateChatInformation(channelId: string, updatedField: string, updateValue: string){
+    let channelDoc = await this.getChannelDocSnapshot(channelId);
+    
+    if (channelDoc.exists()){
+      console.log(channelDoc.data());
+      await updateDoc(this.getChannelDocRef(channelId), {
+        [updatedField]: updateValue
+      });
+    }    
   }
 }

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
+import { ChatService } from '../../../services/firebase-services/chat.service';
 
 @Component({
   selector: 'app-chat-details',
@@ -12,6 +13,8 @@ import { NgForm, FormsModule } from '@angular/forms';
 export class ChatDetailsComponent {
   @Output() callParent: EventEmitter<void> = new EventEmitter();
 
+  currentChannelId: string = 'ER84UOYc0F2jptDjWxFo';
+
   newDescriptionInput: string = '';
   newChannelNameInput: string = '';
 
@@ -19,6 +22,10 @@ export class ChatDetailsComponent {
   showNewChannelNameForm: boolean = false;
   descriptionContainerVisible: boolean = true;
   newDescriptionContainerVisible: boolean = false;
+
+  constructor(private chatService: ChatService) {
+
+  }
 
   closeChatDetails() {
     this.callParent.emit();
@@ -44,27 +51,37 @@ export class ChatDetailsComponent {
     this.toggleChannelDescriptionVisibility();
   }
 
-  toggleChannelNameContainerVisibility(){
+  toggleChannelNameContainerVisibility() {
     this.showChannelName = !this.showChannelName;
   }
 
-  toggleNewChannelNameInputVisibility(){
+  toggleNewChannelNameInputVisibility() {
     this.showNewChannelNameForm = !this.showNewChannelNameForm;
   }
 
-  toggleChannelDescriptionVisibility(){
+  toggleChannelDescriptionVisibility() {
     this.descriptionContainerVisible = !this.descriptionContainerVisible;
   }
 
-  toggleNewChannelDescriptionVisibility(){
+  toggleNewChannelDescriptionVisibility() {
     this.newDescriptionContainerVisible = !this.newDescriptionContainerVisible;
   }
 
   submitNewName(ngForm: NgForm) {
-    this.showChannelNameContainer();
+    if (ngForm.touched && ngForm.valid) {
+      this.chatService.updateChatInformation('x9SaITqN5cLpLMXnv2SY', 'channelName', this.newChannelNameInput)
+        .then(() => {
+          this.showChannelNameContainer();
+        });
+    }
   }
 
   submitNewDescription(ngForm: NgForm) {
-    this.showChannelDescriptionContainer();
+    if (ngForm.touched && ngForm.valid) {
+      this.chatService.updateChatInformation('x9SaITqN5cLpLMXnv2SY', 'channelDescription', this.newDescriptionInput)
+        .then(() => {
+          this.showChannelDescriptionContainer();
+        });
+    }
   }
 }
