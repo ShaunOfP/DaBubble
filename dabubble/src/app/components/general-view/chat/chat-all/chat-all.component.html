@@ -4,9 +4,9 @@
       <div class="line"></div>
       <div class="chat-date_create">{{ message.formattedDate }}</div>
     </div>
-    <div>
-      <div class="chat-content--{{ checkStyle(message.userId) }}">
-        <div class="chat-content_reaction">
+      <div class="chat-content--{{ checkStyle(message.userId) }}" (mouseover)="hoveredMessageId = message.id" 
+      (mouseout)="hoveredMessageId = null">
+        <div class="chat-content_reaction" *ngIf="hoveredMessageId === message.id">
             <button><img src="img/general-view/chat/green_check.svg" alt="check"></button>
             <button><img src="img/general-view/chat/clap_hands.svg" alt="check"></button>
             <button><img src="img/general-view/chat/add_reaction.svg" alt="check"></button>
@@ -25,13 +25,11 @@
             </span>
           </div>
         </div>
-        
         <div>
           <span class="chat-content_conversation_reacts" (click)="openThread()">2 Antworten</span>
           <span class="chat-content_conversation_last-react">letzte Antwort 14:56 Uhr</span>
         </div>
       </div>
-    </div>
   </div>
   <div class="new-message" *ngIf="newMessage">
       <button (click)="scrollToElement('smooth')">neue Nachricht ⬇️</button>

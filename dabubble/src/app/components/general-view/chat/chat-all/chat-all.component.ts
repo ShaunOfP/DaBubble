@@ -17,6 +17,7 @@ export class ChatAllComponent implements OnInit, AfterViewInit, OnDestroy {
   messages$!: Observable<any[]>;
   channelId: string = 'dOCTHJxiNDhYvmqMokLv';
   newMessage: boolean = false;
+  hoveredMessageId: string | null = null;
   private scrollListener!: () => void;
 
   constructor(private chatService: ChatService, private route: ActivatedRoute) {}
