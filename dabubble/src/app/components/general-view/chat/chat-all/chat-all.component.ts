@@ -67,22 +67,36 @@ export class ChatAllComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  returnNewObservable(messages: Message[], lastDate: string | null) {
-    return messages.map((message) => {
-      const currentDate = new Date(message.createdAt).toLocaleDateString('de-DE', {
-        day: '2-digit',
-        month: '2-digit',
-        year: '2-digit',
-      });
-      const showDate = currentDate !== lastDate;
-      lastDate = currentDate;
-      return {
-        ...message,
-        showDate,
-        formattedDate: showDate ? currentDate : null,
-      };
+/**
+ * Transforms an array of messages to include display-related metadata for dates.
+ * 
+ * This method maps over a list of messages and determines whether the date
+ * of each message should be displayed. It compares the current message's date 
+ * with the last seen date to decide if a new date separator is needed.
+ * 
+ * @param {Message[]} messages - An array of messages to process.
+ * @param {string | null} lastDate - The last displayed date in 'dd.mm.yy' format or null if none.
+ * @returns {Array} - A new array of messages, each with added properties:
+ *   - `showDate` (boolean): Whether to display the date for this message.
+ *   - `formattedDate` (string | null): The formatted date to display if `showDate` is true.
+ */
+returnNewObservable(messages: Message[], lastDate: string | null) {
+  return messages.map((message) => {
+    const currentDate = new Date(message.createdAt).toLocaleDateString('de-DE', {
+      day: '2-digit',
+      month: '2-digit',
+      year: '2-digit',
     });
-  }
+    const showDate = currentDate !== lastDate;
+    lastDate = currentDate;
+    return {
+      ...message,
+      showDate,
+      formattedDate: showDate ? currentDate : null,
+    };
+  });
+}
+
 
   formatTime(timestamp: number): string {
     const date = new Date(timestamp);
