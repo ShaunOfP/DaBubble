@@ -13,7 +13,7 @@ import { ChatService } from '../../../services/firebase-services/chat.service';
 export class ChatDetailsComponent {
   @Output() callParent: EventEmitter<void> = new EventEmitter();
 
-  currentChannelId: string = 'ER84UOYc0F2jptDjWxFo';
+  currentChannelId: string = 'ER84UOYc0F2jptDjWxFo'; // change through input
 
   newDescriptionInput: string = '';
   newChannelNameInput: string = '';
@@ -69,7 +69,7 @@ export class ChatDetailsComponent {
 
   submitNewName(ngForm: NgForm) {
     if (ngForm.touched && ngForm.valid) {
-      this.chatService.updateChatInformation('x9SaITqN5cLpLMXnv2SY', 'channelName', this.newChannelNameInput)
+      this.chatService.updateChatInformation(this.currentChannelId, 'channelName', this.newChannelNameInput)
         .then(() => {
           this.showChannelNameContainer();
         });
@@ -78,7 +78,7 @@ export class ChatDetailsComponent {
 
   submitNewDescription(ngForm: NgForm) {
     if (ngForm.touched && ngForm.valid) {
-      this.chatService.updateChatInformation('x9SaITqN5cLpLMXnv2SY', 'channelDescription', this.newDescriptionInput)
+      this.chatService.updateChatInformation(this.currentChannelId, 'channelDescription', this.newDescriptionInput)
         .then(() => {
           this.showChannelDescriptionContainer();
         });

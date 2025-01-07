@@ -226,3 +226,7 @@ app-emoji-picker {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-purple-primary-disabled);
 }
+
+#cdk-accordion-child-1{
+  height: calc(100% - 30px);
+}

@@ -87,11 +87,18 @@ h3 {
   align-items: center;
 }
 
+.channels-and-chat-container {
+  max-height: calc(100vh - 277px);
+  height: 100%;
+  @include arrangement($jc: normal, $ai: normal, $fd: column);
+}
+
 .channels-container {
   justify-content: space-between;
   // min-height: 100px;
   // flex-direction: column;
   gap: 25px;
+  max-height: 30%;
 }
 
 .mat-expansion-panel {
@@ -153,6 +160,7 @@ h3 {
 .dm-container {
   flex-direction: column;
   gap: 25px;
+  max-height: 70%;
 }
 
 .contacts-container {
@@ -160,7 +168,7 @@ h3 {
   flex-direction: column;
   align-items: start;
   gap: 13px;
-  max-height: 480px;
+  height: 100%;
   overflow-y: scroll;
 }
 

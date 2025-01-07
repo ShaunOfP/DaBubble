@@ -1,12 +1,10 @@
-import { Component, Output, EventEmitter, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit, ChangeDetectorRef, ViewChild, QueryList, ElementRef } from '@angular/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { ChangeDetectionStrategy, signal } from '@angular/core';
-import { MatExpansionModule } from '@angular/material/expansion';
+import { MatExpansionModule, MatExpansionPanelContent } from '@angular/material/expansion';
 import { CommonModule } from '@angular/common';
 import { UserDatasService } from '../../../services/firebase-services/user-datas.service';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { query } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-workspace-menu',
@@ -77,4 +75,6 @@ export class WorkspaceMenuComponent implements OnInit {
 
   readonly channelOpenState = signal(false);
   readonly messagesOpenState = signal(false);
+
+  
 }
