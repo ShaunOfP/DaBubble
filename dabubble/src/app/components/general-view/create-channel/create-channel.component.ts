@@ -15,6 +15,8 @@ export class CreateChannelComponent {
   @Output() callParentToClose: EventEmitter<void> = new EventEmitter();
   newChannelName: string = '';
   newChannelDescription: string  = '';
+  createChannelContainerVisible: boolean = true;
+  addMembersToNewChannelVisible: boolean = false;
 
   constructor(private memberService: ChannelMemberService,){}
 
@@ -40,7 +42,7 @@ export class CreateChannelComponent {
    * Removes a class to make the AddMembersToNewChannel Component visible
    */
   openAddMembersToNewChannelMenu() {
-    document.getElementById('addMembersToNewChannel')?.classList.remove('d-none');
+    this.addMembersToNewChannelVisible = true;
   }
 
 
@@ -48,7 +50,7 @@ export class CreateChannelComponent {
    * Adds a class to hide the Create-Channel-Container
    */
   closeCreateChannelContainer() {
-    document.getElementById('create-channel-container')?.classList.add('d-none');
+    this.createChannelContainerVisible = false;
   }
 
 
@@ -56,7 +58,7 @@ export class CreateChannelComponent {
    * Adds a class to hide the AddMembersToNewChannel Component
    */
   closeAddMembersToNewChannelMenu() {
-    document.getElementById('addMembersToNewChannel')?.classList.add('d-none');
+    this.addMembersToNewChannelVisible = false;
   }
 
 
@@ -64,7 +66,7 @@ export class CreateChannelComponent {
    * Removes a class to make the Create-Channel-Container visible
    */
   openCreateChannelContainer() {
-    document.getElementById('create-channel-container')?.classList.remove('d-none');
+    this.createChannelContainerVisible = true;
   }
 
 
