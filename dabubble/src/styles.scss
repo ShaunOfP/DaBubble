@@ -34,8 +34,7 @@
   font-family: "Nunito";
   font-style: normal;
   font-weight: 400;
-  src: url("./assets/fonts/nunito-v26-latin/nunito-v26-latin-regular.woff2")
-    format("woff2");
+  src: url("./assets/fonts/nunito-v26-latin/nunito-v26-latin-regular.woff2") format("woff2");
 }
 
 /* nunito-500 - latin */
@@ -44,8 +43,7 @@
   font-family: "Nunito";
   font-style: normal;
   font-weight: 500;
-  src: url("./assets/fonts/nunito-v26-latin/nunito-v26-latin-500.woff2")
-    format("woff2");
+  src: url("./assets/fonts/nunito-v26-latin/nunito-v26-latin-500.woff2") format("woff2");
 }
 
 /* nunito-700 - latin */
@@ -54,8 +52,7 @@
   font-family: "Nunito";
   font-style: normal;
   font-weight: 700;
-  src: url("./assets/fonts/nunito-v26-latin/nunito-v26-latin-700.woff2")
-    format("woff2");
+  src: url("./assets/fonts/nunito-v26-latin/nunito-v26-latin-700.woff2") format("woff2");
 }
 
 /* nunito-800 - latin */
@@ -64,8 +61,7 @@
   font-family: "Nunito";
   font-style: normal;
   font-weight: 800;
-  src: url("./assets/fonts/nunito-v26-latin/nunito-v26-latin-800.woff2")
-    format("woff2");
+  src: url("./assets/fonts/nunito-v26-latin/nunito-v26-latin-800.woff2") format("woff2");
 }
 
 * {
@@ -96,29 +92,15 @@ h3 {
   height: 100vh;
 }
 
-.mdc-checkbox
-  .mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not(
-    [data-indeterminate="true"]
-  )
-  ~ .mdc-checkbox__background {
+.mdc-checkbox .mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not([data-indeterminate="true"])~.mdc-checkbox__background {
   border-color: var(--color-purple-primary-disabled) !important;
 }
 
-.mdc-checkbox
-  .mdc-checkbox__native-control:enabled:focus:checked
-  ~ .mdc-checkbox__background,
-.mdc-checkbox
-  .mdc-checkbox__native-control:enabled:focus:indeterminate
-  ~ .mdc-checkbox__background,
-.mdc-checkbox
-  .mdc-checkbox__native-control:enabled:checked
-  ~ .mdc-checkbox__background,
-.mdc-checkbox
-  .mdc-checkbox__native-control:enabled:indeterminate
-  ~ .mdc-checkbox__background,
-.mdc-checkbox
-  .mdc-checkbox__native-control[data-indeterminate="true"]:enabled
-  ~ .mdc-checkbox__background {
+.mdc-checkbox .mdc-checkbox__native-control:enabled:focus:checked~.mdc-checkbox__background,
+.mdc-checkbox .mdc-checkbox__native-control:enabled:focus:indeterminate~.mdc-checkbox__background,
+.mdc-checkbox .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background,
+.mdc-checkbox .mdc-checkbox__native-control:enabled:indeterminate~.mdc-checkbox__background,
+.mdc-checkbox .mdc-checkbox__native-control[data-indeterminate="true"]:enabled~.mdc-checkbox__background {
   border-color: var(--color-purple-primary-default) !important;
 }
 
@@ -169,6 +151,7 @@ h3 {
   font-size: 18px;
   font-weight: 400;
   line-height: 21.6px;
+
   &:hover {
     font-weight: 500;
   }
@@ -178,7 +161,7 @@ h3 {
   display: none;
 }
 
-.cursor-no-change{
+.cursor-no-change {
   &:hover {
     cursor: default;
   }
@@ -210,7 +193,8 @@ app-emoji-picker {
 
 ::-webkit-scrollbar {
   /* Styles the overall scrollbar */
-  width: 7px; /* Adjust the width of the scrollbar */
+  width: 7px;
+  /* Adjust the width of the scrollbar */
 }
 
 ::-webkit-scrollbar-track {
@@ -227,6 +211,10 @@ app-emoji-picker {
   background: var(--color-purple-primary-disabled);
 }
 
-#cdk-accordion-child-1{
+#cdk-accordion-child-1 {
   height: calc(100% - 30px);
+}
+
+.mat-expansion-panel-body {
+  height: calc(100% - 16px);
 }
