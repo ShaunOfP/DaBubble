@@ -13,20 +13,21 @@ import { PrivateChatComponent } from "./private-chat/private-chat.component";
 import { PublicChatComponent } from './public-chat/public-chat.component';
 import { AddMembersComponent } from './add-members/add-members.component';
 
+
 @Component({
   selector: 'app-chat',
   standalone: true,
   imports: [
     ChatDetailsComponent,
     ChannelMembersComponent,
-    AddMembersComponent,
     CommonModule,
     EmojiPickerComponent,
     NewMessageComponent,
     SharedModule,
     RouterModule,
     PrivateChatComponent,
-    PublicChatComponent
+    PublicChatComponent,
+    AddMembersComponent
 ],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss',

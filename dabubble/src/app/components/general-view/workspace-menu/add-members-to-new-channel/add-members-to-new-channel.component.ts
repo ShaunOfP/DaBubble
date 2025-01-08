@@ -3,9 +3,10 @@ import { CommonModule } from '@angular/common';
 import { AllMembersComponent } from '../../all-members/all-members.component';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ChannelMemberService, Member} from '../../../../services/firebase-services/channel-member.service';
-import { AllSelectedMembersComponent } from './all-selected-members/all-selected-members.component';
+
 import { firstValueFrom } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { AllSelectedMembersComponent } from './all-selected-members/all-selected-members.component';
 
 
 @Component({
