@@ -6,13 +6,13 @@ import { Message } from '../../../../models/interfaces';
 import { ActivatedRoute} from '@angular/router';
 
 @Component({
-  selector: 'app-chat-all',
+  selector: 'app-public-chat',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './chat-all.component.html',
-  styleUrls: ['./chat-all.component.scss'],
+  templateUrl: './public-chat.component.html',
+  styleUrls: ['./public-chat.component.scss'],
 })
-export class ChatAllComponent implements OnInit, AfterViewInit, OnDestroy {
+export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('chatContainer') chatContainer!: ElementRef;
   messages$!: Observable<any[]>;
   channelId: string = 'dOCTHJxiNDhYvmqMokLv';

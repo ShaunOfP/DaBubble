@@ -1,8 +1,5 @@
-@import './../../../../../styles.scss';
-@import './../../../../../templates/input.scss';
-@import './../../../../../templates/styles/button.scss';
-@import './../add-members-to-new-channel.component.scss';
-@import '../../../landing-page/landing-page.component.scss';
+
+@import './../../../../../../styles.scss';
 
 section{
     @include arrangement($d: flex, $jc: center, $ai: center, $fd: column);

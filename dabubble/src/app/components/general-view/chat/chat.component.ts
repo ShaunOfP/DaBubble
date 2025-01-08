@@ -1,16 +1,17 @@
 import { Component, ViewChild, ElementRef, OnInit, viewChild } from '@angular/core';
-import { ChatDetailsComponent } from '../chat-details/chat-details.component';
-import { ChannelMembersComponent } from '../channel-members/channel-members.component';
-import { AddMembersComponent } from '../add-members/add-members.component';
+import { ChatDetailsComponent } from './chat-details/chat-details.component';
+import { ChannelMembersComponent } from './channel-members/channel-members.component';
 import { CommonModule } from '@angular/common';
 import { EmojiPickerComponent } from '../emoji-picker/emoji-picker.component';
-import { NewMessageComponent } from '../new-message/new-message.component';
+import { NewMessageComponent } from './new-message/new-message.component';
 import { SharedModule } from '../../../shared/shared.module';
-import { ChatAllComponent } from './chat-all/chat-all.component';
 import { ChatService } from '../../../services/firebase-services/chat.service';
 import { Message } from '../../../models/interfaces';
 import { UserDatasService } from '../../../services/firebase-services/user-datas.service';
 import { Router, RouterModule, ActivatedRoute } from '@angular/router';
+import { PrivateChatComponent } from "./private-chat/private-chat.component";
+import { PublicChatComponent } from './public-chat/public-chat.component';
+import { AddMembersComponent } from './add-members/add-members.component';
 
 @Component({
   selector: 'app-chat',
@@ -23,9 +24,10 @@ import { Router, RouterModule, ActivatedRoute } from '@angular/router';
     EmojiPickerComponent,
     NewMessageComponent,
     SharedModule,
-    ChatAllComponent,
     RouterModule,
-  ],
+    PrivateChatComponent,
+    PublicChatComponent
+],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss',
 })
@@ -39,7 +41,7 @@ export class ChatComponent implements OnInit {
   ) { }
 
 
-  @ViewChild(ChatAllComponent) chatAllComponent!: ChatAllComponent;
+  @ViewChild(PublicChatComponent) publicChatComponent!: PublicChatComponent;
   @ViewChild('emojiTarget', { static: true }) emojiTarget!: ElementRef;
   selectedEmoji: string = '';
   chatDetails: boolean = false;
@@ -170,7 +172,7 @@ export class ChatComponent implements OnInit {
       .saveMessage(channelId, message)
       .then(() => {
         console.log('Message saved successfully');
-        this.chatAllComponent.scrollToElement('auto');
+        this.publicChatComponent.scrollToElement('auto');
       })
       .catch((error) => {
         console.error('Error saving message:', error);

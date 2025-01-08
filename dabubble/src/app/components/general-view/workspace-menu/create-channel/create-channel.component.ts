@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { AddMembersToNewChannelComponent } from "../add-members-to-new-channel/add-members-to-new-channel.component";
-import { ChannelMemberService, Member} from '../../../services/firebase-services/channel-member.service';
+import { ChannelMemberService, Member} from '../../../../services/firebase-services/channel-member.service';
 
 @Component({
   selector: 'app-create-channel',
@@ -13,6 +13,7 @@ import { ChannelMemberService, Member} from '../../../services/firebase-services
 })
 export class CreateChannelComponent {
   @Output() callParentToClose: EventEmitter<void> = new EventEmitter();
+  
   newChannelName: string = '';
   newChannelDescription: string  = '';
   createChannelContainerVisible: boolean = true;

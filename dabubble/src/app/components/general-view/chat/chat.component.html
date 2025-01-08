@@ -31,7 +31,7 @@
     </div>
   </header>
   <div class="chat-container height-normal-header" id="chat-container">
-    <app-chat-all class="chat" *ngIf="!showNewMessageHeader"></app-chat-all>
+    <app-public-chat class="chat" *ngIf="!showNewMessageHeader"></app-public-chat>
     <div class="input-container">
       <textarea #messageInput #emojiTarget [placeholder]="'Nachricht an #Entwicklerteam'"></textarea>
       <div class="textarea-icon-bar">

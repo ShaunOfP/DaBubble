@@ -46,7 +46,7 @@
                     </div>
                 </div>
                 <div class="channels flex hover-text-color grow-img">
-                    <div class="add-channel flex gap-10" (click)="openCreateChannelOverlay()">
+                    <div class="add-channel flex gap-10" (click)="toggleCreateChannelOverlay()">
                         <img class="height-width-24 grow-img" src="/img/general-view/workspace-menu/add_circle.svg">
                         <span>Channel hinzufügen</span>
                     </div>
@@ -55,7 +55,7 @@
             </mat-expansion-panel>
             <!--Panel Channels End-->
 
-            <div class="hover height-width-40 flex center img-switch radius-30" (click)="openCreateChannelOverlay()">
+            <div class="hover height-width-40 flex center img-switch radius-30" (click)="toggleCreateChannelOverlay()">
                 <img class="height-width-24" src="/img/general-view/workspace-menu/add.svg">
                 <img class="height-width-24 d-none" src="/img/general-view/workspace-menu/hover_add.svg">
             </div>
@@ -78,92 +78,92 @@
                         </div>
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <!-- <mat-expansion-panel-content>
+                 <!-- <mat-expansion-panel-content>
                     
                 </mat-expansion-panel-content> -->
                 <div class="contacts-container flex">
                     <div class="contact flex center gap-15">
-                        <!-- Dummy profile -->
+                       
                         <img src="xy">
                         <span>Karsten Stahl</span>
                     </div>
                     <div class="contact flex center gap-15">
-                        <!-- Dummy profile -->
+                        
                         <img src="xy">
                         <span>Shauna Vayne</span>
                     </div>
                     <div class="contact flex center gap-15">
-                        <!-- Dummy profile -->
+                        
                         <img src="xy">
                         <span>Stivka Bartel</span>
                     </div>
                     <div class="contact flex center gap-15">
-                        <!-- Dummy profile -->
+                        
                         <img src="xy">
                         <span>Charles Vincent VII</span>
                     </div>
                     <div class="contact flex center gap-15">
-                        <!-- Dummy profile -->
+                        
                         <img src="xy">
                         <span>Charles Vincent VII</span>
                     </div>
                     <div class="contact flex center gap-15">
-                        <!-- Dummy profile -->
+                        
                         <img src="xy">
                         <span>Charles Vincent VII</span>
                     </div>
                     <div class="contact flex center gap-15">
-                        <!-- Dummy profile -->
+                        
                         <img src="xy">
                         <span>Charles Vincent VII</span>
                     </div>
                     <div class="contact flex center gap-15">
-                        <!-- Dummy profile -->
+                        
                         <img src="xy">
                         <span>Charles Vincent VII</span>
                     </div>
                     <div class="contact flex center gap-15">
-                        <!-- Dummy profile -->
+                        
                         <img src="xy">
                         <span>Charles Vincent VII</span>
                     </div>
                     <div class="contact flex center gap-15">
-                        <!-- Dummy profile -->
+                        
                         <img src="xy">
                         <span>Charles Vincent VII</span>
                     </div>
                     <div class="contact flex center gap-15">
-                        <!-- Dummy profile -->
+                        
                         <img src="xy">
                         <span>Charles Vincent VII</span>
                     </div>
                     <div class="contact flex center gap-15">
-                        <!-- Dummy profile -->
+                        
                         <img src="xy">
                         <span>Charles Vincent VII</span>
                     </div>
                     <div class="contact flex center gap-15">
-                        <!-- Dummy profile -->
+                        
                         <img src="xy">
                         <span>Charles Vincent VII</span>
                     </div>
                     <div class="contact flex center gap-15">
-                        <!-- Dummy profile -->
+                        
                         <img src="xy">
                         <span>Charles Vincent VII</span>
                     </div>
                     <div class="contact flex center gap-15">
-                        <!-- Dummy profile -->
+                        
                         <img src="xy">
                         <span>Charles Vincent VII</span>
                     </div>
                     <div class="contact flex center gap-15">
-                        <!-- Dummy profile -->
+                        
                         <img src="xy">
                         <span>Charles Vincent VII</span>
                     </div>
                     <div class="contact flex center gap-15">
-                        <!-- Dummy profile -->
+                        
                         <img src="xy">
                         <span>Charles Vincent Johann Karl von Gutenberg sein Sohn der Bruder</span>
                     </div>
@@ -173,3 +173,4 @@
         </div>
     </div>
 </section>
+<app-create-channel *ngIf="showCreateChannelOverlay" (callParentToClose)="toggleCreateChannelOverlay()" ></app-create-channel>

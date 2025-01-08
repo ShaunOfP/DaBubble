@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
-import { ChatService } from '../../../services/firebase-services/chat.service';
+import { ChatService } from '../../../../services/firebase-services/chat.service';
 
 @Component({
   selector: 'app-chat-details',

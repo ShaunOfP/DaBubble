@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ChannelMemberService, Member } from '../../../../services/firebase-services/channel-member.service';
+import { ChannelMemberService, Member } from '../../../../../services/firebase-services/channel-member.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
