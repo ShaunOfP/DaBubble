@@ -7,17 +7,12 @@ section {
     inset: 0;
     z-index: 999;
     background-color: rgba(0, 0, 0, 0.4);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include arrangement();
 
     >div {
         background-color: var(--color-white);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+        @include arrangement($fd: column, $ai: normal, $g: 20px);
         padding: 40px;
-        gap: 20px;
         border-radius: 30px;
         max-width: 750px;
         margin: 32px;
@@ -35,15 +30,14 @@ section {
 }
 
 header {
-    display: flex;
-    justify-content: space-between;
+    @include arrangement($jc: space-between, $ai: normal);
 }
 
 .description {
     font-size: 18px;
     font-weight: 400;
 
-    span{
+    span {
         color: var(--color-purple-primary-default);
     }
 }
@@ -53,15 +47,11 @@ h3 {
 }
 
 form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+    @include arrangement($fd: column, $g: 20px, $jc: normal, $ai: normal);
 }
 
 .form-input-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+    @include arrangement($ai: normal, $jc: normal, $g: 20px, $fd: column);
 
     @media (max-width: 600px) {
         gap: 8px;
@@ -110,8 +100,7 @@ span {
 }
 
 .form-submit-button-container {
-    display: flex;
-    justify-content: end;
+    @include arrangement($ai: normal, $jc: flex-end);
 }
 
 .btn-primary {
@@ -120,9 +109,7 @@ span {
 }
 
 .close-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include arrangement();
     height: 40px;
     width: 40px;
 
@@ -159,19 +146,18 @@ span {
 .empty-field {
     display: flex;
     min-height: 22px;
-  
+
     // @media (max-height: 725px) {
     // min-height: 24px;
     // }
-  
+
     // @media (max-width: 450px) {
     //   min-height: 20px;
     // }
-  }
+}
 
 .form-input-container-header {
-    justify-content: space-between;
-    display: flex;
+    @include arrangement($jc: space-between, $ai: normal);
 
     @media (max-width: 600px) {
         flex-direction: column;
