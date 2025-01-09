@@ -171,7 +171,7 @@ export class UserDatasService {
   }
 
 
-  async updateUserData(userId: string, newMail: string, newUserName: string){
+  async updateUserData(userId: string, newMail: string, newUserName: string) {
     try {
       const userData = doc(this.firestore, `userDatas/${userId}`);
       await updateDoc(userData, {
@@ -185,10 +185,10 @@ export class UserDatasService {
   }
 
 
-  async getChannelNames(channelId: string){
+  async getChannelNames(channelId: string) {
     const docRef = doc(this.firestore, `channels/${channelId}`);
     const docSnapshot = await getDoc(docRef);
-    if (docSnapshot.exists()){
+    if (docSnapshot.exists()) {
       return docSnapshot.data();
     } else {
       return undefined;

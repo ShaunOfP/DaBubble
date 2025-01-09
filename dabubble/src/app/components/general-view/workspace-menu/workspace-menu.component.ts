@@ -5,23 +5,22 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { CommonModule } from '@angular/common';
 import { UserDatasService } from '../../../services/firebase-services/user-datas.service';
 import { ActivatedRoute } from '@angular/router';
-import { CreateChannelComponent } from "./create-channel/create-channel.component";
 
 @Component({
   selector: 'app-workspace-menu',
   standalone: true,
-  imports: [MatSidenavModule, MatExpansionModule, CommonModule, CreateChannelComponent],
+  imports: [MatSidenavModule, MatExpansionModule, CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './workspace-menu.component.html',
   styleUrl: './workspace-menu.component.scss'
 })
 export class WorkspaceMenuComponent implements OnInit {
-  @Output() callParent: EventEmitter<void> = new EventEmitter();
+  @Output() openCreateChannel: EventEmitter<void> = new EventEmitter();
   @Output() newMessage: EventEmitter<void> = new EventEmitter();
   currentChannels: string[] = [];
   currentUserId: string = ``;
   readableChannels: any[] = [];
-  showCreateChannelOverlay:boolean = false;
+  showCreateChannelOverlay: boolean = false;
 
   constructor(public userDatasService: UserDatasService, private route: ActivatedRoute, private cd: ChangeDetectorRef) {
 
@@ -67,18 +66,15 @@ export class WorkspaceMenuComponent implements OnInit {
   }
 
 
-  // openCreateChannelOverlay() {
-  //   this.showCreateChannelOverlay = true
-  // }
-  toggleCreateChannelOverlay() {
-    this.showCreateChannelOverlay = !this.showCreateChannelOverlay;
+  openCreateChannelOverlay() {
+    this.openCreateChannel.emit();
   }
+
+
   openNewMessage() {
     this.newMessage.emit();
   }
 
   readonly channelOpenState = signal(false);
   readonly messagesOpenState = signal(false);
-
-  
 }

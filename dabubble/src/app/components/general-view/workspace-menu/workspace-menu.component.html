@@ -46,7 +46,7 @@
                     </div>
                 </div>
                 <div class="channels flex hover-text-color grow-img">
-                    <div class="add-channel flex gap-10" (click)="toggleCreateChannelOverlay()">
+                    <div class="add-channel flex gap-10" (click)="openCreateChannelOverlay()">
                         <img class="height-width-24 grow-img" src="/img/general-view/workspace-menu/add_circle.svg">
                         <span>Channel hinzufügen</span>
                     </div>
@@ -55,7 +55,7 @@
             </mat-expansion-panel>
             <!--Panel Channels End-->
 
-            <div class="hover height-width-40 flex center img-switch radius-30" (click)="toggleCreateChannelOverlay()">
+            <div class="hover height-width-40 flex center img-switch radius-30" (click)="openCreateChannelOverlay()">
                 <img class="height-width-24" src="/img/general-view/workspace-menu/add.svg">
                 <img class="height-width-24 d-none" src="/img/general-view/workspace-menu/hover_add.svg">
             </div>
@@ -173,4 +173,3 @@
         </div>
     </div>
 </section>
-<app-create-channel *ngIf="showCreateChannelOverlay" (callParentToClose)="toggleCreateChannelOverlay()" ></app-create-channel>

@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { AddMembersToNewChannelComponent } from "../add-members-to-new-channel/add-members-to-new-channel.component";
-import { ChannelMemberService, Member} from '../../../../services/firebase-services/channel-member.service';
+
+import { ChannelMemberService } from '../../../services/firebase-services/channel-member.service';
+import { AddMembersToNewChannelComponent } from '../workspace-menu/add-members-to-new-channel/add-members-to-new-channel.component';
+
 
 @Component({
   selector: 'app-create-channel',
