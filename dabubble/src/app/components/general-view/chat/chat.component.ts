@@ -7,11 +7,13 @@ import { NewMessageComponent } from './new-message/new-message.component';
 import { SharedModule } from '../../../shared/shared.module';
 import { ChatService } from '../../../services/firebase-services/chat.service';
 import { Message } from '../../../models/interfaces';
-import { UserDatasService } from '../../../services/firebase-services/user-datas.service';
+import { UserDatasService, UserObserver } from '../../../services/firebase-services/user-datas.service';
 import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { PrivateChatComponent } from "./private-chat/private-chat.component";
 import { PublicChatComponent } from './public-chat/public-chat.component';
 import { AddMembersComponent } from './add-members/add-members.component';
+import { map } from 'rxjs';
+import { user } from '@angular/fire/auth';
 
 
 @Component({
@@ -33,13 +35,13 @@ import { AddMembersComponent } from './add-members/add-members.component';
   styleUrl: './chat.component.scss',
 })
 export class ChatComponent implements OnInit {
-  private userID: string | null = null;
+  userID!: string;
 
   constructor(
     private chatService: ChatService,
     private userDatasService: UserDatasService,
     private route: ActivatedRoute
-  ) { }
+  ) {}
 
 
   @ViewChild(PublicChatComponent) publicChatComponent!: PublicChatComponent;
@@ -51,6 +53,7 @@ export class ChatComponent implements OnInit {
   showMembersInfo: boolean = false;
   showAddMembers: boolean = false;
   showGreyScreen: boolean = false;
+  userIds!: string[]
 
 
   // openChatDetails() {
@@ -62,10 +65,18 @@ export class ChatComponent implements OnInit {
       const userID = params['userID'];
       if (userID) {
         this.userID = userID;
+        console.log(this.userID);
+        
       } else {
         console.error('No user ID provided');
       }
     });
+    this.userDatasService.userDatas$.pipe(
+      map((users) => users.map((user) => user.id))
+    )
+    .subscribe((ids) => console.log(ids)
+    );    
+    
   }
 
 

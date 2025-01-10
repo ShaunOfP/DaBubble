@@ -8,7 +8,7 @@ import { User } from '@angular/fire/auth';
 import { AuthService } from '../../../services/firebase-services/auth.service';
 import { UserDatasService } from '../../../services/firebase-services/user-datas.service';
 import { UserDatas } from '../../../models/user.class';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -50,6 +50,7 @@ export class HeaderComponent implements OnInit {
         console.error('No user ID provided');
       }
     });
+     this.userDatasService.userDatas$.pipe(map((user) =>  console.log(user))).subscribe();    
   }
 
   async fetchUserData(userID: string): Promise<void> {
