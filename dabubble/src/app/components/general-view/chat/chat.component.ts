@@ -44,12 +44,14 @@ export class ChatComponent implements OnInit {
 
   @ViewChild(PublicChatComponent) publicChatComponent!: PublicChatComponent;
   @ViewChild('emojiTarget', { static: true }) emojiTarget!: ElementRef;
+  @ViewChild('messageInput', { static: false }) messageInput!: ElementRef;
   selectedEmoji: string = '';
   chatDetails: boolean = false;
   showNewMessageHeader: boolean = false;
   showMembersInfo: boolean = false;
   showAddMembers: boolean = false;
   showGreyScreen: boolean = false;
+
 
   // openChatDetails() {
   //   document.getElementById('chatDetailsOverlay')?.classList.remove('d-none');
@@ -150,7 +152,7 @@ export class ChatComponent implements OnInit {
 
 
   async sendMessage(channelId: string, content: string): Promise<void> {
-    if (!this.userID) {
+    if (!this.userID || !content) {
       console.error('User ID is not available');
       return;
     }
@@ -174,6 +176,7 @@ export class ChatComponent implements OnInit {
       .then(() => {
         console.log('Message saved successfully');
         this.publicChatComponent.scrollToElement('auto');
+        this.messageInput.nativeElement.value = ''
       })
       .catch((error) => {
         console.error('Error saving message:', error);
