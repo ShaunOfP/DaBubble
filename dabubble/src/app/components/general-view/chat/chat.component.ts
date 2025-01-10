@@ -61,6 +61,8 @@ export class ChatComponent implements OnInit {
   // }
 
   ngOnInit(): void {
+
+    //kann in userService definiert und für alle Komponenten welche die Id brauchen nutzbar machen
     this.route.queryParams.subscribe((params) => {
       const userID = params['userID'];
       if (userID) {
@@ -71,12 +73,10 @@ export class ChatComponent implements OnInit {
         console.error('No user ID provided');
       }
     });
-    this.userDatasService.userDatas$.pipe(
-      map((users) => users.map((user) => user.id))
+    this.userDatasService.userIds$.pipe(
+      map((ids) => console.log(ids))
     )
-    .subscribe((ids) => console.log(ids)
-    );    
-    
+    .subscribe();    
   }
 
 

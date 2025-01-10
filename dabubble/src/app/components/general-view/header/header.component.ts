@@ -40,6 +40,8 @@ export class HeaderComponent implements OnInit {
   userId: string = ``;
 
   ngOnInit(): void {
+
+    //kann in userService definiert und für alle Komponenten welche die Id brauchen nutzbar machen
     this.route.queryParams.subscribe(params => {
       const userID = params['userID'];
       if (userID) {
@@ -51,6 +53,10 @@ export class HeaderComponent implements OnInit {
       }
     });
      this.userDatasService.userDatas$.pipe(map((user) =>  console.log(user))).subscribe();    
+     this.userDatasService.userIds$.pipe(
+      map((ids) => console.log(ids))
+    )
+    .subscribe();   
   }
 
   async fetchUserData(userID: string): Promise<void> {
