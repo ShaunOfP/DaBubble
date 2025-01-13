@@ -149,6 +149,7 @@ export class UserDatasService {
     const docRef = doc(this.firestore, `channels/${channelId}`);
     const docSnapshot = await getDoc(docRef);
     if (docSnapshot.exists()) {
+      console.log(docSnapshot.data());
       return docSnapshot.data();
     } else {
       return undefined;

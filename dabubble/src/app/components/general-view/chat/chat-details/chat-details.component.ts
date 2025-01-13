@@ -14,6 +14,7 @@ export class ChatDetailsComponent {
   @Output() callParent: EventEmitter<void> = new EventEmitter();
 
   currentChannelId: string = 'ER84UOYc0F2jptDjWxFo'; // change through input
+  currentChannelOwner: string = '';
 
   newDescriptionInput: string = '';
   newChannelNameInput: string = '';
