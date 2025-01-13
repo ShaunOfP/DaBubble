@@ -40,7 +40,7 @@
                 </mat-expansion-panel-header>
                 <!-- Channels Start -->
                 <div class="channels">
-                    <div *ngFor="let channel of readableChannels" class="channel--primary">
+                    <div *ngFor="let channel of readableChannels" class="channel--primary" (click)="openChatFromWorkspaceMenu(channel.channelId)">
                         <b>#</b>
                         <span>{{ channel.channelName }}</span>
                     </div>

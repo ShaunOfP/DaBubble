@@ -67,4 +67,10 @@ export class WorkspaceMenuComponent implements OnInit {
 
   readonly channelOpenState = signal(false);
   readonly messagesOpenState = signal(false);
+
+
+  openChatFromWorkspaceMenu(channelId: string){
+    console.log(channelId);
+    //Send id to chat and get messages etc from this chat
+  }
 }
