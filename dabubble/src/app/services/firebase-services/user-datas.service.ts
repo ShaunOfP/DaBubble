@@ -20,6 +20,7 @@ import { UserDatas } from './../../models/user.class';
 import { user } from '@angular/fire/auth';
 import { GuestDatas } from '../../models/guest.class';
 import { initializeApp } from '@angular/fire/app';
+import { ActivatedRoute } from '@angular/router';
 
 interface SingleUserData {
   mail: string;
@@ -45,12 +46,15 @@ export class UserDatasService {
   userDatas$: Observable<UserObserver[]> = new Subject<UserObserver[]>();
   private userIdsSubject = new BehaviorSubject<string[]>([]);
   userIds$ = this.userIdsSubject.asObservable();
+  channelData: any = []; //datentyp ändern
+  currentUserId: string = ``;
 
-  constructor() {
+  constructor(private route: ActivatedRoute) {
     this.userDatas$ = collectionData(this.userDatasRef(), { idField: 'id' }) as Observable<UserObserver[]>;
     this.userDatas$
       .pipe(map((users) => users.map((user) => user.id))) 
-      .subscribe((ids) => this.userIdsSubject.next(ids)); 
+      .subscribe((ids) => this.userIdsSubject.next(ids));
+    this.getCurrentChannelId();
   }
 
   async getUserDataById(userId: string): Promise<UserDatas | undefined> {
@@ -131,6 +135,19 @@ export class UserDatasService {
   }
 
 
+  getCurrentChannelId(){
+    this.route.queryParams.subscribe(params => {
+      const userID = params['userID'];
+      if (userID) {
+        this.currentUserId = userID;
+      }
+      else {
+        console.error('No user ID provided');
+      }
+    });
+  }
+
+
   async updateUserData(userId: string, newMail: string, newUserName: string) {
     try {
       const userData = doc(this.firestore, `userDatas/${userId}`);
@@ -149,7 +166,8 @@ export class UserDatasService {
     const docRef = doc(this.firestore, `channels/${channelId}`);
     const docSnapshot = await getDoc(docRef);
     if (docSnapshot.exists()) {
-      console.log(docSnapshot.data());
+      this.channelData.push(docSnapshot.data());
+      // console.log(this.channelData);
       return docSnapshot.data();
     } else {
       return undefined;

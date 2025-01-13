@@ -27,15 +27,7 @@ export class WorkspaceMenuComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.route.queryParams.subscribe(params => {
-      const userID = params['userID'];
-      if (userID) {
-        this.currentUserId = userID;
-      }
-      else {
-        console.error('No user ID provided');
-      }
-    });
+    this.currentUserId = this.userDatasService.currentUserId;
     await this.fetchUserData(this.currentUserId);
   }
 
