@@ -23,15 +23,17 @@ import { Message } from '../../models/interfaces';
 })
 export class ChatService {
   private firestore = inject(Firestore);
-  currentChatId$ = new Subject<string>();
+  currentChatId$ = new Subject<string>(); //Subject weil keine initial value benötigt wird wie beim Observable
   constructor() {
-    this.detectIdChange();
   }
 
 
+  /**
+   * Subscribes to an Observable coming from the Workspace-Menu which contains the ID of the Chat that should be displayed
+   */
   detectIdChange() {
     this.currentChatId$.subscribe((value: string) => {
-      console.log(value); //new value from workspace-menu for the chat
+
     });
   }
 

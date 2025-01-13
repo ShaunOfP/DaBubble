@@ -51,6 +51,7 @@ export class ChatComponent implements OnInit {
   showAddMembers: boolean = false;
   showGreyScreen: boolean = false;
   userIds!: string[]
+  chatId: string = ``;
 
 
   // openChatDetails() {
@@ -62,6 +63,10 @@ export class ChatComponent implements OnInit {
       map((ids) => console.log(ids))
     )
       .subscribe();
+
+    this.chatService.currentChatId$.subscribe((id: string) => {
+      this.chatId = id.toString();
+    });
   }
 
 
@@ -147,7 +152,8 @@ export class ChatComponent implements OnInit {
   }
 
 
-  async sendMessage(channelId: string, content: string): Promise<void> {
+  //Beim erstellen der ersten nachricht wird keine sammlung names messages angelegt
+  async sendMessage(content: string): Promise<void> {
     if (!this.userDatasService.currentUserId || !content) {
       console.error('User ID is not available');
       return;
@@ -167,8 +173,13 @@ export class ChatComponent implements OnInit {
       userId: this.userDatasService.currentUserId, // Use the actual user ID
     };
 
+    if (this.chatId == ``){
+      console.log("No chat Id provided");
+      return;
+    }
+
     this.chatService
-      .saveMessage(channelId, message)
+      .saveMessage(this.chatId, message)
       .then(() => {
         console.log('Message saved successfully');
         this.publicChatComponent.scrollToElement('auto');
