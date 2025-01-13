@@ -4,7 +4,8 @@ import { ChangeDetectionStrategy, signal } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CommonModule } from '@angular/common';
 import { UserDatasService } from '../../../services/firebase-services/user-datas.service';
-import { ActivatedRoute } from '@angular/router';
+import { ChatService } from '../../../services/firebase-services/chat.service';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-workspace-menu',
@@ -21,7 +22,9 @@ export class WorkspaceMenuComponent implements OnInit {
   readableChannels: any[] = [];
   showCreateChannelOverlay: boolean = false;
 
-  constructor(public userDatasService: UserDatasService, private route: ActivatedRoute, private cd: ChangeDetectorRef) {
+  constructor(public userDatasService: UserDatasService,
+    private chatService: ChatService,
+    private cd: ChangeDetectorRef) {
 
   }
 
@@ -69,8 +72,7 @@ export class WorkspaceMenuComponent implements OnInit {
   readonly messagesOpenState = signal(false);
 
 
-  openChatFromWorkspaceMenu(channelId: string){
-    console.log(channelId);
-    //Send id to chat and get messages etc from this chat
+  openChatFromWorkspaceMenu(channelId: string) {
+    this.chatService.currentChatId$.next(channelId);
   }
 }

@@ -14,7 +14,7 @@ import {
   orderBy,
   updateDoc,
 } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Message } from '../../models/interfaces';
 
 
@@ -23,7 +23,18 @@ import { Message } from '../../models/interfaces';
 })
 export class ChatService {
   private firestore = inject(Firestore);
-  constructor() {}
+  currentChatId$ = new Subject<string>();
+  constructor() {
+    this.detectIdChange();
+  }
+
+
+  detectIdChange() {
+    this.currentChatId$.subscribe((value: string) => {
+      console.log(value); //new value from workspace-menu for the chat
+    });
+  }
+
 
   getChatRef() {
     return collection(this.firestore, 'chat');
@@ -36,7 +47,7 @@ export class ChatService {
     );
     return collectionData(messagesRef, { idField: 'id' }) as Observable<Message[]>;
   }
-  
+
   saveMessage(channelId: string, message: Message) {
     return addDoc(collection(this.firestore, `channels/${channelId}/messages`), message);
   }
@@ -56,7 +67,7 @@ export class ChatService {
   //     return () => unsubscribe();
   //   });
   // }
-  
+
 
   getThreadCollection(channelId: string, messageId: string): Observable<any[]> {
     return collectionData(
@@ -68,22 +79,22 @@ export class ChatService {
   }
 
 
-  getChannelDocRef(channelId: string){
+  getChannelDocRef(channelId: string) {
     return doc(this.firestore, `channels/${channelId}`);
   }
 
-  async getChannelDocSnapshot(channelId: string){
+  async getChannelDocSnapshot(channelId: string) {
     return await getDoc(this.getChannelDocRef(channelId));
   }
 
-  async updateChatInformation(channelId: string, updatedField: string, updateValue: string){
+  async updateChatInformation(channelId: string, updatedField: string, updateValue: string) {
     let channelDoc = await this.getChannelDocSnapshot(channelId);
-    
-    if (channelDoc.exists()){
+
+    if (channelDoc.exists()) {
       console.log(channelDoc.data());
       await updateDoc(this.getChannelDocRef(channelId), {
         [updatedField]: updateValue
       });
-    }    
+    }
   }
 }
