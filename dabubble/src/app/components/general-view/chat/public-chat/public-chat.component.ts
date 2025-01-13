@@ -15,7 +15,7 @@ import { ActivatedRoute} from '@angular/router';
 export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('chatContainer') chatContainer!: ElementRef;
   messages$!: Observable<any[]>;
-  channelId: string = 'dOCTHJxiNDhYvmqMokLv';
+  channelId: string = 'dOCTHJxiNDhYvmqMokLv'; //change on input from chat service
   newMessage: boolean = false;
   hoveredMessageId: string | null = null;
   private scrollListener!: () => void;
