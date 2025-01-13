@@ -1,12 +1,13 @@
-import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AllMembersComponent } from '../../all-members/all-members.component';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ChannelMemberService, Member} from '../../../../services/firebase-services/channel-member.service';
+import { ChannelMemberService, Member } from '../../../../services/firebase-services/channel-member.service';
 
 import { firstValueFrom } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { AllSelectedMembersComponent } from './all-selected-members/all-selected-members.component';
+import { UserDatasService } from '../../../../services/firebase-services/user-datas.service';
 
 
 @Component({
@@ -17,7 +18,7 @@ import { AllSelectedMembersComponent } from './all-selected-members/all-selected
   styleUrl: './add-members-to-new-channel.component.scss'
 
 })
-export class AddMembersToNewChannelComponent implements OnInit{
+export class AddMembersToNewChannelComponent implements OnInit {
   @ViewChild('nameInput') nameInputField!: ElementRef;
   @Output() closeAll: EventEmitter<void> = new EventEmitter();
 
@@ -26,20 +27,19 @@ export class AddMembersToNewChannelComponent implements OnInit{
   selectedMembers: Member[] = [];
   allMembers: Member[] = [];
   openSelectedMembers: boolean = false;
-  userID!: string;
   channelCreated: boolean = false;
   searchFocus: boolean = false;
   isFocused: boolean = false;
 
 
   constructor(
-    private memberService: ChannelMemberService, private route: ActivatedRoute){
+    private memberService: ChannelMemberService, private userDataService: UserDatasService) {
   }
 
   onSubmit() {
     if (this.selectedOption) {
       this.addAllMembersToChannel();
-    } else if(this.selectedMembers.length > 0) {
+    } else if (this.selectedMembers.length > 0) {
       this.addSelectedMembersToChannel();
     } else {
       return;
@@ -48,7 +48,7 @@ export class AddMembersToNewChannelComponent implements OnInit{
     setTimeout(() => {
       this.close();
     }, 2000);
-  }  
+  }
 
   close(): void {
     this.clearSearchField();
@@ -63,36 +63,33 @@ export class AddMembersToNewChannelComponent implements OnInit{
     this.memberService.selectedMembers$.subscribe(members => {
       this.selectedMembers = members;
     });
-    this.route.queryParams.subscribe(params => {
-      this.userID = params['userID'];
-    });
   }
 
-  removeMember(member: Member): void{
+  removeMember(member: Member): void {
     this.memberService.removeMember(member);
   }
 
   async addAllMembersToChannel(): Promise<void> {
     await this.memberService.selectAllMembers();
     this.allMembers = await firstValueFrom(this.memberService.allMembersSubject$);
-    const filteredMembers = this.allMembers.filter(member => member.id !== this.userID);
-    this.memberService.createNewChannel(filteredMembers, this.userID);
+    const filteredMembers = this.allMembers.filter(member => member.id !== this.userDataService.currentUserId);
+    this.memberService.createNewChannel(filteredMembers, this.userDataService.currentUserId);
   }
 
-  addSelectedMembersToChannel(){
-    this.memberService.createNewChannel(this.selectedMembers, this.userID);
+  addSelectedMembersToChannel() {
+    this.memberService.createNewChannel(this.selectedMembers, this.userDataService.currentUserId);
   }
 
-  clearSearchField(){
+  clearSearchField() {
     this.searchQuery = '';
     this.searchFocus = false;
   }
 
-  handleFocus(){
+  handleFocus() {
     this.isFocused = true;
   }
 
-  handleBlur(){
+  handleBlur() {
     this.isFocused = false;
 
     if (this.selectedMembers.length > 0 && this.searchQuery === '') {
@@ -114,7 +111,7 @@ export class AddMembersToNewChannelComponent implements OnInit{
   //   }
   // }
 
-  showSelectedMembers(){
+  showSelectedMembers() {
     this.openSelectedMembers = !this.openSelectedMembers;
   }
 

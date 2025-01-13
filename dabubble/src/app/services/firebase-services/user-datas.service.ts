@@ -27,13 +27,13 @@ interface SingleUserData {
   password: string;
 }
 
-export interface UserObserver{
+export interface UserObserver {
   avatar: string;
   channels: string[];
-  id:string;
+  id: string;
   mail: string;
-  online:boolean;
-  privateChats:string[];
+  online: boolean;
+  privateChats: string[];
   username: string;
   username_lowercase: string;
 }
@@ -52,7 +52,7 @@ export class UserDatasService {
   constructor(private route: ActivatedRoute) {
     this.userDatas$ = collectionData(this.userDatasRef(), { idField: 'id' }) as Observable<UserObserver[]>;
     this.userDatas$
-      .pipe(map((users) => users.map((user) => user.id))) 
+      .pipe(map((users) => users.map((user) => user.id)))
       .subscribe((ids) => this.userIdsSubject.next(ids));
     this.getCurrentChannelId();
   }
@@ -135,7 +135,7 @@ export class UserDatasService {
   }
 
 
-  getCurrentChannelId(){
+  getCurrentChannelId() {
     this.route.queryParams.subscribe(params => {
       const userID = params['userID'];
       if (userID) {
@@ -176,56 +176,56 @@ export class UserDatasService {
 }
 
 
- // async getUserDatas(email: string, password: string) {
-  //   const q = query(this.userDatasRef(), where('mail', '==', email));
-  //   try {
-  //     const querySnapshot = await getDocs(q);
-  //     querySnapshot.forEach((doc) => {
-  //       const userData = doc.data() as SingleUserData;
-  //       if (userData.password === password) {
-  //         console.log('ID:', doc.id);
-  //         console.log('Data:', userData);
-  //         this.found = true;
-  //       }
-  //     });
-  //     this.found ? false : console.log('falsche Email oder falsches Passwort');
-  //   } catch (error) {
-  //     console.error('Error fetching documents:', error);
-  //   }
-  // }
+// async getUserDatas(email: string, password: string) {
+//   const q = query(this.userDatasRef(), where('mail', '==', email));
+//   try {
+//     const querySnapshot = await getDocs(q);
+//     querySnapshot.forEach((doc) => {
+//       const userData = doc.data() as SingleUserData;
+//       if (userData.password === password) {
+//         console.log('ID:', doc.id);
+//         console.log('Data:', userData);
+//         this.found = true;
+//       }
+//     });
+//     this.found ? false : console.log('falsche Email oder falsches Passwort');
+//   } catch (error) {
+//     console.error('Error fetching documents:', error);
+//   }
+// }
 
-  // async updateUserAvatar(userId: string, avatarUrl: string) {
-  //   try {
-  //     const userData = doc(this.firestore, `userDatas/${userId}`);
-  //     await updateDoc(userData, {
-  //       avatar: avatarUrl,
-  //     });
-  //   } catch (error) {
-  //     console.error('Error updating avatar:', error);
-  //   }
-  // }
+// async updateUserAvatar(userId: string, avatarUrl: string) {
+//   try {
+//     const userData = doc(this.firestore, `userDatas/${userId}`);
+//     await updateDoc(userData, {
+//       avatar: avatarUrl,
+//     });
+//   } catch (error) {
+//     console.error('Error updating avatar:', error);
+//   }
+// }
 
-  /*   async updateUserPassword(userId: string, newPassword: string) {
-    try {
-      const UserUpdate = doc(this.userDatasRef(), userId);
-      await updateDoc(UserUpdate, {
-        password: newPassword,
-      });
-      console.log('succses', newPassword);
-    } catch (err) {
-      console.error('Error updation User!', err);
-    }
+/*   async updateUserPassword(userId: string, newPassword: string) {
+  try {
+    const UserUpdate = doc(this.userDatasRef(), userId);
+    await updateDoc(UserUpdate, {
+      password: newPassword,
+    });
+    console.log('succses', newPassword);
+  } catch (err) {
+    console.error('Error updation User!', err);
   }
- */
-  // saveLocalStorage(id: string, name: string) {
-  //   const user = { id, name };
-  //   localStorage.setItem('user', JSON.stringify(user));
-  //   this.userSubject.next(user);
-  // }
+}
+*/
+// saveLocalStorage(id: string, name: string) {
+//   const user = { id, name };
+//   localStorage.setItem('user', JSON.stringify(user));
+//   this.userSubject.next(user);
+// }
 
-  // getUserFromStorage() {
-  //   const user = localStorage.getItem('user');
-  //   if (user) {
-  //     this.userSubject.next(JSON.parse(user));
-  //   }
-  // }
+// getUserFromStorage() {
+//   const user = localStorage.getItem('user');
+//   if (user) {
+//     this.userSubject.next(JSON.parse(user));
+//   }
+// }

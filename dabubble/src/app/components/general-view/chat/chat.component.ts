@@ -30,18 +30,15 @@ import { user } from '@angular/fire/auth';
     PrivateChatComponent,
     PublicChatComponent,
     AddMembersComponent
-],
+  ],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss',
 })
 export class ChatComponent implements OnInit {
-  userID!: string;
-
   constructor(
     private chatService: ChatService,
     private userDatasService: UserDatasService,
-    private route: ActivatedRoute
-  ) {}
+  ) { }
 
 
   @ViewChild(PublicChatComponent) publicChatComponent!: PublicChatComponent;
@@ -61,22 +58,10 @@ export class ChatComponent implements OnInit {
   // }
 
   ngOnInit(): void {
-
-    //kann in userService definiert und für alle Komponenten welche die Id brauchen nutzbar machen
-    this.route.queryParams.subscribe((params) => {
-      const userID = params['userID'];
-      if (userID) {
-        this.userID = userID;
-        console.log(this.userID);
-        
-      } else {
-        console.error('No user ID provided');
-      }
-    });
     this.userDatasService.userIds$.pipe(
       map((ids) => console.log(ids))
     )
-    .subscribe();    
+      .subscribe();
   }
 
 
@@ -163,12 +148,12 @@ export class ChatComponent implements OnInit {
 
 
   async sendMessage(channelId: string, content: string): Promise<void> {
-    if (!this.userID || !content) {
+    if (!this.userDatasService.currentUserId || !content) {
       console.error('User ID is not available');
       return;
     }
 
-    const userData = await this.userDatasService.getUserDataById(this.userID);
+    const userData = await this.userDatasService.getUserDataById(this.userDatasService.currentUserId);
     if (!userData) {
       console.error('User data is not available');
       return;
@@ -179,7 +164,7 @@ export class ChatComponent implements OnInit {
       sender: userData.username, // Replace with actual sender name
       createdAt: new Date().getTime(),
       content: content,
-      userId: this.userID, // Use the actual user ID
+      userId: this.userDatasService.currentUserId, // Use the actual user ID
     };
 
     this.chatService

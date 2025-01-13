@@ -18,7 +18,6 @@ export class WorkspaceMenuComponent implements OnInit {
   @Output() openCreateChannel: EventEmitter<void> = new EventEmitter();
   @Output() newMessage: EventEmitter<void> = new EventEmitter();
   currentChannels: string[] = [];
-  currentUserId: string = ``;
   readableChannels: any[] = [];
   showCreateChannelOverlay: boolean = false;
 
@@ -27,8 +26,7 @@ export class WorkspaceMenuComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.currentUserId = this.userDatasService.currentUserId;
-    await this.fetchUserData(this.currentUserId);
+    await this.fetchUserData(this.userDatasService.currentUserId);
   }
 
 
