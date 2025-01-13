@@ -218,3 +218,9 @@ app-emoji-picker {
 .mat-expansion-panel-body {
   height: calc(100% - 16px);
 }
+
+#cdk-accordion-child-0 {
+  max-height: 140px;
+  overflow-y: auto;
+  margin-top: 16px;
+}
