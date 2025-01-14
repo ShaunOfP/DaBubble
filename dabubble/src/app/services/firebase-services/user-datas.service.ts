@@ -167,7 +167,6 @@ export class UserDatasService {
     const docSnapshot = await getDoc(docRef);
     if (docSnapshot.exists()) {
       this.channelData.push(docSnapshot.data());
-      // console.log(this.channelData);
       return docSnapshot.data();
     } else {
       return undefined;
