@@ -157,7 +157,6 @@ export class ChatComponent implements OnInit {
   }
 
 
-  //Beim erstellen der ersten nachricht wird keine sammlung names messages angelegt
   async sendMessage(content: string, chatId:string): Promise<void> {
     if (!this.userDatasService.currentUserId || !content) {
       console.error('User ID is not available');

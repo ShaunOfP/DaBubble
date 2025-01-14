@@ -23,8 +23,7 @@
         </div>
         <span class="count">3</span>
       </div>
-      <div class="change-image-on-hover members-menu"
-        (click)="openAddMembersMenu()">
+      <div class="change-image-on-hover members-menu" (click)="openAddMembersMenu()">
         <img src="/img/general-view/workspace-menu/add_person.svg">
         <img class="d-none" src="/img/general-view/workspace-menu/hover_add_person.svg">
       </div>
@@ -33,13 +32,12 @@
   <div class="chat-container height-normal-header" id="chat-container">
     <app-public-chat class="chat" *ngIf="!showNewMessageHeader"></app-public-chat>
     <div class="input-container">
-      <textarea #messageInput #emojiTarget [placeholder]="'Nachricht an #{{ currentChannelName}}'"></textarea>
+      <textarea #messageInput #emojiTarget [placeholder]="'Nachricht an #{{ currentChannelName }}'"></textarea>
       <div class="textarea-icon-bar">
         <div appClickOutside (appClickOutside)="hideEmojiPicker()">
           <app-emoji-picker id="emojiChat" (emojiSelected)="onEmojiReceived($event)"
             class="d-none left-corner-0"></app-emoji-picker>
-          <div class="chat-icons change-image-on-hover"
-            (click)="toggleEmojiPicker()">
+          <div class="chat-icons change-image-on-hover" (click)="toggleEmojiPicker()">
             <img src="/img/general-view/workspace-menu/smiley.svg">
             <img class="d-none" src="/img/general-view/workspace-menu/hover_smiley.svg">
           </div>
