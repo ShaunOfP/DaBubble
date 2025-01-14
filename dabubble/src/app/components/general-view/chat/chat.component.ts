@@ -50,7 +50,9 @@ export class ChatComponent implements OnInit {
   showMembersInfo: boolean = false;
   showAddMembers: boolean = false;
   showGreyScreen: boolean = false;
-  userIds!: string[]
+  userIds!: string[];
+  currentChannelName: string = `Entwicklerchannel`; //ändern via abfrage
+
   // chatId: string = 'ER84UOYc0F2jptDjWxFo';
 
 

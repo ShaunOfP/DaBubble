@@ -2,7 +2,7 @@
     <header>
         <div class="header-headline">
             <h3>#</h3>
-            <h3>Entwicklerteam</h3>
+            <h3>{{ currentChannelName }}</h3>
         </div>
         <div class="img-container change-image-on-hover" (click)="closeChatDetails()">
             <img src="/img/general-view/workspace-menu/close.svg">
@@ -18,7 +18,7 @@
                 </div>
                 <div>
                     <span class="fs18 bold">#</span>
-                    <span class="fs18">Entwicklerteam</span>
+                    <span class="fs18">{{ currentChannelName }}</span>
                 </div>
             </div>
         </div>
@@ -30,7 +30,7 @@
             </div>
             <div>
                 <span class="fs18 bold z1 padding-left-20">#</span>
-                <input class="input-field margin-left-negative-50 padding-left-50" placeholder="Entwicklerteam"
+                <input class="input-field margin-left-negative-50 padding-left-50" placeholder="{{ currentChannelName }}"
                     [(ngModel)]="newChannelNameInput" name="newChannelNameInput">
             </div>
         </form>
@@ -40,14 +40,12 @@
                     <span class="fs18 bold">Beschreibung</span>
                     <span class="fs18 purple hover" (click)="openDesciptionEdit()">Bearbeiten</span>
                 </div>
-                <p class="fs18">Dieser Channel ist für alles rund um #asdas vorgesehen. Hier kannst du zusammen
-                    mit deinem Team
-                    Meetings abhalten, Dokumente teilen und Entscheidungen treffen.</p>
+                <p class="fs18">{{ currentChannelDescription }}</p>
             </div>
             <span class="separator"></span>
             <div class="d-flex column gap-20">
                 <span class="fs18 bold">Erstellt von</span>
-                <span class="fs24 purple">Noah Braun</span>
+                <span class="fs24 purple">{{ currentChannelOwner }}</span>
             </div>
         </div>
         <div class="d-flex column gap-30" *ngIf="newDescriptionContainerVisible">

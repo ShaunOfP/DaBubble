@@ -14,7 +14,9 @@ export class ChatDetailsComponent {
   @Output() callParent: EventEmitter<void> = new EventEmitter();
 
   currentChannelId: string = 'ER84UOYc0F2jptDjWxFo'; // change through input
-  currentChannelOwner: string = '';
+  currentChannelName: string = 'Entwicklerteam';
+  currentChannelOwner: string = 'Noah Braun';
+  currentChannelDescription: string = 'Dieser Channel ist für alles rund um #asdas vorgesehen. Hier kannst du zusammen mit deinem Team Meetings abhalten, Dokumente teilen und Entscheidungen treffen.';
 
   newDescriptionInput: string = '';
   newChannelNameInput: string = '';
