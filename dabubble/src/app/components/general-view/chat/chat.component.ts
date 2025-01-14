@@ -51,7 +51,7 @@ export class ChatComponent implements OnInit {
   showAddMembers: boolean = false;
   showGreyScreen: boolean = false;
   userIds!: string[]
-  chatId: string = 'ER84UOYc0F2jptDjWxFo';
+  // chatId: string = 'ER84UOYc0F2jptDjWxFo';
 
 
   // openChatDetails() {
@@ -156,7 +156,7 @@ export class ChatComponent implements OnInit {
 
 
   //Beim erstellen der ersten nachricht wird keine sammlung names messages angelegt
-  async sendMessage(content: string): Promise<void> {
+  async sendMessage(content: string, chatId:string): Promise<void> {
     if (!this.userDatasService.currentUserId || !content) {
       console.error('User ID is not available');
       return;
@@ -176,13 +176,13 @@ export class ChatComponent implements OnInit {
       userId: this.userDatasService.currentUserId, // Use the actual user ID
     };
 
-    if (this.chatId == ``){
+    if (chatId == ``){
       console.log("No chat Id provided");
       return;
     }
 
     this.chatService
-      .saveMessage(this.chatId, message)
+      .saveMessage(chatId, message)
       .then(() => {
         console.log('Message saved successfully');
         this.publicChatComponent.scrollToElement('auto');
