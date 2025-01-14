@@ -33,7 +33,7 @@
   <div class="chat-container height-normal-header" id="chat-container">
     <app-public-chat class="chat" *ngIf="!showNewMessageHeader"></app-public-chat>
     <div class="input-container">
-      <textarea #messageInput #emojiTarget [placeholder]="'Nachricht an #Entwicklerteam'"></textarea>
+      <textarea #messageInput #emojiTarget [placeholder]="'Nachricht an #{{ currentChannelName}}'"></textarea>
       <div class="textarea-icon-bar">
         <div appClickOutside (appClickOutside)="hideEmojiPicker()">
           <app-emoji-picker id="emojiChat" (emojiSelected)="onEmojiReceived($event)"
