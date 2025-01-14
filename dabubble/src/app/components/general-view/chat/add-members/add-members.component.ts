@@ -9,7 +9,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 })
 export class AddMembersComponent {
   @Output() closeMe: EventEmitter<void> = new EventEmitter();
-
+  currentChannelName: string = 'Entwicklerchannel'; //change
 
   /**
    * Emits a signal to the parent component to close the Add Members Menu
