@@ -24,7 +24,7 @@ h3 {
   padding: 6px 10px 6px 10px;
   border-radius: 30px;
 
-  >button {
+  > button {
     border: none;
     background-color: transparent;
     height: 30px;
@@ -40,11 +40,11 @@ h3 {
     cursor: pointer;
     background-color: #eceefe;
 
-    >h3 {
+    > h3 {
       color: var(--color-purple-primary-default);
     }
 
-    >button {
+    > button {
       :first-child {
         display: none;
       }
@@ -56,6 +56,19 @@ h3 {
   }
 }
 
+.header-user-container {
+  @include arrangement($g: 10px);
+  .header-user-container_members {
+    @include arrangement($g: 10px);
+    border-radius: 30px;
+    padding: 3px 10px;
+    &:hover {
+      cursor: pointer;
+      background-color: var(--color-blue-bg);
+      color: var(--color-purple-secondary-hover);
+    }
+  }
+}
 .user-icon {
   height: 40px;
   width: 40px;
@@ -74,6 +87,16 @@ h3 {
   justify-content: end;
   gap: 25px;
   height: calc(100% - 94px);
+  .chat-icons{
+    @include arrangement();
+    height: 40px;
+    width: 40px;
+    border-radius: 30px;
+    &:hover{
+      cursor: pointer;
+      background-color: var(--color-blue-bg);
+    }
+  }
 }
 
 .height-normal-header {
@@ -92,8 +115,6 @@ h3 {
   @include arrangement($jc: normal, $fd: column, $g: 20px);
   overflow-y: auto;
 }
-
-
 
 .input-container {
   position: relative;
@@ -125,7 +146,7 @@ textarea {
   left: 70px;
   right: 70px;
 
-  >div {
+  > div {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -178,8 +199,16 @@ textarea {
     background-color: var(--color-blue-bg);
   }
 }
-
+.members-menu{
+  @include arrangement();
+  border-radius: 30px;
+  height: 40px;
+  width: 40px;
+  background-color: #eceefe;
+}
 .change-image-on-hover {
+
+  cursor: pointer;
   &:hover {
     > :first-child {
       display: none;
