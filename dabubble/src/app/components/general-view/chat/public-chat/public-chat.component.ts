@@ -1,9 +1,10 @@
-import { Component, OnInit, ElementRef, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, AfterViewInit, OnDestroy, viewChild } from '@angular/core';
 import { ChatService } from '../../../../services/firebase-services/chat.service';
 import { Observable, map, tap } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { Message } from '../../../../models/interfaces';
 import { ActivatedRoute } from '@angular/router';
+import { ChatComponent } from '../chat.component';
 
 @Component({
   selector: 'app-public-chat',
@@ -15,7 +16,7 @@ import { ActivatedRoute } from '@angular/router';
 export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('chatContainer') chatContainer!: ElementRef;
   messages$!: Observable<any[]>;
-  channelId: string = 'dOCTHJxiNDhYvmqMokLv'; //dOCTHJxiNDhYvmqMokLv
+  channelId: string= 'ER84UOYc0F2jptDjWxFo'  //dOCTHJxiNDhYvmqMokLv
   newMessage: boolean = false;
   hoveredMessageId: string | null = null;
   private scrollListener!: () => void;
@@ -27,7 +28,8 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     //   this.channelId = id.toString();
     //   this.loadChatOnIdChange();
     // });
-
+    console.log(this.channelId);
+    
     this.messages$ = this.chatService.getMessages(this.channelId).pipe(
       map((messages: Message[]) => this.returnNewObservable(messages, null)),
       tap(() => {
@@ -35,6 +37,8 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
       })
     );
     setTimeout(() => this.scrollToElement('auto'), 1000);
+    console.log(this.channelId);
+    
   }
 
 

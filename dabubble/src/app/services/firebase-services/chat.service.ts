@@ -25,6 +25,7 @@ export class ChatService {
   private firestore = inject(Firestore);
   currentChatId$ = new Subject<string>(); //Subject weil keine initial value benötigt wird wie beim Observable
   constructor() {
+
   }
 
 

@@ -51,23 +51,26 @@ export class ChatComponent implements OnInit {
   showAddMembers: boolean = false;
   showGreyScreen: boolean = false;
   userIds!: string[]
-  chatId: string = ``;
+  chatId: string = 'ER84UOYc0F2jptDjWxFo';
 
 
   // openChatDetails() {
   //   document.getElementById('chatDetailsOverlay')?.classList.remove('d-none');
   // }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void>{
     this.userDatasService.userIds$.pipe(
       map((ids) => console.log(ids))
-    )
-      .subscribe();
+    ).subscribe();
 
-    this.chatService.currentChatId$.subscribe((id: string) => {
-      this.chatId = id.toString();
-    });
+    // this.chatService.currentChatId$.subscribe((id: string) => {
+    //   this.chatId = id.toString();
+    // });
+    // console.log(this.chatId);
+    
   }
+
+
 
 
   activateGreyScreen() {

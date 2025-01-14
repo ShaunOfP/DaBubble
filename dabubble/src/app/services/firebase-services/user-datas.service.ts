@@ -50,7 +50,7 @@ export class UserDatasService {
   currentUserId: string = ``;
 
   constructor(private route: ActivatedRoute) {
-    this.userDatas$ = collectionData(this.userDatasRef(), { idField: 'id' }) as Observable<UserObserver[]>;
+    this.userDatas$ = collectionData(this.userDatasRef(), { idField: 'id' });
     this.userDatas$
       .pipe(map((users) => users.map((user) => user.id)))
       .subscribe((ids) => this.userIdsSubject.next(ids));
