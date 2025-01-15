@@ -6,7 +6,7 @@ import { SharedModule } from '../../../shared/shared.module';
 import { ChatService } from '../../../services/firebase-services/chat.service';
 import { Message } from '../../../models/interfaces';
 import { UserDatasService } from '../../../services/firebase-services/user-datas.service';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { PrivateChatComponent } from "./private-chat/private-chat.component";
 import { PublicChatComponent } from './public-chat/public-chat.component';
 import { map } from 'rxjs';
@@ -31,6 +31,7 @@ export class ChatComponent implements OnInit {
   constructor(
     private chatService: ChatService,
     private userDatasService: UserDatasService,
+    private router: Router
   ) { }
 
 
