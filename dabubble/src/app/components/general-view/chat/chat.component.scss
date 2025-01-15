@@ -5,75 +5,9 @@ section {
   height: calc(100vh - 130px);
 }
 
-header {
-  padding: 25px 45px 25px 45px;
-  display: flex;
-  justify-content: space-between;
-  box-shadow: 0px 2px 10px -10px;
-  position: relative;
-}
 
 h3 {
   margin: 0;
-}
-
-.header-chat-info-container {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 6px 10px 6px 10px;
-  border-radius: 30px;
-
-  > button {
-    border: none;
-    background-color: transparent;
-    height: 30px;
-    width: 30px;
-    font-size: 24px;
-
-    &:hover {
-      cursor: pointer;
-    }
-  }
-
-  &:hover {
-    cursor: pointer;
-    background-color: #eceefe;
-
-    > h3 {
-      color: var(--color-purple-primary-default);
-    }
-
-    > button {
-      :first-child {
-        display: none;
-      }
-
-      :last-child {
-        display: flex;
-      }
-    }
-  }
-}
-
-.header-user-container {
-  @include arrangement($g: 10px);
-  .header-user-container_members {
-    @include arrangement($g: 10px);
-    border-radius: 30px;
-    padding: 3px 10px;
-    &:hover {
-      cursor: pointer;
-      background-color: var(--color-blue-bg);
-      color: var(--color-purple-secondary-hover);
-    }
-  }
-}
-.user-icon {
-  height: 40px;
-  width: 40px;
-  border-radius: 30px;
-  border: 2px solid var(--color-white);
 }
 
 .count {
@@ -86,7 +20,8 @@ h3 {
   flex-direction: column;
   justify-content: end;
   gap: 25px;
-  height: calc(100% - 94px);
+  height: 100%;
+}
   .chat-icons{
     @include arrangement();
     height: 40px;
@@ -97,11 +32,6 @@ h3 {
       background-color: var(--color-blue-bg);
     }
   }
-}
-
-.height-normal-header {
-  height: calc(100% - 94px);
-}
 
 .height-new-message {
   height: calc(100% - 160px);

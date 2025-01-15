@@ -1,35 +1,9 @@
 <section class="radius-30">
-  <div *ngIf="showGreyScreen" class="grey-screen"></div>
+
   <app-new-message *ngIf="showNewMessageHeader"></app-new-message>
-  <header *ngIf="!showNewMessageHeader">
-    <div class="header-chat-info-container" (click)="toggleChatDetails()">
-      <h3>#</h3>
-      <h3>{{ currentChannelName }}</h3>
-      <button>
-        <img class="d-flex center" src="/img/general-view/workspace-menu/arrow_drop_down_thin.svg">
-        <img class="d-none center" src="/img/general-view/workspace-menu/hover_arrow_drop_down_thin.svg">
-      </button>
-    </div>
-    <app-chat-details id="chatDetailsOverlay" *ngIf="chatDetails" (callParent)="toggleChatDetails()"></app-chat-details>
-    <app-channel-members *ngIf="showMembersInfo" id="channelMembersMenu" (closeMe)="closeMembersInfo()"
-      (openAddMembers)="openAddMembersMenu()"></app-channel-members>
-    <app-add-members *ngIf="showAddMembers" id="addMembersMenu" (closeMe)="closeAddMembersMenu()"></app-add-members>
-    <div class="header-user-container">
-      <div class="header-user-container_members" (click)="openMembersInfo()">
-        <div class="d-flex center">
-          <img class="user-icon radius-30" src="/img/public/user_icon_male_2.svg">
-          <img class="user-icon radius-30 margin-left-minus-10" src="/img/public/user_icon_male_2.svg">
-          <img class="user-icon radius-30 margin-left-minus-10" src="/img/public/user_icon_male_2.svg">
-        </div>
-        <span class="count">3</span>
-      </div>
-      <div class="change-image-on-hover members-menu" (click)="openAddMembersMenu()">
-        <img src="/img/general-view/workspace-menu/add_person.svg">
-        <img class="d-none" src="/img/general-view/workspace-menu/hover_add_person.svg">
-      </div>
-    </div>
-  </header>
-  <div class="chat-container height-normal-header" id="chat-container">
+  
+  <div class="chat-container" id="chat-container">
+    
     <app-public-chat class="chat" *ngIf="!showNewMessageHeader"></app-public-chat>
     <div class="input-container">
       <textarea #messageInput #emojiTarget [placeholder]="'Nachricht an #{{ currentChannelName }}'"></textarea>

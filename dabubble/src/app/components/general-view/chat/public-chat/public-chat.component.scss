@@ -5,8 +5,94 @@
   font-weight: $fw;
 }
 
+header {
+  width: 100%;
+  padding: 25px 45px 25px 45px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 0px 2px 10px -10px;
+  position: relative;
+}
+
+
 .chat-feed {
   @include arrangement($fd: column, $g: 20px, $ai: start);
+}
+
+.header-chat-info-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px 6px 10px;
+  border-radius: 30px;
+
+  > button {
+    border: none;
+    background-color: transparent;
+    height: 30px;
+    width: 30px;
+    font-size: 24px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &:hover {
+    cursor: pointer;
+    background-color: #eceefe;
+
+    > h3 {
+      color: var(--color-purple-primary-default);
+    }
+
+    > button {
+      :first-child {
+        display: none;
+      }
+
+      :last-child {
+        display: flex;
+      }
+    }
+  }
+}
+
+.header-user-container {
+  @include arrangement($g: 10px);
+  .header-user-container_members {
+    @include arrangement($g: 10px);
+    border-radius: 30px;
+    padding: 3px 10px;
+    &:hover {
+      cursor: pointer;
+      background-color: var(--color-blue-bg);
+      color: var(--color-purple-secondary-hover);
+    }
+  }
+}
+
+.change-image-on-hover {
+
+  cursor: pointer;
+  &:hover {
+    > :first-child {
+      display: none;
+    }
+
+    > :last-child {
+      display: flex;
+      cursor: pointer;
+    }
+  }
+}
+
+.user-icon {
+  height: 40px;
+  width: 40px;
+  border-radius: 30px;
+  border: 2px solid var(--color-white);
 }
 
 .chat-date {
@@ -188,4 +274,14 @@
     background-color: white;
     color: black;
   }
+}
+
+
+.grey-screen {
+  height: 100vh;
+  width: 100vw;
+  inset: 0;
+  background-color: var(--color-grey-primary-overlay);
+  position: absolute;
+  z-index: 5;
 }

@@ -5,11 +5,16 @@ import { CommonModule } from '@angular/common';
 import { Message } from '../../../../models/interfaces';
 import { ActivatedRoute } from '@angular/router';
 import { ChatComponent } from '../chat.component';
+import { ChatDetailsComponent } from '../chat-details/chat-details.component';
+import { ChannelMembersComponent } from '../channel-members/channel-members.component';
+import { AddMembersComponent } from '../add-members/add-members.component';
 
 @Component({
   selector: 'app-public-chat',
   standalone: true,
-  imports: [CommonModule],
+  imports: [ChatDetailsComponent,
+        ChannelMembersComponent,
+        CommonModule,AddMembersComponent],
   templateUrl: './public-chat.component.html',
   styleUrls: ['./public-chat.component.scss'],
 })
@@ -19,6 +24,11 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   channelId: string= 'ER84UOYc0F2jptDjWxFo'  //dOCTHJxiNDhYvmqMokLv
   newMessage: boolean = false;
   hoveredMessageId: string | null = null;
+  currentChannelName: string = `Entwicklerchannel`; //ändern via abfrage
+  chatDetails: boolean = false;
+  showGreyScreen: boolean = false;
+  showMembersInfo: boolean = false;
+  showAddMembers: boolean = false;
   private scrollListener!: () => void;
 
   constructor(private chatService: ChatService, private route: ActivatedRoute) { }
@@ -40,7 +50,45 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     console.log(this.channelId);
     
   }
+  toggleChatDetails() {
+    this.showGreyScreen ? this.hideGreyScreen() : this.activateGreyScreen();
+    this.chatDetails = !this.chatDetails;
+  }
 
+  
+  activateGreyScreen() {
+    this.showGreyScreen = true;
+  }
+
+
+  hideGreyScreen() {
+    this.showGreyScreen = false;
+  }
+
+  openMembersInfo() {
+    this.activateGreyScreen();
+    this.showMembersInfo = true;
+  }
+
+
+  closeMembersInfo() {
+    this.showMembersInfo = false;
+    this.hideGreyScreen();
+  }
+
+
+  openAddMembersMenu() {
+    if (this.showMembersInfo) {
+      this.closeMembersInfo();
+    }
+    this.activateGreyScreen();
+    this.showAddMembers = true;
+  }
+
+  closeAddMembersMenu() {
+    this.showAddMembers = false;
+    this.hideGreyScreen();
+  }
 
   // loadChatOnIdChange() {
   //   this.getChatMessages();

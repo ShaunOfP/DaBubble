@@ -51,7 +51,7 @@ export class ChatComponent implements OnInit {
   showAddMembers: boolean = false;
   showGreyScreen: boolean = false;
   userIds!: string[];
-  currentChannelName: string = `Entwicklerchannel`; //ändern via abfrage
+  
 
   // chatId: string = 'ER84UOYc0F2jptDjWxFo';
 
@@ -70,51 +70,6 @@ export class ChatComponent implements OnInit {
     // });
     // console.log(this.chatId);
     
-  }
-
-
-
-
-  activateGreyScreen() {
-    this.showGreyScreen = true;
-  }
-
-
-  hideGreyScreen() {
-    this.showGreyScreen = false;
-  }
-
-
-  toggleChatDetails() {
-    this.showGreyScreen ? this.hideGreyScreen() : this.activateGreyScreen();
-    this.chatDetails = !this.chatDetails;
-  }
-
-
-  openMembersInfo() {
-    this.activateGreyScreen();
-    this.showMembersInfo = true;
-  }
-
-
-  closeMembersInfo() {
-    this.showMembersInfo = false;
-    this.hideGreyScreen();
-  }
-
-
-  openAddMembersMenu() {
-    if (this.showMembersInfo) {
-      this.closeMembersInfo();
-    }
-    this.activateGreyScreen();
-    this.showAddMembers = true;
-  }
-
-
-  closeAddMembersMenu() {
-    this.showAddMembers = false;
-    this.hideGreyScreen();
   }
 
 
