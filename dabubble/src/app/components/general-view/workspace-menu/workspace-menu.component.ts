@@ -37,6 +37,7 @@ export class WorkspaceMenuComponent implements OnInit {
   }
 
 
+  // geänderte url verhindert genauen abruf der id
   async fetchUserData(userID: string): Promise<void> {
     try {
       const userData = await this.userDatasService.getUserDataById(userID);
@@ -70,7 +71,6 @@ export class WorkspaceMenuComponent implements OnInit {
 
   openNewMessage() {
     this.route.queryParams.subscribe(params => {
-      console.log(params);
       const userID = params['userID'];
       this.router.navigate(['/general/new-message'], { queryParams: { userID: userID } });
     })
