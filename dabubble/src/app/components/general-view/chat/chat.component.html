@@ -5,7 +5,7 @@
   <div class="chat-container" id="chat-container">
         <router-outlet></router-outlet>
     <div class="input-container">
-      <textarea #messageInput #emojiTarget [placeholder]="'Nachricht an #{{ currentChannelName }}'"></textarea>
+      <textarea #messageInput #emojiTarget [placeholder]="'Nachricht an #' + currentChannelName "></textarea>
       <div class="textarea-icon-bar">
         <div appClickOutside (appClickOutside)="hideEmojiPicker()">
           <app-emoji-picker id="emojiChat" (emojiSelected)="onEmojiReceived($event)"

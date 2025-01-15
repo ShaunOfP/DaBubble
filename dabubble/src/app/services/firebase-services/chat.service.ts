@@ -16,6 +16,7 @@ import {
 } from '@angular/fire/firestore';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Message } from '../../models/interfaces';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Injectable({
@@ -23,16 +24,28 @@ import { Message } from '../../models/interfaces';
 })
 export class ChatService {
   private firestore = inject(Firestore);
-  currentChatId$ = new Subject<string>(); //Subject weil keine initial value benötigt wird wie beim Observable
-  constructor() {}
+  // currentChatId$ = new Subject<string>(); //Subject weil keine initial value benötigt wird wie beim Observable
+  currentChatId: string = ``;
+  constructor(private route: ActivatedRoute) {
+    this.getCurrentChatId();
+  }
 
 
   /**
    * Subscribes to an Observable coming from the Workspace-Menu which contains the ID of the Chat that should be displayed
    */
-  detectIdChange() {
-    this.currentChatId$.subscribe((value: string) => {
+  // detectIdChange() {
+   // this.currentChatId$.subscribe((value: string) => {
 
+    // });
+  // }
+
+
+  getCurrentChatId(){
+    this.route.queryParams.subscribe(params => {
+      const wholeString = params['userID'];
+      const extractedChatID = wholeString.split("=", 2)[1];
+      this.currentChatId = extractedChatID;
     });
   }
 

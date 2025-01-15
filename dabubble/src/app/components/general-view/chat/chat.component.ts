@@ -44,6 +44,7 @@ export class ChatComponent implements OnInit {
   showAddMembers: boolean = false;
   showGreyScreen: boolean = false;
   userIds!: string[];
+  currentChannelName: string = ``; //holen vom service via url
   
 
   // chatId: string = 'ER84UOYc0F2jptDjWxFo';

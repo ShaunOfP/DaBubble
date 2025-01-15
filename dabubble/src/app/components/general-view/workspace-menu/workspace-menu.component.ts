@@ -26,7 +26,7 @@ export class WorkspaceMenuComponent implements OnInit {
   constructor(public userDatasService: UserDatasService,
     private chatService: ChatService,
     private cd: ChangeDetectorRef) {
-      this.currentUrl = window.location.href;
+    this.currentUrl = window.location.href;
   }
 
   async ngOnInit() {
@@ -73,9 +73,13 @@ export class WorkspaceMenuComponent implements OnInit {
   readonly messagesOpenState = signal(false);
 
 
-  openChatFromWorkspaceMenu(channelId: string) {
+  openChatFromWorkspaceMenu(channelId: string) { //umbenennen in modifyUrlWithChatString()
     // this.chatService.currentChatId$.next(channelId);
 
+    if (this.currentUrl.includes("chatID")) {
+      const editedUrl = this.currentUrl.split(`%2FchatID`, 1)[0];
+      this.currentUrl = editedUrl;
+    }
     const newUrl = `${this.currentUrl}/chatID=${channelId}`;
     window.history.pushState({}, '', newUrl);
   }
