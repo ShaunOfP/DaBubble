@@ -21,11 +21,12 @@ export class WorkspaceMenuComponent implements OnInit {
   currentChannels: string[] = [];
   readableChannels: any[] = [];
   showCreateChannelOverlay: boolean = false;
+  currentUrl: string = ``;
 
   constructor(public userDatasService: UserDatasService,
     private chatService: ChatService,
     private cd: ChangeDetectorRef) {
-
+      this.currentUrl = window.location.href;
   }
 
   async ngOnInit() {
@@ -33,6 +34,7 @@ export class WorkspaceMenuComponent implements OnInit {
   }
 
 
+  // geänderte url verhindert genauen abruf der id
   async fetchUserData(userID: string): Promise<void> {
     try {
       const userData = await this.userDatasService.getUserDataById(userID);
@@ -73,6 +75,9 @@ export class WorkspaceMenuComponent implements OnInit {
 
 
   openChatFromWorkspaceMenu(channelId: string) {
-    this.chatService.currentChatId$.next(channelId);
+    // this.chatService.currentChatId$.next(channelId);
+
+    const newUrl = `${this.currentUrl}/chatID=${channelId}`;
+    window.history.pushState({}, '', newUrl);
   }
 }
