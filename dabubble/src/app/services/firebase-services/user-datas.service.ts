@@ -137,9 +137,10 @@ export class UserDatasService {
 
   getCurrentChannelId() {
     this.route.queryParams.subscribe(params => {
-      const userID = params['userID'];
-      if (userID) {
-        this.currentUserId = userID;
+      const wholeString = params['userID'];
+      const extractedUserID = wholeString.split("/", 1)[0];
+      if (extractedUserID) {
+        this.currentUserId = extractedUserID;
       }
       else {
         console.error('No user ID provided');
