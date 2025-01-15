@@ -3,8 +3,7 @@
   <app-new-message *ngIf="showNewMessageHeader"></app-new-message>
   
   <div class="chat-container" id="chat-container">
-    
-    <app-public-chat class="chat" *ngIf="!showNewMessageHeader"></app-public-chat>
+        <router-outlet></router-outlet>
     <div class="input-container">
       <textarea #messageInput #emojiTarget [placeholder]="'Nachricht an #{{ currentChannelName }}'"></textarea>
       <div class="textarea-icon-bar">

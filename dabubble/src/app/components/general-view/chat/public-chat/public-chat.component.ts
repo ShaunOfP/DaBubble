@@ -5,9 +5,10 @@ import { CommonModule } from '@angular/common';
 import { Message } from '../../../../models/interfaces';
 import { ActivatedRoute } from '@angular/router';
 import { ChatComponent } from '../chat.component';
-import { ChatDetailsComponent } from '../chat-details/chat-details.component';
-import { ChannelMembersComponent } from '../channel-members/channel-members.component';
-import { AddMembersComponent } from '../add-members/add-members.component';
+
+import { ChannelMembersComponent } from './channel-members/channel-members.component';
+import { AddMembersComponent } from './add-members/add-members.component';
+import { ChatDetailsComponent } from './chat-details/chat-details.component';
 
 @Component({
   selector: 'app-public-chat',

@@ -1,0 +1,22 @@
+<header>
+  <h3>Mitglieder</h3>
+  <div class="close-button" (click)="closeChannelMembersMenu()">
+    <img src="/img/general-view/workspace-menu/close.svg" />
+    <img
+      class="d-none"
+      src="/img/general-view/workspace-menu/hover_close.svg"
+    />
+  </div>
+</header>
+<div class="members-list-container">
+  <div class="members-list">
+    <div class="member" (click)="openProfileInfo()">
+      <img src="/img/public/user_icon_male_2.svg" />
+      <span>Frederik Beck (Du)</span>
+    </div>
+  </div>
+  <button (click)="openAddMembersMenu()">
+    <img src="/img/general-view/workspace-menu/add_person.svg" />
+    <span>Mitglieder hinzufügen</span>
+  </button>
+</div>

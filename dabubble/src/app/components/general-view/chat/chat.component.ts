@@ -1,27 +1,21 @@
 import { Component, ViewChild, ElementRef, OnInit, viewChild } from '@angular/core';
-import { ChatDetailsComponent } from './chat-details/chat-details.component';
-import { ChannelMembersComponent } from './channel-members/channel-members.component';
 import { CommonModule } from '@angular/common';
 import { EmojiPickerComponent } from '../emoji-picker/emoji-picker.component';
 import { NewMessageComponent } from './new-message/new-message.component';
 import { SharedModule } from '../../../shared/shared.module';
 import { ChatService } from '../../../services/firebase-services/chat.service';
 import { Message } from '../../../models/interfaces';
-import { UserDatasService, UserObserver } from '../../../services/firebase-services/user-datas.service';
-import { Router, RouterModule, ActivatedRoute } from '@angular/router';
+import { UserDatasService } from '../../../services/firebase-services/user-datas.service';
+import { RouterModule } from '@angular/router';
 import { PrivateChatComponent } from "./private-chat/private-chat.component";
 import { PublicChatComponent } from './public-chat/public-chat.component';
-import { AddMembersComponent } from './add-members/add-members.component';
 import { map } from 'rxjs';
-import { user } from '@angular/fire/auth';
 
 
 @Component({
   selector: 'app-chat',
   standalone: true,
   imports: [
-    ChatDetailsComponent,
-    ChannelMembersComponent,
     CommonModule,
     EmojiPickerComponent,
     NewMessageComponent,
@@ -29,7 +23,6 @@ import { user } from '@angular/fire/auth';
     RouterModule,
     PrivateChatComponent,
     PublicChatComponent,
-    AddMembersComponent
   ],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss',

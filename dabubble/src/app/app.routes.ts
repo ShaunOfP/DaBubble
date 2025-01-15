@@ -7,7 +7,6 @@ import { PublicChatComponent } from './components/general-view/chat/public-chat/
 import { PrivateChatComponent } from './components/general-view/chat/private-chat/private-chat.component';
 import { NewMessageComponent } from './components/general-view/chat/new-message/new-message.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
-import { WorkspaceMenuComponent } from './components/general-view/workspace-menu/workspace-menu.component';
 import { SignInComponent } from './components/landing-page/sign-in/sign-in.component';
 import { ForgotPasswordComponent } from './components/landing-page/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/landing-page/reset-password/reset-password.component';

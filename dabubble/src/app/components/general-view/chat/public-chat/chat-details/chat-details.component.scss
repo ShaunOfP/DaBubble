@@ -1,19 +1,5 @@
-@import './../../../../../styles.scss';
+@import './../../../../../../styles.scss';
 
-section {
-    background-color: var(--color-white);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 40px;
-    gap: 20px;
-    border-radius: 0px 30px 30px 30px;
-    position: absolute;
-    width: 832px;
-    z-index: 6;
-    top: 80px;
-    left: 50px;
-}
 
 header {
     display: flex;
