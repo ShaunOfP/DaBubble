@@ -5,6 +5,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { CommonModule } from '@angular/common';
 import { UserDatasService } from '../../../services/firebase-services/user-datas.service';
 import { ChatService } from '../../../services/firebase-services/chat.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Subject } from 'rxjs';
 
 @Component({
@@ -25,6 +26,8 @@ export class WorkspaceMenuComponent implements OnInit {
 
   constructor(public userDatasService: UserDatasService,
     private chatService: ChatService,
+    private router: Router,
+    private route: ActivatedRoute,
     private cd: ChangeDetectorRef) {
       this.currentUrl = window.location.href;
   }
@@ -67,7 +70,11 @@ export class WorkspaceMenuComponent implements OnInit {
 
 
   openNewMessage() {
-    this.newMessage.emit();
+    this.route.queryParams.subscribe(params => {
+      console.log(params);
+      const userID = params['userID'];
+      this.router.navigate(['/general/new-message'], { queryParams: { userID: userID } });
+    })
   }
 
   readonly channelOpenState = signal(false);
