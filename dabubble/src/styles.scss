@@ -220,7 +220,7 @@ app-emoji-picker {
 }
 
 #cdk-accordion-child-0 {
-  max-height: 140px;
+  max-height: 140px; //maybe nur 100 über media query
   overflow-y: auto;
   margin-top: 16px;
 }
