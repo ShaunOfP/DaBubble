@@ -75,11 +75,12 @@ section {
 
 .workspace-menu-header {
   @include arrangement($jc: space-between);
-  &--primary{
+
+  &--primary {
     @include arrangement($jc: normal, $ai: normal, $g: 15px);
   }
 
-  &--secondary{
+  &--secondary {
     height: 40px;
     width: 40px;
     @include arrangement();
@@ -90,7 +91,7 @@ section {
       background-color: var(--color-blue-bg);
     }
 
-    >img{
+    >img {
       height: 24px;
       width: 24px;
     }
@@ -132,9 +133,9 @@ h3 {
 
 .mat-expansion-panel:not([class*=mat-elevation-z]) {
   box-shadow: none;
-} 
+}
 
- .mat-expansion-panel-header {
+.mat-expansion-panel-header {
   padding: 0;
 }
 
@@ -163,6 +164,7 @@ h3 {
 
 .add-channel {
   @include arrangement($jc: normal, $g: 10px);
+
   >span {
     font-weight: 400px;
     font-size: 18px;
@@ -184,10 +186,7 @@ h3 {
 }
 
 .contacts-container {
-  margin-top: 16px;
-  flex-direction: column;
-  align-items: start;
-  gap: 13px;
+  @include arrangement($fd: column, $ai: flex-start, $g: 13px, $jc: normal);
   height: 100%;
   overflow-y: scroll;
 }

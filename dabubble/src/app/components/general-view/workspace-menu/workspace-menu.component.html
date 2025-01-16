@@ -11,7 +11,6 @@
     </div>
     <div class="channels-and-chat-container">
         <div class="channels-container flex">
-            <!--Panel Channels Start-->
             <mat-expansion-panel hideToggle [expanded]="true" (opened)="channelOpenState.set(true)"
                 (closed)="channelOpenState.set(false)">
                 <mat-expansion-panel-header>
@@ -37,9 +36,9 @@
                         </div>
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <!-- Channels Start -->
                 <div class="channels">
-                    <div *ngFor="let channel of readableChannels" class="channel--primary" (click)="modifyUrlWithChatString(channel.channelId)">
+                    <div *ngFor="let channel of readableChannels" class="channel--primary"
+                        (click)="modifyUrlWithChatString(channel.channelId)">
                         <b>#</b>
                         <span>{{ channel.channelName }}</span>
                     </div>
@@ -50,9 +49,7 @@
                         <span>Channel hinzufügen</span>
                     </div>
                 </div>
-                <!-- Channels End -->
             </mat-expansion-panel>
-            <!--Panel Channels End-->
 
             <div class="hover height-width-40 flex center img-switch radius-30" (click)="openCreateChannelOverlay()">
                 <img class="height-width-24" src="/img/general-view/workspace-menu/add.svg">
@@ -60,7 +57,6 @@
             </div>
         </div>
         <div class="dm-container flex">
-            <!--Panel Messages Start-->
             <mat-expansion-panel hideToggle [expanded]="true" (opened)="messagesOpenState.set(true)"
                 (closed)="messagesOpenState.set(false)">
                 <mat-expansion-panel-header>
@@ -77,98 +73,44 @@
                         </div>
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                 <!-- <mat-expansion-panel-content>
-                    
-                </mat-expansion-panel-content> -->
                 <div class="contacts-container flex">
                     <div class="contact flex center gap-15">
-                       
+
                         <img src="xy">
                         <span>Karsten Stahl</span>
                     </div>
                     <div class="contact flex center gap-15">
-                        
+
                         <img src="xy">
                         <span>Shauna Vayne</span>
                     </div>
                     <div class="contact flex center gap-15">
-                        
+
                         <img src="xy">
                         <span>Stivka Bartel</span>
                     </div>
                     <div class="contact flex center gap-15">
-                        
+
                         <img src="xy">
                         <span>Charles Vincent VII</span>
                     </div>
                     <div class="contact flex center gap-15">
-                        
+
                         <img src="xy">
                         <span>Charles Vincent VII</span>
                     </div>
                     <div class="contact flex center gap-15">
-                        
+
                         <img src="xy">
                         <span>Charles Vincent VII</span>
                     </div>
                     <div class="contact flex center gap-15">
-                        
-                        <img src="xy">
-                        <span>Charles Vincent VII</span>
-                    </div>
-                    <div class="contact flex center gap-15">
-                        
-                        <img src="xy">
-                        <span>Charles Vincent VII</span>
-                    </div>
-                    <div class="contact flex center gap-15">
-                        
-                        <img src="xy">
-                        <span>Charles Vincent VII</span>
-                    </div>
-                    <div class="contact flex center gap-15">
-                        
-                        <img src="xy">
-                        <span>Charles Vincent VII</span>
-                    </div>
-                    <div class="contact flex center gap-15">
-                        
-                        <img src="xy">
-                        <span>Charles Vincent VII</span>
-                    </div>
-                    <div class="contact flex center gap-15">
-                        
-                        <img src="xy">
-                        <span>Charles Vincent VII</span>
-                    </div>
-                    <div class="contact flex center gap-15">
-                        
-                        <img src="xy">
-                        <span>Charles Vincent VII</span>
-                    </div>
-                    <div class="contact flex center gap-15">
-                        
-                        <img src="xy">
-                        <span>Charles Vincent VII</span>
-                    </div>
-                    <div class="contact flex center gap-15">
-                        
-                        <img src="xy">
-                        <span>Charles Vincent VII</span>
-                    </div>
-                    <div class="contact flex center gap-15">
-                        
-                        <img src="xy">
-                        <span>Charles Vincent VII</span>
-                    </div>
-                    <div class="contact flex center gap-15">
-                        
+
                         <img src="xy">
                         <span>Charles Vincent Johann Karl von Gutenberg sein Sohn der Bruder</span>
                     </div>
                 </div>
             </mat-expansion-panel>
-            <!--Panel Messages Start-->
         </div>
     </div>
 </section>
