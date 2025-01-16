@@ -105,7 +105,7 @@ section {
 }
 
 h3 {
-  align-items: center;
+  @include arrangement($jc: normal);
 }
 
 .channels-and-chat-container {
@@ -114,12 +114,19 @@ h3 {
   @include arrangement($jc: normal, $ai: normal, $fd: column);
 }
 
-.channels-container {
-  justify-content: space-between;
-  // min-height: 100px;
-  // flex-direction: column;
-  gap: 25px;
+.channels-and-chat-container-upper {
+  @include arrangement($jc: space-between, $ai: normal, $g: 25px);
   max-height: 30%;
+}
+
+.channels-and-chat-container-lower {
+  @include arrangement($fd: column, $jc: normal, $ai: normal, $g: 25px);
+  max-height: 70%;
+}
+
+.channels-header{
+  @include arrangement($g: 15px);
+  @include filter-hover(purple-secondary-hover);
 }
 
 .mat-expansion-panel {
@@ -137,15 +144,6 @@ h3 {
 
 .mat-expansion-panel-header {
   padding: 0;
-}
-
-.header {
-  align-items: center;
-
-  >img {
-    height: 30px;
-    width: 30px;
-  }
 }
 
 .header-middle {
@@ -177,12 +175,6 @@ h3 {
       transform: scale(1.05);
     }
   }
-}
-
-.dm-container {
-  flex-direction: column;
-  gap: 25px;
-  max-height: 70%;
 }
 
 .contacts-container {
@@ -222,6 +214,9 @@ h3 {
 
   >span {
     font-size: 18px;
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   &:hover {
