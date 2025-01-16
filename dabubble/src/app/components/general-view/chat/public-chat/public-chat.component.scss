@@ -15,7 +15,6 @@ header {
   position: relative;
 }
 
-
 .chat-feed {
   @include arrangement($fd: column, $g: 20px, $ai: start);
 }
@@ -70,10 +69,15 @@ header {
       background-color: var(--color-blue-bg);
       color: var(--color-purple-secondary-hover);
     }
+
+    >div{
+      @include arrangement($jc: normal);
+    }
   }
 }
 
 .change-image-on-hover {
+  @include arrangement();
 
   cursor: pointer;
   &:hover {

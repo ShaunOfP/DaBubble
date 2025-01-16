@@ -14,14 +14,14 @@
   <app-add-members *ngIf="showAddMembers" id="addMembersMenu" (closeMe)="closeAddMembersMenu()"></app-add-members>
   <div class="header-user-container">
     <div class="header-user-container_members" (click)="openMembersInfo()">
-      <div class="d-flex center">
+      <div>
         <img class="user-icon " src="/img/public/user_icon_male_2.svg">
         <img class="user-icon margin-left-minus-10" src="/img/public/user_icon_male_2.svg">
         <img class="user-icon margin-left-minus-10" src="/img/public/user_icon_male_2.svg">
       </div>
       <span class="count">3</span>
     </div>
-    <div class="change-image-on-hover members-menu" (click)="openAddMembersMenu()">
+    <div class="change-image-on-hover" (click)="openAddMembersMenu()">
       <img src="/img/general-view/workspace-menu/add_person.svg">
       <img class="d-none" src="/img/general-view/workspace-menu/hover_add_person.svg">
     </div>
