@@ -79,7 +79,7 @@ export class WorkspaceMenuComponent implements OnInit {
   readonly messagesOpenState = signal(false);
 
 
-  openChatFromWorkspaceMenu(channelId: string) { //umbenennen in modifyUrlWithChatString()
+  modifyUrlWithChatString(channelId: string) {
     // this.chatService.currentChatId$.next(channelId);
 
     if (this.currentUrl.includes("chatID")) {
