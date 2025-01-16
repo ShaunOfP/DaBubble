@@ -54,7 +54,7 @@ export class UserDatasService {
     this.userDatas$
       .pipe(map((users) => users.map((user) => user.id)))
       .subscribe((ids) => this.userIdsSubject.next(ids));
-    this.getCurrentChannelId();
+    this.getCurrentChannelId(); //call nach/beim login da sonst fehlermeldung weil zu früh gerufen und keine id in url ist
   }
 
   async getUserDataById(userId: string): Promise<UserDatas | undefined> {
