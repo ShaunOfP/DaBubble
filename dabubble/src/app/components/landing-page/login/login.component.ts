@@ -37,7 +37,7 @@ import { User } from '@angular/fire/auth';
   styleUrl: './login.component.scss',
 })
 export class LoginComponent implements OnInit {
-  userDatas$: Observable<UserDatas>;
+  userDatas$: Observable<UserDatas[]>;
   loginForm: FormGroup;
   animationPlayed: boolean = false;
   user: UserDatas = new UserDatas();
@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
     private userService: UserDatasService,
     private form: FormBuilder
   ) {
-    this.userDatas$ = collectionData(this.userDatasRef());
+    this.userDatas$ = collectionData(this.userDatasRef()) as Observable<UserDatas[]>;
     const animation = sessionStorage.getItem('animation');
     this.animationPlayed = animation === 'true';
 
