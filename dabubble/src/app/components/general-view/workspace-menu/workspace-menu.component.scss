@@ -74,13 +74,33 @@ section {
 }
 
 .workspace-menu-header {
-  justify-content: space-between;
-  align-items: center;
+  @include arrangement($jc: space-between);
+  &--primary{
+    @include arrangement($jc: normal, $ai: normal, $g: 15px);
+  }
+
+  &--secondary{
+    height: 40px;
+    width: 40px;
+    @include arrangement();
+    border-radius: 30px;
+
+    &:hover {
+      cursor: pointer;
+      background-color: var(--color-blue-bg);
+    }
+
+    >img{
+      height: 24px;
+      width: 24px;
+    }
+  }
 }
 
 .devspace-logo {
   height: 60px;
   width: 60px;
+  border-radius: 30px;
 }
 
 h3 {
@@ -142,6 +162,7 @@ h3 {
 }
 
 .add-channel {
+  @include arrangement($jc: normal, $g: 10px);
   >span {
     font-weight: 400px;
     font-size: 18px;

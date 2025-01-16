@@ -1,13 +1,12 @@
 <section class="flex radius-30">
-    <div class="workspace-menu-header flex">
-        <div class="flex gap-15">
-            <img class="radius-30 devspace-logo" src="/img/general-view/workspace-menu/logo_devspace.svg">
+    <div class="workspace-menu-header">
+        <div class="workspace-menu-header--primary">
+            <img class="devspace-logo" src="/img/general-view/workspace-menu/logo_devspace.svg">
             <h3 class="flex cursor-no-change">Devspace</h3>
         </div>
-        <div class="hover height-width-40 flex center img-switch radius-30" (click)="openNewMessage()">
-            <img class="height-width-24" src="/img/general-view/workspace-menu/edit.svg">
-            <img style="height: 27px; margin-bottom: 3px; margin-right: 3px;" class="d-none"
-                src="/img/general-view/workspace-menu/hover_edit.svg">
+        <div class="workspace-menu-header--secondary img-switch" (click)="openNewMessage()">
+            <img src="/img/general-view/workspace-menu/edit.svg">
+            <img class="d-none" src="/img/general-view/workspace-menu/hover_edit.svg">
         </div>
     </div>
     <div class="channels-and-chat-container">
@@ -46,7 +45,7 @@
                     </div>
                 </div>
                 <div class="channels flex hover-text-color grow-img">
-                    <div class="add-channel flex gap-10" (click)="openCreateChannelOverlay()">
+                    <div class="add-channel" (click)="openCreateChannelOverlay()">
                         <img class="height-width-24 grow-img" src="/img/general-view/workspace-menu/add_circle.svg">
                         <span>Channel hinzufügen</span>
                     </div>
