@@ -1,6 +1,10 @@
 @import './../../../../../styles.scss';
 
 section {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
     padding: 25px 45px 25px 45px;
     box-shadow: 0px 2px 10px -10px;
     display: flex;
