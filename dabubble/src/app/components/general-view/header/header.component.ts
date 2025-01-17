@@ -37,43 +37,12 @@ export class HeaderComponent implements OnInit {
   newNameInput: string = ``;
   newMailInput: string = ``;
 
-  userId: string = ``;
-
   ngOnInit(): void {
-
-    //kann in userService definiert und für alle Komponenten welche die Id brauchen nutzbar machen
-    this.route.queryParams.subscribe(params => {
-      const userID = params['userID'];
-      if (userID) {
-        this.fetchUserData(userID);
-        this.userId = userID;
-      }
-      else {
-        console.error('No user ID provided');
-      }
-    });
-     this.userDatasService.userDatas$.pipe(map((user) =>  console.log(user))).subscribe();    
-     this.userDatasService.userIds$.pipe(
-      map((ids) => console.log(ids))
-    )
-    .subscribe();   
-  }
-
-  async fetchUserData(userID: string): Promise<void> {
-    try {
-      const userData = await this.userDatasService.getUserDataById(userID);
-      this.userData = userData || null;
-      console.log('Fetched user data:', this.userData);
-      if (this.userData) {
-        console.log('Mail:', this.userData.mail);
-        console.log('Name:', this.userData.username); // Correctly log the name    
-        console.log('Account Image:', this.userData.avatar); // Correctly log the account image
-      } else {
-        console.log('User data is null or undefined');
-      }
-    } catch (error) {
-      console.error('Error fetching user data:', error);
-    }
+    this.userDatasService.userDatas$.pipe(map((user) => console.log(user))).subscribe();
+    //  this.userDatasService.userIds$.pipe(
+    //   map((ids) => console.log(ids))
+    // )
+    // .subscribe();
   }
 
   /**
@@ -153,7 +122,7 @@ export class HeaderComponent implements OnInit {
    */
   submitForm(form: NgForm) {
     if (form.touched && form.valid) {
-      this.userDatasService.updateUserData(this.userId, this.newMailInput, this.newNameInput);
+      // this.userDatasService.updateUserData(this.userId, this.newMailInput, this.newNameInput);
       console.log("successful");
     } else {
       console.log("invalid");
