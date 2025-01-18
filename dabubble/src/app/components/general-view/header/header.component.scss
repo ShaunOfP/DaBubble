@@ -27,9 +27,7 @@ h3 {
 }
 
 .header-logo {
-    display: flex;
-    align-items: center;
-    gap: 16px;
+    @include arrangement($jc: normal, $g: 16px);
 
     >img {
         height: 70px;
@@ -38,11 +36,8 @@ h3 {
 }
 
 .bar-info-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    @include arrangement($jc: space-between, $g: 6vw);
     width: 100%;
-    gap: 6vw;
 }
 
 .searchbar {
@@ -70,10 +65,8 @@ h3 {
 }
 
 .account-info {
+    @include arrangement($g: 20px, $jc: normal);
     height: 70px;
-    display: flex;
-    gap: 20px;
-    align-items: center;
 
     >span {
         @include fontStyle($fz: 32px);
@@ -121,30 +114,24 @@ h3 {
 }
 
 .profile-info-container {
+    @include arrangement($fd: column, $g: 45px, $ai: normal, $jc: normal);
     width: 500px;
     position: absolute;
     top: 100px;
     right: 40px;
     border-radius: 30px 0px 30px 30px;
     padding: 40px;
-    display: flex;
-    flex-direction: column;
-    gap: 45px;
     background-color: var(--color-white);
     z-index: 11;
 }
 
 .profile-info-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    @include arrangement($jc: space-between);
 
     >div {
         height: 40px;
         width: 40px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        @include arrangement();
 
         &:hover {
             background-color: var(--color-blue-border);
@@ -154,12 +141,9 @@ h3 {
 }
 
 .profile-info-image {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include arrangement();
     height: 200px;
     width: 100%;
-
 
     >img {
         width: 200px;
@@ -172,15 +156,11 @@ h3 {
 }
 
 .profile-info-name-status {
-    display: flex;
-    gap: 15px;
-    flex-direction: column;
+    @include arrangement($fd: column, $jc: normal, $ai: normal, $g: 15px);
 }
 
 .profile-info-name-status-upper {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    @include arrangement($jc: space-between);
 }
 
 .font-size-18 {
@@ -249,15 +229,13 @@ h3 {
 }
 
 .edit-profile-container {
+    @include arrangement($fd: column, $g: 45px);
     width: 500px;
     position: absolute;
     top: 100px;
     right: 40px;
     border-radius: 30px 0px 30px 30px;
     padding: 40px;
-    display: flex;
-    flex-direction: column;
-    gap: 45px;
     background-color: var(--color-white);
     z-index: 11;
 }
@@ -284,10 +262,6 @@ h3 {
     }
 }
 
-// gap ist auch schon mit @include arrangement($g:20px) (als beispiel) benutzbar. genau wie d-flex, flex-direction und align-items 
-
-
-//dann einfach einbinden per include?
 .gap-20 {
     gap: 20px;
 }

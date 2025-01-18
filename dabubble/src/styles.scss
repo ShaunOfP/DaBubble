@@ -225,12 +225,16 @@ app-emoji-picker {
   margin-top: 16px;
 }
 
-#cdk-accordion-child-3{
+#cdk-accordion-child-3 {
   height: calc(100% - 57px);
 }
 
 .ng-tns-c857250080-4 {
   max-width: 100% !important;
+}
+
+#mat-menu-panel-0 {
+  box-shadow: none;
 }
 
 app-public-chat {
