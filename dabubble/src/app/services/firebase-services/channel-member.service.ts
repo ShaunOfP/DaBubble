@@ -13,158 +13,117 @@ import {
 import { Observable, BehaviorSubject } from 'rxjs';
 
 export interface Member {
-    privateChats: string;
-    username: string;
-    avatar: string;
-    selected: boolean;
-    id: string,
+  privateChats: string;
+  username: string;
+  avatar: string;
+  selected: boolean;
+  id: string;
 }
 
 @Injectable({
   providedIn: 'root',
 })
+export class ChannelMemberService {
+  public firestore = inject(Firestore);
+  private allMembersSubject = new BehaviorSubject<Member[]>([]);
+  allMembersSubject$: Observable<Member[]> =
+    this.allMembersSubject.asObservable();
+  private membersSubject = new BehaviorSubject<Member[]>([]);
+  members$: Observable<Member[]> = this.membersSubject.asObservable();
+  private selectedMembersSubject = new BehaviorSubject<Member[]>([]);
+  selectedMembers$ = this.selectedMembersSubject.asObservable();
+  private channelName = new BehaviorSubject<string>('');
+  channelName$ = this.channelName.asObservable();
+  private channelDescription = new BehaviorSubject<string>('');
+  channelDescription$ = this.channelDescription.asObservable();
 
-export class ChannelMemberService{
-    public firestore = inject(Firestore);
-    private allMembersSubject = new BehaviorSubject<Member[]>([]);
-    allMembersSubject$: Observable<Member[]> = this.allMembersSubject.asObservable();
-    private membersSubject = new BehaviorSubject<Member[]>([]);
-    members$: Observable<Member[]> = this.membersSubject.asObservable();
-    private selectedMembersSubject = new BehaviorSubject<Member[]>([]);
-    selectedMembers$ = this.selectedMembersSubject.asObservable();
-    private channelName = new BehaviorSubject<string>('');
-    channelName$ = this.channelName.asObservable();
-    private channelDescription = new BehaviorSubject<string>('');
-    channelDescription$ = this.channelDescription.asObservable();
-
-    userDatasRef() {
-        return collection(this.firestore, 'userDatas');
-    }
-
-    async selectAllMembers(){
-      const querySnapshot = await getDocs(collection(this.firestore, 'userDatas'));
-      const allUsers: Member[] = []
-      
-      querySnapshot.forEach((doc)=> {
-        allUsers.push({...(doc.data() as Member),
-          id: doc.id
-        })
-      });
-      this.allMembersSubject.next(allUsers);
-      return allUsers
-    }
-
-
-    // async searchUsers(queryString: string): Promise<Member[]> {
-    //   const capitalizedQuery = queryString.charAt(0).toUpperCase() + queryString.slice(1);
-    //   const lowercaseQuery = queryString.toLowerCase();
-  
-    //   const capitalizedQueryRef = query(
-    //     this.userDatasRef(),
-    //     where('username', '>=', capitalizedQuery),
-    //     where('username', '<', capitalizedQuery + '\uf8ff')
-    //   );
-  
-    //   const lowercaseQueryRef = query(
-    //     this.userDatasRef(),
-    //     where('username', '>=', lowercaseQuery),
-    //     where('username', '<', lowercaseQuery + '\uf8ff')
-    //   );
-  
-    //   try {
-    //     const [capitalizedSnapshot, lowercaseSnapshot] = await Promise.all([
-    //       getDocs(capitalizedQueryRef),
-    //       getDocs(lowercaseQueryRef),
-    //     ]);
-  
-    //     const users: Member[] = [];
-    //     const userIds = new Set<string>();
-  
-    //     capitalizedSnapshot.forEach((doc) => {
-    //       const user = {...(doc.data() as Member), id: doc.id};
-    //       if (!userIds.has(doc.id)) {
-    //         users.push(user);
-    //         userIds.add(doc.id);
-    //       }
-    //     });
-  
-    //     lowercaseSnapshot.forEach((doc) => {
-    //       const user = {...(doc.data() as Member), id: doc.id};
-    //       if (!userIds.has(doc.id)) {
-    //         users.push(user);
-    //         userIds.add(doc.id);
-    //       }
-    //     });
-  
-    //     this.membersSubject.next(users);
-    //     return users;
-    //   } catch (error) {
-    //     console.error('Error searching for users:', error);
-    //     return [];
-    //   }
-    // }
-
-    // Old search case sensitive
-
-
-
-
-    async searchUsers(queryString: string): Promise<Member[]> {
-      const normalizedQuery = queryString.toLowerCase();
-        const userQuery = query(
-          this.userDatasRef(),
-          where('username_lowercase', '>=', normalizedQuery),
-          where('username_lowercase', '<', normalizedQuery + '\uf8ff')
-        );
-      
-        try {
-          const querySnapshot = await getDocs(userQuery);
-          const users: Member[] = [];
-          querySnapshot.forEach((doc) => {
-            users.push({...(doc.data() as Member),
-            id: doc.id
-             });
-          });
-          this.membersSubject.next(users);
-          return users;
-        } catch (error) {
-          console.error('Fehler beim Suchen nach Nutzern:', error);
-          return [];
-        }
-      }
-    
-      selectMember(member: Member): void{
-        const members = this.membersSubject.getValue();
-        const updateMembers = members.map(m => 
-          m.privateChats[0] === member.privateChats[0] ? {...m, selected: true} : m);
-        
-        this.membersSubject.next(updateMembers);
-    
-        const selectedMembers = this.selectedMembersSubject.getValue();
-        if (!selectedMembers.find(m => m.privateChats[0] === member.privateChats[0])) {
-          this.selectedMembersSubject.next([...selectedMembers, {...member, selected: true}])
-        }
-      }
-    
-      removeMember(member: Member){
-        const selectedMembers = this.selectedMembersSubject.getValue();
-        const updateSelectedMembers = selectedMembers.filter(
-          m => m.privateChats[0] !== member.privateChats[0]
-        );
-        this.selectedMembersSubject.next(updateSelectedMembers);
-    
-        const members = this.membersSubject.getValue();
-        const updateMembers = members.map(m => 
-          m.privateChats[0] === member.privateChats[0] ? {...m, selected: false} : m);
-    
-        this.membersSubject.next(updateMembers);
-      }
-
-  setChannelData(name: string, description: string){
-    this.channelName.next(name);
-    this.channelDescription.next(description)
+  userDatasRef() {
+    return collection(this.firestore, 'userDatas');
   }
 
+  async selectAllMembers() {
+    const querySnapshot = await getDocs(
+      collection(this.firestore, 'userDatas')
+    );
+    const allUsers: Member[] = [];
+
+    querySnapshot.forEach((doc) => {
+      allUsers.push({ ...(doc.data() as Member), id: doc.id });
+    });
+    this.allMembersSubject.next(allUsers);
+  }
+
+  async searchUsers(queryString: string): Promise<Member[]> {
+    const normalizedQuery = queryString.toLowerCase();
+    const userQuery = query(
+      this.userDatasRef(),
+      where('username_lowercase', '>=', normalizedQuery),
+      where('username_lowercase', '<', normalizedQuery + '\uf8ff')
+    );
+
+    try {
+      const querySnapshot = await getDocs(userQuery);
+      const users: Member[] = [];
+      querySnapshot.forEach((doc) => {
+        users.push({ ...(doc.data() as Member), id: doc.id });
+      });
+      this.membersSubject.next(users);
+      return users;
+    } catch (error) {
+      console.error('Fehler beim Suchen nach Nutzern:', error);
+      return [];
+    }
+  }
+
+  selectMember(member: Member): void {
+    const members = this.membersSubject.getValue();
+    const updateMembers = members.map((m) =>
+      m.privateChats[0] === member.privateChats[0]
+        ? { ...m, selected: true }
+        : m
+    );
+
+    this.membersSubject.next(updateMembers);
+
+    const selectedMembers = this.selectedMembersSubject.getValue();
+    if (
+      !selectedMembers.find((m) => m.privateChats[0] === member.privateChats[0])
+    ) {
+      this.selectedMembersSubject.next([
+        ...selectedMembers,
+        { ...member, selected: true },
+      ]);
+    }
+  }
+
+  removeMember(member: Member) {
+    const selectedMembers = this.selectedMembersSubject.getValue();
+    const updateSelectedMembers = selectedMembers.filter(
+      (m) => m.privateChats[0] !== member.privateChats[0]
+    );
+    this.selectedMembersSubject.next(updateSelectedMembers);
+
+    const members = this.membersSubject.getValue();
+    const updateMembers = members.map((m) =>
+      m.privateChats[0] === member.privateChats[0]
+        ? { ...m, selected: false }
+        : m
+    );
+
+    this.membersSubject.next(updateMembers);
+  }
+
+  /**
+   * Get current channel-name and channel-description from create-channel-component and update observables
+   */
+  setChannelData(name: string, description: string) {
+    this.channelName.next(name);
+    this.channelDescription.next(description);
+  }
+
+  /**
+   * Create new channel in firebase
+   */
   async createNewChannel(members: Member[], ownerId: string) {
     const generatedId = this.generateRandomId();
     const channelDocRef = doc(this.firestore, 'channels', generatedId);
@@ -174,13 +133,16 @@ export class ChannelMemberService{
       createdAt: new Date().getTime(),
       description: this.channelDescription.value,
       owner: ownerId,
-      users: members.map(member => member.id),
-    }
+      users: members.map((member) => member.id),
+    };
     await setDoc(channelDocRef, channelData);
     this.addNewChannelToMembers(members, generatedId);
     this.addNewChannelToOwner(ownerId, generatedId);
   }
 
+  /**
+   * Generate and return a new ID for a new channel
+   */
   generateRandomId() {
     const array = new Uint8Array(22);
     crypto.getRandomValues(array);
@@ -199,20 +161,25 @@ export class ChannelMemberService{
       await updateDoc(ownerDocRef, {
         channels: arrayUnion(channelId),
       });
-      console.log(`Channel ${channelId} successfully added to owner ${ownerId}`);
+      console.log(
+        `Channel ${channelId} successfully added to owner ${ownerId}`
+      );
     } catch (error) {
-      console.error(`Error adding channel ${channelId} to owner ${ownerId}:`, error);
+      console.error(
+        `Error adding channel ${channelId} to owner ${ownerId}:`,
+        error
+      );
     }
   }
 
   async addNewChannelToMembers(members: Member[], channelId: string) {
-    const promises = members.map(member => {
+    const promises = members.map((member) => {
       const docRef = doc(this.firestore, 'userDatas', member.id);
       return updateDoc(docRef, {
         channels: arrayUnion(channelId),
       });
     });
-  
+
     try {
       await Promise.all(promises);
       console.log('Channel added to all members successfully');

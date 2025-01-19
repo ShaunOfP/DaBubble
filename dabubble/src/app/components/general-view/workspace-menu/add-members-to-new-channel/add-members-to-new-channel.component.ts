@@ -69,9 +69,21 @@ export class AddMembersToNewChannelComponent implements OnInit {
     this.memberService.removeMember(member);
   }
 
+   /**
+    * Adds all current members to a new channel:
+    * - Initiates member retrieval with selectAllMembers() in member Service
+    * - Subscribes observable `allMembersSubject$` to retrieve all members.
+    * - Filters out the channel creator from the list of members.
+    * - Passes the filtered members and the creator's ID to the `createNewChannel` method.
+   */
   async addAllMembersToChannel(): Promise<void> {
-    await this.memberService.selectAllMembers();
-    this.allMembers = await firstValueFrom(this.memberService.allMembersSubject$);
+    await this.memberService.selectAllMembers()
+    this.memberService.allMembersSubject$.subscribe({
+        next: (users) => {
+          this.allMembers = users;
+        }
+      }
+    );
     const filteredMembers = this.allMembers.filter(member => member.id !== this.userDataService.currentUserId);
     this.memberService.createNewChannel(filteredMembers, this.userDataService.currentUserId);
   }
