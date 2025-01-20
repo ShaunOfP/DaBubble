@@ -23,10 +23,10 @@ import { ActivatedRoute } from '@angular/router';
   providedIn: 'root',
 })
 export class ChatService {
-  private firestore = inject(Firestore);
+  // public firestore = inject(Firestore);
   // currentChatId$ = new Subject<string>(); //Subject weil keine initial value benötigt wird wie beim Observable
   currentChatId: string = ``;
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private firestore: Firestore) {
     this.getCurrentChatId();
   }
 
@@ -54,12 +54,12 @@ export class ChatService {
     return collection(this.firestore, 'chat');
   }
 
-  getMessages(channelId: string): Observable<Message[]> {
+  getMessages(channelId: string): Observable<Message[]> {  
     const messagesRef = query(
       collection(this.firestore, `channels/${channelId}/messages`),
       orderBy('createdAt', 'asc')
     );
-    return collectionData(messagesRef, { idField: 'id' }) as Observable<Message[]>;
+     return collectionData(messagesRef, { idField: 'id' }) as Observable<Message[]>;
   }
 
   saveMessage(channelId: string, message: Message) {

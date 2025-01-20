@@ -8,8 +8,8 @@ import { Message } from '../../../models/interfaces';
 import { UserDatasService } from '../../../services/firebase-services/user-datas.service';
 import { RouterModule } from '@angular/router';
 import { PrivateChatComponent } from "./private-chat/private-chat.component";
-import { PublicChatComponent } from './public-chat/public-chat.component';
 import { map } from 'rxjs';
+import { PublicChatComponent } from './public-chat/public-chat.component';
 
 
 @Component({
@@ -20,10 +20,8 @@ import { map } from 'rxjs';
     EmojiPickerComponent,
     NewMessageComponent,
     SharedModule,
-    RouterModule,
-    PrivateChatComponent,
-    PublicChatComponent,
-  ],
+    RouterModule
+],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss',
 })
