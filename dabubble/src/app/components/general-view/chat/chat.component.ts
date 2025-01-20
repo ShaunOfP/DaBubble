@@ -49,9 +49,7 @@ export class ChatComponent implements OnInit {
   // }
 
   async ngOnInit(): Promise<void>{
-    this.userDatasService.userIds$.pipe(
-      map((ids) => console.log(ids))
-    ).subscribe();
+ 
   }
 
 

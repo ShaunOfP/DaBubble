@@ -35,16 +35,13 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(private chatService: ChatService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    // this.chatService.currentChatId$.subscribe((id) => {
-    //   this.channelId = id.toString();
-    //   this.loadChatOnIdChange();
-    // });
-    // this.messages$ = this.chatService.getMessages(this.channelId).pipe(
-    //   map((messages: Message[]) => this.returnNewObservable(messages, null)),
-    //   tap(() => {
-    //     this.newMessage = true;
-    //   })
-    // );
+    const messages = this.chatService.getMessages(this.channelId)
+    this.messages$ = messages.pipe(
+      map((messages: Message[]) => this.returnNewObservable(messages, null)),
+      tap(() => {
+        this.newMessage = true;
+      })
+    );
     setTimeout(() => this.scrollToElement('auto'), 1000);
     
   }
