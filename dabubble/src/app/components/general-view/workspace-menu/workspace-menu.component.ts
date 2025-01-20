@@ -89,4 +89,8 @@ export class WorkspaceMenuComponent implements OnInit {
     const newUrl = `${this.currentUrl}/chatID=${channelId}`;
     window.history.pushState({}, '', newUrl);
   }
+
+  openDirectMessage(userId: string){
+    //implement logic to open a message
+  }
 }
