@@ -7,16 +7,16 @@
         <input placeholder="Devspace durchsuchen" />
         <button><img src="/img/general-view/workspace-menu/search.svg" /></button>
     </div>
-    <div class="account-info" (click)="toggleGreyScreen(); openDropdownMenu()">
+    <div class="account-info" (click)="openDropdownMenu()">
         <span>{{ this.userData?.username }}</span>
         <img class="avatar-small" src="{{ this.userData?.avatar }}" alt="User Image" />
-        <div class="dropdown">
+        <div>
             <button mat-button [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger">
                 <img src="/img/general-view/workspace-menu/arrow_drop_down_thin.svg" />
                 <img class="d-none" src="/img/general-view/workspace-menu/hover_arrow_drop_down_thin.svg" />
             </button>
             <mat-menu #menu="matMenu">
-                <button mat-menu-item (click)="toggleProfileInfo()">Profil</button>
+                <button mat-menu-item (click)="toggleGreyScreen(); toggleProfileInfo(true)">Profil</button>
                 <button mat-menu-item (click)="navigateTo('')">Log out</button>
             </mat-menu>
         </div>
@@ -26,7 +26,7 @@
 <div *ngIf="showProfileInfo" id="profile-info-container" class="profile-info-container">
     <div class="profile-info-header">
         <h3 class="cursor-no-change">Profil</h3>
-        <div class="change-image-on-hover pointer" (click)="toggleProfileInfo()">
+        <div class="change-image-on-hover pointer" (click)="toggleGreyScreen(); toggleProfileInfo(false)">
             <img src="/img/general-view/workspace-menu/close.svg" />
             <img class="d-none" src="/img/general-view/workspace-menu/hover_close.svg" />
         </div>

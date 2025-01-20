@@ -143,6 +143,10 @@ h3 {
   }
 }
 
+.cdk-overlay-container {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
 .cdk-overlay-connected-position-bounding-box {
   z-index: 9999;
 }

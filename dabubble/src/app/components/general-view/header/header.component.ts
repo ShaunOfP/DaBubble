@@ -46,14 +46,15 @@ export class HeaderComponent implements OnInit {
   }
 
   /**
-   * Changes bool of variable to display/hide the Profile Info (and open the DropdownMenu)
+   * Takes boolean as input to decide wether the menu should be open or not
    */
-  toggleProfileInfo() {
-    if (this.showProfileInfo) {
+  toggleProfileInfo(state: boolean) {
+    if (state) {
+      this.showProfileInfo = true;
+    }
+    if (!state) {
       this.showProfileInfo = false;
       this.openDropdownMenu();
-    } else {
-      this.showProfileInfo = !this.showProfileInfo;
     }
   }
 
