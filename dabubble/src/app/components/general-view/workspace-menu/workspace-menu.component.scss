@@ -124,7 +124,7 @@ h3 {
   max-height: 70%;
 }
 
-.channels-header{
+.channels-header {
   @include arrangement($g: 15px);
   @include filter-hover(purple-secondary-hover);
 }
@@ -184,17 +184,25 @@ h3 {
 }
 
 .contact {
-  // padding: 4px 20px 4px 20px;
-  // margin-left: 25px;
-
+  padding: 4px 20px 4px 20px;
+  @include arrangement($g: 15px, $jc: center, $ai: center);
+  border-radius: 30px;
+  transition: all ease-in 100ms;
+  
   >img {
     height: 50px;
     width: 50px;
+    border-radius: 30px;
   }
 
   >span {
     font-weight: 400;
     font-size: 18px;
+  }
+
+  &:hover{
+    cursor: pointer;
+    background-color: var(--color-blue-bg);
   }
 }
 
