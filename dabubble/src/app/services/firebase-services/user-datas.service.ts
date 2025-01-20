@@ -42,19 +42,22 @@ export interface UserObserver {
   providedIn: 'root',
 })
 export class UserDatasService {
-  public firestore = inject(Firestore);
+  private firestore = inject(Firestore);
   userDatas$: Observable<UserObserver[]> = new Subject<UserObserver[]>();
-  private userIdsSubject = new BehaviorSubject<string[]>([]);
+  userIdsSubject = new BehaviorSubject<string[]>([]);
   userIds$ = this.userIdsSubject.asObservable();
   channelData: any = []; //datentyp ändern
   currentUserId: string = ``;
 
   constructor(private route: ActivatedRoute) {
     this.userDatas$ = collectionData(this.userDatasRef(), { idField: 'id' }) as Observable<UserObserver[]>;
-    this.userDatas$
-      .pipe(map((users) => users.map((user) => user.id)))
-      .subscribe((ids) => this.userIdsSubject.next(ids));
-    this.getCurrentChannelId(); //call nach/beim login da sonst fehlermeldung weil zu früh gerufen und keine id in url ist
+    // this.userDatas$
+    //   .pipe(map((users) => users.map((user) => user.id)))
+    //   .subscribe((ids) => this.userIdsSubject.next(ids));
+    // this.getCurrentChannelId(); //call nach/beim login da sonst fehlermeldung weil zu früh gerufen und keine id in url ist
+    // this.userDatas$.pipe().subscribe(data => console.log(data));
+   this.getCurrentChannelId() 
+    
   }
 
   async getUserDataById(userId: string): Promise<UserDatas | undefined> {
@@ -135,12 +138,13 @@ export class UserDatasService {
   }
 
 
-  getCurrentChannelId() {
-    this.route.queryParams.subscribe(params => {
+  async getCurrentChannelId() {
+     this.route.queryParams.subscribe(params => {
       const wholeString = params['userID'];
       const extractedUserID = wholeString.split("/", 1)[0];
       if (extractedUserID) {
         this.currentUserId = extractedUserID;
+        console.log(this.currentUserId);
       }
       else {
         console.error('No user ID provided');

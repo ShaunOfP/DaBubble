@@ -26,7 +26,7 @@ export class ThreadMessagesComponent {
   constructor(private chatService: ChatService) { }
 
   ngOnInit() {
-    this.messages$ = this.chatService.getThreadCollection('dOCTHJxiNDhYvmqMokLv', 'buM6uSAhw8snf948FEIh');
+    // this.messages$ = this.chatService.getThreadCollection('dOCTHJxiNDhYvmqMokLv', 'buM6uSAhw8snf948FEIh');
   }
 
   //wenn reaktionen vorhanden dann showReactions auf true

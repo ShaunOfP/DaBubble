@@ -39,16 +39,13 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     //   this.channelId = id.toString();
     //   this.loadChatOnIdChange();
     // });
-    console.log(this.channelId);
-    
-    this.messages$ = this.chatService.getMessages(this.channelId).pipe(
-      map((messages: Message[]) => this.returnNewObservable(messages, null)),
-      tap(() => {
-        this.newMessage = true;
-      })
-    );
+    // this.messages$ = this.chatService.getMessages(this.channelId).pipe(
+    //   map((messages: Message[]) => this.returnNewObservable(messages, null)),
+    //   tap(() => {
+    //     this.newMessage = true;
+    //   })
+    // );
     setTimeout(() => this.scrollToElement('auto'), 1000);
-    console.log(this.channelId);
     
   }
   toggleChatDetails() {

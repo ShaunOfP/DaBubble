@@ -38,7 +38,7 @@ export class HeaderComponent implements OnInit {
   newMailInput: string = ``;
 
   ngOnInit(): void {
-    this.userDatasService.userDatas$.pipe(map((user) => console.log(user))).subscribe();
+
     //  this.userDatasService.userIds$.pipe(
     //   map((ids) => console.log(ids))
     // )
