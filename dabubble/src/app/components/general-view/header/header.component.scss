@@ -3,8 +3,8 @@
 // generell bessere eindeutige Klassennamen BEM nutzen https://kulturbanause.de/faq/bem-block-element-modifier/
 
 
-@mixin fontStyle($fz: 18px, $fw: 700) {
-    font-size: $fz;
+@mixin fontStyle($fs: 18px, $fw: 700) {
+    font-size: $fs;
     font-weight: $fw;
 }
 
@@ -35,17 +35,17 @@ h3 {
     }
 }
 
-.bar-info-container {
+.bar-info {
     @include arrangement($jc: space-between, $g: 6vw);
     width: 100%;
 }
 
-.searchbar {
+.bar-info-searchbar {
     background-color: var(--color-white);
     min-width: 560px; //eventuell anpassen
 
     >input {
-        @include fontStyle($fz: 24px, $fw: 400);
+        @include fontStyle($fs: 24px, $fw: 400);
         background-color: var(--color-white);
     }
 
@@ -64,12 +64,12 @@ h3 {
     }
 }
 
-.account-info {
+.bar-info-account-info {
     @include arrangement($g: 20px, $jc: normal);
     height: 70px;
 
     >span {
-        @include fontStyle($fz: 32px);
+        @include fontStyle($fs: 32px);
         width: max-content;
         max-width: 250px;
         overflow: hidden;
@@ -113,7 +113,7 @@ h3 {
     padding: 0;
 }
 
-.profile-info-container {
+.profile-info {
     @include arrangement($fd: column, $g: 45px, $ai: normal, $jc: normal);
     width: 500px;
     position: absolute;
@@ -161,6 +161,23 @@ h3 {
 
 .profile-info-name-status-upper {
     @include arrangement($jc: space-between);
+
+    >:first-child {
+        @include fontStyle($fs: 32px, $fw: 700);
+    }
+
+    >:last-child {
+        @include fontStyle($fs: 18px, $fw: 700);
+    }
+}
+
+.profile-info-name-status-lower {
+    @include arrangement($ai: center, $jc: normal, $g: 15px);
+
+    >span{
+        @include fontStyle($fs: 20px, $fw: 400);
+        color: var(--color-green);
+    }
 }
 
 .font-size-18 {
@@ -193,6 +210,7 @@ h3 {
 
 .color-purple-with-hover {
     color: var(--color-purple-primary-disabled);
+    transition: all ease-in 100ms;
 
     &:hover {
         cursor: pointer;
@@ -220,7 +238,7 @@ h3 {
     background-color: var(--color-green);
 }
 
-.profile-mail-container {
+.profile-info-mail {
     >a {
         margin-left: 50px;
         text-decoration: none;
@@ -277,7 +295,7 @@ h3 {
 .input-field {
     background-color: var(--color-white);
     border: 1px solid var(--color-blue-border);
-    @include fontStyle($fz: 18px, $fw: 400);
+    @include fontStyle($fs: 18px, $fw: 400);
 
     &:hover {
         border: 1px solid var(--color-purple-primary-disabled);
@@ -326,6 +344,6 @@ form {
 }
 
 .error-message {
-    @include fontStyle($fz: 18px, $fw: 400);
+    @include fontStyle($fs: 18px, $fw: 400);
     color: var(--color-purple-error);
 }

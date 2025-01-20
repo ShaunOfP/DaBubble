@@ -77,12 +77,7 @@ export class HeaderComponent implements OnInit {
    * Closes the Dropdown Menu and also closes the Profile Info Container if it is still open
    */
   closeDropdownMenu() {
-    let profileInfoContainer = document.getElementById('profile-info-container');
-
     this.menuTrigger.closeMenu();
-    if (!profileInfoContainer?.classList.contains('d-none')) {
-      profileInfoContainer?.classList.add('d-none');
-    }
   }
 
   /**
