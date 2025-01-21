@@ -252,5 +252,5 @@ app-public-chat {
   // padding: 0 35px;
   // box-sizing: border-box;
   @include arrangement($jc: normal, $fd: column, $g: 0px); //gap geändert von 20 auf 0, falls doof aussieht dann eben wieder ändern
-  overflow-y: auto;
+  overflow-y: auto; //verhindert, dass chat-details richtig angezeigt werden kann
 }
