@@ -246,7 +246,23 @@ h3 {
     }
 }
 
-.edit-profile-container {
+.profile-info-mail-title{
+    @include arrangement($jc: normal, $g: 20px);
+
+    &--image{
+        @extend .profile-info-mail-title;
+        height: 30px;
+        width: 30px;
+    }
+
+    >span{
+        @include fontStyle($fs: 20px);
+    }
+}
+
+
+
+.profile-edit {
     @include arrangement($fd: column, $g: 45px, $ai: normal);
     width: 500px;
     position: absolute;
@@ -325,6 +341,22 @@ h3 {
 
 form {
     @include arrangement($ai: normal, $fd: column, $g: 20px);
+}
+
+.profile-edit-form{
+    @include arrangement($g: 8px, $fd: column, $ai: normal, $jc: normal);
+
+    >div{
+        @include arrangement($g: 20px, $ai: center, $jc: normal);
+    }
+
+    &--primary{
+
+    }
+}
+
+.profile-edit-form-image{
+    
 }
 
 .height-25 {

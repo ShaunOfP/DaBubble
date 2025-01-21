@@ -46,16 +46,16 @@
         </div>
     </div>
     <div class="profile-info-mail">
-        <div class="d-flex gap-20 align-center">
-            <div class="height-30 width-30 d-flex align-center">
+        <div class="profile-info-mail-title">
+            <div class="profile-info-mail-title--image">
                 <img src="/img/public/mail-black.svg" />
             </div>
-            <span class="font-size-20 font-weight-700 cursor-no-change">E-Mail-Adresse</span>
+            <span class="cursor-no-change">E-Mail-Adresse</span>
         </div>
         <a class="cursor-no-change">{{ this.userData?.mail }}</a>
     </div>
 </div>
-<div *ngIf="showProfileEdit" class="edit-profile-container">
+<div *ngIf="showProfileEdit" class="profile-edit">
     <div class="profile-info-header">
         <h3>Dein Profil bearbeiten</h3>
         <div class="change-image-on-hover pointer" (click)="closeEditForm()">
@@ -67,9 +67,9 @@
         <img src="{{ this.userData?.avatar }}" alt="User Image" />
     </div>
     <form (ngSubmit)="submitForm(form)" #form="ngForm">
-        <div class="gap-8 d-flex column">
-            <div class="d-flex align-center gap-20">
-                <div class="height-30 width-30 d-flex align-center">
+        <div class="profile-edit-form">
+            <div>
+                <div class="height-30 width-30 d-flex align-center profile-edit-form-image">
                     <img class="height-100" src="/img/general-view/workspace-menu/person_circle.svg" />
                 </div>
                 <span class="font-size-20 font-weight-700 cursor-no-change">Vollständiger Name</span>
@@ -79,8 +79,8 @@
                 name="newNameInputField" />
             <span *ngIf="name.touched && name.invalid" class="error-message">This field is required</span>
         </div>
-        <div class="gap-8 d-flex column">
-            <div class="d-flex align-center gap-20">
+        <div class="profile-edit-form">
+            <div>
                 <div class="height-30 width-30 d-flex align-center">
                     <img class="width-100 height-25" src="/img/public/mail-black.svg" />
                 </div>
