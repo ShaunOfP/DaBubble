@@ -5,10 +5,7 @@
   </div>
   <div class="img-container change-image-on-hover" (click)="closeChatDetails()">
     <img src="/img/general-view/workspace-menu/close.svg" />
-    <img
-      class="d-none"
-      src="/img/general-view/workspace-menu/hover_close.svg"
-    />
+    <img class="d-none" src="/img/general-view/workspace-menu/hover_close.svg" />
   </div>
 </header>
 <div id="input-form" class="d-flex column gap-20">
@@ -16,9 +13,7 @@
     <div class="channel-name-container">
       <div>
         <span class="fs18 bold">Channel-Name</span>
-        <span class="fs18 purple hover" (click)="openNewChannelInput()"
-          >Bearbeiten</span
-        >
+        <span class="fs18 purple hover" (click)="openNewChannelInput()">Bearbeiten</span>
       </div>
       <div>
         <span class="fs18 bold">#</span>
@@ -26,39 +21,25 @@
       </div>
     </div>
   </div>
-  <form
-    class="new-channel-name-container"
-    *ngIf="showNewChannelNameForm"
-    (ngSubmit)="submitNewName(form)"
-    #form="ngForm"
-    name="newName"
-  >
+  <form class="new-channel-name-container" *ngIf="showNewChannelNameForm" (ngSubmit)="submitNewName(form)"
+    #form="ngForm" name="newName">
     <div>
       <span class="fs18 bold">Channel-Name</span>
-      <button
-        class="fs18 purple hover no-border bgc-white no-padding-right"
-        type="submit"
-      >
+      <button class="fs18 purple hover no-border bgc-white no-padding-right" type="submit">
         Speichern
       </button>
     </div>
     <div>
       <span class="fs18 bold z1 padding-left-20">#</span>
-      <input
-        class="input-field margin-left-negative-50 padding-left-50"
-        placeholder="{{ currentChannelName }}"
-        [(ngModel)]="newChannelNameInput"
-        name="newChannelNameInput"
-      />
+      <input class="input-field margin-left-negative-50 padding-left-50" placeholder="{{ currentChannelName }}"
+        [(ngModel)]="newChannelNameInput" name="newChannelNameInput" />
     </div>
   </form>
   <div class="description-container" *ngIf="descriptionContainerVisible">
     <div class="d-flex gap-20 column">
       <div class="d-flex justify-between">
         <span class="fs18 bold">Beschreibung</span>
-        <span class="fs18 purple hover" (click)="openDesciptionEdit()"
-          >Bearbeiten</span
-        >
+        <span class="fs18 purple hover" (click)="openDesciptionEdit()">Bearbeiten</span>
       </div>
       <p class="fs18">{{ currentChannelDescription }}</p>
     </div>
@@ -69,27 +50,15 @@
     </div>
   </div>
   <div class="d-flex column gap-30" *ngIf="newDescriptionContainerVisible">
-    <form
-      (ngSubmit)="submitNewDescription(form)"
-      #form="ngForm"
-      name="newDescription"
-      class="d-flex column gap-20"
-    >
+    <form (ngSubmit)="submitNewDescription(form)" #form="ngForm" name="newDescription" class="d-flex column gap-20">
       <div class="d-flex justify-between">
         <span class="fs18">Beschreibung</span>
-        <button
-          class="fs18 purple hover padding-right-20 no-border bgc-white"
-          type="submit"
-        >
+        <button class="fs18 purple hover padding-right-20 no-border bgc-white" type="submit">
           Speichern
         </button>
       </div>
-      <input
-        class="input-field"
-        placeholder="Dein Text hier"
-        [(ngModel)]="newDescriptionInput"
-        name="newChannelDescriptionInput"
-      />
+      <input class="input-field" placeholder="Dein Text hier" [(ngModel)]="newDescriptionInput"
+        name="newChannelDescriptionInput" />
     </form>
     <span class="separator"></span>
     <div class="d-flex column gap-20">
