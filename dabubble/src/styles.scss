@@ -223,15 +223,29 @@ app-emoji-picker {
   height: calc(100% - 16px);
 }
 
-#cdk-accordion-child-0 {
-  max-height: 100px;
-  overflow-y: auto;
-  margin-top: 16px;
+#expansion-panel-1 {
+  >div {
+    max-height: 100px;
+    overflow-y: auto;
+    margin-top: 16px;
+  }
 }
 
-#cdk-accordion-child-3 {
-  height: calc(100% - 57px);
+#expansion-panel-2 {
+  >div {
+    height: calc(100% - 57px);
+  }
 }
+
+// #cdk-accordion-child-0 {
+//   max-height: 100px;
+//   overflow-y: auto;
+//   margin-top: 16px;
+// }
+
+// #cdk-accordion-child-3 {
+//   height: calc(100% - 57px);
+// }
 
 .ng-tns-c857250080-4 {
   max-width: 100% !important;
