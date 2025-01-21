@@ -87,4 +87,8 @@ export class ChatDetailsComponent {
         });
     }
   }
+
+  leaveChannel(){
+    //logic for leaving the channel
+  }
 }

@@ -1,15 +1,20 @@
 @import './../../../../../../styles.scss';
 
+@mixin fontStyle($fs: 18px, $fw: 700) {
+    font-size: $fs;
+    font-weight: $fw;
+}
+
+.font-size--18--700 {
+    @include fontStyle();
+}
 
 header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    @include arrangement($jc: space-between);
 }
 
 .header-headline {
-    display: flex;
-    gap: 20px;
+    @include arrangement($ai: normal, $jc: normal, $g: 20px);
 }
 
 h3 {
@@ -17,45 +22,34 @@ h3 {
 }
 
 .channel-name-info-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+    @include arrangement($fd: column, $ai: normal, $jc: normal, $g: 20px);
     border: 1px solid var(--color-blue-border);
     border-radius: 30px;
 }
 
 .channel-name-container {
-    display: flex;
+    @include arrangement($fd: column, $ai: normal, $jc: normal, $g: 20px);
     padding: 20px;
-    flex-direction: column;
-    gap: 20px;
 
     :first-child {
-        display: flex;
-        justify-content: space-between;
+        @include arrangement($ai: normal, $jc: space-between);
     }
 
     :last-child {
-        display: flex;
-        gap: 10px;
+        @include arrangement($ai: normal, $jc: normal, $g: 10px);
     }
 }
 
 .new-channel-name-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+    @include arrangement($ai: normal, $jc: normal, $g: 20px, $fd: column);
 
     :first-child {
-        display: flex;
-        justify-content: space-between;
+        @include arrangement($ai: normal, $jc: space-between);
         padding-right: 20px;
     }
 
     :last-child {
-        display: flex;
-        align-items: center;
-
+        @include arrangement($jc: normal);
     }
 }
 
@@ -98,15 +92,13 @@ h3 {
 }
 
 ::placeholder {
-    font-size: 18px;
-    font-weight: 400;
+    @include fontStyle($fw: 400);
 }
 
 .input-field {
     background-color: var(--color-white);
     border: 1px solid var(--color-blue-border);
-    font-size: 18px;
-    font-weight: 400;
+    @include fontStyle($fw: 400);
 
     &:hover {
         border: 1px solid var(--color-purple-primary-disabled);
@@ -119,21 +111,17 @@ h3 {
 }
 
 .leave-channel-button-container {
-    display: flex;
-    justify-content: end;
+    @include arrangement($jc: flex-end, $ai: normal);
 }
 
 .btn-primary {
-    font-size: 18px;
-    font-weight: 700;
+    @include fontStyle();
 }
 
 .img-container {
     height: 40px;
     width: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include arrangement();
 
     &:hover {
         border-radius: 30px;
@@ -170,12 +158,10 @@ h3 {
 }
 
 .description-container {
-    display: flex;
-    gap: 30px;
+    @include arrangement($g: 30px, $fd: column, $ai: normal, $jc: normal);
     padding: 20px;
     border: 1px solid var(--color-blue-border);
     border-radius: 20px;
-    flex-direction: column;
 }
 
 .d-flex {
