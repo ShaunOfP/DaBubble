@@ -285,7 +285,7 @@ header {
   width: 100vw;
   inset: 0;
   background-color: var(--color-grey-primary-overlay);
-  position: absolute;
+  position: fixed;
   z-index: 5;
 }
 
