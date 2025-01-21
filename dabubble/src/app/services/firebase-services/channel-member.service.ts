@@ -41,6 +41,13 @@ export class ChannelMemberService {
     return collection(this.firestore, 'userDatas');
   }
 
+  /**
+   * Retrieves all user data from Firebase and updates the members observable:
+   * - Fetches all documents from the `userDatas` collection in Firestore
+   * - Transforms each document into a `Member` object by including its `id`
+   * - Populates the `allUsers` array with the transformed `Member` objects
+   * - Updates the `allMembersSubject` behavior subject with the `allUsers` array
+   */
   async selectAllMembers() {
     const querySnapshot = await getDocs(
       collection(this.firestore, 'userDatas')
