@@ -26,7 +26,7 @@
 <div *ngIf="showProfileInfo" class="profile-info">
     <div class="profile-info-header">
         <h3 class="cursor-no-change">Profil</h3>
-        <div class="change-image-on-hover pointer" (click)="toggleGreyScreen(); toggleProfileInfo(false)">
+        <div class="change-image-on-hover" (click)="toggleGreyScreen(); toggleProfileInfo(false)">
             <img src="/img/general-view/workspace-menu/close.svg" />
             <img class="d-none" src="/img/general-view/workspace-menu/hover_close.svg" />
         </div>
@@ -58,7 +58,7 @@
 <div *ngIf="showProfileEdit" class="profile-edit">
     <div class="profile-info-header">
         <h3>Dein Profil bearbeiten</h3>
-        <div class="change-image-on-hover pointer" (click)="closeEditForm()">
+        <div class="change-image-on-hover" (click)="closeEditForm()">
             <img src="/img/general-view/workspace-menu/close.svg" />
             <img class="d-none" src="/img/general-view/workspace-menu/hover_close.svg" />
         </div>
@@ -69,10 +69,11 @@
     <form (ngSubmit)="submitForm(form)" #form="ngForm">
         <div class="profile-edit-form">
             <div>
-                <div class="height-30 width-30 d-flex align-center profile-edit-form-image">
-                    <img class="height-100" src="/img/general-view/workspace-menu/person_circle.svg" />
+                <div class="profile-edit-form-image">
+                    <img class="profile-edit-form-image--primary"
+                        src="/img/general-view/workspace-menu/person_circle.svg" />
                 </div>
-                <span class="font-size-20 font-weight-700 cursor-no-change">Vollständiger Name</span>
+                <span class="font-size--20--700 cursor-no-change">Vollständiger Name</span>
             </div>
             <input class="input-field" [class.invalid]="name.touched && name.invalid" #name="ngModel"
                 placeholder="{{ this.userData?.username }}" required [(ngModel)]="newNameInput"
@@ -81,21 +82,21 @@
         </div>
         <div class="profile-edit-form">
             <div>
-                <div class="height-30 width-30 d-flex align-center">
-                    <img class="width-100 height-25" src="/img/public/mail-black.svg" />
+                <div class="profile-edit-form-image">
+                    <img class="profile-edit-form-image--secondary" src="/img/public/mail-black.svg" />
                 </div>
-                <span class="font-size-20 font-weight-700 cursor-no-change">E-Mail-Adresse</span>
+                <span class="font-size--20--700 cursor-no-change">E-Mail-Adresse</span>
             </div>
             <input class="input-field" placeholder="{{ this.userData?.mail }}" required
                 [class.invalid]="mail.touched && mail.invalid" #mail="ngModel" [(ngModel)]="newMailInput"
                 name="newMailInputField" />
             <span *ngIf="mail.touched && mail.invalid" class="error-message">This field is required</span>
         </div>
-        <div class="d-flex gap-45 justify-center">
-            <button class="btn-secondary--default font-size-18 font-weight-700" (click)="closeEditForm()">
+        <div class="profile-edit-form-buttons">
+            <button class="btn-secondary--default font-size--18--700" (click)="closeEditForm()">
                 Abbrechen
             </button>
-            <button class="font-size-18 font-weight-700" [class.btn-primary--default]="form.touched && form.valid"
+            <button class="font-size--18--700" [class.btn-primary--default]="form.touched && form.valid"
                 [class.btn-primary--disable]="form.invalid" [disabled]="form.invalid" type="submit">
                 Speichern
             </button>

@@ -1,15 +1,16 @@
 @import './../../../../styles.scss';
 
-// generell bessere eindeutige Klassennamen BEM nutzen https://kulturbanause.de/faq/bem-block-element-modifier/
-
-
 @mixin fontStyle($fs: 18px, $fw: 700) {
     font-size: $fs;
     font-weight: $fw;
 }
 
-.font-size--700--18 {
+.font-size--18--700 {
     @include fontStyle();
+}
+
+.font-size--20--700 {
+    @include fontStyle($fs: 20px);
 }
 
 // font-size und color-purple-with-hover zusammengefasst.
@@ -174,38 +175,10 @@ h3 {
 .profile-info-name-status-lower {
     @include arrangement($ai: center, $jc: normal, $g: 15px);
 
-    >span{
+    >span {
         @include fontStyle($fs: 20px, $fw: 400);
         color: var(--color-green);
     }
-}
-
-.font-size-18 {
-    font-size: 18px;
-}
-
-.font-size-20 {
-    font-size: 20px;
-}
-
-.font-size-32 {
-    font-size: 32px;
-}
-
-.font-weight-700 {
-    font-weight: 700;
-}
-
-.margin-left-15 {
-    margin-left: 15px;
-}
-
-.height-30 {
-    height: 30px;
-}
-
-.width-30 {
-    width: 30px;
 }
 
 .color-purple-with-hover {
@@ -216,19 +189,6 @@ h3 {
         cursor: pointer;
         color: var(--color-purple-secondary-hover);
     }
-}
-
-.d-flex {
-    display: flex;
-}
-
-.align-center {
-    align-items: center;
-}
-
-.center {
-    align-items: center;
-    justify-content: center;
 }
 
 .active-circle {
@@ -246,21 +206,19 @@ h3 {
     }
 }
 
-.profile-info-mail-title{
+.profile-info-mail-title {
     @include arrangement($jc: normal, $g: 20px);
 
-    &--image{
+    &--image {
         @extend .profile-info-mail-title;
         height: 30px;
         width: 30px;
     }
 
-    >span{
+    >span {
         @include fontStyle($fs: 20px);
     }
 }
-
-
 
 .profile-edit {
     @include arrangement($fd: column, $g: 45px, $ai: normal);
@@ -278,13 +236,9 @@ h3 {
     color: var(--color-green);
 }
 
-.pointer {
-    &:hover {
-        cursor: pointer;
-    }
-}
-
 .change-image-on-hover {
+    cursor: pointer;
+
     &:hover {
         >:first-child {
             display: none;
@@ -294,18 +248,6 @@ h3 {
             display: flex;
         }
     }
-}
-
-.gap-20 {
-    gap: 20px;
-}
-
-.gap-8 {
-    gap: 8px;
-}
-
-.gap-45 {
-    gap: 45px;
 }
 
 .input-field {
@@ -327,44 +269,37 @@ h3 {
     @include fontStyle($fw: 400);
 }
 
-.height-100 {
-    height: 100%;
-}
-
-.width-100 {
-    width: 100%;
-}
-
-.column {
-    flex-direction: column;
-}
-
 form {
     @include arrangement($ai: normal, $fd: column, $g: 20px);
 }
 
-.profile-edit-form{
+.profile-edit-form {
     @include arrangement($g: 8px, $fd: column, $ai: normal, $jc: normal);
 
-    >div{
+    >div {
         @include arrangement($g: 20px, $ai: center, $jc: normal);
     }
+}
 
-    &--primary{
+.profile-edit-form-image {
+    height: 30px;
+    width: 30px;
+    @include arrangement($ai: center, $jc: normal);
 
+    &--primary {
+        @extend .profile-edit-form-image;
+        height: 100%;
+    }
+
+    &--secondary {
+        @extend .profile-edit-form-image;
+        width: 100%;
+        height: 25px;
     }
 }
 
-.profile-edit-form-image{
-    
-}
-
-.height-25 {
-    height: 25px;
-}
-
-.justify-center {
-    justify-content: center;
+.profile-edit-form-buttons {
+    @include arrangement($g: 45px, $ai: normal);
 }
 
 .d-none {
