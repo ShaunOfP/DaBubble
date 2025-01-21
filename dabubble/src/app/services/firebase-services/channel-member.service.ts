@@ -37,29 +37,30 @@ export class ChannelMemberService {
   private channelDescription = new BehaviorSubject<string>('');
   channelDescription$ = this.channelDescription.asObservable();
 
+  /**
+   * Get current channel-name and channel-description from create-channel-component and update observables
+   */
+  setChannelData(name: string, description: string) {
+    this.channelName.next(name);
+    this.channelDescription.next(description);
+  }
+
+  /**
+   * Retrieves a Firestore collection reference for user data.
+   */
   userDatasRef() {
     return collection(this.firestore, 'userDatas');
   }
 
   /**
-   * Retrieves all user data from Firebase and updates the members observable:
-   * - Fetches all documents from the `userDatas` collection in Firestore
-   * - Transforms each document into a `Member` object by including its `id`
-   * - Populates the `allUsers` array with the transformed `Member` objects
-   * - Updates the `allMembersSubject` behavior subject with the `allUsers` array
+   * Searches for users in the Firestore `userDatas` collection based on a query string.
+   * - Normalizes the `queryString` to lowercase for case-insensitive search.
+   * - Performs a Firestore query to find users whose `username_lowercase` starts with the normalized query.
+   * - Updates the `membersSubject` observable with the resulting users.
+   * - Returns an array of matching `Member` objects.
+   * @param queryString
+   * @returns
    */
-  async selectAllMembers() {
-    const querySnapshot = await getDocs(
-      collection(this.firestore, 'userDatas')
-    );
-    const allUsers: Member[] = [];
-
-    querySnapshot.forEach((doc) => {
-      allUsers.push({ ...(doc.data() as Member), id: doc.id });
-    });
-    this.allMembersSubject.next(allUsers);
-  }
-
   async searchUsers(queryString: string): Promise<Member[]> {
     const normalizedQuery = queryString.toLowerCase();
     const userQuery = query(
@@ -121,11 +122,22 @@ export class ChannelMemberService {
   }
 
   /**
-   * Get current channel-name and channel-description from create-channel-component and update observables
+   * Retrieves all user data from Firebase and updates the members observable:
+   * - Fetches all documents from the `userDatas` collection in Firestore
+   * - Transforms each document into a `Member` object by including its `id`
+   * - Populates the `allUsers` array with the transformed `Member` objects
+   * - Updates the `allMembersSubject` behavior subject with the `allUsers` array
    */
-  setChannelData(name: string, description: string) {
-    this.channelName.next(name);
-    this.channelDescription.next(description);
+  async selectAllMembers() {
+    const querySnapshot = await getDocs(
+      collection(this.firestore, 'userDatas')
+    );
+    const allUsers: Member[] = [];
+
+    querySnapshot.forEach((doc) => {
+      allUsers.push({ ...(doc.data() as Member), id: doc.id });
+    });
+    this.allMembersSubject.next(allUsers);
   }
 
   /**
