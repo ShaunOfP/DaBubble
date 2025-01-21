@@ -12,7 +12,7 @@
     <div class="channels-and-chat-container">
         <div class="channels-and-chat-container-upper">
             <mat-expansion-panel hideToggle [expanded]="true" (opened)="channelOpenState.set(true)"
-                (closed)="channelOpenState.set(false)">
+                (closed)="channelOpenState.set(false)" id="expansion-panel-1">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         <div class="channels-header">
@@ -56,7 +56,7 @@
         </div>
         <div class="channels-and-chat-container-lower">
             <mat-expansion-panel hideToggle [expanded]="true" (opened)="messagesOpenState.set(true)"
-                (closed)="messagesOpenState.set(false)">
+                (closed)="messagesOpenState.set(false)" id="expansion-panel-2">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         <div class="header gap-15 flex hover-text-color">
