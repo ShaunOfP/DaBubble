@@ -39,7 +39,8 @@ export class WorkspaceMenuComponent implements OnInit {
 
   async fetchUserData(userID: string): Promise<void> {
     try {
-      const userData = await this.userDatasService.getUserDataById(userID);
+      // const userData = await this.userDatasService.getUserDataById(userID);
+      const userData = this.userDatasService.currentUserData
       if (userData) {
         this.fetchChannelNames(userData.channels);
       }

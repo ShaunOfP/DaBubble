@@ -38,22 +38,22 @@ export class HeaderComponent implements OnInit {
   newMailInput: string = ``;
 
   ngOnInit(): void {
-    this.getUserDatas()
+    this.userData = this.userDatasService.currentUserData
     //  this.userDatasService.userIds$.pipe(
     //   map((ids) => console.log(ids))
     // )
     // .subscribe();
   }
   
-  async getUserDatas(): Promise<void> {
-    this.route.queryParams.pipe(take(1)).subscribe(async (params) => {
-      const userID = params['userID'];
-      if (userID) {
-        this.userData = await this.userDatasService.getUserDataById(userID);
-        console.log('User Data:', this.userData);
-      }
-    });
-  }
+  // async getUserDatas(): Promise<void> {
+  //   this.route.queryParams.pipe(take(1)).subscribe(async (params) => {
+  //     const userID = params['userID'];
+  //     if (userID) {
+  //       this.userData = await this.userDatasService.getUserDataById(userID);
+  //       console.log('User Data:', this.userData);
+  //     }
+  //   });
+  // }
   
   /**
    * Takes boolean as input to decide wether the menu should be open or not

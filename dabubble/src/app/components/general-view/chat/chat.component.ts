@@ -98,7 +98,8 @@ export class ChatComponent implements OnInit {
       return;
     }
 
-    const userData = await this.userDatasService.getUserDataById(this.userDatasService.currentUserId);
+    // const userData = await this.userDatasService.getUserDataById(this.userDatasService.currentUserId);
+    const userData = this.userDatasService.currentUserData
     if (!userData) {
       console.error('User data is not available');
       return;

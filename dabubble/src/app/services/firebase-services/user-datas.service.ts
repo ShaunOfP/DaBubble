@@ -15,7 +15,7 @@ import {
   docData,
   onSnapshot,
 } from '@angular/fire/firestore';
-import { Observable, BehaviorSubject, Subject, map } from 'rxjs';
+import { Observable, BehaviorSubject, Subject, map, take } from 'rxjs';
 import { UserDatas } from './../../models/user.class';
 import { user } from '@angular/fire/auth';
 import { GuestDatas } from '../../models/guest.class';
@@ -43,27 +43,37 @@ export interface UserObserver {
 })
 export class UserDatasService {
   private firestore = inject(Firestore);
-  userDatas$: Observable<UserObserver[]> = new Subject<UserObserver[]>();
+  // userDatas$: Observable<UserObserver[]> = new Subject<UserObserver[]>();
   userIdsSubject = new BehaviorSubject<string[]>([]);
   userIds$ = this.userIdsSubject.asObservable();
   channelData: any = []; //datentyp ändern
   currentUserId: string = ``;
+  currentUserData!:UserDatas
 
   constructor(private route: ActivatedRoute) {
-    this.userDatas$ = collectionData(this.userDatasRef(), { idField: 'id' }) as Observable<UserObserver[]>;
+    // this.userDatas$ = collectionData(this.userDatasRef(), { idField: 'id' }) as Observable<UserObserver[]>;
     // this.userDatas$
     //   .pipe(map((users) => users.map((user) => user.id)))
     //   .subscribe((ids) => this.userIdsSubject.next(ids));
     // this.getCurrentChannelId(); //call nach/beim login da sonst fehlermeldung weil zu früh gerufen und keine id in url ist
     // this.userDatas$.pipe().subscribe(data => console.log(data));
-   this.getCurrentChannelId() 
-    
+   this.getUserDataById(); 
+   this.getCurrentChannelId()  
+
   }
 
-  async getUserDataById(userId: string): Promise<UserDatas | undefined> {
-    const userDocRef = doc(this.firestore, `userDatas/${userId}`);
-    const userDoc = await getDoc(userDocRef);
-    return userDoc.exists() ? (userDoc.data() as UserDatas) : undefined;
+  async getUserDataById() {
+    this.route.queryParams.pipe(take(1)).subscribe(async (params) => {
+          const userID = params['userID'];
+          if (userID) {
+            const userDocRef = doc(this.firestore, `userDatas/${userID}`);
+            const userDoc = await getDoc(userDocRef);
+            this.currentUserData = (userDoc.data() as UserDatas);
+          }
+        });
+    // const userDocRef = doc(this.firestore, `userDatas/${userId}`);
+    // const userDoc = await getDoc(userDocRef);
+    // return (userDoc.data() as UserDatas);
   }
 
   async saveUser(accountData: UserDatas, userId: string): Promise<void> {
