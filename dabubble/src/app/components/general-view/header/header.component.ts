@@ -19,7 +19,7 @@ import { map, Observable } from 'rxjs';
 })
 export class HeaderComponent implements OnInit {
   user: User | null = null;
-  userData: UserDatas | null = null;
+  userData!: UserDatas | undefined;
 
   constructor(
     private router: Router,
@@ -38,13 +38,22 @@ export class HeaderComponent implements OnInit {
   newMailInput: string = ``;
 
   ngOnInit(): void {
-
+    this.getUserDatas()
     //  this.userDatasService.userIds$.pipe(
     //   map((ids) => console.log(ids))
     // )
     // .subscribe();
   }
-
+  
+  async getUserDatas(): Promise<void> {
+    this.route.queryParams.subscribe(async (params) => {
+      const userID = params['userID'];
+      if (userID) {
+        this.userData = await this.userDatasService.getUserDataById(userID);
+      }
+    });
+  }
+  
   /**
    * Takes boolean as input to decide wether the menu should be open or not
    */
