@@ -8,8 +8,8 @@
         <button><img src="/img/general-view/workspace-menu/search.svg" /></button>
     </div>
     <div class="bar-info-account-info" (click)="openDropdownMenu()">
-        <span>{{ this.userData?.username }}</span>
-        <img class="avatar-small" src="{{ this.userData?.avatar }}" alt="User Image" />
+        <span>{{ this.currentUserData?.username }}</span>
+        <img class="avatar-small" src="{{ this.currentUserData?.avatar }}" alt="User Image" />
         <div>
             <button mat-button [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger">
                 <img src="/img/general-view/workspace-menu/arrow_drop_down_thin.svg" />
@@ -32,11 +32,11 @@
         </div>
     </div>
     <div class="profile-info-image">
-        <img src="{{ this.userData?.avatar }}" alt="User Image" />
+        <img src="{{ this.currentUserData?.avatar }}" alt="User Image" />
     </div>
     <div class="profile-info-name-status">
         <div class="profile-info-name-status-upper">
-            <span class="cursor-no-change">{{this.userData?.username}}</span>
+            <span class="cursor-no-change">{{this.currentUserData?.username}}</span>
             <!-- <span class="profile-info-name-status_prepare" (als eindeutigen namen). -->
             <span class="color-purple-with-hover" (click)="toggleProfileEdit()">Bearbeiten</span>
         </div>
@@ -52,7 +52,7 @@
             </div>
             <span class="cursor-no-change">E-Mail-Adresse</span>
         </div>
-        <a class="cursor-no-change">{{ this.userData?.mail }}</a>
+        <a class="cursor-no-change">{{ this.currentUserData?.mail }}</a>
     </div>
 </div>
 <div *ngIf="showProfileEdit" class="profile-edit">
@@ -64,7 +64,7 @@
         </div>
     </div>
     <div class="profile-info-image">
-        <img src="{{ this.userData?.avatar }}" alt="User Image" />
+        <img src="{{ this.currentUserData?.avatar }}" alt="User Image" />
     </div>
     <form (ngSubmit)="submitForm(form)" #form="ngForm">
         <div class="profile-edit-form">
@@ -76,7 +76,7 @@
                 <span class="font-size--20--700 cursor-no-change">Vollständiger Name</span>
             </div>
             <input class="input-field" [class.invalid]="name.touched && name.invalid" #name="ngModel"
-                placeholder="{{ this.userData?.username }}" required [(ngModel)]="newNameInput"
+                placeholder="{{ this.currentUserData?.username }}" required [(ngModel)]="newNameInput"
                 name="newNameInputField" />
             <span *ngIf="name.touched && name.invalid" class="error-message">This field is required</span>
         </div>
@@ -87,7 +87,7 @@
                 </div>
                 <span class="font-size--20--700 cursor-no-change">E-Mail-Adresse</span>
             </div>
-            <input class="input-field" placeholder="{{ this.userData?.mail }}" required
+            <input class="input-field" placeholder="{{ this.currentUserData?.mail }}" required
                 [class.invalid]="mail.touched && mail.invalid" #mail="ngModel" [(ngModel)]="newMailInput"
                 name="newMailInputField" />
             <span *ngIf="mail.touched && mail.invalid" class="error-message">This field is required</span>

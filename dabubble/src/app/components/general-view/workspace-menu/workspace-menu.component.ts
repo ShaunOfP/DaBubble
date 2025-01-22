@@ -1,4 +1,10 @@
-import { Component, Output, EventEmitter, OnInit, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  Output,
+  EventEmitter,
+  OnInit,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { ChangeDetectionStrategy, signal } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -14,7 +20,7 @@ import { BehaviorSubject, Subject } from 'rxjs';
   imports: [MatSidenavModule, MatExpansionModule, CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './workspace-menu.component.html',
-  styleUrl: './workspace-menu.component.scss'
+  styleUrl: './workspace-menu.component.scss',
 })
 export class WorkspaceMenuComponent implements OnInit {
   @Output() openCreateChannel: EventEmitter<void> = new EventEmitter();
@@ -24,36 +30,37 @@ export class WorkspaceMenuComponent implements OnInit {
   showCreateChannelOverlay: boolean = false;
   currentUrl: string = ``;
 
-  constructor(public userDatasService: UserDatasService,
+  constructor(
+    public userDatasService: UserDatasService,
     private chatService: ChatService,
     private router: Router,
     private route: ActivatedRoute,
-    private cd: ChangeDetectorRef) {
+    private cd: ChangeDetectorRef
+  ) {
     this.currentUrl = window.location.href;
   }
 
-  async ngOnInit() {
-    await this.fetchUserData(this.userDatasService.currentUserId);
+  ngOnInit() {
+    this.fetchUserData();
   }
 
-
-  async fetchUserData(userID: string): Promise<void> {
+  fetchUserData(): void {
     try {
-      // const userData = await this.userDatasService.getUserDataById(userID);
-      const userData = this.userDatasService.currentUserData
-      if (userData) {
-        this.fetchChannelNames(userData.channels);
-      }
+        this.userDatasService.currentUserData$.subscribe((userDatas) => {
+        const userData = userDatas;
+        if (userData) {
+          this.fetchChannelNames(userData.channels);
+        }
+      });
     } catch (error) {
       console.error('Error fetching user data:', error);
     }
   }
 
-
   async fetchChannelNames(channelIdArray: string[]): Promise<void> {
     let array: any[] = [];
     for (const channelId of channelIdArray) {
-      await this.userDatasService.getChannelNames(channelId).then(result => {
+      await this.userDatasService.getChannelNames(channelId).then((result) => {
         if (result) {
           array.push(result);
         }
@@ -63,27 +70,26 @@ export class WorkspaceMenuComponent implements OnInit {
     this.cd.detectChanges();
   }
 
-
   openCreateChannelOverlay() {
     this.openCreateChannel.emit();
   }
 
-
   openNewMessage() {
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params) => {
       const userID = params['userID'];
-      this.router.navigate(['/general/new-message'], { queryParams: { userID: userID } });
-    })
+      this.router.navigate(['/general/new-message'], {
+        queryParams: { userID: userID },
+      });
+    });
   }
 
   readonly channelOpenState = signal(false);
   readonly messagesOpenState = signal(false);
 
-
   modifyUrlWithChatString(channelId: string) {
     // this.chatService.currentChatId$.next(channelId);
 
-    if (this.currentUrl.includes("chatID")) {
+    if (this.currentUrl.includes('chatID')) {
       const editedUrl = this.currentUrl.split(`%2FchatID`, 1)[0];
       this.currentUrl = editedUrl;
     }
@@ -91,7 +97,7 @@ export class WorkspaceMenuComponent implements OnInit {
     window.history.pushState({}, '', newUrl);
   }
 
-  openDirectMessage(userId: string){
+  openDirectMessage(userId: string) {
     //implement logic to open a message
   }
 }

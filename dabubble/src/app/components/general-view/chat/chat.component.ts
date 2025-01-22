@@ -8,7 +8,7 @@ import { Message } from '../../../models/interfaces';
 import { UserDatasService } from '../../../services/firebase-services/user-datas.service';
 import { RouterModule } from '@angular/router';
 import { PrivateChatComponent } from "./private-chat/private-chat.component";
-import { map } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { PublicChatComponent } from './public-chat/public-chat.component';
 
 
@@ -99,35 +99,65 @@ export class ChatComponent implements OnInit {
     }
 
     // const userData = await this.userDatasService.getUserDataById(this.userDatasService.currentUserId);
-    const userData = this.userDatasService.currentUserData
-    if (!userData) {
-      console.error('User data is not available');
-      return;
-    }
+    this.userDatasService.currentUserData$.subscribe((userData) => {
+      const userName = userData
+      if (!userName) {
+        console.error('User data is not available');
+        return;
+      }
+  
+      const message: Message = {
+        id: this.generateId(), // Generate a unique ID for the message
+        sender: userName.username, // Replace with actual sender name
+        createdAt: new Date().getTime(),
+        content: content,
+        userId: this.userDatasService.currentUserId, // Use the actual user ID
+      };
+  
+      if (chatId == ``){
+        console.log("No chat Id provided");
+        return;
+      }
+  
+      this.chatService
+        .saveMessage(chatId, message)
+        .then(() => {
+          console.log('Message saved successfully');
+          this.publicChatComponent.scrollToElement('auto');
+          this.messageInput.nativeElement.value = ''
+        })
+        .catch((error) => {
+          console.error('Error saving message:', error);
+        });
+    })
+    // if (!userName) {
+    //   console.error('User data is not available');
+    //   return;
+    // }
 
-    const message: Message = {
-      id: this.generateId(), // Generate a unique ID for the message
-      sender: userData.username, // Replace with actual sender name
-      createdAt: new Date().getTime(),
-      content: content,
-      userId: this.userDatasService.currentUserId, // Use the actual user ID
-    };
+    // const message: Message = {
+    //   id: this.generateId(), // Generate a unique ID for the message
+    //   sender: userName, // Replace with actual sender name
+    //   createdAt: new Date().getTime(),
+    //   content: content,
+    //   userId: this.userDatasService.currentUserId, // Use the actual user ID
+    // };
 
-    if (chatId == ``){
-      console.log("No chat Id provided");
-      return;
-    }
+    // if (chatId == ``){
+    //   console.log("No chat Id provided");
+    //   return;
+    // }
 
-    this.chatService
-      .saveMessage(chatId, message)
-      .then(() => {
-        console.log('Message saved successfully');
-        this.publicChatComponent.scrollToElement('auto');
-        this.messageInput.nativeElement.value = ''
-      })
-      .catch((error) => {
-        console.error('Error saving message:', error);
-      });
+    // this.chatService
+    //   .saveMessage(chatId, message)
+    //   .then(() => {
+    //     console.log('Message saved successfully');
+    //     this.publicChatComponent.scrollToElement('auto');
+    //     this.messageInput.nativeElement.value = ''
+    //   })
+    //   .catch((error) => {
+    //     console.error('Error saving message:', error);
+    //   });
 
   }
 

@@ -48,32 +48,30 @@ export class UserDatasService {
   userIds$ = this.userIdsSubject.asObservable();
   channelData: any = []; //datentyp ändern
   currentUserId: string = ``;
-  currentUserData!:UserDatas
+  private currentUserDataSubject = new BehaviorSubject<UserObserver | null>(null);
+  public currentUserData$: Observable<UserObserver | null> = this.currentUserDataSubject.asObservable();
 
   constructor(private route: ActivatedRoute) {
-    // this.userDatas$ = collectionData(this.userDatasRef(), { idField: 'id' }) as Observable<UserObserver[]>;
-    // this.userDatas$
-    //   .pipe(map((users) => users.map((user) => user.id)))
-    //   .subscribe((ids) => this.userIdsSubject.next(ids));
-    // this.getCurrentChannelId(); //call nach/beim login da sonst fehlermeldung weil zu früh gerufen und keine id in url ist
-    // this.userDatas$.pipe().subscribe(data => console.log(data));
+
    this.getUserDataById(); 
    this.getCurrentChannelId()  
 
   }
 
-  async getUserDataById() {
+  async getUserDataById(): Promise<void> {
     this.route.queryParams.pipe(take(1)).subscribe(async (params) => {
-          const userID = params['userID'];
-          if (userID) {
-            const userDocRef = doc(this.firestore, `userDatas/${userID}`);
-            const userDoc = await getDoc(userDocRef);
-            this.currentUserData = (userDoc.data() as UserDatas);
-          }
-        });
-    // const userDocRef = doc(this.firestore, `userDatas/${userId}`);
-    // const userDoc = await getDoc(userDocRef);
-    // return (userDoc.data() as UserDatas);
+      const userID = params['userID'];
+      const userDocRef = doc(this.firestore, `userDatas/${userID}`);
+      const userDoc = await getDoc(userDocRef);
+
+      if (userDoc.exists()) {
+        const userData = userDoc.data() as UserObserver;
+        this.currentUserDataSubject.next(userData); 
+      } else {
+        console.error('User not found');
+        this.currentUserDataSubject.next(null);
+      }
+    });
   }
 
   async saveUser(accountData: UserDatas, userId: string): Promise<void> {

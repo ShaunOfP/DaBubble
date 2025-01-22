@@ -6,7 +6,7 @@ import { NgForm, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { User } from '@angular/fire/auth';
 import { AuthService } from '../../../services/firebase-services/auth.service';
-import { UserDatasService } from '../../../services/firebase-services/user-datas.service';
+import { UserDatasService, UserObserver } from '../../../services/firebase-services/user-datas.service';
 import { UserDatas } from '../../../models/user.class';
 import { map, Observable, take } from 'rxjs';
 
@@ -19,7 +19,7 @@ import { map, Observable, take } from 'rxjs';
 })
 export class HeaderComponent implements OnInit {
   user: User | null = null;
-  userData!: UserDatas | undefined;
+  currentUserData!: UserObserver | null;
 
   constructor(
     private router: Router,
@@ -38,18 +38,20 @@ export class HeaderComponent implements OnInit {
   newMailInput: string = ``;
 
   ngOnInit(): void {
-
-    this.userData = this.userDatasService.currentUserData
-    if(this.userData === undefined){
-      const user = setInterval(() => {
-        this.userData = this.userDatasService.currentUserData
-        if(this.userData !== undefined){
-          clearInterval(user)
-          console.log(this.userData);
-        }
-      }, 100);
-    }
-  
+    
+  this.userDatasService.currentUserData$.subscribe((userData) => {
+    this.currentUserData = userData
+  })
+    // if(this.userData === undefined){
+    //   const user = setInterval(() => {
+    //     this.userData = this.userDatasService.currentUserData
+    //     if(this.userData !== undefined){
+    //       clearInterval(user)
+    //       console.log(this.userData);
+    //     }
+    //   }, 100);
+    // }
+    
     
     //  this.userDatasService.userIds$.pipe(
     //   map((ids) => console.log(ids))
