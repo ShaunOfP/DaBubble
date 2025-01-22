@@ -38,7 +38,19 @@ export class HeaderComponent implements OnInit {
   newMailInput: string = ``;
 
   ngOnInit(): void {
+
     this.userData = this.userDatasService.currentUserData
+    if(this.userData === undefined){
+      const user = setInterval(() => {
+        this.userData = this.userDatasService.currentUserData
+        if(this.userData !== undefined){
+          clearInterval(user)
+          console.log(this.userData);
+        }
+      }, 100);
+    }
+  
+    
     //  this.userDatasService.userIds$.pipe(
     //   map((ids) => console.log(ids))
     // )
