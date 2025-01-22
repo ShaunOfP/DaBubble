@@ -5,10 +5,6 @@
     font-weight: $fw;
 }
 
-.font-size--18--700 {
-    @include fontStyle();
-}
-
 header {
     @include arrangement($jc: space-between);
 }
@@ -21,53 +17,75 @@ h3 {
     margin: 0;
 }
 
-.channel-name-info-container {
-    @include arrangement($fd: column, $ai: normal, $jc: normal, $g: 20px);
-    border: 1px solid var(--color-blue-border);
-    border-radius: 30px;
+h5 {
+    margin: 0;
+    @include fontStyle();
 }
 
-.channel-name-container {
-    @include arrangement($fd: column, $ai: normal, $jc: normal, $g: 20px);
-    padding: 20px;
+.channel-name-info {
+    @include arrangement($g: 20px, $ai: normal, $jc: normal, $fd: column);
 
-    :first-child {
-        @include arrangement($ai: normal, $jc: space-between);
-    }
-
-    :last-child {
-        @include arrangement($ai: normal, $jc: normal, $g: 10px);
+    &--container {
+        @extend .channel-name-info;
+        border: 1px solid var(--color-blue-border);
+        border-radius: 30px;
     }
 }
 
-.new-channel-name-container {
-    @include arrangement($ai: normal, $jc: normal, $g: 20px, $fd: column);
+.channel-name {
+    @include arrangement($fd: column, $ai: normal, $jc: normal, $g: 20px);
 
     :first-child {
         @include arrangement($ai: normal, $jc: space-between);
-        padding-right: 20px;
     }
 
     :last-child {
         @include arrangement($jc: normal);
     }
+
+    &--padding {
+        @extend .channel-name;
+        padding: 20px;
+
+        :last-child {
+            @include arrangement($ai: normal, $jc: normal, $g: 10px);
+        }
+    }
+
+    &--edit {
+        @extend .channel-name;
+
+        :first-child {
+            padding-right: 20px;
+        }
+    }
 }
 
-.margin-left-negative-50 {
-    margin-left: -50px;
+.channel-name_btn {
+    @include fontStyle($fw: 400);
+    color: var(--color-purple-secondary-hover);
+    border: none;
+    background-color: transparent;
+
+    &:hover {
+        cursor: pointer;
+        color: var(--color-purple-primary-default);
+        @include fontStyle($fw: 700);
+        transition: all 0.15s;
+    }
 }
 
-.z1 {
-    position: relative;
-    z-index: 1;
-}
+.overlap-children {
+    :first-child {
+        position: relative;
+        z-index: 1;
+        padding-left: 20px;
+    }
 
-.padding-left-20 {
-    padding-left: 20px;
-}
-
-.padding-left-50 {
-    padding-left: 50px;
+    :last-child {
+        margin-left: -50px;
+        padding-left: 50px;
+    }
 }
 
 .input-image-container {
@@ -85,10 +103,6 @@ h3 {
 
 .fs18 {
     font-size: 18px;
-}
-
-.bold {
-    font-weight: 700;
 }
 
 ::placeholder {
@@ -144,52 +158,36 @@ h3 {
     }
 }
 
-.purple {
-    color: var(--color-purple-secondary-hover);
-}
+.description-container {
+    @include arrangement($g: 30px, $fd: column, $ai: normal, $jc: normal);
 
-.hover {
-    &:hover {
-        cursor: pointer;
-        color: var(--color-purple-primary-default);
-        font-weight: 700;
-        transition: all 0.15s;
+    &--primary {
+        @extend .description-container;
+        padding: 20px;
+        border: 1px solid var(--color-blue-border);
+        border-radius: 20px;
     }
 }
 
-.description-container {
-    @include arrangement($g: 30px, $fd: column, $ai: normal, $jc: normal);
-    padding: 20px;
-    border: 1px solid var(--color-blue-border);
-    border-radius: 20px;
+.description-info-container {
+    @include arrangement($fd: column, $g: 20px, $ai: normal, $jc: normal);
+
+    >div {
+        @include arrangement($jc: space-between, $ai: normal);
+    }
+
+    >p {
+        @include fontStyle($fw: 400);
+    }
 }
 
-.d-flex {
-    display: flex;
-}
+.owner-info {
+    @include arrangement($g: 20px, $fd: column, $ai: normal, $jc: normal);
 
-.justify-between {
-    justify-content: space-between;
-}
-
-.column {
-    flex-direction: column;
-}
-
-.gap-20 {
-    gap: 20px;
-}
-
-.gap-30 {
-    gap: 30px;
-}
-
-.padding-right-20 {
-    padding-right: 20px;
-}
-
-.fs24 {
-    font-size: 24px;
+    >span {
+        @include fontStyle($fs: 24px, $fw: 400);
+        color: var(--color-purple-secondary-hover);
+    }
 }
 
 .separator {
@@ -198,16 +196,4 @@ h3 {
 
 .d-none {
     display: none;
-}
-
-.no-border {
-    border: none;
-}
-
-.bgc-white {
-    background-color: var(--color-white);
-}
-
-.no-padding-right {
-    padding-right: 0;
 }
