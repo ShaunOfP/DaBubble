@@ -133,8 +133,6 @@ export class AddMembersToNewChannelComponent implements OnInit {
    * Initiates the removal of a member when clicked.
    * - Calls the function 'removeMember' of the memberService
    * - Passes the provided member's data to the service
-   *
-   * @param member
    */
   removeMember(member: Member): void {
     this.memberService.removeMember(member);
