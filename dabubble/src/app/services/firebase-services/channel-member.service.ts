@@ -58,8 +58,6 @@ export class ChannelMemberService {
    * - Performs a Firestore query to find users whose `username_lowercase` starts with the normalized query.
    * - Updates the `membersSubject` observable with the resulting users.
    * - Returns an array of matching `Member` objects.
-   * @param queryString
-   * @returns
    */
   async searchUsers(queryString: string): Promise<Member[]> {
     const normalizedQuery = queryString.toLowerCase();
@@ -83,6 +81,11 @@ export class ChannelMemberService {
     }
   }
 
+  /**
+   * Selects a member and updates the relevant observables
+   * - Marks the given `member` as selected by updating the `membersSubject` observable
+   * - If the `member` is not already in the `selectedMembersSubject` observable, it is added to it
+   */
   selectMember(member: Member): void {
     const members = this.membersSubject.getValue();
     const updateMembers = members.map((m) =>
@@ -104,6 +107,11 @@ export class ChannelMemberService {
     }
   }
 
+  /**
+   * Removes a member from the selection and updates the relevant observables
+   * - filters the specified member out of the `selectedMembersSubject` observable
+   * - Updates the `membersSubject` observable by marking the member's `selected` property as `false`
+   */
   removeMember(member: Member) {
     const selectedMembers = this.selectedMembersSubject.getValue();
     const updateSelectedMembers = selectedMembers.filter(
@@ -174,6 +182,9 @@ export class ChannelMemberService {
     return generatedRandomId;
   }
 
+  /**
+   * Adds new channel id to channel creator
+   */
   async addNewChannelToOwner(ownerId: string, channelId: string) {
     try {
       const ownerDocRef = doc(this.firestore, 'userDatas', ownerId);
@@ -191,6 +202,9 @@ export class ChannelMemberService {
     }
   }
 
+  /**
+   * Adds new channel id to each channel member
+   */
   async addNewChannelToMembers(members: Member[], channelId: string) {
     const promises = members.map((member) => {
       const docRef = doc(this.firestore, 'userDatas', member.id);
