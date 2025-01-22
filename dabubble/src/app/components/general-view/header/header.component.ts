@@ -8,7 +8,7 @@ import { User } from '@angular/fire/auth';
 import { AuthService } from '../../../services/firebase-services/auth.service';
 import { UserDatasService } from '../../../services/firebase-services/user-datas.service';
 import { UserDatas } from '../../../models/user.class';
-import { map, Observable } from 'rxjs';
+import { map, Observable, take } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -46,10 +46,11 @@ export class HeaderComponent implements OnInit {
   }
   
   async getUserDatas(): Promise<void> {
-    this.route.queryParams.subscribe(async (params) => {
+    this.route.queryParams.pipe(take(1)).subscribe(async (params) => {
       const userID = params['userID'];
       if (userID) {
         this.userData = await this.userDatasService.getUserDataById(userID);
+        console.log('User Data:', this.userData);
       }
     });
   }
