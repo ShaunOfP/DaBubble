@@ -9,7 +9,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { ChangeDetectionStrategy, signal } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CommonModule } from '@angular/common';
-import { UserDatasService } from '../../../services/firebase-services/user-datas.service';
+import { UserDatasService, UserObserver } from '../../../services/firebase-services/user-datas.service';
 import { ChatService } from '../../../services/firebase-services/chat.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Subject } from 'rxjs';
@@ -29,6 +29,7 @@ export class WorkspaceMenuComponent implements OnInit {
   readableChannels: any[] = [];
   showCreateChannelOverlay: boolean = false;
   currentUrl: string = ``;
+  workspaceUserData!:UserObserver | null
 
   constructor(
     public userDatasService: UserDatasService,
@@ -41,17 +42,20 @@ export class WorkspaceMenuComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.fetchUserData();
+    this.userDatasService.currentUserData$.subscribe((userDatas) => {
+      this.workspaceUserData = userDatas;  
+      this.fetchUserData();
+      console.log(userDatas?.channels);
+      
+     });
+   
   }
 
   fetchUserData(): void {
-    try {
-        this.userDatasService.currentUserData$.subscribe((userDatas) => {
-        const userData = userDatas;
-        if (userData) {
-          this.fetchChannelNames(userData.channels);
+    try {            
+        if (this.workspaceUserData) {
+          this.fetchChannelNames(this.workspaceUserData.channels);
         }
-      });
     } catch (error) {
       console.error('Error fetching user data:', error);
     }

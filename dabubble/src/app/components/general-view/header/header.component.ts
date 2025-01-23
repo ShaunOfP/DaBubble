@@ -40,7 +40,7 @@ export class HeaderComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     await this.userDatasService.getUserDataById(); 
     await this.userDatasService.getCurrentChannelId() 
-  this.userDatasService.currentUserData$.subscribe((userData) => {
+    this.userDatasService.currentUserData$.subscribe((userData) => {
     this.currentUserData = userData
   })
     // if(this.userData === undefined){

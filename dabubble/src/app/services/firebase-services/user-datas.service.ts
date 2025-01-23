@@ -54,7 +54,7 @@ export class UserDatasService {
   constructor(private route: ActivatedRoute) {}
 
   async getUserDataById(): Promise<void> {
-    this.route.queryParams.pipe(take(1)).subscribe(async (params) => {
+    this.route.queryParams.pipe().subscribe(async (params) => {
       const userID = params['userID'];
       const userDocRef = doc(this.firestore, `userDatas/${userID}`);
       const userDoc = await getDoc(userDocRef);
