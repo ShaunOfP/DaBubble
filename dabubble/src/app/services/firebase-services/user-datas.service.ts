@@ -51,12 +51,7 @@ export class UserDatasService {
   private currentUserDataSubject = new BehaviorSubject<UserObserver | null>(null);
   public currentUserData$: Observable<UserObserver | null> = this.currentUserDataSubject.asObservable();
 
-  constructor(private route: ActivatedRoute) {
-
-   this.getUserDataById(); 
-   this.getCurrentChannelId()  
-
-  }
+  constructor(private route: ActivatedRoute) {}
 
   async getUserDataById(): Promise<void> {
     this.route.queryParams.pipe(take(1)).subscribe(async (params) => {

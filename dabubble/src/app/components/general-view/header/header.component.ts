@@ -37,8 +37,9 @@ export class HeaderComponent implements OnInit {
   newNameInput: string = ``;
   newMailInput: string = ``;
 
-  ngOnInit(): void {
-    
+  async ngOnInit(): Promise<void> {
+    await this.userDatasService.getUserDataById(); 
+    await this.userDatasService.getCurrentChannelId() 
   this.userDatasService.currentUserData$.subscribe((userData) => {
     this.currentUserData = userData
   })
