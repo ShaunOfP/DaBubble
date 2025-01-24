@@ -1,18 +1,55 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { UserDatas } from '../../../../models/user.class';
+import { ChannelMemberService, Member } from '../../../../services/firebase-services/channel-member.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-new-message',
   standalone: true,
-  imports: [],
+  imports: [ CommonModule ],
   templateUrl: './new-message.component.html',
-  styleUrl: './new-message.component.scss'
+  styleUrls: ['./new-message.component.scss']
 })
-export class NewMessageComponent {
+export class NewMessageComponent implements OnInit {
+  selectedMembers: Member[] = [];
+  isFocused: boolean = false;
+  openSelectedMembers: boolean = false;
   
+  constructor(private memberService: ChannelMemberService) { }
+
+  ngOnInit(): void {
+    this.memberService.selectedMembers$.subscribe((members) => {
+      this.selectedMembers = members;
+    });
+  }
   
   //Called when search is finished
   changeHeaders(){
     document.getElementById('chat-container')?.classList.add('height-normal-header');
     document.getElementById('chat-container')?.classList.remove('height-new-message');
+  }
+
+  onSearchInput(event: Event): void {
+    const input = (event.target as HTMLInputElement).value;
+    console.log(input);
+    if (input.startsWith('#')) {
+      
+    } else if (input.startsWith('@')) {
+      this.memberService.searchUsers(input);
+    } else {
+      console.log('search All');
+    }
+  }
+
+  removeMember(member: Member): void {
+    this.memberService.removeMember(member);
+  }
+
+  showSelectedMembers() {
+    this.openSelectedMembers = !this.openSelectedMembers;
+  }
+
+  showSelectedMembersInSearchField(): boolean {
+    return !this.isFocused && this.selectedMembers.length > 0;
   }
 }
