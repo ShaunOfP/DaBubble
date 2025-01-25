@@ -1,46 +1,73 @@
 <section>
-    <div *ngIf="createChannelContainerVisible">
-        <header>
-            <h3>Channel erstellen</h3>
-            <div class="close-button" (click)="closeCreateChannel()">
-                <img src="/img/general-view/workspace-menu/close.svg">
-                <img class="d-none" src="/img/general-view/workspace-menu/hover_close.svg">
-            </div>
-        </header>
-        <div class="description">
-            Channels dienen deinem Team zur Kommunikation. Am besten sollten sie themenbezogen sein 
-            <span>#marketing</span> zum Beispiel
-        </div>
-        <form (ngSubmit)="formSubmit(form)" #form="ngForm">
-            <div class="form-input-container">
-                <div class="form-input-container-header">
-                    <span>Channel-Name</span>
-                    @if (!name.valid && name.touched) {
-                        <label for="name" class="error-message">Der Channel-Name wird benötigt</label>
-                    } @else {
-                        <label for="name" class="empty-field"></label>
-                    }
-                    <!-- <span class="error-message" *ngIf="name.invalid && name.touched">Der Channel-Name wird
-                        benötigt</span> -->
-                </div>
-                <div class="input-image-container">
-                    <img src="/img/public/hash.svg">
-                    <input [class.is-invalid]="name.invalid && name.touched" class="input-field"
-                        placeholder="z.B. Kooperationsprojekte" [(ngModel)]="newChannelName" #name="ngModel"
-                        name="newChannelName" required="required">
-                </div>
-            </div>
-            <div class="form-input-container">
-                <span>Beschreibung<span class="optional"> (optional)</span></span>
-                <input class="input-field" placeholder="Dein Text hier" [(ngModel)]="newChannelDescription"
-                    name="newChannelDescription">
-            </div>
-            <div class="form-submit-button-container">
-                <button [class.btn-primary--disable]="form.invalid" [class.btn-primary--default]="form.valid"
-                    type="submit" [disabled]="name.invalid" id="submit-btn">Erstellen</button>
-            </div>
-        </form>
+  <div *ngIf="createChannelContainerVisible">
+    <header>
+      <h3>Channel erstellen</h3>
+      <div class="close-button" (click)="closeCreateChannel()">
+        <img src="/img/general-view/workspace-menu/close.svg" />
+        <img
+          class="d-none"
+          src="/img/general-view/workspace-menu/hover_close.svg"
+        />
+      </div>
+    </header>
+    <div class="description">
+      Channels dienen deinem Team zur Kommunikation. Am besten sollten sie
+      themenbezogen sein
+      <span>#marketing</span> zum Beispiel
     </div>
-    <app-add-members-to-new-channel *ngIf="addMembersToNewChannelVisible" id="addMembersToNewChannel"
-        (closeAll)="closeCreateChannelAndChangeClasses()"></app-add-members-to-new-channel>
+    <form (ngSubmit)="formSubmit(form)" #form="ngForm">
+      <div class="form-input-container">
+        <div class="form-input-container-header">
+          <span>Channel-Name</span>
+          @if (!name.valid && name.touched) {
+          <label for="name" class="error-message"
+            >Der Channel-Name wird benötigt</label
+          >
+          } @else {
+          <label for="name" class="empty-field"></label>
+          }
+          <!-- <span class="error-message" *ngIf="name.invalid && name.touched">Der Channel-Name wird
+                        benötigt</span> -->
+        </div>
+        <div class="input-image-container">
+          <img src="/img/public/hash.svg" />
+          <input
+            [class.is-invalid]="name.invalid && name.touched"
+            class="input-field"
+            placeholder="z.B. Kooperationsprojekte"
+            [(ngModel)]="newChannelName"
+            #name="ngModel"
+            name="newChannelName"
+            required="required"
+          />
+        </div>
+      </div>
+      <div class="form-input-container">
+        <span>Beschreibung<span class="optional"> (optional)</span></span>
+        <input
+          class="input-field"
+          placeholder="Dein Text hier"
+          [(ngModel)]="newChannelDescription"
+          name="newChannelDescription"
+        />
+      </div>
+      <div class="form-submit-button-container">
+        <button
+          [class.btn-primary--disable]="form.invalid"
+          [class.btn-primary--default]="form.valid"
+          type="submit"
+          [disabled]="name.invalid"
+          id="submit-btn"
+        >
+          Erstellen
+        </button>
+      </div>
+    </form>
+  </div>
+  <app-add-members-to-new-channel
+    *ngIf="addMembersToNewChannelVisible"
+    id="addMembersToNewChannel"
+    (closeAll)="closeCreateChannelAndChangeClasses()"
+  >
+  </app-add-members-to-new-channel>
 </section>
