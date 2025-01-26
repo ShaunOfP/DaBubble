@@ -8,7 +8,7 @@ section {
 .main-content {
   background-color: var(--color-white);
   border-radius: 30px;
-  padding: 40px;    
+  padding: 40px;
   width: 710px;
   margin: auto;
   gap: 20px;
@@ -174,7 +174,7 @@ label {
   @include arrangement($d: flex, $jc: end, $ai: end, $fd: column);
 }
 
-.members-container-mobile{
+.members-container-mobile {
   display: none;
   background-color: var(--color-blue-bg);
   border-radius: 30px;

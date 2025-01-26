@@ -1,43 +1,33 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { AllMembersComponent } from '../../all-members/all-members.component';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import {
   ChannelMemberService,
   Member,
-} from '../../../../services/firebase-services/channel-member.service';
-import { AllSelectedMembersComponent } from './all-selected-members/all-selected-members.component';
-import { UserDatasService } from '../../../../services/firebase-services/user-datas.service';
-import { MobileDialogComponent } from './mobile-dialog/mobile-dialog.component';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+} from '../../../../../services/firebase-services/channel-member.service';
+import { CommonModule } from '@angular/common';
+import { AllMembersComponent } from '../../../all-members/all-members.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AllSelectedMembersComponent } from '../all-selected-members/all-selected-members.component';
+import { UserDatasService } from '../../../../../services/firebase-services/user-datas.service';
 import {
-  MatBottomSheet,
+  MatBottomSheetModule,
   MatBottomSheetRef,
 } from '@angular/material/bottom-sheet';
 
 @Component({
-  selector: 'app-add-members-to-new-channel',
+  selector: 'app-mobile-dialog',
   standalone: true,
   imports: [
     CommonModule,
     AllMembersComponent,
     ReactiveFormsModule,
-    AllSelectedMembersComponent,
     FormsModule,
+    MatBottomSheetModule,
   ],
-  templateUrl: './add-members-to-new-channel.component.html',
-  styleUrl: './add-members-to-new-channel.component.scss',
+  templateUrl: './mobile-dialog.component.html',
+  styleUrl: './mobile-dialog.component.scss',
 })
-export class AddMembersToNewChannelComponent implements OnInit {
+export class MobileDialogComponent {
   @ViewChild('nameInput') nameInputField!: ElementRef;
-  @Output() closeAll: EventEmitter<void> = new EventEmitter();
 
   selectedOption: boolean = true;
   searchQuery: string = '';
@@ -47,36 +37,17 @@ export class AddMembersToNewChannelComponent implements OnInit {
   channelCreated: boolean = false;
   searchFocus: boolean = false;
   isFocused: boolean = false;
-  isMobile: boolean = false;
-  private bottomSheetRef: MatBottomSheetRef | null = null;
 
   constructor(
     private memberService: ChannelMemberService,
     private userDataService: UserDatasService,
-    private breakpointObserver: BreakpointObserver,
-    private bottomSheet: MatBottomSheet
+    private bottomSheetRef: MatBottomSheetRef<MobileDialogComponent>
   ) {}
 
   ngOnInit(): void {
     this.memberService.selectedMembers$.subscribe((members) => {
       this.selectedMembers = members;
     });
-    this.openResponsiveComponent();
-  }
-
-  openResponsiveComponent() {
-    if (this.breakpointObserver.isMatched(Breakpoints.Handset)) {
-      this.isMobile = true;
-      this.bottomSheetRef = this.bottomSheet.open(MobileDialogComponent);
-
-      this.bottomSheetRef.afterDismissed().subscribe((result) => {
-        if (result === 'closed') {
-          this.close();
-        }
-      });
-    } else {
-      console.log('Desktop view');
-    }
   }
 
   /**
@@ -143,7 +114,7 @@ export class AddMembersToNewChannelComponent implements OnInit {
     this.searchFocus = false;
     this.selectedOption = true;
     this.channelCreated = false;
-    this.closeAll.emit();
+    this.bottomSheetRef.dismiss('closed');
   }
 
   /**

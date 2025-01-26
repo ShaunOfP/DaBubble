@@ -1,0 +1,31 @@
+@import "./../../../../../../styles.scss";
+@import "./../../../../landing-page/landing-page.component.scss";
+@import "./../add-members-to-new-channel.component.scss";
+
+:host {
+  width: 100vw;
+}
+
+.main-content {
+  background-color: var(--color-white);
+  border-radius: 30px;
+  width: calc(100% - 48px);
+  padding: 24px;
+  margin: auto;
+  gap: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.mobile-close {
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+
+  span {
+    width: 50px;
+    background-color: var(--color-grey-bar);
+    height: 5px;
+    border-radius: 10px;
+  }
+}
