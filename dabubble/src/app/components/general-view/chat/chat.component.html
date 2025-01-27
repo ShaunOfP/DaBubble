@@ -1,9 +1,7 @@
 <section class="radius-30">
-
   <app-new-message *ngIf="showNewMessageHeader"></app-new-message>
-  
   <div class="chat-container" id="chat-container">
-        <router-outlet></router-outlet> <!--Verbuggt den Header sodass oben 25 px gap eingefügt werden-->
+    <router-outlet></router-outlet>
     <div class="input-container">
       <textarea #messageInput #emojiTarget [placeholder]="'Nachricht an #' + currentChannelName "></textarea>
       <div class="textarea-icon-bar">
