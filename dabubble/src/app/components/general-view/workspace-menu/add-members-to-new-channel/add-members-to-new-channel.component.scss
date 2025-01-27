@@ -192,9 +192,10 @@ label {
 }
 
 /* Media Queries */
-@media (max-width: 700px) {
+@media (max-width: 800px) {
   .main-content {
     padding: 32px;
+    max-width: 80%;
   }
 }
 

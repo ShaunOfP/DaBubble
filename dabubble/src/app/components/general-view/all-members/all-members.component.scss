@@ -45,7 +45,7 @@ section {
   > span {
     font-size: 18px;
   }
-  
+
   &:hover {
     cursor: pointer;
     background-color: var(--color-blue-bg);
@@ -70,6 +70,10 @@ section {
 }
 
 @media (max-width: 450px) {
+  section {
+    position: relative;
+  }
+
   section > div {
     margin-right: 8px;
     padding: 8px 16px;
