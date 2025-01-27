@@ -8,7 +8,7 @@ import {
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { ChangeDetectionStrategy, signal } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { UserDatasService, UserObserver } from '../../../services/firebase-services/user-datas.service';
 import { ChatService } from '../../../services/firebase-services/chat.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -36,7 +36,8 @@ export class WorkspaceMenuComponent implements OnInit {
     private chatService: ChatService,
     private router: Router,
     private route: ActivatedRoute,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private location: Location
   ) {
     this.currentUrl = window.location.href;
   }
@@ -98,7 +99,8 @@ export class WorkspaceMenuComponent implements OnInit {
       this.currentUrl = editedUrl;
     }
     const newUrl = `${this.currentUrl}/chatID=${channelId}`;
-    window.history.pushState({}, '', newUrl);
+    // window.history.pushState({}, '', newUrl);
+    this.location.replaceState(newUrl);
   }
 
   openDirectMessage(userId: string) {
