@@ -60,14 +60,14 @@
             >
               <div
                 class="member-container"
-                *ngFor="let member of selectedMembers | slice : 0 : 2"
+                *ngFor="let member of selectedMembers | slice : 0 : 1"
               >
                 <img
                   class="avatar"
                   src="{{ member?.avatar }}"
                   alt="Member Avatar"
                 />
-                <span>{{ member.username }}</span>
+                <span>{{ getInitials(member.username) }}</span>
                 <div class="arrow-back" (click)="removeMember(member)">
                   <img src="/img/general-view/workspace-menu/close.svg" />
                 </div>
@@ -75,9 +75,9 @@
               <div
                 (click)="showSelectedMembers()"
                 class="further-members-container"
-                *ngIf="selectedMembers.length > 2"
+                *ngIf="selectedMembers.length > 1"
               >
-                +{{ selectedMembers.length - 2 }}
+                +{{ selectedMembers.length - 1 }}
               </div>
 
               <div
@@ -121,3 +121,15 @@
     </form>
   </div>
 </section>
+
+<div class="overlay-container" *ngIf="channelCreated">
+  <span class="side-sheet"> Channel erfolgreich erstellt! </span>
+</div>
+
+<!-- Dialog to show all selected Members -->
+<app-all-selected-members
+  *ngIf="openSelectedMembers"
+  [members]="selectedMembers"
+  (closeWindow)="closeSelectedMembersWindow()"
+>
+</app-all-selected-members>

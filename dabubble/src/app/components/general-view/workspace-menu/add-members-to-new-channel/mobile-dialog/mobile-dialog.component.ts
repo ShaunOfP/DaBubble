@@ -22,6 +22,7 @@ import {
     ReactiveFormsModule,
     FormsModule,
     MatBottomSheetModule,
+    AllSelectedMembersComponent,
   ],
   templateUrl: './mobile-dialog.component.html',
   styleUrl: './mobile-dialog.component.scss',
@@ -48,6 +49,14 @@ export class MobileDialogComponent {
     this.memberService.selectedMembers$.subscribe((members) => {
       this.selectedMembers = members;
     });
+  }
+
+  getInitials(username: string): string {
+    if (!username) return '';
+    return username
+      .split(' ')
+      .map((word) => word.charAt(0).toUpperCase())
+      .join('');
   }
 
   /**
