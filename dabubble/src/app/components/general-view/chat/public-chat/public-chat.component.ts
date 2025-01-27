@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild, AfterViewInit, OnDestroy, viewChild } from '@angular/core';
 import { ChatService } from '../../../../services/firebase-services/chat.service';
 import { Observable, map, tap } from 'rxjs';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Message } from '../../../../models/interfaces';
 import { ActivatedRoute } from '@angular/router';
 import { ChatComponent } from '../chat.component';
@@ -14,15 +14,15 @@ import { ChatDetailsComponent } from './chat-details/chat-details.component';
   selector: 'app-public-chat',
   standalone: true,
   imports: [ChatDetailsComponent,
-        ChannelMembersComponent,
-        CommonModule,AddMembersComponent],
+    ChannelMembersComponent,
+    CommonModule, AddMembersComponent],
   templateUrl: './public-chat.component.html',
   styleUrls: ['./public-chat.component.scss'],
 })
 export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('chatContainer') chatContainer!: ElementRef;
   messages$!: Observable<any[]>;
-  channelId: string= 'ER84UOYc0F2jptDjWxFo'  //dOCTHJxiNDhYvmqMokLv
+  channelId: string = 'ER84UOYc0F2jptDjWxFo'  //dOCTHJxiNDhYvmqMokLv
   newMessage: boolean = false;
   hoveredMessageId: string | null = null;
   currentChannelName: string = `Entwicklerchannel`; //ändern via abfrage
@@ -32,9 +32,15 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   showAddMembers: boolean = false;
   private scrollListener!: () => void;
 
-  constructor(private chatService: ChatService, private route: ActivatedRoute) { }
+  constructor(private chatService: ChatService, private route: ActivatedRoute, private location: Location) { }
 
   ngOnInit(): void {
+    this.loadMessages();
+    this.detectUrlChange();
+  }
+
+
+  loadMessages(){
     const messages = this.chatService.getMessages(this.channelId)
     this.messages$ = messages.pipe(
       map((messages: Message[]) => this.returnNewObservable(messages, null)),
@@ -43,14 +49,40 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
       })
     );
     setTimeout(() => this.scrollToElement('auto'), 1000);
-    
   }
+
+
+  /**
+   * Subscribes to URL Changes
+   */
+  detectUrlChange() {
+    this.location.onUrlChange((url) => {
+      this.extractCurrentChannelIdFromUrl(url);
+      this.loadMessages();
+    });
+  }
+
+
+  /**
+   * Extracts the ChatID from the current URL and assigns it to the channelId-Variable
+   * @param url The current URL as a string
+   */
+  extractCurrentChannelIdFromUrl(url: string) {
+    const fixedUrl = url.replace('/chatID=', '&chatID=');
+    const queryParams = new URLSearchParams(fixedUrl.split('?')[1]);
+    const chatID = queryParams.get('chatID');
+    if (chatID) {
+      this.channelId = chatID;
+    }
+  }
+
+
   toggleChatDetails() {
     this.showGreyScreen ? this.hideGreyScreen() : this.activateGreyScreen();
     this.chatDetails = !this.chatDetails;
   }
 
-  
+
   activateGreyScreen() {
     this.showGreyScreen = true;
   }

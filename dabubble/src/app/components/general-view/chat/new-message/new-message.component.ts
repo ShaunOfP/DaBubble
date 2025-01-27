@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { UserDatas } from '../../../../models/user.class';
 import { ChannelMemberService, Member } from '../../../../services/firebase-services/channel-member.service';
 import { CommonModule } from '@angular/common';
+import { AllMembersComponent } from "../../all-members/all-members.component";
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-new-message',
   standalone: true,
-  imports: [ CommonModule ],
+  imports: [CommonModule, AllMembersComponent, FormsModule],
   templateUrl: './new-message.component.html',
   styleUrls: ['./new-message.component.scss']
 })
@@ -14,11 +16,15 @@ export class NewMessageComponent implements OnInit {
   selectedMembers: Member[] = [];
   isFocused: boolean = false;
   openSelectedMembers: boolean = false;
+  searchQuery: string = '';
+  searchFocus: boolean = false;
+  selectedOption: boolean = true;
   
   constructor(private memberService: ChannelMemberService) { }
 
   ngOnInit(): void {
     this.memberService.selectedMembers$.subscribe((members) => {
+      console.log(members);
       this.selectedMembers = members;
     });
   }
@@ -35,9 +41,11 @@ export class NewMessageComponent implements OnInit {
     if (input.startsWith('#')) {
       
     } else if (input.startsWith('@')) {
-      this.memberService.searchUsers(input);
+      this.selectedOption = false;  
+      this.searchQuery = input.substring(1);
     } else {
       console.log('search All');
+      this.selectedOption = true; 
     }
   }
 
@@ -51,5 +59,24 @@ export class NewMessageComponent implements OnInit {
 
   showSelectedMembersInSearchField(): boolean {
     return !this.isFocused && this.selectedMembers.length > 0;
+  }
+
+  clearSearchField() {
+    this.searchQuery = '';
+    this.searchFocus = false;
+  }
+
+  handleFocus() {
+    this.isFocused = true;
+  }
+
+  handleBlur() {
+    this.isFocused = false;
+
+    if (this.selectedMembers.length > 0 && this.searchQuery === '') {
+      this.searchFocus = false;
+    } else {
+      this.searchFocus = true;
+    }
   }
 }
