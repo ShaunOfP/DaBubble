@@ -19,6 +19,7 @@ import { MobileDialogComponent } from './mobile-dialog/mobile-dialog.component';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import {
   MatBottomSheet,
+  MatBottomSheetModule,
   MatBottomSheetRef,
 } from '@angular/material/bottom-sheet';
 
@@ -31,6 +32,7 @@ import {
     ReactiveFormsModule,
     AllSelectedMembersComponent,
     FormsModule,
+    MatBottomSheetModule
   ],
   templateUrl: './add-members-to-new-channel.component.html',
   styleUrl: './add-members-to-new-channel.component.scss',

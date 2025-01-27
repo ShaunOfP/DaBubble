@@ -24,6 +24,7 @@ export class NewMessageComponent implements OnInit {
 
   ngOnInit(): void {
     this.memberService.selectedMembers$.subscribe((members) => {
+      console.log(members);
       this.selectedMembers = members;
     });
   }
@@ -41,9 +42,10 @@ export class NewMessageComponent implements OnInit {
       
     } else if (input.startsWith('@')) {
       this.selectedOption = false;  
-      this.searchQuery = input;
+      this.searchQuery = input.substring(1);
     } else {
       console.log('search All');
+      this.selectedOption = true; 
     }
   }
 
