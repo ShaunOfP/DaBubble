@@ -10,6 +10,7 @@ section {
     display: flex;
     gap: 20px;
     flex-direction: column;
+    width: unset !important;
 }
 
 h3 {
@@ -20,6 +21,7 @@ h3 {
     background-color: var(--color-white);
     font-size: 18px;
     border: 1px solid var(--color-blue-border);
+    position: relative;
 
     &:hover {
         outline: none;
@@ -30,6 +32,10 @@ h3 {
         outline: none;
         border: 1px solid var(--color-purple-primary-default);
     }
+}
+
+.member-container {
+    
 }
 
 ::placeholder {
