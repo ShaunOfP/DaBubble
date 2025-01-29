@@ -3,7 +3,7 @@
     <app-workspace-menu *ngIf="workspaceMenuIsVisible" (openCreateChannel)="toggleCreateChannelOverlay()" [@toggleWorkspaceMenu]="workspaceMenuState" (newMessage)="openNewMessage()"></app-workspace-menu>
     <app-workspace-menu-close-button (callParent)="toggleWorkspaceMenu()"></app-workspace-menu-close-button>
     <app-chat></app-chat>
-    <app-thread *ngIf="threadIsVisible" [@toggleThread]="threadMenuState" (callParent)="closeThread()"></app-thread>
+    <!-- <app-thread *ngIf="threadIsVisible" [@toggleThread]="threadMenuState" (callParent)="closeThread()"></app-thread> -->
   </div>
   <app-create-channel *ngIf="showCreateChannelOverlay"
     (callParentToClose)="toggleCreateChannelOverlay()"></app-create-channel>
