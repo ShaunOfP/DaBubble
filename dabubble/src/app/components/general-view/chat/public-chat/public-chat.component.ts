@@ -22,7 +22,7 @@ import { ChatDetailsComponent } from './chat-details/chat-details.component';
 export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('chatContainer') chatContainer!: ElementRef;
   messages$!: Observable<any[]>;
-  channelId: string = 'ER84UOYc0F2jptDjWxFo'  //dOCTHJxiNDhYvmqMokLv
+  channelId: string = 'public';
   newMessage: boolean = false;
   hoveredMessageId: string | null = null;
   currentChannelName: string = `Entwicklerchannel`; //ändern via abfrage
@@ -39,9 +39,9 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     this.detectUrlChange();
   }
 
-
+  
   loadMessages(){
-    const messages = this.chatService.getMessages(this.channelId)
+    const messages = this.chatService.getMessages(this.channelId);
     this.messages$ = messages.pipe(
       map((messages: Message[]) => this.returnNewObservable(messages, null)),
       tap(() => {

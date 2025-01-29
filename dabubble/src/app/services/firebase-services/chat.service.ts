@@ -24,30 +24,18 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ChatService {
   private firestore = inject(Firestore);
-  // currentChatId$ = new Subject<string>(); //Subject weil keine initial value benötigt wird wie beim Observable
   currentChatId: string = ``;
+
   constructor(private route: ActivatedRoute) {
     this.getCurrentChatId();
   }
 
 
-  /**
-   * Subscribes to an Observable coming from the Workspace-Menu which contains the ID of the Chat that should be displayed
-   */
-  // detectIdChange() {
-   // this.currentChatId$.subscribe((value: string) => {
-
-    // });
-  // }
-
-
-  getCurrentChatId(){
+  getCurrentChatId() {
     this.route.queryParams.subscribe(params => {
       const wholeString = params['userID'];
       const extractedChatID = wholeString.split("=", 2)[1];
       this.currentChatId = extractedChatID;
-      console.log(this.currentChatId);
-      
     });
   }
 
@@ -56,17 +44,20 @@ export class ChatService {
     return collection(this.firestore, 'chat');
   }
 
-  getMessages(channelId: string): Observable<Message[]> {  
+
+  getMessages(channelId: string): Observable<Message[]> {
     const messagesRef = query(
       collection(this.firestore, `channels/${channelId}/messages`),
       orderBy('createdAt', 'asc')
-    );    
-     return collectionData(messagesRef, { idField: 'id' }) as Observable<Message[]>;
+    );
+    return collectionData(messagesRef, { idField: 'id' }) as Observable<Message[]>;
   }
+
 
   saveMessage(channelId: string, message: Message) {
     return addDoc(collection(this.firestore, `channels/${channelId}/messages`), message);
   }
+
 
   // getMessages(channelId: string): Observable<Message[]> {
   //   return new Observable((observer) => {

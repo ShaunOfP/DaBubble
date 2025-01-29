@@ -42,15 +42,15 @@ export class WorkspaceMenuComponent implements OnInit {
     this.currentUrl = window.location.href;
   }
 
+
   ngOnInit() {
     this.userDatasService.currentUserData$.subscribe((userDatas) => {
       this.workspaceUserData = userDatas;  
       this.fetchUserData();
-      console.log(userDatas?.channels);
-      
+      // console.log(userDatas?.channels);      
      });
-   
   }
+
 
   fetchUserData(): void {
     try {            
@@ -61,6 +61,7 @@ export class WorkspaceMenuComponent implements OnInit {
       console.error('Error fetching user data:', error);
     }
   }
+
 
   async fetchChannelNames(channelIdArray: string[]): Promise<void> {
     let array: any[] = [];
@@ -75,9 +76,11 @@ export class WorkspaceMenuComponent implements OnInit {
     this.cd.detectChanges();
   }
 
+
   openCreateChannelOverlay() {
     this.openCreateChannel.emit();
   }
+
 
   openNewMessage() {
     this.route.queryParams.subscribe((params) => {
@@ -88,20 +91,20 @@ export class WorkspaceMenuComponent implements OnInit {
     });
   }
 
+
   readonly channelOpenState = signal(false);
   readonly messagesOpenState = signal(false);
 
-  modifyUrlWithChatString(channelId: string) {
-    // this.chatService.currentChatId$.next(channelId);
 
+  modifyUrlWithChatString(channelId: string) {
     if (this.currentUrl.includes('chatID')) {
       const editedUrl = this.currentUrl.split(`%2FchatID`, 1)[0];
       this.currentUrl = editedUrl;
     }
     const newUrl = `${this.currentUrl}/chatID=${channelId}`;
-    // window.history.pushState({}, '', newUrl);
     this.location.replaceState(newUrl);
   }
+
 
   openDirectMessage(userId: string) {
     //implement logic to open a message
