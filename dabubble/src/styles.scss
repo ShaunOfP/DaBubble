@@ -238,6 +238,7 @@ app-emoji-picker {
 
 .mat-expansion-panel-body {
   height: calc(100% - 16px);
+  padding: 0 !important;
 }
 
 #expansion-panel-1 {

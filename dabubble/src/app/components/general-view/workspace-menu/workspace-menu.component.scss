@@ -91,7 +91,7 @@ section {
       background-color: var(--color-blue-bg);
     }
 
-    >img {
+    > img {
       height: 24px;
       width: 24px;
     }
@@ -117,6 +117,7 @@ h3 {
 .channels-and-chat-container-upper {
   @include arrangement($jc: space-between, $ai: normal, $g: 25px);
   max-height: 30%;
+  width: 100%;
 }
 
 .channels-and-chat-container-lower {
@@ -131,14 +132,19 @@ h3 {
 
 .mat-expansion-panel {
   max-height: fit-content;
-  max-width: fit-content;
+  // max-width: fit-content;
+  width: 100%;
 }
 
-.mat-expansion-panel-header:not([aria-disabled=true]) {
+#expansion-panel-2 {
+  margin-top: 8px;
+}
+
+.mat-expansion-panel-header:not([aria-disabled="true"]) {
   cursor: auto;
 }
 
-.mat-expansion-panel:not([class*=mat-elevation-z]) {
+.mat-expansion-panel:not([class*="mat-elevation-z"]) {
   box-shadow: none;
 }
 
@@ -149,7 +155,7 @@ h3 {
 .header-middle {
   align-items: center;
 
-  >span {
+  > span {
     font-weight: 700;
     font-size: 20px;
   }
@@ -163,7 +169,7 @@ h3 {
 .add-channel {
   @include arrangement($jc: normal, $g: 10px);
 
-  >span {
+  > span {
     font-weight: 400px;
     font-size: 18px;
   }
@@ -188,24 +194,23 @@ h3 {
   @include arrangement($g: 15px, $jc: center, $ai: center);
   border-radius: 30px;
   transition: all ease-in 100ms;
-  
-  >img {
+
+  > img {
     height: 50px;
     width: 50px;
     border-radius: 30px;
   }
 
-  >span {
+  > span {
     font-weight: 400;
     font-size: 18px;
   }
 
-  &:hover{
+  &:hover {
     cursor: pointer;
     background-color: var(--color-blue-bg);
   }
 }
-
 
 .channel--primary {
   padding: 4px 20px;
@@ -215,12 +220,12 @@ h3 {
   border-radius: 20px;
   margin-left: 25px;
 
-  >b {
+  > b {
     font-size: 18px;
     font-weight: 700;
   }
 
-  >span {
+  > span {
     font-size: 18px;
     max-width: 150px;
     overflow: hidden;
@@ -232,4 +237,15 @@ h3 {
     background-color: var(--color-blue-bg);
     color: var(--color-purple-secondary-hover);
   }
+}
+
+.p-absolute {
+  position: absolute;
+  right: 0;
+  margin-right: 14px;
+}
+
+.a-items {
+  align-items: start;
+  padding: 8px;
 }
