@@ -4,7 +4,7 @@
         <input (input)="onSearchInput($event)" class="input-field"
             placeholder="An: #channel, oder @jemand oder E-Mail-Adresse" (focus)="handleFocus()" (blur)="handleBlur()"
             [(ngModel)]="searchQuery" name="searchQuery">
-        <app-all-members [ngClass]="{'d-none': searchQuery === '' || selectedOption}" [searchQuery]="searchQuery"
+        <app-all-members [ngClass]="{'d-none': searchQuery === '' || selectedOption}" [searchQuery]="searchQuery.startsWith('@') ? searchQuery.substring(1) : searchQuery"
             (memberClicked)="clearSearchField()"></app-all-members>
             <div
             class="all-selected-member-container"
