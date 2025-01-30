@@ -5,8 +5,9 @@ import {
   OnInit,
   ChangeDetectorRef,
   ViewChild,
+  ElementRef,
 } from '@angular/core';
-import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
+import { MatDrawer, MatDrawerContainer, MatSidenavModule } from '@angular/material/sidenav';
 import { ChangeDetectionStrategy, signal } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CommonModule, Location } from '@angular/common';
@@ -28,11 +29,13 @@ export class WorkspaceMenuComponent implements OnInit {
   @Output() openCreateChannel: EventEmitter<void> = new EventEmitter();
   @Output() newMessage: EventEmitter<void> = new EventEmitter();
   @ViewChild('drawer') drawer!: MatDrawer;
+  @ViewChild('drawerContainer') drawerContainer!: ElementRef;
   currentChannels: string[] = [];
   readableChannels: any[] = [];
   showCreateChannelOverlay: boolean = false;
   currentUrl: string = ``;
-  workspaceUserData!:UserObserver | null
+  workspaceUserData!:UserObserver | null;
+  toggleMarginLeft: boolean = true;
 
   constructor(
     public userDatasService: UserDatasService,
@@ -55,13 +58,8 @@ export class WorkspaceMenuComponent implements OnInit {
   }
 
 
-  toggleDrawer(boolean: boolean){
-    if (boolean){
-      console.log(this.drawer);
-      this.drawer.close();
-    } else {
-      this.drawer.open();
-    }
+  toggleMargin(){
+    this.toggleMarginLeft ? this.toggleMarginLeft = false : this.toggleMarginLeft = true;
   }
 
 

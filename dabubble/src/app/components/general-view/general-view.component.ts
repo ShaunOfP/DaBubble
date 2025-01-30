@@ -14,7 +14,6 @@ import { CreateChannelComponent } from './create-channel/create-channel.componen
   imports: [
     CommonModule,
     RouterModule,
-    WorkspaceMenuComponent,
     HeaderComponent,
     ThreadComponent,
     ChatComponent,
@@ -41,36 +40,6 @@ export class GeneralViewComponent {
     setTimeout(() => {
       this.threadIsVisible = false;
     }, 125);
-  }
-
-
-  /**
-   * Calls different functions to allow the toggling of the Workspace menu
-   */
-  toggleWorkspaceMenu() {
-    if (this.toggleNumber == 0) {
-      this.closeWorkspaceMenu();
-      this.toggleNumberIncrease();
-    } else {
-      this.openWorkspaceMenu();
-      this.toggleNumberDecrease();
-    }
-  }
-
-
-  /**
-   * Opens the Workspace menu
-   */
-  openWorkspaceMenu() {
-    this.workspaceMenu.toggleDrawer(true);
-  }
-
-
-  /**
-   * Closes the Workspace menu
-   */
-  closeWorkspaceMenu() {
-    this.workspaceMenu.toggleDrawer(false);
   }
 
 

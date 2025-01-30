@@ -1,4 +1,4 @@
-<mat-drawer-container>
+<mat-drawer-container #drawerContainer [class.margin-left-20]="toggleMarginLeft === true">
   <mat-drawer #drawer mode="side" opened id="workspace-menu-drawer">
     <div class="workspace-menu-header">
       <div class="workspace-menu-header--primary">
@@ -108,6 +108,5 @@
       </div>
     </div>
   </mat-drawer>
-
-  <app-workspace-state-toggle-button (menu)="drawer.toggle()"></app-workspace-state-toggle-button>
+  <app-workspace-state-toggle-button (menu)="drawer.toggle(); toggleMargin()"></app-workspace-state-toggle-button>
 </mat-drawer-container>
