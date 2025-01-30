@@ -9,6 +9,7 @@ import { AuthService } from '../../../services/firebase-services/auth.service';
 import { UserDatasService, UserObserver } from '../../../services/firebase-services/user-datas.service';
 import { UserDatas } from '../../../models/user.class';
 import { map, Observable, take } from 'rxjs';
+import { PublicChatComponent } from '../chat/public-chat/public-chat.component';
 
 @Component({
   selector: 'app-header',
@@ -24,7 +25,8 @@ export class HeaderComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    public userDatasService: UserDatasService
+    public userDatasService: UserDatasService,
+    private publicChatComponent: PublicChatComponent
   ) { }
 
   @ViewChild('menu') menu!: MatMenu;
@@ -36,6 +38,8 @@ export class HeaderComponent implements OnInit {
 
   newNameInput: string = ``;
   newMailInput: string = ``;
+
+  inputSearch:string=''
 
   async ngOnInit(): Promise<void> {
     await this.userDatasService.getUserDataById(); 
@@ -148,5 +152,11 @@ export class HeaderComponent implements OnInit {
     } else {
       console.log("invalid");
     }
+  }
+
+  searchInDevspace(){
+    console.log(this.inputSearch);
+    
+    this.publicChatComponent.updateFilter(this.inputSearch)
   }
 }

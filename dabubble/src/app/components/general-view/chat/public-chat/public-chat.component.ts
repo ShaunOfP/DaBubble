@@ -1,6 +1,6 @@
-import { Component, OnInit, ElementRef, ViewChild, AfterViewInit, OnDestroy, viewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, AfterViewInit, OnDestroy, viewChild, Injectable } from '@angular/core';
 import { ChatService } from '../../../../services/firebase-services/chat.service';
-import { Observable, map, tap } from 'rxjs';
+import { BehaviorSubject, Observable, combineLatest, map, tap } from 'rxjs';
 import { CommonModule, Location } from '@angular/common';
 import { Message } from '../../../../models/interfaces';
 import { ActivatedRoute } from '@angular/router';
@@ -10,6 +10,11 @@ import { ChannelMembersComponent } from './channel-members/channel-members.compo
 import { AddMembersComponent } from './add-members/add-members.component';
 import { ChatDetailsComponent } from './chat-details/chat-details.component';
 
+
+
+@Injectable({
+  providedIn: 'root',
+})
 @Component({
   selector: 'app-public-chat',
   standalone: true,
@@ -22,6 +27,8 @@ import { ChatDetailsComponent } from './chat-details/chat-details.component';
 export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('chatContainer') chatContainer!: ElementRef;
   messages$!: Observable<any[]>;
+  filteredMessages$!:Observable<any[]>
+  filterText$ = new BehaviorSubject<string>('');
   channelId: string = 'public';
   newMessage: boolean = false;
   hoveredMessageId: string | null = null;
@@ -43,12 +50,31 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   loadMessages(){
     const messages = this.chatService.getMessages(this.channelId);
     this.messages$ = messages.pipe(
-      map((messages: Message[]) => this.returnNewObservable(messages, null)),
+      map((messages: Message[]) => this.returnNewObservable(messages, null)),   
       tap(() => {
         this.newMessage = true;
       })
     );
+ 
+    this.filteredMessages$ = this.messages$
+    
+
+    this.filteredMessages$ = combineLatest([this.messages$, this.filterText$]).pipe(
+      map(([messages, filterText]) =>
+        messages.filter(msg => msg.text.toLowerCase().includes(filterText.toLowerCase(),
+      	console.log(messages)
+        ))
+      )
+    );
+    
+   
+   
     setTimeout(() => this.scrollToElement('auto'), 1000);
+  }
+
+  updateFilter(text: string) {
+    this.filterText$.next(text); // Setzt den neuen Filtertext, wodurch die Liste automatisch aktualisiert wird
+    this.filterText$.subscribe((filter) => console.log(filter))
   }
 
 

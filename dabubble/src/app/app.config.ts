@@ -8,6 +8,7 @@ import { getAuth, provideAuth } from '@angular/fire/auth';
 
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { MAT_BOTTOM_SHEET_DEFAULT_OPTIONS } from '@angular/material/bottom-sheet';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -26,6 +27,11 @@ export const appConfig: ApplicationConfig = {
     provideFirestore(() => getFirestore()),
     provideAuth(() => getAuth()),
     provideAnimations(),
-    provideHttpClient(), provideAnimationsAsync(),
+    provideHttpClient(),
+    provideAnimationsAsync(),
+    {
+      provide: MAT_BOTTOM_SHEET_DEFAULT_OPTIONS,
+      useValue: { hasBackdrop: false },
+    },
   ],
 };

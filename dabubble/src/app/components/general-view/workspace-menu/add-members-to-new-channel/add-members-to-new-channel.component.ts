@@ -32,7 +32,7 @@ import {
     ReactiveFormsModule,
     AllSelectedMembersComponent,
     FormsModule,
-    MatBottomSheetModule
+    MatBottomSheetModule,
   ],
   templateUrl: './add-members-to-new-channel.component.html',
   styleUrl: './add-members-to-new-channel.component.scss',
@@ -76,8 +76,6 @@ export class AddMembersToNewChannelComponent implements OnInit {
           this.close();
         }
       });
-    } else {
-      console.log('Desktop view');
     }
   }
 
