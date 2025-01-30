@@ -2,7 +2,7 @@
 
 .devspace-container {
     display: flex;
-    padding: 0px 20px 25px 20px;
+    padding: 0px 20px 25px 0px;
     gap: 20px;
 }
 
@@ -12,13 +12,6 @@ app-header{
     align-items: center;
     height: 70px;
     gap: 220px;
-}
-
-app-workspace-menu-close-button {
-    position: absolute;
-    left: 0;
-    bottom: 127px;
-    z-index: 1;
 }
 
 app-chat {

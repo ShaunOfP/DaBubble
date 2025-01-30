@@ -1,7 +1,6 @@
   <app-header></app-header>
   <div class="devspace-container">
-    <app-workspace-menu *ngIf="workspaceMenuIsVisible" (openCreateChannel)="toggleCreateChannelOverlay()" [@toggleWorkspaceMenu]="workspaceMenuState" (newMessage)="openNewMessage()"></app-workspace-menu>
-    <app-workspace-menu-close-button (callParent)="toggleWorkspaceMenu()"></app-workspace-menu-close-button>
+    <app-workspace-menu (openCreateChannel)="toggleCreateChannelOverlay()" (newMessage)="openNewMessage()" ></app-workspace-menu>
     <app-chat></app-chat>
     <app-thread *ngIf="threadIsVisible" [@toggleThread]="threadMenuState" (callParent)="closeThread()"></app-thread>
   </div>

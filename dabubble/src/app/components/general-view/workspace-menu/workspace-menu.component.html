@@ -1,157 +1,113 @@
-<section class="flex radius-30">
-  <div class="workspace-menu-header">
-    <div class="workspace-menu-header--primary">
-      <img
-        class="devspace-logo"
-        src="/img/general-view/workspace-menu/logo_devspace.svg"
-      />
-      <h3 class="cursor-no-change">Devspace</h3>
+<mat-drawer-container>
+  <mat-drawer #drawer mode="side" opened id="workspace-menu-drawer">
+    <div class="workspace-menu-header">
+      <div class="workspace-menu-header--primary">
+        <img class="devspace-logo" src="/img/general-view/workspace-menu/logo_devspace.svg" />
+        <h3 class="cursor-no-change">Devspace</h3>
+      </div>
+      <div class="workspace-menu-header--secondary img-switch" (click)="openNewMessage()">
+        <img src="/img/general-view/workspace-menu/edit.svg" />
+        <img class="d-none" src="/img/general-view/workspace-menu/hover_edit.svg" />
+      </div>
     </div>
-    <div
-      class="workspace-menu-header--secondary img-switch"
-      (click)="openNewMessage()"
-    >
-      <img src="/img/general-view/workspace-menu/edit.svg" />
-      <img
-        class="d-none"
-        src="/img/general-view/workspace-menu/hover_edit.svg"
-      />
-    </div>
-  </div>
-  <div class="channels-and-chat-container">
-    <div class="channels-and-chat-container-upper">
-      <mat-expansion-panel
-        hideToggle
-        [expanded]="true"
-        (opened)="channelOpenState.set(true)"
-        (closed)="channelOpenState.set(false)"
-        id="expansion-panel-1"
-      >
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <div class="channels-header">
-              <div class="flex">
-                <img
-                  [src]="
+    <div class="channels-and-chat-container">
+      <div class="channels-and-chat-container-upper">
+        <mat-expansion-panel hideToggle [expanded]="true" (opened)="channelOpenState.set(true)"
+          (closed)="channelOpenState.set(false)" id="expansion-panel-1">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <div class="channels-header">
+                <div class="flex">
+                  <img [src]="
                     channelOpenState()
                       ? '/img/general-view/workspace-menu/arrow_drop_down.svg'
                       : '/img/general-view/workspace-menu/arrow_drop_up.svg'
-                  "
-                />
-              </div>
-              <div class="header-middle flex gap-10">
-                <div class="flex">
-                  <img
-                    class="height-width-24"
-                    src="/img/general-view/workspace-menu/dots_channels.svg"
-                  />
-                  <img
-                    class="height-width-24 d-none"
-                    src="/img/general-view/workspace-menu/hover_dots_channels.svg"
-                  />
+                  " />
                 </div>
-                <span>Channels</span>
+                <div class="header-middle flex gap-10">
+                  <div class="flex">
+                    <img class="height-width-24" src="/img/general-view/workspace-menu/dots_channels.svg" />
+                    <img class="height-width-24 d-none"
+                      src="/img/general-view/workspace-menu/hover_dots_channels.svg" />
+                  </div>
+                  <span>Channels</span>
+                </div>
               </div>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="channels">
+            <div *ngFor="let channel of readableChannels" class="channel--primary"
+              (click)="modifyUrlWithChatString(channel.channelId)">
+              <b>#</b>
+              <span>{{ channel.channelName }}</span>
             </div>
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <div class="channels">
-          <div
-            *ngFor="let channel of readableChannels"
-            class="channel--primary"
-            (click)="modifyUrlWithChatString(channel.channelId)"
-          >
-            <b>#</b>
-            <span>{{ channel.channelName }}</span>
           </div>
-        </div>
-        <div class="channels flex hover-text-color grow-img a-items">
-          <div class="add-channel" (click)="openCreateChannelOverlay()">
-            <img
-              class="height-width-24 grow-img"
-              src="/img/general-view/workspace-menu/add_circle.svg"
-            />
-            <span>Channel hinzufügen</span>
+          <div class="channels flex hover-text-color grow-img a-items">
+            <div class="add-channel" (click)="openCreateChannelOverlay()">
+              <img class="height-width-24 grow-img" src="/img/general-view/workspace-menu/add_circle.svg" />
+              <span>Channel hinzufügen</span>
+            </div>
           </div>
+        </mat-expansion-panel>
+        <div class="hover height-width-40 flex center img-switch radius-30 p-absolute"
+          (click)="openCreateChannelOverlay()"> <!--positioning-->
+          <img class="height-width-24" src="/img/general-view/workspace-menu/add.svg" />
+          <img class="height-width-24 d-none" src="/img/general-view/workspace-menu/hover_add.svg" />
         </div>
-      </mat-expansion-panel>
-
-      <div
-        class="hover height-width-40 flex center img-switch radius-30 p-absolute"
-        (click)="openCreateChannelOverlay()"
-      >
-        <img
-          class="height-width-24"
-          src="/img/general-view/workspace-menu/add.svg"
-        />
-        <img
-          class="height-width-24 d-none"
-          src="/img/general-view/workspace-menu/hover_add.svg"
-        />
       </div>
-    </div>
-    <div class="channels-and-chat-container-lower">
-      <mat-expansion-panel
-        hideToggle
-        [expanded]="true"
-        (opened)="messagesOpenState.set(true)"
-        (closed)="messagesOpenState.set(false)"
-        id="expansion-panel-2"
-      >
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <div class="header gap-15 flex hover-text-color">
-              <img
-                [src]="
+      <div class="channels-and-chat-container-lower">
+        <mat-expansion-panel hideToggle [expanded]="true" (opened)="messagesOpenState.set(true)"
+          (closed)="messagesOpenState.set(false)" id="expansion-panel-2">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <div class="header gap-15 flex hover-text-color">
+                <img [src]="
                   messagesOpenState()
                     ? '/img/general-view/workspace-menu/arrow_drop_down.svg'
                     : '/img/general-view/workspace-menu/arrow_drop_up.svg'
-                "
-              />
-              <div class="header-middle flex gap-10">
-                <img
-                  class="height-width-24"
-                  src="/img/general-view/workspace-menu/person_circle.svg"
-                />
-                <span>Direktnachrichten</span>
+                " />
+                <div class="header-middle flex gap-10">
+                  <img class="height-width-24" src="/img/general-view/workspace-menu/person_circle.svg" />
+                  <span>Direktnachrichten</span>
+                </div>
               </div>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="contacts-container">
+            <div class="contact" (click)="openDirectMessage('id')">
+              <img src="xy" />
+              <span>Karsten Stahl</span>
             </div>
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <div class="contacts-container">
-          <div class="contact" (click)="openDirectMessage('id')">
-            <img src="xy" />
-            <span>Karsten Stahl</span>
+            <div class="contact">
+              <img src="xy" />
+              <span>Shauna Vayne</span>
+            </div>
+            <div class="contact">
+              <img src="xy" />
+              <span>Stivka Bartel</span>
+            </div>
+            <div class="contact">
+              <img src="xy" />
+              <span>Charles Vincent VII</span>
+            </div>
+            <div class="contact">
+              <img src="xy" />
+              <span>Charles Vincent VII</span>
+            </div>
+            <div class="contact">
+              <img src="xy" />
+              <span>Charles Vincent VII</span>
+            </div>
+            <div class="contact">
+              <img src="xy" />
+              <span>Charles Vincent Johann Karl von Gutenberg sein Sohn der
+                Bruder</span>
+            </div>
           </div>
-          <div class="contact">
-            <img src="xy" />
-            <span>Shauna Vayne</span>
-          </div>
-          <div class="contact">
-            <img src="xy" />
-            <span>Stivka Bartel</span>
-          </div>
-          <div class="contact">
-            <img src="xy" />
-            <span>Charles Vincent VII</span>
-          </div>
-          <div class="contact">
-            <img src="xy" />
-            <span>Charles Vincent VII</span>
-          </div>
-          <div class="contact">
-            <img src="xy" />
-            <span>Charles Vincent VII</span>
-          </div>
-          <div class="contact">
-            <img src="xy" />
-            <span
-              >Charles Vincent Johann Karl von Gutenberg sein Sohn der
-              Bruder</span
-            >
-          </div>
-        </div>
-      </mat-expansion-panel>
+        </mat-expansion-panel>
+      </div>
     </div>
-  </div>
-</section>
+  </mat-drawer>
+
+  <app-workspace-state-toggle-button (menu)="drawer.toggle()"></app-workspace-state-toggle-button>
+</mat-drawer-container>

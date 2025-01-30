@@ -13,8 +13,7 @@
   --color-purple-primary-default: #444df2; //Purple color for header
   --color-purple-primary-disabled: #797ef3; //Purple color if text is disabled/grayed out
   --color-purple-secondary-hover: #535af1; //Hover over black text
-  --filter-purple-secondary-hover: brightness(0) saturate(100%) invert(35%)
-    sepia(91%) saturate(3601%) hue-rotate(229deg) brightness(97%) contrast(95%);
+  --filter-purple-secondary-hover: brightness(0) saturate(100%) invert(35%) sepia(91%) saturate(3601%) hue-rotate(229deg) brightness(97%) contrast(95%);
   --color-transparent: #ffffff00;
   --color-grey-bar: #d9d9d9;
   --color-grey-hover: #e6e6e6;
@@ -35,8 +34,7 @@
   font-family: "Nunito";
   font-style: normal;
   font-weight: 400;
-  src: url("./assets/fonts/nunito-v26-latin/nunito-v26-latin-regular.woff2")
-    format("woff2");
+  src: url("./assets/fonts/nunito-v26-latin/nunito-v26-latin-regular.woff2") format("woff2");
 }
 
 /* nunito-500 - latin */
@@ -45,8 +43,7 @@
   font-family: "Nunito";
   font-style: normal;
   font-weight: 500;
-  src: url("./assets/fonts/nunito-v26-latin/nunito-v26-latin-500.woff2")
-    format("woff2");
+  src: url("./assets/fonts/nunito-v26-latin/nunito-v26-latin-500.woff2") format("woff2");
 }
 
 /* nunito-700 - latin */
@@ -55,8 +52,7 @@
   font-family: "Nunito";
   font-style: normal;
   font-weight: 700;
-  src: url("./assets/fonts/nunito-v26-latin/nunito-v26-latin-700.woff2")
-    format("woff2");
+  src: url("./assets/fonts/nunito-v26-latin/nunito-v26-latin-700.woff2") format("woff2");
 }
 
 /* nunito-800 - latin */
@@ -65,8 +61,7 @@
   font-family: "Nunito";
   font-style: normal;
   font-weight: 800;
-  src: url("./assets/fonts/nunito-v26-latin/nunito-v26-latin-800.woff2")
-    format("woff2");
+  src: url("./assets/fonts/nunito-v26-latin/nunito-v26-latin-800.woff2") format("woff2");
 }
 
 * {
@@ -97,29 +92,15 @@ h3 {
   height: 100vh;
 }
 
-.mdc-checkbox
-  .mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not(
-    [data-indeterminate="true"]
-  )
-  ~ .mdc-checkbox__background {
+.mdc-checkbox .mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not([data-indeterminate="true"])~.mdc-checkbox__background {
   border-color: var(--color-purple-primary-disabled) !important;
 }
 
-.mdc-checkbox
-  .mdc-checkbox__native-control:enabled:focus:checked
-  ~ .mdc-checkbox__background,
-.mdc-checkbox
-  .mdc-checkbox__native-control:enabled:focus:indeterminate
-  ~ .mdc-checkbox__background,
-.mdc-checkbox
-  .mdc-checkbox__native-control:enabled:checked
-  ~ .mdc-checkbox__background,
-.mdc-checkbox
-  .mdc-checkbox__native-control:enabled:indeterminate
-  ~ .mdc-checkbox__background,
-.mdc-checkbox
-  .mdc-checkbox__native-control[data-indeterminate="true"]:enabled
-  ~ .mdc-checkbox__background {
+.mdc-checkbox .mdc-checkbox__native-control:enabled:focus:checked~.mdc-checkbox__background,
+.mdc-checkbox .mdc-checkbox__native-control:enabled:focus:indeterminate~.mdc-checkbox__background,
+.mdc-checkbox .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background,
+.mdc-checkbox .mdc-checkbox__native-control:enabled:indeterminate~.mdc-checkbox__background,
+.mdc-checkbox .mdc-checkbox__native-control[data-indeterminate="true"]:enabled~.mdc-checkbox__background {
   border-color: var(--color-purple-primary-default) !important;
 }
 
@@ -232,17 +213,13 @@ app-emoji-picker {
   background: var(--color-purple-primary-disabled);
 }
 
-#cdk-accordion-child-1 {
-  height: calc(100% - 57px);
-}
-
 .mat-expansion-panel-body {
-  height: calc(100% - 16px);
+  height: calc(100vh - 500px);
   padding: 0 !important;
 }
 
 #expansion-panel-1 {
-  > div {
+  >div {
     max-height: 100px;
     overflow-y: auto;
     margin-top: 16px;
@@ -250,9 +227,13 @@ app-emoji-picker {
 }
 
 #expansion-panel-2 {
-  > div {
-    height: calc(100% - 57px);
+  >div {
+    height: 100%;
   }
+}
+
+.mat-drawer-inner-container {
+  overflow: visible !important;
 }
 
 .ng-tns-c857250080-4 {
@@ -279,10 +260,8 @@ app-public-chat {
   overflow: hidden;
   // padding: 0 35px;
   // box-sizing: border-box;
-  @include arrangement(
-    $jc: normal,
+  @include arrangement($jc: normal,
     $fd: column,
-    $g: 0px
-  ); //gap geändert von 20 auf 0, falls doof aussieht dann eben wieder ändern
+    $g: 0px); //gap geändert von 20 auf 0, falls doof aussieht dann eben wieder ändern
   // overflow-y: auto; //verhindert, dass chat-details richtig angezeigt werden kann
 }

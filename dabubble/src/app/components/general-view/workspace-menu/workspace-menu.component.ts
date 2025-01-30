@@ -4,8 +4,9 @@ import {
   EventEmitter,
   OnInit,
   ChangeDetectorRef,
+  ViewChild,
 } from '@angular/core';
-import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
 import { ChangeDetectionStrategy, signal } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CommonModule, Location } from '@angular/common';
@@ -13,11 +14,12 @@ import { UserDatasService, UserObserver } from '../../../services/firebase-servi
 import { ChatService } from '../../../services/firebase-services/chat.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Subject } from 'rxjs';
+import { WorkspaceStateToggleButtonComponent } from "./workspace-state-toggle-button/workspace-state-toggle-button.component";
 
 @Component({
   selector: 'app-workspace-menu',
   standalone: true,
-  imports: [MatSidenavModule, MatExpansionModule, CommonModule],
+  imports: [MatSidenavModule, MatExpansionModule, CommonModule, WorkspaceStateToggleButtonComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './workspace-menu.component.html',
   styleUrl: './workspace-menu.component.scss',
@@ -25,6 +27,7 @@ import { BehaviorSubject, Subject } from 'rxjs';
 export class WorkspaceMenuComponent implements OnInit {
   @Output() openCreateChannel: EventEmitter<void> = new EventEmitter();
   @Output() newMessage: EventEmitter<void> = new EventEmitter();
+  @ViewChild('drawer') drawer!: MatDrawer;
   currentChannels: string[] = [];
   readableChannels: any[] = [];
   showCreateChannelOverlay: boolean = false;
@@ -49,6 +52,16 @@ export class WorkspaceMenuComponent implements OnInit {
       this.fetchUserData();
       // console.log(userDatas?.channels);      
      });
+  }
+
+
+  toggleDrawer(boolean: boolean){
+    if (boolean){
+      console.log(this.drawer);
+      this.drawer.close();
+    } else {
+      this.drawer.open();
+    }
   }
 
 

@@ -1,12 +1,30 @@
 @import "./../../../../styles.scss";
 
-section {
-  background-color: var(--color-white);
+mat-drawer-container {
+  height: calc(100vh - 130px);
+  @include arrangement($ai: normal, $jc: normal);
+  margin-left: 20px;
+  background-color: transparent;
+}
+
+mat-drawer {
+  border-radius: 30px;
   width: 366px;
+  background-color: var(--color-white);
   padding: 32px 30px 32px 30px;
-  flex-direction: column;
-  gap: 25px;
-  height: calc(100vh - 192px);
+  box-sizing: content-box;
+  border: none;
+}
+
+app-workspace-state-toggle-button {
+  position: fixed;
+  left: 0;
+  bottom: 127px;
+}
+
+#workspace-menu-drawer {
+  z-index: 1 !important;
+  overflow: visible !important;
 }
 
 .d-none {
@@ -91,7 +109,7 @@ section {
       background-color: var(--color-blue-bg);
     }
 
-    > img {
+    >img {
       height: 24px;
       width: 24px;
     }
@@ -109,8 +127,7 @@ h3 {
 }
 
 .channels-and-chat-container {
-  max-height: calc(100vh - 277px);
-  height: 100%;
+  height: calc(100vh - 223px);
   @include arrangement($jc: normal, $ai: normal, $fd: column);
 }
 
@@ -122,7 +139,6 @@ h3 {
 
 .channels-and-chat-container-lower {
   @include arrangement($fd: column, $jc: normal, $ai: normal, $g: 25px);
-  max-height: 70%;
 }
 
 .channels-header {
@@ -132,7 +148,6 @@ h3 {
 
 .mat-expansion-panel {
   max-height: fit-content;
-  // max-width: fit-content;
   width: 100%;
 }
 
@@ -155,7 +170,7 @@ h3 {
 .header-middle {
   align-items: center;
 
-  > span {
+  >span {
     font-weight: 700;
     font-size: 20px;
   }
@@ -169,7 +184,7 @@ h3 {
 .add-channel {
   @include arrangement($jc: normal, $g: 10px);
 
-  > span {
+  >span {
     font-weight: 400px;
     font-size: 18px;
   }
@@ -195,13 +210,13 @@ h3 {
   border-radius: 30px;
   transition: all ease-in 100ms;
 
-  > img {
+  >img {
     height: 50px;
     width: 50px;
     border-radius: 30px;
   }
 
-  > span {
+  >span {
     font-weight: 400;
     font-size: 18px;
   }
@@ -220,12 +235,12 @@ h3 {
   border-radius: 20px;
   margin-left: 25px;
 
-  > b {
+  >b {
     font-size: 18px;
     font-weight: 700;
   }
 
-  > span {
+  >span {
     font-size: 18px;
     max-width: 150px;
     overflow: hidden;
