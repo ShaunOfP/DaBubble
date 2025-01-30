@@ -4,8 +4,8 @@
 </div>
 <div class="bar-info">
     <div class="bar-info-searchbar input-field">
-        <input placeholder="Devspace durchsuchen" />
-        <button><img src="/img/general-view/workspace-menu/search.svg" /></button>
+        <input placeholder="Devspace durchsuchen" [(ngModel)]="inputSearch"/>
+        <button (click)="searchInDevspace()"><img src="/img/general-view/workspace-menu/search.svg" /></button>
     </div>
     <div class="bar-info-account-info" (click)="openDropdownMenu()">
         <span>{{ this.currentUserData?.username }}</span>

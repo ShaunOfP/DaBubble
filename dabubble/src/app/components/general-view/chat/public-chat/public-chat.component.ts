@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, AfterViewInit, OnDestroy, viewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, AfterViewInit, OnDestroy, viewChild, Injectable } from '@angular/core';
 import { ChatService } from '../../../../services/firebase-services/chat.service';
 import { BehaviorSubject, Observable, combineLatest, map, tap } from 'rxjs';
 import { CommonModule, Location } from '@angular/common';
@@ -10,6 +10,11 @@ import { ChannelMembersComponent } from './channel-members/channel-members.compo
 import { AddMembersComponent } from './add-members/add-members.component';
 import { ChatDetailsComponent } from './chat-details/chat-details.component';
 
+
+
+@Injectable({
+  providedIn: 'root',
+})
 @Component({
   selector: 'app-public-chat',
   standalone: true,
@@ -45,15 +50,20 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   loadMessages(){
     const messages = this.chatService.getMessages(this.channelId);
     this.messages$ = messages.pipe(
-      map((messages: Message[]) => this.returnNewObservable(messages, null)),
+      map((messages: Message[]) => this.returnNewObservable(messages, null)),   
       tap(() => {
         this.newMessage = true;
       })
     );
+ 
+    this.filteredMessages$ = this.messages$
+    
 
     this.filteredMessages$ = combineLatest([this.messages$, this.filterText$]).pipe(
       map(([messages, filterText]) =>
-        messages.filter(msg => msg.text.toLowerCase().includes(filterText.toLowerCase()))
+        messages.filter(msg => msg.text.toLowerCase().includes(filterText.toLowerCase(),
+      	console.log(messages)
+        ))
       )
     );
     
@@ -64,6 +74,7 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
 
   updateFilter(text: string) {
     this.filterText$.next(text); // Setzt den neuen Filtertext, wodurch die Liste automatisch aktualisiert wird
+    this.filterText$.subscribe((filter) => console.log(filter))
   }
 
 
