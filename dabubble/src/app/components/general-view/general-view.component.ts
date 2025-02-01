@@ -25,10 +25,8 @@ import { CreateChannelComponent } from './create-channel/create-channel.componen
 })
 export class GeneralViewComponent {
   threadIsVisible: boolean = true;
-  toggleNumber: number = 0;
   showCreateChannelOverlay: boolean = false;
   @ViewChild(ChatComponent) chatComponent!: ChatComponent;
-  @ViewChild(WorkspaceMenuComponent) workspaceMenu!: WorkspaceMenuComponent;
   threadMenuState: 'opened' | 'closed' = 'opened';
   workspaceMenuState: boolean = false;
 
@@ -40,22 +38,6 @@ export class GeneralViewComponent {
     setTimeout(() => {
       this.threadIsVisible = false;
     }, 125);
-  }
-
-
-  /**
-   * Increases the toggleNumber
-   */
-  toggleNumberIncrease() {
-    this.toggleNumber++;
-  }
-
-
-  /**
-   * Decreses the toggleNumber
-   */
-  toggleNumberDecrease() {
-    this.toggleNumber--;
   }
 
 
