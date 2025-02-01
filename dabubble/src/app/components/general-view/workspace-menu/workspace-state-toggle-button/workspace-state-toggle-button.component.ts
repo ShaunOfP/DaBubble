@@ -1,15 +1,19 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-workspace-state-toggle-button',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './workspace-state-toggle-button.component.html',
   styleUrl: './workspace-state-toggle-button.component.scss'
 })
 export class WorkspaceStateToggleButtonComponent {
   @Output() menu: EventEmitter<void> = new EventEmitter();
   imagePath: string = `hide_nav`;
+  displayOpenMessage: boolean = false;
+  displayCloseMessage: boolean = true;
+
 
   toggleWorkspaceMenu() {
     this.menu.emit();
@@ -22,15 +26,12 @@ export class WorkspaceStateToggleButtonComponent {
   * Switches classes around to show the open/close text on the Button
   */
   switchMessage() {
-    let closeMessage = document.getElementById('close-message');
-    let openMessage = document.getElementById('open-message');
-
-    if (openMessage?.classList.contains('d-none')) {
-      openMessage?.classList.remove('d-none');
-      closeMessage?.classList.add('d-none');
+    if (!this.displayOpenMessage) {
+      this.displayOpenMessage = true;
+      this.displayCloseMessage = false;
     } else {
-      closeMessage?.classList.remove('d-none');
-      openMessage?.classList.add('d-none');
+      this.displayOpenMessage = false;
+      this.displayCloseMessage = true;
     }
   }
 
