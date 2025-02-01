@@ -3,7 +3,6 @@
 mat-drawer-container {
   height: calc(100vh - 130px);
   @include arrangement($ai: normal, $jc: normal);
-  // margin-left: 20px;
   background-color: transparent;
 }
 

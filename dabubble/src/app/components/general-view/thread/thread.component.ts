@@ -2,24 +2,23 @@ import { Component, EventEmitter, Output, ViewChild, ElementRef } from '@angular
 import { EmojiPickerComponent } from '../emoji-picker/emoji-picker.component';
 import { SharedModule } from '../../../shared/shared.module';
 import { ThreadMessagesComponent } from "./thread-messages/thread-messages.component";
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-thread',
   standalone: true,
-  imports: [EmojiPickerComponent, SharedModule, ThreadMessagesComponent],
+  imports: [EmojiPickerComponent, SharedModule, ThreadMessagesComponent, MatSidenavModule],
   templateUrl: './thread.component.html',
   styleUrl: './thread.component.scss'
 })
 export class ThreadComponent {
   @Output() callParent: EventEmitter<void> = new EventEmitter();
-    @ViewChild('emojiTarget', { static: true }) emojiTarget!: ElementRef;
-    selectedEmoji: string = '';
+  @ViewChild('emojiTarget', { static: true }) emojiTarget!: ElementRef;
+  selectedEmoji: string = '';
+  toggleMarginLeft: boolean = true; //wenn thread geschlossen ist muss false sein
 
-  /**
-   * Emit a signal to the parent element to hide/close the Thread Menu
-   */
-  closeThread(){
-    this.callParent.emit();
+  toggleMargin(){
+    this.toggleMarginLeft ? this.toggleMarginLeft = false : this.toggleMarginLeft = true;
   }
 
   onEmojiReceived(emoji: string) {
@@ -28,7 +27,7 @@ export class ThreadComponent {
     this.toggleEmojiPicker();
   }
 
-    toggleEmojiPicker() {
+  toggleEmojiPicker() {
     const emojiPickerElement = document.getElementById('emojiThreads');
     if (emojiPickerElement) {
       emojiPickerElement.classList.toggle('d-none');

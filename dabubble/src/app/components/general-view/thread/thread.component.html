@@ -1,41 +1,44 @@
-<section>
-    <header>
-        <div>
-            <h3 class="cursor-no-change">
-                Thread
-            </h3>
-            <span class="purple-text size-14 cursor-no-change">
-                # Entwicklerteam
-            </span>
-        </div>
-        <div class="header-image-container hover change-image-on-hover" (click)="closeThread()">
-            <img src="/img/general-view/workspace-menu/close.svg">
-            <img class="d-none" src="/img/general-view/workspace-menu/hover_close.svg">
-        </div>
-    </header>
-    <div class="chat-container">
-        <app-thread-messages class="chat"></app-thread-messages>
-        <div class="input-container">
-            <textarea #emojiTarget [placeholder]="'Antworten...'"></textarea>
-            <div class="textarea-icon-bar">
-                <div appClickOutside (appClickOutside)="hideEmojiPicker()">
-                    <app-emoji-picker id="emojiThreads" (emojiSelected)="onEmojiReceived($event)"
-                        class="d-none left-corner-0"></app-emoji-picker>
-                    <div class="height-width-40 d-flex center hover change-image-on-hover"
-                        (click)="toggleEmojiPicker()">
-                        <img src="/img/general-view/workspace-menu/smiley.svg">
-                        <img class="d-none" src="/img/general-view/workspace-menu/hover_smiley.svg">
+<mat-drawer-container [class.margin-right-20]="toggleMarginLeft === true">
+    <mat-drawer #threadDrawer opened mode="side" position="end">
+        <header>
+            <div>
+                <h3 class="cursor-no-change">
+                    Thread
+                </h3>
+                <span class="purple-text size-14 cursor-no-change">
+                    # Entwicklerteam
+                </span>
+            </div>
+            <div class="header-image-container hover change-image-on-hover" (click)="threadDrawer.toggle()">
+                <img src="/img/general-view/workspace-menu/close.svg">
+                <img class="d-none" src="/img/general-view/workspace-menu/hover_close.svg">
+            </div>
+        </header>
+        <div class="chat-container">
+            <app-thread-messages class="chat"></app-thread-messages>
+            <div class="input-container">
+                <textarea #emojiTarget [placeholder]="'Antworten...'"></textarea>
+                <div class="textarea-icon-bar">
+                    <div appClickOutside (appClickOutside)="hideEmojiPicker()">
+                        <app-emoji-picker id="emojiThreads" (emojiSelected)="onEmojiReceived($event)"
+                            class="d-none left-corner-0"></app-emoji-picker>
+                        <div class="height-width-40 d-flex center hover change-image-on-hover"
+                            (click)="toggleEmojiPicker()">
+                            <img src="/img/general-view/workspace-menu/smiley.svg">
+                            <img class="d-none" src="/img/general-view/workspace-menu/hover_smiley.svg">
+                        </div>
+                        <div class="height-width-40 d-flex center hover change-image-on-hover">
+                            <img src="/img/general-view/workspace-menu/aet.svg">
+                            <img class="d-none" src="/img/general-view/workspace-menu/hover_aet.svg">
+                        </div>
                     </div>
-                    <div class="height-width-40 d-flex center hover change-image-on-hover">
-                        <img src="/img/general-view/workspace-menu/aet.svg">
-                        <img class="d-none" src="/img/general-view/workspace-menu/hover_aet.svg">
+                    <div class="change-image-on-hover">
+                        <img class="height-width-40" src="/img/general-view/workspace-menu/send.svg">
+                        <img class="d-none height-width-40" src="/img/general-view/workspace-menu/hover_send.svg">
                     </div>
-                </div>
-                <div class="change-image-on-hover">
-                    <img class="height-width-40" src="/img/general-view/workspace-menu/send.svg">
-                    <img class="d-none height-width-40" src="/img/general-view/workspace-menu/hover_send.svg">
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </mat-drawer>
+    <button (click)="threadDrawer.toggle(); toggleMargin()" class="dev-btn">open thread</button>
+</mat-drawer-container>
