@@ -10,10 +10,11 @@ import { Component, EventEmitter, Output } from '@angular/core';
 export class WorkspaceStateToggleButtonComponent {
   @Output() menu: EventEmitter<void> = new EventEmitter();
   imagePath: string = `hide_nav`;
-  imagePath1: boolean = true;
 
-  toggleWorkspaceMenu(){
+  toggleWorkspaceMenu() {
     this.menu.emit();
+    this.switchMessage();
+    this.switchImagePath();
   }
 
 
@@ -38,7 +39,7 @@ export class WorkspaceStateToggleButtonComponent {
    * Switches the image path to show the correct image on the close button
    */
   switchImagePath() {
-    if (this.imagePath1) {
+    if (this.imagePath == `show_nav`) {
       this.imagePath = `hide_nav`;
     } else {
       this.imagePath = `show_nav`;
