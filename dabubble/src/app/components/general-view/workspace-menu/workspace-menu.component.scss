@@ -55,32 +55,8 @@ app-workspace-state-toggle-button {
   }
 }
 
-
-
-
-.gap-10 {
-  gap: 10px;
-}
-
-.gap-15 {
-  gap: 15px;
-}
-
 .flex {
   display: flex;
-}
-
-.center {
-  justify-content: center;
-  align-items: center;
-}
-
-.justify-space-between {
-  justify-content: space-between;
-}
-
-.radius-30 {
-  border-radius: 30px;
 }
 
 .hover {
@@ -178,7 +154,7 @@ h3 {
   padding: 0;
 }
 
-.header{
+.header {
   @include arrangement($g: 15px, $ai: normal, $jc: normal);
 }
 
@@ -193,6 +169,12 @@ h3 {
 
 .channels {
   @include arrangement($fd: column, $jc: normal, $ai: flex-start);
+
+  &--start {
+    @extend .channels;
+    @include arrangement($ai: flex-start, $jc: normal);
+    padding: 8px;
+  }
 }
 
 .add-channel {
@@ -265,15 +247,4 @@ h3 {
     background-color: var(--color-blue-bg);
     color: var(--color-purple-secondary-hover);
   }
-}
-
-.p-absolute {
-  position: absolute;
-  right: 0;
-  margin-right: 14px;
-}
-
-.a-items {
-  align-items: start;
-  padding: 8px;
 }
