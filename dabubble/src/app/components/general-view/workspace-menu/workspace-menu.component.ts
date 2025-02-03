@@ -32,8 +32,9 @@ export class WorkspaceMenuComponent implements OnInit {
   readableChannels: any[] = [];
   showCreateChannelOverlay: boolean = false;
   currentUrl: string = ``;
-  workspaceUserData!:UserObserver | null;
+  workspaceUserData!: UserObserver | null;
   toggleMarginLeft: boolean = true;
+  previousChatId: string = ``;
 
   constructor(
     public userDatasService: UserDatasService,
@@ -43,29 +44,29 @@ export class WorkspaceMenuComponent implements OnInit {
     private cd: ChangeDetectorRef,
     private location: Location
   ) {
-    this.currentUrl = window.location.href;
+    // this.currentUrl = window.location.href;
   }
 
 
   ngOnInit() {
     this.userDatasService.currentUserData$.subscribe((userDatas) => {
-      this.workspaceUserData = userDatas;  
+      this.workspaceUserData = userDatas;
       this.fetchUserData();
       // console.log(userDatas?.channels);      
-     });
+    });
   }
 
 
-  toggleMargin(){
+  toggleMargin() {
     this.toggleMarginLeft ? this.toggleMarginLeft = false : this.toggleMarginLeft = true;
   }
 
 
   fetchUserData(): void {
-    try {            
-        if (this.workspaceUserData) {
-          this.fetchChannelNames(this.workspaceUserData.channels);
-        }
+    try {
+      if (this.workspaceUserData) {
+        this.fetchChannelNames(this.workspaceUserData.channels);
+      }
     } catch (error) {
       console.error('Error fetching user data:', error);
     }
@@ -106,12 +107,24 @@ export class WorkspaceMenuComponent implements OnInit {
 
 
   modifyUrlWithChatString(channelId: string) {
+    this.currentUrl = window.location.href;
     if (this.currentUrl.includes('chatID')) {
-      const editedUrl = this.currentUrl.split(`%2FchatID`, 1)[0];
-      this.currentUrl = editedUrl;
+      if (this.previousChatId != ``){
+        this.currentUrl = this.currentUrl.replace(`%2FchatID=${this.previousChatId}`, "");
+      }
     }
-    const newUrl = `${this.currentUrl}/chatID=${channelId}`;
-    this.location.replaceState(newUrl);
+    let newUrl = `${this.currentUrl}%2FchatID=${channelId}`;
+    this.location.replaceState(this.fixDuplicateUrl(newUrl));
+    this.previousChatId = channelId;
+  }
+
+
+  fixDuplicateUrl(url: string): string {
+    const currentHost = window.location.origin;
+    if (url.startsWith(currentHost + "/")){
+      return url.replace(currentHost + "/", "");
+    }
+    return url;
   }
 
 
