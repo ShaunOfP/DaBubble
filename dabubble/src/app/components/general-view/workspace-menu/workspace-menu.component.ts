@@ -109,7 +109,7 @@ export class WorkspaceMenuComponent implements OnInit {
   modifyUrlWithChatString(channelId: string) {
     this.currentUrl = window.location.href;
     if (this.currentUrl.includes('chatID')) {
-      if (this.previousChatId != ``){
+      if (this.previousChatId != ``) {
         this.currentUrl = this.currentUrl.replace(`%2FchatID=${this.previousChatId}`, "");
       }
     }
@@ -121,7 +121,7 @@ export class WorkspaceMenuComponent implements OnInit {
 
   fixDuplicateUrl(url: string): string {
     const currentHost = window.location.origin;
-    if (url.startsWith(currentHost + "/")){
+    if (url.startsWith(currentHost + "/")) {
       return url.replace(currentHost + "/", "");
     }
     return url;
