@@ -1,7 +1,7 @@
 <section>
     <div (click)="toggleWorkspaceMenu()">
-        <span id="close-message">Workspace-Menü schließen</span>
-        <span id="open-message" class="d-none">Workspace-Menü öffnen</span>
+        <span id="close-message" *ngIf="displayCloseMessage">Workspace-Menü schließen</span>
+        <span id="open-message" *ngIf="displayOpenMessage">Workspace-Menü öffnen</span>
         <div class="picture-container">
             <img src="/img/general-view/workspace-menu-close-button/{{ imagePath }}.svg">
         </div>

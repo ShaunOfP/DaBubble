@@ -1,10 +1,23 @@
 @import './../../../../styles.scss';
 
-section {
+.dev-btn{
+    position: fixed;
+    z-index: 9999;
+    right: 0;
+    top: 0;
+}
+
+mat-drawer-container {
+    background-color: transparent;
+    height: calc(100vh - 130px);
+}
+
+mat-drawer {
     width: 485px;
     background-color: var(--color-white);
-    border-radius: 30px;
+    border-radius: 30px !important;
     height: calc(100vh - 130px);
+    border: none;
 }
 
 header {
@@ -24,6 +37,10 @@ header {
 
 h3 {
     margin: 0;
+}
+
+.margin-right-20{
+    margin-right: 20px;
 }
 
 .purple-text {
@@ -143,12 +160,12 @@ textarea {
 
 .left-picker {
     .mat-mdc-card {
-      border-bottom-right-radius: 0;
+        border-bottom-right-radius: 0;
     }
-  }
-  
-  .right-picker {
+}
+
+.right-picker {
     .mat-mdc-card {
-      border-bottom-left-radius: 0;
+        border-bottom-left-radius: 0;
     }
-  }
+}

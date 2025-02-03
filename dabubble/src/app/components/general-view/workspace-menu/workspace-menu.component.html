@@ -1,4 +1,4 @@
-<mat-drawer-container #drawerContainer [class.margin-left-20]="toggleMarginLeft === true">
+<mat-drawer-container [class.margin-left-20]="toggleMarginLeft === true">
   <mat-drawer #drawer mode="side" opened id="workspace-menu-drawer">
     <div class="workspace-menu-header">
       <div class="workspace-menu-header--primary">
@@ -24,7 +24,7 @@
                       : '/img/general-view/workspace-menu/arrow_drop_up.svg'
                   " />
                 </div>
-                <div class="header-middle flex gap-10">
+                <div class="header-middle">
                   <div class="flex">
                     <img class="height-width-24" src="/img/general-view/workspace-menu/dots_channels.svg" />
                     <img class="height-width-24 d-none"
@@ -42,15 +42,14 @@
               <span>{{ channel.channelName }}</span>
             </div>
           </div>
-          <div class="channels flex hover-text-color grow-img a-items">
+          <div class="channels--start hover-text-color grow-img">
             <div class="add-channel" (click)="openCreateChannelOverlay()">
               <img class="height-width-24 grow-img" src="/img/general-view/workspace-menu/add_circle.svg" />
               <span>Channel hinzufügen</span>
             </div>
           </div>
         </mat-expansion-panel>
-        <div class="hover height-width-40 flex center img-switch radius-30 p-absolute"
-          (click)="openCreateChannelOverlay()"> <!--positioning-->
+        <div class="hover img-switch channels-header-new-channel" (click)="openCreateChannelOverlay()">
           <img class="height-width-24" src="/img/general-view/workspace-menu/add.svg" />
           <img class="height-width-24 d-none" src="/img/general-view/workspace-menu/hover_add.svg" />
         </div>
@@ -60,13 +59,13 @@
           (closed)="messagesOpenState.set(false)" id="expansion-panel-2">
           <mat-expansion-panel-header>
             <mat-panel-title>
-              <div class="header gap-15 flex hover-text-color">
+              <div class="header hover-text-color">
                 <img [src]="
                   messagesOpenState()
                     ? '/img/general-view/workspace-menu/arrow_drop_down.svg'
                     : '/img/general-view/workspace-menu/arrow_drop_up.svg'
                 " />
-                <div class="header-middle flex gap-10">
+                <div class="header-middle">
                   <img class="height-width-24" src="/img/general-view/workspace-menu/person_circle.svg" />
                   <span>Direktnachrichten</span>
                 </div>
