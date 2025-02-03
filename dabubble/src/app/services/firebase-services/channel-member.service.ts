@@ -36,6 +36,12 @@ export class ChannelMemberService {
   channelName$ = this.channelName.asObservable();
   private channelDescription = new BehaviorSubject<string>('');
   channelDescription$ = this.channelDescription.asObservable();
+  private isComponentVisibleSource = new BehaviorSubject<boolean>(false);
+  isComponentVisible$ = this.isComponentVisibleSource.asObservable();
+
+  updateComponentStatus(isVisible: boolean) {
+    this.isComponentVisibleSource.next(isVisible);
+  }
 
   /**
    * Get current channel-name and channel-description from create-channel-component and update observables

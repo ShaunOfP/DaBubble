@@ -8,7 +8,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-
 import { ChannelMemberService } from '../../../services/firebase-services/channel-member.service';
 import { AddMembersToNewChannelComponent } from '../workspace-menu/add-members-to-new-channel/add-members-to-new-channel.component';
 
@@ -25,7 +24,7 @@ export class CreateChannelComponent implements OnInit {
   newChannelName: string = '';
   newChannelDescription: string = '';
   createChannelContainerVisible: boolean = true;
-  addMembersToNewChannelVisible: boolean = false;
+  isComponentVisible: boolean = false;
   isMobile: boolean = false;
 
   constructor(private memberService: ChannelMemberService) {}
@@ -45,6 +44,9 @@ export class CreateChannelComponent implements OnInit {
       console.log('Desktop device detected');
       this.isMobile = false;
     }
+    this.memberService.isComponentVisible$.subscribe((isVisible) => {
+      this.isComponentVisible = isVisible;
+    });
   }
 
   /**
@@ -59,7 +61,6 @@ export class CreateChannelComponent implements OnInit {
    */
   closeCreateChannelAndChangeClasses() {
     this.closeCreateChannel();
-    this.closeAddMembersToNewChannelMenu();
     this.openCreateChannelContainer();
   }
 
@@ -67,21 +68,16 @@ export class CreateChannelComponent implements OnInit {
    * Removes a class to make the AddMembersToNewChannel Component visible
    */
   openAddMembersToNewChannelMenu() {
-    this.addMembersToNewChannelVisible = true;
+    this.memberService.updateComponentStatus(true);
   }
 
   /**
    * Adds a class to hide the Create-Channel-Container
    */
   closeCreateChannelContainer() {
-    this.createChannelContainerVisible = false;
-  }
-
-  /**
-   * Adds a class to hide the AddMembersToNewChannel Component
-   */
-  closeAddMembersToNewChannelMenu() {
-    this.addMembersToNewChannelVisible = false;
+    if (window.innerWidth > 500) {
+      this.createChannelContainerVisible = false;
+    }
   }
 
   /**
@@ -102,8 +98,6 @@ export class CreateChannelComponent implements OnInit {
         this.newChannelName,
         this.newChannelDescription
       );
-    }
-    if (!this.isMobile) {
       this.closeCreateChannelContainer();
     }
   }

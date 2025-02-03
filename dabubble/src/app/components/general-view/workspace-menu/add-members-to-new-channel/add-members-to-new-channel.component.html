@@ -1,5 +1,8 @@
-<section *ngIf="!isMobile">
-  <div class="main-content">
+<section *ngIf="openAddMembers">
+  <div class="main-content" [class.fade-out]="isAnimating">
+    <div class="mobile-button-div">
+      <button (click)="close()"></button>
+    </div>
     <header>
       <h3>Leute einladen</h3>
       <div class="close-button" (click)="close()">
