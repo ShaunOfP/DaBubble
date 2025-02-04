@@ -42,6 +42,9 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(private chatService: ChatService, private route: ActivatedRoute, private location: Location) { }
 
   ngOnInit(): void {
+/*     this.route.queryParams.subscribe((params) => {
+      this.channelId = params['chatID'];
+    }); */
     this.loadMessages();
     this.detectUrlChange();
   }

@@ -105,7 +105,8 @@ export class LoginComponent implements OnInit {
     } else if (result === 'auth/wrong-password') {
       this.loginErrorPassword = 'Das Passwort ist ungültig!';
     } else {
-      this.router.navigate([`/general/public-chat`], { queryParams: { userID: result?.uid } });
+      const chatId = 'ER84UOYc0F2jptDjWxFo';
+      this.router.navigate([`/general/public-chat`], { queryParams: { chatId:chatId, userID: result?.uid } });
     }
   }
   
