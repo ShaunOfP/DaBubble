@@ -10,6 +10,7 @@ import { UserDatasService, UserObserver } from '../../../services/firebase-servi
 import { UserDatas } from '../../../models/user.class';
 import { map, Observable, take } from 'rxjs';
 import { PublicChatComponent } from '../chat/public-chat/public-chat.component';
+import { FilterService } from '../../../services/component-services/filter.service';
 
 @Component({
   selector: 'app-header',
@@ -26,7 +27,7 @@ export class HeaderComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     public userDatasService: UserDatasService,
-    private publicChatComponent: PublicChatComponent
+    private filterService : FilterService
   ) { }
 
   @ViewChild('menu') menu!: MatMenu;
@@ -156,7 +157,7 @@ export class HeaderComponent implements OnInit {
 
   searchInDevspace(){
     console.log(this.inputSearch);
-    this.publicChatComponent.updateFilter(this.inputSearch)
+    this.filterService.updateFilter(this.inputSearch)
     // this.publicChatComponent.updateFilter(this.inputSearch)
   }
 }

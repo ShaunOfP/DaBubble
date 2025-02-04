@@ -19,10 +19,8 @@ import { ChannelMembersComponent } from './channel-members/channel-members.compo
 import { AddMembersComponent } from './add-members/add-members.component';
 import { ChatDetailsComponent } from './chat-details/chat-details.component';
 import { FormsModule } from '@angular/forms';
+import { FilterService } from '../../../../services/component-services/filter.service';
 
-@Injectable({
-  providedIn: 'root',
-})
 @Component({
   selector: 'app-public-chat',
   standalone: true,
@@ -40,7 +38,6 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('chatContainer') chatContainer!: ElementRef;
   messages$!: Observable<any[]>;
   filteredMessages$!: Observable<any[]>;
-  filterText$ = new BehaviorSubject<string>('');
   channelId: string = 'public';
   newMessage: boolean = false;
   hoveredMessageId: string | null = null;
@@ -49,13 +46,13 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   showGreyScreen: boolean = false;
   showMembersInfo: boolean = false;
   showAddMembers: boolean = false;
-  searchInput: string = '';
   private scrollListener!: () => void;
 
   constructor(
     private chatService: ChatService,
     private route: ActivatedRoute,
-    private location: Location
+    private location: Location,
+    private filterService : FilterService
   ) {}
 
   ngOnInit(): void {
@@ -80,7 +77,7 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   loadFilter() {
-    this.filteredMessages$ = combineLatest([this.messages$, this.filterText$]).pipe(
+    this.filteredMessages$ = combineLatest([this.messages$, this.filterService.filterText$]).pipe(
       map(([messages, searchText]) => {
         if (!searchText) {
           return messages;
@@ -91,18 +88,7 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
       })
     );
   }
-  
-  
 
-  searchLocal() {
-    this.filterText$.next(this.searchInput);
-    console.log(this.searchInput);
-  }
-
-  updateFilter(text: string) {
-    this.filterText$.next(text); // Setzt den neuen Filtertext, wodurch die Liste automatisch aktualisiert wird
-    this.filterText$.subscribe((filter) => console.log(filter));
-  }
 
   /**
    * Subscribes to URL Changes

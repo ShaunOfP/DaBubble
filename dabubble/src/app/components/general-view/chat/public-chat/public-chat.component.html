@@ -1,9 +1,5 @@
 <div *ngIf="showGreyScreen" class="grey-screen"></div>
 <header>
-  <div>
-    <input type="text" [(ngModel)]="searchInput">
-    <button (click)="searchLocal()">suche</button>
-  </div>
   <div class="header-chat-info-container" (click)="toggleChatDetails()">
     <h3>#</h3>
     <h3>{{ currentChannelName }}</h3>
