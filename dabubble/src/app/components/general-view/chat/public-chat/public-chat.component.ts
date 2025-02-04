@@ -20,6 +20,7 @@ import { AddMembersComponent } from './add-members/add-members.component';
 import { ChatDetailsComponent } from './chat-details/chat-details.component';
 import { FormsModule } from '@angular/forms';
 import { FilterService } from '../../../../services/component-services/filter.service';
+import { EmojiPickerComponent } from '../../emoji-picker/emoji-picker.component';
 
 @Component({
   selector: 'app-public-chat',
@@ -29,6 +30,7 @@ import { FilterService } from '../../../../services/component-services/filter.se
     ChannelMembersComponent,
     CommonModule,
     AddMembersComponent,
+    EmojiPickerComponent,
     FormsModule,
   ],
   templateUrl: './public-chat.component.html',
@@ -40,7 +42,6 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
 
   messages$!: Observable<any[]>;
   filteredMessages$!: Observable<any[]>;
-
   channelId: string = 'public';
   newMessage: boolean = false;
   hoveredMessageId: string | null = null;
@@ -49,6 +50,7 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   showGreyScreen: boolean = false;
   showMembersInfo: boolean = false;
   showAddMembers: boolean = false;
+  showPicker:boolean = false
 
   private scrollListener!: () => void;
 
@@ -93,11 +95,8 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
         return messages.filter(message => {
           const contentMatch = message.content?.toLowerCase().startsWith(searchLower);
           const senderMatch = message.sender?.toLowerCase().startsWith(searchLower);
-          // Wandeln den Timestamp in ein Datum um, formatiert z.B. im deutschen Format
           const dateStr = new Date(message.createdAt).toLocaleDateString('de-DE');
           const dateMatch = dateStr.toLowerCase().includes(searchLower);
-          
-          // Wenn einer der Werte passt, wird die Nachricht beibehalten
           return contentMatch || senderMatch || dateMatch;
         });
       })
