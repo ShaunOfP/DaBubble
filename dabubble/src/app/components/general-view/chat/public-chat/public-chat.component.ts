@@ -130,39 +130,31 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   toggleChatDetails() {
-    this.showGreyScreen ? this.hideGreyScreen() : this.activateGreyScreen();
+    this.showGreyScreen = !this.showGreyScreen;
     this.chatDetails = !this.chatDetails;
   }
 
-  activateGreyScreen() {
-    this.showGreyScreen = true;
-  }
-
-  hideGreyScreen() {
-    this.showGreyScreen = false;
-  }
-
   openMembersInfo() {
-    this.activateGreyScreen();
+    this.showGreyScreen = true;
     this.showMembersInfo = true;
   }
 
   closeMembersInfo() {
     this.showMembersInfo = false;
-    this.hideGreyScreen();
+    this.showGreyScreen = false;
   }
 
   openAddMembersMenu() {
     if (this.showMembersInfo) {
       this.closeMembersInfo();
     }
-    this.activateGreyScreen();
+    this.showGreyScreen = true;
     this.showAddMembers = true;
   }
 
   closeAddMembersMenu() {
     this.showAddMembers = false;
-    this.hideGreyScreen();
+    this.showGreyScreen = false;
   }
 
   // loadChatOnIdChange() {
