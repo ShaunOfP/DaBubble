@@ -5,8 +5,9 @@ mat-drawer-container {
   @include arrangement($ai: normal, $jc: normal);
   background-color: transparent;
 
-  @media (max-width: 700px){
-    
+  @media (max-width: 700px) {
+    height: calc(100vh - 100px);
+    margin: 0 !important;
   }
 }
 
@@ -19,12 +20,20 @@ mat-drawer {
   border: none;
   z-index: 1 !important;
   overflow: visible !important;
+
+  @media (max-width: 700px) {
+    width: auto;
+  }
 }
 
 app-workspace-state-toggle-button {
   position: fixed;
   left: 0;
   bottom: 127px;
+
+  @media (max-width: 700px) {
+    display: none;
+  }
 }
 
 .d-none {

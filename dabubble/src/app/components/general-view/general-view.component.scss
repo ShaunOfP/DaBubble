@@ -16,6 +16,15 @@ app-header {
     }
 }
 
+app-workspace-menu {
+    @media (max-width: 700px) {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+}
+
 app-chat {
     width: 100%;
 }
