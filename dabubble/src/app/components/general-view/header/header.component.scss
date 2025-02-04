@@ -13,16 +13,6 @@
     @include fontStyle($fs: 20px);
 }
 
-// font-size und color-purple-with-hover zusammengefasst.
-// .profile-info-name-status_prepare{
-//     @include fontStyle();
-//     color: var(--color-purple-primary-disabled);
-//     &:hover {
-//         cursor: pointer;
-//         color: var(--color-purple-secondary-hover);
-//     }
-// }
-
 h3 {
     margin: 0;
 }
@@ -39,11 +29,19 @@ h3 {
 .bar-info {
     @include arrangement($jc: space-between, $g: 6vw);
     width: 100%;
+
+    @media (max-width: 700px) {
+        @include arrangement($jc: flex-end);
+    }
 }
 
 .bar-info-searchbar {
     background-color: var(--color-white);
     min-width: 560px; //eventuell anpassen
+
+    @media(max-width: 700px) {
+        display: none;
+    }
 
     >input {
         @include fontStyle($fs: 24px, $fw: 400);
@@ -74,11 +72,21 @@ h3 {
         width: max-content;
         max-width: 250px;
         overflow: hidden;
+
+        @media (max-width: 700px) {
+            display: none;
+        }
     }
 
     >img {
         height: 70px;
         width: 70px;
+    }
+
+    >div {
+        @media (max-width: 700px) {
+            display: none;
+        }
     }
 
     &:hover {
@@ -124,6 +132,14 @@ h3 {
     padding: 40px;
     background-color: var(--color-white);
     z-index: 11;
+
+    @media(max-width: 700px){
+        right: 20px;
+        left: 20px;
+        border-radius: 30px;
+        width: auto;
+        // center the div
+    }
 }
 
 .profile-info-header {
@@ -230,6 +246,14 @@ h3 {
     padding: 40px;
     background-color: var(--color-white);
     z-index: 11;
+
+    @media (max-width: 700px){
+        right: 20px;
+        left: 20px;
+        border-radius: 30px;
+        width: auto;
+        // center the div
+    }
 }
 
 .color-active {
