@@ -65,7 +65,7 @@
     </form>
   </div>
   <app-add-members-to-new-channel
-    *ngIf="addMembersToNewChannelVisible"
+    *ngIf="isComponentVisible"
     id="addMembersToNewChannel"
     (closeAll)="closeCreateChannelAndChangeClasses()"
   >

@@ -5,23 +5,18 @@ import {
   OnInit,
   Output,
   ViewChild,
+  HostListener,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AllMembersComponent } from '../../all-members/all-members.component';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   ChannelMemberService,
   Member,
 } from '../../../../services/firebase-services/channel-member.service';
 import { AllSelectedMembersComponent } from './all-selected-members/all-selected-members.component';
 import { UserDatasService } from '../../../../services/firebase-services/user-datas.service';
-import { MobileDialogComponent } from './mobile-dialog/mobile-dialog.component';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import {
-  MatBottomSheet,
-  MatBottomSheetModule,
-  MatBottomSheetRef,
-} from '@angular/material/bottom-sheet';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 
 @Component({
   selector: 'app-add-members-to-new-channel',
@@ -50,32 +45,39 @@ export class AddMembersToNewChannelComponent implements OnInit {
   searchFocus: boolean = false;
   isFocused: boolean = false;
   isMobile: boolean = false;
-  private bottomSheetRef: MatBottomSheetRef | null = null;
+  openAddMembers: boolean = true;
+  isComponentVisible: boolean = false;
+  isAnimating: boolean = false;
 
   constructor(
     private memberService: ChannelMemberService,
     private userDataService: UserDatasService,
-    private breakpointObserver: BreakpointObserver,
-    private bottomSheet: MatBottomSheet
+    private eRef: ElementRef
   ) {}
+
+  @HostListener('document:click', ['$event']) //Trackt alle Klick-Events im gesamten Dokument
+  // Sobald irgendwo auf der Seite geklickt wird, wird die Funktion ausgelöst und das HTML-Element, auf das geklickt wurde, mitgegeben
+  onClickOutside(event: Event) {
+    if (
+      this.openAddMembers &&
+      !this.eRef.nativeElement
+        .querySelector('.main-content')
+        .contains(event.target as Node)
+    ) {
+      this.close();
+    }
+  }
 
   ngOnInit(): void {
     this.memberService.selectedMembers$.subscribe((members) => {
       this.selectedMembers = members;
     });
-    this.openResponsiveComponent();
-  }
-
-  openResponsiveComponent() {
-    if (this.breakpointObserver.isMatched(Breakpoints.Handset)) {
+    this.memberService.isComponentVisible$.subscribe((isVisible) => {
+      this.isComponentVisible = isVisible;
+    });
+    this.openAddMembers = true;
+    if (window.innerWidth < 450) {
       this.isMobile = true;
-      this.bottomSheetRef = this.bottomSheet.open(MobileDialogComponent);
-
-      this.bottomSheetRef.afterDismissed().subscribe((result) => {
-        if (result === 'closed') {
-          this.close();
-        }
-      });
     }
   }
 
@@ -138,12 +140,20 @@ export class AddMembersToNewChannelComponent implements OnInit {
    * Resets all input fields, arrays, and variables and closes the dialog.
    */
   close(): void {
-    this.clearSearchField();
-    this.selectedMembers.forEach((member) => this.removeMember(member));
-    this.searchFocus = false;
-    this.selectedOption = true;
-    this.channelCreated = false;
-    this.closeAll.emit();
+    this.isAnimating = true;
+    setTimeout(() => {
+      if (!this.isMobile) {
+        this.closeAll.emit();
+      }
+      this.isAnimating = false;
+      this.clearSearchField();
+      this.selectedMembers.forEach((member) => this.removeMember(member));
+      this.searchFocus = false;
+      this.selectedOption = true;
+      this.channelCreated = false;
+      this.openAddMembers = false;
+      this.memberService.updateComponentStatus(false);
+    }, 200);
   }
 
   /**
