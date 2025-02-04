@@ -1,6 +1,15 @@
-import { Component, OnInit, ElementRef, ViewChild, AfterViewInit, OnDestroy, viewChild, Injectable } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ElementRef,
+  ViewChild,
+  AfterViewInit,
+  OnDestroy,
+  viewChild,
+  Injectable,
+} from '@angular/core';
 import { ChatService } from '../../../../services/firebase-services/chat.service';
-import { BehaviorSubject, Observable, combineLatest, map, tap } from 'rxjs';
+import { BehaviorSubject, Observable, combineLatest, distinctUntilChanged, map, tap } from 'rxjs';
 import { CommonModule, Location } from '@angular/common';
 import { Message } from '../../../../models/interfaces';
 import { ActivatedRoute } from '@angular/router';
@@ -9,8 +18,7 @@ import { ChatComponent } from '../chat.component';
 import { ChannelMembersComponent } from './channel-members/channel-members.component';
 import { AddMembersComponent } from './add-members/add-members.component';
 import { ChatDetailsComponent } from './chat-details/chat-details.component';
-
-
+import { FormsModule } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
@@ -18,16 +26,20 @@ import { ChatDetailsComponent } from './chat-details/chat-details.component';
 @Component({
   selector: 'app-public-chat',
   standalone: true,
-  imports: [ChatDetailsComponent,
+  imports: [
+    ChatDetailsComponent,
     ChannelMembersComponent,
-    CommonModule, AddMembersComponent],
+    CommonModule,
+    AddMembersComponent,
+    FormsModule,
+  ],
   templateUrl: './public-chat.component.html',
   styleUrls: ['./public-chat.component.scss'],
 })
 export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('chatContainer') chatContainer!: ElementRef;
   messages$!: Observable<any[]>;
-  filteredMessages$!:Observable<any[]>
+  filteredMessages$!: Observable<any[]>;
   filterText$ = new BehaviorSubject<string>('');
   channelId: string = 'public';
   newMessage: boolean = false;
@@ -37,46 +49,57 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   showGreyScreen: boolean = false;
   showMembersInfo: boolean = false;
   showAddMembers: boolean = false;
+  searchInput: string = '';
   private scrollListener!: () => void;
 
-  constructor(private chatService: ChatService, private route: ActivatedRoute, private location: Location) { }
+  constructor(
+    private chatService: ChatService,
+    private route: ActivatedRoute,
+    private location: Location
+  ) {}
 
   ngOnInit(): void {
     this.loadMessages();
+    this.loadFilter();
     this.detectUrlChange();
   }
 
-  
-  loadMessages(){
+  loadMessages() {
     const messages = this.chatService.getMessages(this.channelId);
     this.messages$ = messages.pipe(
-      map((messages: Message[]) => this.returnNewObservable(messages, null)),   
+      map((messages: Message[]) => this.returnNewObservable(messages, null)),
       tap(() => {
         this.newMessage = true;
       })
     );
- 
-    this.filteredMessages$ = this.messages$
-    
 
-    this.filteredMessages$ = combineLatest([this.messages$, this.filterText$]).pipe(
-      map(([messages, filterText]) =>
-        messages.filter(msg => msg.text.toLowerCase().includes(filterText.toLowerCase(),
-      	console.log(messages)
-        ))
-      )
-    );
-    
-   
-   
     setTimeout(() => this.scrollToElement('auto'), 1000);
+  }
+
+  loadFilter() {
+    this.filteredMessages$ = combineLatest([this.messages$, this.filterText$]).pipe(
+      map(([messages, searchText]) => {
+        if (!searchText) {
+          return messages;
+        }
+        return messages.filter(message =>
+          message.content.toLowerCase().includes(searchText.toLowerCase())
+        );
+      })
+    );
+  }
+  
+  
+
+  searchLocal() {
+    this.filterText$.next(this.searchInput);
+    console.log(this.searchInput);
   }
 
   updateFilter(text: string) {
     this.filterText$.next(text); // Setzt den neuen Filtertext, wodurch die Liste automatisch aktualisiert wird
-    this.filterText$.subscribe((filter) => console.log(filter))
+    this.filterText$.subscribe((filter) => console.log(filter));
   }
-
 
   /**
    * Subscribes to URL Changes
@@ -87,7 +110,6 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
       this.loadMessages();
     });
   }
-
 
   /**
    * Extracts the ChatID from the current URL and assigns it to the channelId-Variable
@@ -102,17 +124,14 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-
   toggleChatDetails() {
     this.showGreyScreen ? this.hideGreyScreen() : this.activateGreyScreen();
     this.chatDetails = !this.chatDetails;
   }
 
-
   activateGreyScreen() {
     this.showGreyScreen = true;
   }
-
 
   hideGreyScreen() {
     this.showGreyScreen = false;
@@ -123,12 +142,10 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     this.showMembersInfo = true;
   }
 
-
   closeMembersInfo() {
     this.showMembersInfo = false;
     this.hideGreyScreen();
   }
-
 
   openAddMembersMenu() {
     if (this.showMembersInfo) {
@@ -147,7 +164,6 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   //   this.getChatMessages();
   // }
 
-
   // getChatMessages() {
   //   if (this.channelId != ``) {
   //     this.messages$ = this.chatService.getMessages(this.channelId).pipe(
@@ -162,17 +178,22 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   //   }
   // }
 
-
   ngAfterViewInit(): void {
     if (this.chatContainer) {
       this.scrollListener = this.onScroll.bind(this);
-      this.chatContainer.nativeElement.addEventListener('scroll', this.scrollListener);
+      this.chatContainer.nativeElement.addEventListener(
+        'scroll',
+        this.scrollListener
+      );
     }
   }
 
   ngOnDestroy(): void {
     if (this.chatContainer && this.scrollListener) {
-      this.chatContainer.nativeElement.removeEventListener('scroll', this.scrollListener);
+      this.chatContainer.nativeElement.removeEventListener(
+        'scroll',
+        this.scrollListener
+      );
     }
   }
 
@@ -181,17 +202,17 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
       this.chatContainer.nativeElement.scroll({
         top: this.chatContainer.nativeElement.scrollHeight,
         left: 0,
-        behavior: behavior
+        behavior: behavior,
       });
       this.newMessage = false;
-
     }
   }
 
   onScroll(): void {
     if (this.chatContainer) {
       const element = this.chatContainer.nativeElement;
-      const isAtBottom = element.scrollTop + element.clientHeight >= element.scrollHeight - 10;
+      const isAtBottom =
+        element.scrollTop + element.clientHeight >= element.scrollHeight - 10;
       if (isAtBottom) {
         this.newMessage = false;
       }
@@ -200,11 +221,11 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
 
   /**
    * Transforms an array of messages to include display-related metadata for dates.
-   * 
+   *
    * This method maps over a list of messages and determines whether the date
-   * of each message should be displayed. It compares the current message's date 
+   * of each message should be displayed. It compares the current message's date
    * with the last seen date to decide if a new date separator is needed.
-   * 
+   *
    * @param {Message[]} messages - An array of messages to process.
    * @param {string | null} lastDate - The last displayed date in 'dd.mm.yy' format or null if none.
    * @returns {Array} - A new array of messages, each with added properties:
@@ -213,11 +234,14 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   returnNewObservable(messages: Message[], lastDate: string | null) {
     return messages.map((message) => {
-      const currentDate = new Date(message.createdAt).toLocaleDateString('de-DE', {
-        day: '2-digit',
-        month: '2-digit',
-        year: '2-digit',
-      });
+      const currentDate = new Date(message.createdAt).toLocaleDateString(
+        'de-DE',
+        {
+          day: '2-digit',
+          month: '2-digit',
+          year: '2-digit',
+        }
+      );
       const showDate = currentDate !== lastDate;
       lastDate = currentDate;
       return {
@@ -227,7 +251,6 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
       };
     });
   }
-
 
   formatTime(timestamp: number): string {
     const date = new Date(timestamp);
@@ -245,15 +268,10 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     return userId === currentUser ? 'secondary' : 'primary';
   }
 
-
   openThread(): void {
     // Logic for opening a thread
   }
 }
-
-
-
-
 
 // ngAfterViewInit(): void {
 //   if (this.chatContainer) {

@@ -1,5 +1,9 @@
 <div *ngIf="showGreyScreen" class="grey-screen"></div>
 <header>
+  <div>
+    <input type="text" [(ngModel)]="searchInput">
+    <button (click)="searchLocal()">suche</button>
+  </div>
   <div class="header-chat-info-container" (click)="toggleChatDetails()">
     <h3>#</h3>
     <h3>{{ currentChannelName }}</h3>
@@ -28,7 +32,7 @@
   </div>
 </header>
 <div #chatContainer class="all-chat-container">
-    <div *ngFor="let message of messages$ | async" class="chat-content">
+    <div *ngFor="let message of filteredMessages$ | async" class="chat-content">
       <div class="chat-date" *ngIf="message.showDate">
         <div class="line"></div>
         <div class="chat-date_create">{{ message.formattedDate }}</div>

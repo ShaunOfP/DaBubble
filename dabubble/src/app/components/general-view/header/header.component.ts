@@ -156,7 +156,7 @@ export class HeaderComponent implements OnInit {
 
   searchInDevspace(){
     console.log(this.inputSearch);
-    
     this.publicChatComponent.updateFilter(this.inputSearch)
+    // this.publicChatComponent.updateFilter(this.inputSearch)
   }
 }
