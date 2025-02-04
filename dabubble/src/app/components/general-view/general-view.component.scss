@@ -9,10 +9,10 @@
 app-header {
     padding: 25px 34px 20px 45px;
     @include arrangement($jc: normal, $g: 220px);
-    height: 70px;
 
     @media (max-width: 700px) {
         @include arrangement($jc: space-between, $g: 0px);
+        padding: 15px 16px 15px 16px;
     }
 }
 

@@ -133,11 +133,12 @@ h3 {
     background-color: var(--color-white);
     z-index: 11;
 
-    @media(max-width: 700px){
+    @media(max-width: 700px) {
         right: 20px;
         left: 20px;
         border-radius: 30px;
         width: auto;
+        padding: 45px 20px 45px 20px;
         // center the div
     }
 }
@@ -179,12 +180,27 @@ h3 {
 .profile-info-name-status-upper {
     @include arrangement($jc: space-between);
 
-    >:first-child {
+    &--font-primary {
         @include fontStyle($fs: 32px, $fw: 700);
     }
 
-    >:last-child {
+    &--font-secondary {
         @include fontStyle($fs: 18px, $fw: 700);
+
+        @media (max-width: 700px) {
+            display: none;
+        }
+    }
+
+    >img {
+        height: 30px;
+        width: 30px;
+        cursor: pointer;
+        display: none;
+
+        @media (max-width: 700px) {
+            display: flex;
+        }
     }
 }
 
@@ -247,11 +263,12 @@ h3 {
     background-color: var(--color-white);
     z-index: 11;
 
-    @media (max-width: 700px){
+    @media (max-width: 700px) {
         right: 20px;
         left: 20px;
         border-radius: 30px;
         width: auto;
+        padding: 45px 20px 45px 20px;
         // center the div
     }
 }

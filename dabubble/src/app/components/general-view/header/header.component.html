@@ -36,8 +36,9 @@
     </div>
     <div class="profile-info-name-status">
         <div class="profile-info-name-status-upper">
-            <span class="cursor-no-change">{{this.currentUserData?.username}}</span>
-            <span class="color-purple-with-hover" (click)="toggleProfileEdit()">Bearbeiten</span>
+            <span class="profile-info-name-status-upper--font-primary cursor-no-change">{{this.currentUserData?.username}}</span>
+            <span class="profile-info-name-status-upper--font-secondary color-purple-with-hover" (click)="toggleProfileEdit()">Bearbeiten</span>
+            <img src="/img/general-view/header/edit_icon.svg" (click)="toggleProfileEdit()">
         </div>
         <div class="profile-info-name-status-lower">
             <img class="active-circle" />
