@@ -4,7 +4,7 @@
 </div>
 <div class="bar-info">
     <div class="bar-info-searchbar input-field">
-        <input placeholder="Devspace durchsuchen" [(ngModel)]="inputSearch"/>
+        <input placeholder="Devspace durchsuchen" [(ngModel)]="inputSearch" />
         <button (click)="searchInDevspace()"><img src="/img/general-view/workspace-menu/search.svg" /></button>
     </div>
     <div class="bar-info-account-info" (click)="openDropdownMenu()">
@@ -16,8 +16,8 @@
                 <img class="d-none" src="/img/general-view/workspace-menu/hover_arrow_drop_down_thin.svg" />
             </button>
             <mat-menu #menu="matMenu">
-                <button mat-menu-item (click)="toggleGreyScreen(); toggleProfileInfo(true)">Profil</button>
-                <button mat-menu-item (click)="navigateTo('')">Log out</button>
+                <button mat-menu-item (click)="toggleGreyScreen(); toggleProfileInfo(true)"><img class="mat-menu-button-img" src="/img/general-view/header/account_circle.svg">Profil</button>
+                <button mat-menu-item (click)="navigateTo('')"><img class="mat-menu-button-img" src="/img/general-view/header/logout.svg">Log out</button>
             </mat-menu>
         </div>
     </div>
@@ -36,9 +36,9 @@
     </div>
     <div class="profile-info-name-status">
         <div class="profile-info-name-status-upper">
-            <span class="cursor-no-change">{{this.currentUserData?.username}}</span>
-            <!-- <span class="profile-info-name-status_prepare" (als eindeutigen namen). -->
-            <span class="color-purple-with-hover" (click)="toggleProfileEdit()">Bearbeiten</span>
+            <span class="profile-info-name-status-upper--font-primary cursor-no-change">{{this.currentUserData?.username}}</span>
+            <span class="profile-info-name-status-upper--font-secondary color-purple-with-hover" (click)="toggleProfileEdit()">Bearbeiten</span>
+            <img src="/img/general-view/header/edit_icon.svg" (click)="toggleProfileEdit()">
         </div>
         <div class="profile-info-name-status-lower">
             <img class="active-circle" />

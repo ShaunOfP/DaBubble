@@ -4,6 +4,10 @@ mat-drawer-container {
   height: calc(100vh - 130px);
   @include arrangement($ai: normal, $jc: normal);
   background-color: transparent;
+
+  @media (max-width: 700px){
+    
+  }
 }
 
 mat-drawer {
@@ -127,6 +131,8 @@ h3 {
 
 .channels-header-new-channel {
   height: 40px;
+  min-height: 40px;
+  min-width: 40px;
   width: 40px;
   @include arrangement();
   border-radius: 30px;
