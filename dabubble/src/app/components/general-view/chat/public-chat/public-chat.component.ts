@@ -91,8 +91,8 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
         }
         const searchLower = filterText.toLowerCase();
         return messages.filter(message => {
-          const contentMatch = message.content?.toLowerCase().includes(searchLower);
-          const senderMatch = message.sender?.toLowerCase().includes(searchLower);
+          const contentMatch = message.content?.toLowerCase().startsWith(searchLower);
+          const senderMatch = message.sender?.toLowerCase().startsWith(searchLower);
           // Wandeln den Timestamp in ein Datum um, formatiert z.B. im deutschen Format
           const dateStr = new Date(message.createdAt).toLocaleDateString('de-DE');
           const dateMatch = dateStr.toLowerCase().includes(searchLower);
