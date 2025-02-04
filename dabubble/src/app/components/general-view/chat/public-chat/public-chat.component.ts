@@ -35,9 +35,12 @@ import { FilterService } from '../../../../services/component-services/filter.se
   styleUrls: ['./public-chat.component.scss'],
 })
 export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
+
   @ViewChild('chatContainer') chatContainer!: ElementRef;
+
   messages$!: Observable<any[]>;
   filteredMessages$!: Observable<any[]>;
+
   channelId: string = 'public';
   newMessage: boolean = false;
   hoveredMessageId: string | null = null;
@@ -46,6 +49,7 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   showGreyScreen: boolean = false;
   showMembersInfo: boolean = false;
   showAddMembers: boolean = false;
+
   private scrollListener!: () => void;
 
   constructor(
@@ -77,17 +81,29 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   loadFilter() {
-    this.filteredMessages$ = combineLatest([this.messages$, this.filterService.filterText$]).pipe(
-      map(([messages, searchText]) => {
-        if (!searchText) {
+    this.filteredMessages$ = combineLatest([
+      this.messages$,
+      this.filterService.filterText$.pipe(distinctUntilChanged())
+    ]).pipe(
+      map(([messages, filterText]) => {
+        if (!filterText) {
           return messages;
         }
-        return messages.filter(message =>
-          message.content.toLowerCase().includes(searchText.toLowerCase())
-        );
+        const searchLower = filterText.toLowerCase();
+        return messages.filter(message => {
+          const contentMatch = message.content?.toLowerCase().includes(searchLower);
+          const senderMatch = message.sender?.toLowerCase().includes(searchLower);
+          // Wandeln den Timestamp in ein Datum um, formatiert z.B. im deutschen Format
+          const dateStr = new Date(message.createdAt).toLocaleDateString('de-DE');
+          const dateMatch = dateStr.toLowerCase().includes(searchLower);
+          
+          // Wenn einer der Werte passt, wird die Nachricht beibehalten
+          return contentMatch || senderMatch || dateMatch;
+        });
       })
     );
   }
+  
 
 
   /**
