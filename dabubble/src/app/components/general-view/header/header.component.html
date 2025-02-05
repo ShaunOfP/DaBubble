@@ -9,7 +9,7 @@
     </div>
     <div class="bar-info-account-info" (click)="openDropdownMenu()">
         <span>{{ this.currentUserData?.username }}</span>
-        <img class="avatar-small" src="{{ this.currentUserData?.avatar }}" alt="User Image" />
+        <img class="avatar-small" [src]="this.currentUserData?.avatar" alt="User Image" />
         <div>
             <button mat-button [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger">
                 <img src="/img/general-view/workspace-menu/arrow_drop_down_thin.svg" />
