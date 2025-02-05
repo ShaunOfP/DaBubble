@@ -62,6 +62,9 @@ export class AddMembersToNewChannelComponent implements OnInit {
       this.openAddMembers &&
       !this.eRef.nativeElement
         .querySelector('.main-content')
+        .contains(event.target as Node) &&
+      !this.eRef.nativeElement
+        .querySelector('container-wrapper')
         .contains(event.target as Node)
     ) {
       this.close();

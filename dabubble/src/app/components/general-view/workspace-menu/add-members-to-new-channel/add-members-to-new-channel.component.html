@@ -60,7 +60,9 @@
             >
               <div
                 class="member-container"
-                *ngFor="let member of selectedMembers | slice : 0 : 2"
+                *ngFor="
+                  let member of selectedMembers | slice : 0 : (isMobile ? 1 : 2)
+                "
               >
                 <img
                   class="avatar"
@@ -75,9 +77,9 @@
               <div
                 (click)="showSelectedMembers()"
                 class="further-members-container"
-                *ngIf="selectedMembers.length > 2"
+                *ngIf="selectedMembers.length > (isMobile ? 1 : 2)"
               >
-                +{{ selectedMembers.length - 2 }}
+                +{{ selectedMembers.length - (isMobile ? 1 : 2) }}
               </div>
 
               <div
@@ -121,7 +123,6 @@
     </form>
   </div>
 </section>
-<!-- <app-mobile-dialog *ngIf="isMobile"></app-mobile-dialog> -->
 
 <div class="overlay-container" *ngIf="channelCreated">
   <span class="side-sheet"> Channel erfolgreich erstellt! </span>
