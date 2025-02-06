@@ -4,6 +4,11 @@
     display: flex;
     padding-bottom: 25px;
     gap: 20px;
+
+    @media (max-width: 700px) {
+        padding-bottom: 0;
+        gap: 0;
+    }
 }
 
 app-header {

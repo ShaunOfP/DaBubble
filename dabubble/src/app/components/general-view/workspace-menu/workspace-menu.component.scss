@@ -23,6 +23,7 @@ mat-drawer {
 
   @media (max-width: 700px) {
     width: auto;
+    border-radius: 0;
   }
 }
 
@@ -105,6 +106,40 @@ app-workspace-state-toggle-button {
       height: 24px;
       width: 24px;
     }
+  }
+
+  @media (max-width:700px) {
+    display: none;
+  }
+}
+
+.workspace-menu-mobile-searchbar {
+  @include arrangement($jc: normal);
+
+  >input {
+    font-size: 17px;
+    padding: 8px 24px;
+    width: calc(100% - 50px);
+
+    &:hover {
+      border: 1px solid var(--color-purple-primary-disabled);
+    }
+
+    &:focus {
+      border: 1px solid var(--color-purple-secondary-hover);
+      outline: none;
+    }
+  }
+
+  >img {
+    height: 26px;
+    width: 32px;
+    margin-left: -50px;
+    cursor: pointer;
+  }
+
+  @media (min-width: 701px) {
+    display: none;
   }
 }
 
@@ -261,5 +296,25 @@ h3 {
     cursor: pointer;
     background-color: var(--color-blue-bg);
     color: var(--color-purple-secondary-hover);
+  }
+}
+
+.mobile-new-message-bubble {
+  height: 60px;
+  width: 60px;
+  background-color: var(--color-purple-primary-default);
+  border-radius: 30px;
+  position: fixed;
+  right: 16px;
+  bottom: 60px;
+  @include arrangement();
+  cursor: pointer;
+  
+  >img{
+    filter: invert(1);
+  }
+
+  @media (min-width: 701px) {
+    display: none;
   }
 }

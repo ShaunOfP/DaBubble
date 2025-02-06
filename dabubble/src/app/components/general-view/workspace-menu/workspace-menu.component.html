@@ -10,6 +10,9 @@
         <img class="d-none" src="/img/general-view/workspace-menu/hover_edit.svg" />
       </div>
     </div>
+    <div class="workspace-menu-mobile-searchbar">
+      <input class="input-field" placeholder="Gehe zu..."><img src="/img/general-view/workspace-menu/search.svg">
+    </div>
     <div class="channels-and-chat-container">
       <div class="channels-and-chat-container-upper">
         <mat-expansion-panel hideToggle [expanded]="true" (opened)="channelOpenState.set(true)"
@@ -108,4 +111,7 @@
     </div>
   </mat-drawer>
   <app-workspace-state-toggle-button (menu)="drawer.toggle(); toggleMargin()"></app-workspace-state-toggle-button>
+  <div class="mobile-new-message-bubble" (click)="openNewMessage()">
+    <img src="/img/general-view/workspace-menu/edit.svg">
+  </div>
 </mat-drawer-container>
