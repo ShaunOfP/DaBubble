@@ -249,6 +249,10 @@ app-emoji-picker {
 
 .mat-drawer-inner-container {
   overflow: visible !important;
+
+  @media (max-width: 700px){
+    @include arrangement($fd: column, $g: 25px, $ai: normal, $jc: normal);
+  }
 }
 
 .ng-tns-c857250080-4 {
