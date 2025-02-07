@@ -1,6 +1,6 @@
 @import './../../../../styles.scss';
 
-.dev-btn{
+.dev-btn {
     position: fixed;
     z-index: 9999;
     right: 0;
@@ -10,53 +10,57 @@
 mat-drawer-container {
     background-color: transparent;
     height: calc(100vh - 130px);
+
+    @media (max-width: 700px) {
+        height: calc(100vh - 100px);
+        margin: 0 !important;
+    }
 }
 
 mat-drawer {
     width: 485px;
     background-color: var(--color-white);
     border-radius: 30px !important;
-    height: calc(100vh - 130px);
     border: none;
+
+    @media (max-width: 700px) {
+        width: 100%;
+        border-radius: 0 !important;
+    }
 }
 
 header {
-    padding: 32px 40px 32px 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    padding: 32px 40px;
+    @include arrangement($jc: space-between);
     height: 40px;
     box-shadow: 0px 2px 10px -10px;
 
     >div {
-        display: flex;
-        align-items: center;
-        gap: 5px;
+        @include arrangement($g: 5px);
     }
+
+    @media (max-width: 700px) {
+        padding: 10px 16px;
+    }
+}
+
+.header-headline-channel {
+    color: var(--color-purple-primary-disabled);
+    font-size: 14px;
 }
 
 h3 {
     margin: 0;
 }
 
-.margin-right-20{
+.margin-right-20 {
     margin-right: 20px;
-}
-
-.purple-text {
-    color: var(--color-purple-primary-disabled);
-}
-
-.size-14 {
-    font-size: 14;
 }
 
 .header-image-container {
     height: 40px;
     width: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include arrangement();
 
     >img {
         &:hover {
@@ -66,10 +70,12 @@ h3 {
 }
 
 .chat-container {
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
+    @include arrangement($ai: normal, $jc: normal, $fd: column, $g: 25px);
     height: calc(100% - 104px);
+
+    @media (max-width: 700px) {
+        height: 100%;
+    }
 }
 
 .chat {
@@ -81,8 +87,11 @@ h3 {
 .input-container {
     position: relative;
     padding: 0 20px 40px 20px;
-    display: flex;
-    flex-direction: column;
+    @include arrangement($ai: normal, $jc: normal, $fd: column);
+
+    @media (max-width: 700px) {
+        padding: 0 16px 30px 16px;
+    }
 }
 
 textarea {
@@ -100,18 +109,32 @@ textarea {
 }
 
 .textarea-icon-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    @include arrangement($jc: space-between);
     position: absolute;
     bottom: 60px;
     width: 380px;
     left: 40px;
 
     >div {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        @include arrangement();
+    }
+
+    @media (max-width: 700px) {
+        width: auto;
+        bottom: 40px;
+        right: 40px;
+    }
+}
+
+.textarea-icon-bar-icons {
+    height: 40px;
+    width: 40px;
+    @include arrangement();
+    cursor: pointer;
+    border-radius: 30px;
+
+    &:hover {
+        background-color: #ADB0D9;
     }
 }
 
@@ -120,25 +143,8 @@ textarea {
     width: 40px;
 }
 
-.d-flex {
-    display: flex;
-}
-
 .d-none {
     display: none;
-}
-
-.center {
-    justify-content: center;
-    align-items: center;
-}
-
-.hover {
-    &:hover {
-        cursor: pointer;
-        background-color: #ADB0D9;
-        border-radius: 30px;
-    }
 }
 
 .change-image-on-hover {

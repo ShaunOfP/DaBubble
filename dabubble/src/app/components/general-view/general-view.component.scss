@@ -32,6 +32,24 @@ app-workspace-menu {
 
 app-chat {
     width: 100%;
+
+    @media (max-width: 700px) {
+        width: auto;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        position: absolute;
+        z-index: 1;
+    }
+}
+
+app-thread{
+    @media (max-width: 700px){
+        left: 0;
+        bottom: 0;
+        right: 0;
+        position: absolute;
+    }
 }
 
 app-user-profile {
