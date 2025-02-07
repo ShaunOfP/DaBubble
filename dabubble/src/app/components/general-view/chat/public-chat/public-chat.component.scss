@@ -13,7 +13,10 @@ header {
   justify-content: space-between;
   box-shadow: 0px 2px 10px -10px;
   // position: relative;
-  margin-top: -25px;
+
+  @media (max-width: 700px) {
+    padding: 10px 16px;
+  }
 }
 
 .chat-feed {
@@ -27,7 +30,7 @@ header {
   padding: 6px 10px 6px 10px;
   border-radius: 30px;
 
-  > button {
+  >button {
     border: none;
     background-color: transparent;
     height: 30px;
@@ -43,11 +46,11 @@ header {
     cursor: pointer;
     background-color: #eceefe;
 
-    > h3 {
+    >h3 {
       color: var(--color-purple-primary-default);
     }
 
-    > button {
+    >button {
       :first-child {
         display: none;
       }
@@ -61,19 +64,30 @@ header {
 
 .header-user-container {
   @include arrangement($g: 10px);
+
   .header-user-container_members {
     @include arrangement($g: 10px);
     border-radius: 30px;
     padding: 3px 10px;
+
     &:hover {
       cursor: pointer;
       background-color: var(--color-blue-bg);
       color: var(--color-purple-secondary-hover);
     }
 
-    >div{
+    >div {
       @include arrangement($jc: normal);
     }
+
+    @media (max-width: 700px) {
+      display: none;
+    }
+  }
+
+  >:last-child {
+    background-color: var(--color-blue-bg);
+    border-radius: 30px;
   }
 }
 
@@ -81,6 +95,7 @@ header {
   @include arrangement();
 
   cursor: pointer;
+
   &:hover {
     > :first-child {
       display: none;
@@ -133,7 +148,7 @@ header {
     @include arrangement($jc: normal, $g: 20px, $fd: column, $ai: start);
     padding: 10px 40px;
 
-    > div {
+    >div {
       @include arrangement($jc: flex-start, $g: 20px);
     }
 
@@ -162,7 +177,8 @@ header {
     .chat-content_header {
       flex-direction: row-reverse;
     }
-    .chat-content_reaction{
+
+    .chat-content_reaction {
       flex-direction: unset;
       left: 10px;
       right: unset
@@ -170,7 +186,7 @@ header {
   }
 }
 
-.chat-content_reaction{
+.chat-content_reaction {
   position: absolute;
   right: 10px;
   display: flex;
@@ -178,14 +194,16 @@ header {
   padding: 3px 15px;
   border-radius: 25px 25px 0 25px;
   background-color: white;
-  >button{
+
+  >button {
     display: flex;
     align-items: center;
     background-color: transparent;
     border: none;
     cursor: pointer;
     padding: 12px;
-    &:hover{
+
+    &:hover {
       border-radius: 50%;
       background-color: #ECEEFE;
       box-sizing: border-box;
@@ -252,7 +270,8 @@ header {
   display: flex;
   justify-content: center;
   width: 100%;
-  > button {
+
+  >button {
     background-color: white;
     border: none;
     color: rgb(255, 255, 255);
@@ -269,10 +288,12 @@ header {
     background-color: white;
     color: black;
   }
+
   50% {
     background-color: var(--color-purple-primary-disabled);
     color: white;
   }
+
   100% {
     background-color: white;
     color: black;
@@ -289,7 +310,7 @@ header {
   z-index: 5;
 }
 
-app-channel-members{
+app-channel-members {
   display: flex;
   flex-direction: column;
   padding: 40px;
@@ -304,7 +325,7 @@ app-channel-members{
   right: 90px;
 }
 
-app-add-members{
+app-add-members {
   display: flex;
   flex-direction: column;
   padding: 40px;
@@ -319,7 +340,7 @@ app-add-members{
   z-index: 6;
 }
 
-app-chat-details{
+app-chat-details {
   background-color: var(--color-white);
   display: flex;
   flex-direction: column;

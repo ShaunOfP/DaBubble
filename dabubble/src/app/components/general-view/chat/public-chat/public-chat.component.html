@@ -28,45 +28,45 @@
   </div>
 </header>
 <div #chatContainer class="all-chat-container">
-    <div *ngFor="let message of filteredMessages$ | async" class="chat-content" (mouseleave)="showPicker = false">
-      <div class="chat-date" *ngIf="message.showDate">
-        <div class="line"></div>
-        <div class="chat-date_create">{{ message.formattedDate }}</div>
-      </div>
-      <div class="chat-content--{{ checkStyle(message.userId) }}" 
-           (mouseover)="hoveredMessageId = message.id" 
-           (mouseout)="hoveredMessageId = null">
-        <div class="chat-content_reaction" *ngIf="hoveredMessageId === message.id">
-          <button><img src="img/general-view/chat/green_check.svg" alt="check"></button>
-          <button><img src="img/general-view/chat/clap_hands.svg" alt="check"></button>
-          <button (click)="showPicker = !showPicker"><img src="img/general-view/chat/add_reaction.svg" alt="check"></button>
-          <app-emoji-picker  *ngIf="showPicker" (mouseleave)="showPicker = false" (click)="$event.preventDefault()"></app-emoji-picker>
-          <button><img src="img/general-view/chat/add_comment.svg" alt="check"></button>
-          <button *ngIf="checkStyle(message.userId) === 'secondary'">
-             <img src="img/general-view/chat/menu_points.svg" alt="check">
-          </button>
-        </div>
-        <div class="row-reverse">
-          <img src="img/general-view/create-avatar/avatar1.svg" alt="avatar" />
-          <div class="chat-content_conversation">
-            <div class="chat-content_header">
-              <span>{{ message.sender }}</span>
-              <span>{{ formatTime(message.createdAt) }}</span>
-            </div>
-            <span class="chat-content_message--{{ checkStyle(message.userId) }}">
-              {{ message.content }}
-            </span>
-          </div>
-        </div>
-        <div>
-          <span class="chat-content_conversation_reacts" (click)="openThread()">2 Antworten</span>
-          <span class="chat-content_conversation_last-react">letzte Antwort 14:56 Uhr</span>
-        </div>
-      </div>
+  <div *ngFor="let message of filteredMessages$ | async" class="chat-content" (mouseleave)="showPicker = false">
+    <div class="chat-date" *ngIf="message.showDate">
+      <div class="line"></div>
+      <div class="chat-date_create">{{ message.formattedDate }}</div>
     </div>
-    
-    <div class="new-message" *ngIf="newMessage">
-        <button (click)="scrollToElement('smooth')">neue Nachricht ⬇️</button>
+    <div class="chat-content--{{ checkStyle(message.userId) }}" (mouseover)="hoveredMessageId = message.id"
+      (mouseout)="hoveredMessageId = null">
+      <div class="chat-content_reaction" *ngIf="hoveredMessageId === message.id">
+        <button><img src="img/general-view/chat/green_check.svg" alt="check"></button>
+        <button><img src="img/general-view/chat/clap_hands.svg" alt="check"></button>
+        <button (click)="showPicker = !showPicker"><img src="img/general-view/chat/add_reaction.svg"
+            alt="check"></button>
+        <app-emoji-picker *ngIf="showPicker" (mouseleave)="showPicker = false"
+          (click)="$event.preventDefault()"></app-emoji-picker>
+        <button><img src="img/general-view/chat/add_comment.svg" alt="check"></button>
+        <button *ngIf="checkStyle(message.userId) === 'secondary'">
+          <img src="img/general-view/chat/menu_points.svg" alt="check">
+        </button>
+      </div>
+      <div class="row-reverse">
+        <img src="img/general-view/create-avatar/avatar1.svg" alt="avatar" />
+        <div class="chat-content_conversation">
+          <div class="chat-content_header">
+            <span>{{ message.sender }}</span>
+            <span>{{ formatTime(message.createdAt) }}</span>
+          </div>
+          <span class="chat-content_message--{{ checkStyle(message.userId) }}">
+            {{ message.content }}
+          </span>
+        </div>
+      </div>
+      <div>
+        <span class="chat-content_conversation_reacts" (click)="openThread()">2 Antworten</span>
+        <span class="chat-content_conversation_last-react">letzte Antwort 14:56 Uhr</span>
+      </div>
     </div>
   </div>
-  
+
+  <div class="new-message" *ngIf="newMessage">
+    <button (click)="scrollToElement('smooth')">neue Nachricht ⬇️</button>
+  </div>
+</div>
