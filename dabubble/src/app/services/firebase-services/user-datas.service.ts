@@ -48,8 +48,11 @@ export class UserDatasService {
   userIds$ = this.userIdsSubject.asObservable();
   channelData: any = []; //datentyp ändern
   currentUserId: string = ``;
-  private currentUserDataSubject = new BehaviorSubject<UserObserver | null>(null);
-  public currentUserData$: Observable<UserObserver | null> = this.currentUserDataSubject.asObservable();
+  private currentUserDataSubject = new BehaviorSubject<UserObserver | null>(
+    null
+  );
+  public currentUserData$: Observable<UserObserver | null> =
+    this.currentUserDataSubject.asObservable();
 
   constructor(private route: ActivatedRoute) {}
 
@@ -61,7 +64,7 @@ export class UserDatasService {
 
       if (userDoc.exists()) {
         const userData = userDoc.data() as UserObserver;
-        this.currentUserDataSubject.next(userData); 
+        this.currentUserDataSubject.next(userData);
       } else {
         console.error('User not found');
         this.currentUserDataSubject.next(null);
@@ -99,7 +102,7 @@ export class UserDatasService {
       const guestData = {
         username: accountData.username,
         avatar: accountData.avatar,
-        channels: accountData.channels
+        channels: accountData.channels,
       };
       await setDoc(guestDocRef, guestData);
 
@@ -140,21 +143,18 @@ export class UserDatasService {
     return collection(this.firestore, 'guestDatas');
   }
 
-
   async getCurrentChannelId() {
-     this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params) => {
       const wholeString = params['userID'];
-      const extractedUserID = wholeString.split("/", 1)[0];
+      const extractedUserID = wholeString.split('/', 1)[0];
       if (extractedUserID) {
         this.currentUserId = extractedUserID;
         console.log(this.currentUserId);
-      }
-      else {
+      } else {
         console.error('No user ID provided');
       }
     });
   }
-
 
   async updateUserData(userId: string, newMail: string, newUserName: string) {
     try {
@@ -162,13 +162,12 @@ export class UserDatasService {
       await updateDoc(userData, {
         mail: newMail,
         username: newUserName,
-        username_lowercase: newUserName.toLowerCase()
+        username_lowercase: newUserName.toLowerCase(),
       });
     } catch (err) {
-      console.log("Error updating user Data:", err);
+      console.log('Error updating user Data:', err);
     }
   }
-
 
   async getChannelNames(channelId: string) {
     const docRef = doc(this.firestore, `channels/${channelId}`);
@@ -181,7 +180,6 @@ export class UserDatasService {
     }
   }
 }
-
 
 // async getUserDatas(email: string, password: string) {
 //   const q = query(this.userDatasRef(), where('mail', '==', email));

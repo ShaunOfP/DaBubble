@@ -7,20 +7,29 @@ import {
   ViewChild,
   ElementRef,
 } from '@angular/core';
+import { CommonModule, Location } from '@angular/common';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { ChangeDetectionStrategy, signal } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { CommonModule, Location } from '@angular/common';
-import { UserDatasService, UserObserver } from '../../../services/firebase-services/user-datas.service';
+import {
+  UserDatasService,
+  UserObserver,
+} from '../../../services/firebase-services/user-datas.service';
 import { ChatService } from '../../../services/firebase-services/chat.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { WorkspaceStateToggleButtonComponent } from "./workspace-state-toggle-button/workspace-state-toggle-button.component";
+import { WorkspaceStateToggleButtonComponent } from './workspace-state-toggle-button/workspace-state-toggle-button.component';
+import { ChannelMemberService } from '../../../services/firebase-services/channel-member.service';
 
 @Component({
   selector: 'app-workspace-menu',
   standalone: true,
-  imports: [MatSidenavModule, MatExpansionModule, CommonModule, WorkspaceStateToggleButtonComponent],
+  imports: [
+    CommonModule,
+    MatSidenavModule,
+    MatExpansionModule,
+    WorkspaceStateToggleButtonComponent,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './workspace-menu.component.html',
   styleUrl: './workspace-menu.component.scss',
@@ -35,10 +44,13 @@ export class WorkspaceMenuComponent implements OnInit {
   workspaceUserData!: UserObserver | null;
   toggleMarginLeft: boolean = true;
   previousChatId: string = ``;
+  userDatas: any[] = [];
+  allUsers: any[] = [];
 
   constructor(
     public userDatasService: UserDatasService,
     private chatService: ChatService,
+    private channelService: ChannelMemberService,
     private router: Router,
     private route: ActivatedRoute,
     private cd: ChangeDetectorRef,
@@ -47,20 +59,30 @@ export class WorkspaceMenuComponent implements OnInit {
     // this.currentUrl = window.location.href;
   }
 
-
   ngOnInit() {
     this.userDatasService.currentUserData$.subscribe((userDatas) => {
       this.workspaceUserData = userDatas;
       this.fetchUserData();
-      // console.log(userDatas?.channels);      
+      // console.log(userDatas?.channels);
+    });
+    this.subscribeAllMembers();
+  }
+
+  async subscribeAllMembers() {
+    await this.channelService.selectAllMembers();
+    this.channelService.allMembersSubject$.subscribe((allUsers) => {
+      this.allUsers = allUsers.filter(
+        (user) =>
+          user.privateChats[0] !== this.workspaceUserData?.privateChats[0]
+      );
     });
   }
 
-
   toggleMargin() {
-    this.toggleMarginLeft ? this.toggleMarginLeft = false : this.toggleMarginLeft = true;
+    this.toggleMarginLeft
+      ? (this.toggleMarginLeft = false)
+      : (this.toggleMarginLeft = true);
   }
-
 
   fetchUserData(): void {
     try {
@@ -71,7 +93,6 @@ export class WorkspaceMenuComponent implements OnInit {
       console.error('Error fetching user data:', error);
     }
   }
-
 
   async fetchChannelNames(channelIdArray: string[]): Promise<void> {
     let array: any[] = [];
@@ -86,11 +107,9 @@ export class WorkspaceMenuComponent implements OnInit {
     this.cd.detectChanges();
   }
 
-
   openCreateChannelOverlay() {
     this.openCreateChannel.emit();
   }
-
 
   openNewMessage() {
     this.route.queryParams.subscribe((params) => {
@@ -101,16 +120,17 @@ export class WorkspaceMenuComponent implements OnInit {
     });
   }
 
-
   readonly channelOpenState = signal(false);
   readonly messagesOpenState = signal(false);
-
 
   modifyUrlWithChatString(channelId: string) {
     this.currentUrl = window.location.href;
     if (this.currentUrl.includes('chatID')) {
       if (this.previousChatId != ``) {
-        this.currentUrl = this.currentUrl.replace(`%2FchatID=${this.previousChatId}`, "");
+        this.currentUrl = this.currentUrl.replace(
+          `%2FchatID=${this.previousChatId}`,
+          ''
+        );
       }
     }
     let newUrl = `${this.currentUrl}%2FchatID=${channelId}`;
@@ -118,15 +138,13 @@ export class WorkspaceMenuComponent implements OnInit {
     this.previousChatId = channelId;
   }
 
-
   fixDuplicateUrl(url: string): string {
     const currentHost = window.location.origin;
-    if (url.startsWith(currentHost + "/")) {
-      return url.replace(currentHost + "/", "");
+    if (url.startsWith(currentHost + '/')) {
+      return url.replace(currentHost + '/', '');
     }
     return url;
   }
-
 
   openDirectMessage(userId: string) {
     //implement logic to open a message
