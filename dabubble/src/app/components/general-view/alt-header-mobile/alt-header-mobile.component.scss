@@ -1,0 +1,36 @@
+@import "./../../../../styles.scss";
+
+div {
+    position: fixed;
+    left: 0;
+    top: 0;
+    padding: 15px 0px 15px 16px;
+    background-color: var(--color-blue-bg);
+    @include arrangement($jc: space-between);
+    height: 70px;
+
+    >img {
+        height: 50px;
+        width: 50px;
+        margin-right: 10px;
+        margin-left: 2px;
+    }
+
+    @media (min-width: 700px) {
+        display: none;
+    }
+}
+
+button {
+    border: none;
+    @include arrangement();
+
+    >img {
+        rotate: 90deg;
+    }
+}
+
+span {
+    font-size: 24px;
+    font-weight: 700;
+}
