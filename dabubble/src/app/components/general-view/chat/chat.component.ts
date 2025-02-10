@@ -10,6 +10,7 @@ import { RouterModule } from '@angular/router';
 import { PrivateChatComponent } from "./private-chat/private-chat.component";
 import { map, Observable } from 'rxjs';
 import { PublicChatComponent } from './public-chat/public-chat.component';
+import { AltHeaderMobileComponent } from "../alt-header-mobile/alt-header-mobile.component";
 
 
 @Component({
@@ -20,8 +21,9 @@ import { PublicChatComponent } from './public-chat/public-chat.component';
     EmojiPickerComponent,
     NewMessageComponent,
     SharedModule,
-    RouterModule
-  ],
+    RouterModule,
+    AltHeaderMobileComponent
+],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss',
 })

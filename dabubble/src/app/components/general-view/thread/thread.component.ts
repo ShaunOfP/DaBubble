@@ -3,11 +3,12 @@ import { EmojiPickerComponent } from '../emoji-picker/emoji-picker.component';
 import { SharedModule } from '../../../shared/shared.module';
 import { ThreadMessagesComponent } from "./thread-messages/thread-messages.component";
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { AltHeaderMobileComponent } from "../alt-header-mobile/alt-header-mobile.component";
 
 @Component({
   selector: 'app-thread',
   standalone: true,
-  imports: [EmojiPickerComponent, SharedModule, ThreadMessagesComponent, MatSidenavModule],
+  imports: [EmojiPickerComponent, SharedModule, ThreadMessagesComponent, MatSidenavModule, AltHeaderMobileComponent],
   templateUrl: './thread.component.html',
   styleUrl: './thread.component.scss'
 })
