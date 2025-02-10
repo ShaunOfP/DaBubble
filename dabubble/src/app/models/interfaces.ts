@@ -3,5 +3,6 @@ export interface Message{
   sender: string,
   createdAt:number,
   content:string,
-  userId: string
+  userId: string,
+  reaction?:Record<string,string[]>,
 }

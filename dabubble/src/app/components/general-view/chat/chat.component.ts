@@ -44,7 +44,7 @@ export class ChatComponent implements OnInit {
   showGreyScreen: boolean = false;
   userIds!: string[];
   currentChannelName: string = ``; //holen vom service via url
-  currentChannelId: string = `public`;
+  currentChannelId: string = `ER84UOYc0F2jptDjWxFo`;
 
   ngOnInit() { }
 
@@ -125,6 +125,7 @@ export class ChatComponent implements OnInit {
         createdAt: new Date().getTime(),
         content: content,
         userId: this.userDatasService.currentUserId, // Use the actual user ID
+        reaction: {}
       };
 
       if (chatId == ``) {
