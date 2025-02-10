@@ -8,11 +8,13 @@ import { Component } from '@angular/core';
   styleUrl: './alt-header-mobile.component.scss'
 })
 export class AltHeaderMobileComponent {
+  showAltHeader: boolean = true;
+  
   goBackToWorkspaceMenu(){
     this.hideAltHeader();
   }
 
   hideAltHeader(){
-    
+    this.showAltHeader = false;
   }
 }
