@@ -110,9 +110,8 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
       this.filterService.filterText$.pipe(distinctUntilChanged())
     ]).pipe(
       map(([messages, filterText]) => {
-        if (!filterText) {
-          return messages;
-        }
+        if (!filterText) return messages;
+    
         const searchLower = filterText.toLowerCase();
         return messages.filter(message => {
           const contentMatch = message.content?.toLowerCase().startsWith(searchLower);
@@ -123,22 +122,13 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
         });
       })
     );
-  
-    // Reaktionen aus gefilterten Nachrichten extrahieren
-    this.reactions$ = this.filteredMessages$.pipe(
-      map((messages) => {
-        const reactionMap: Record<string, number> = {};
-    
-        messages.forEach((message) => {
-          Object.entries(message.reaction as Record<string, string[]> || {}).forEach(([emoji, users]) => {
-            reactionMap[emoji] = (reactionMap[emoji] || 0) + users.length;
-          });
-        });
-    
-        return Object.entries(reactionMap).map(([emoji, count]) => ({ emoji, count }));
-      })
-    );
-    
+  }
+
+  reactionEntries(message: Message): { emoji: string, count: number }[] {
+    return Object.entries(message.reaction || {}).map(([emoji, users]) => ({
+      emoji,
+      count: (users as string[]).length // Typ-Cast, um `unknown` zu vermeiden
+    }));
   }
   
 
