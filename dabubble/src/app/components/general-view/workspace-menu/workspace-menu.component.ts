@@ -20,6 +20,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { WorkspaceStateToggleButtonComponent } from './workspace-state-toggle-button/workspace-state-toggle-button.component';
 import { ChannelMemberService } from '../../../services/firebase-services/channel-member.service';
+import { AltHeaderMobileComponent } from '../alt-header-mobile/alt-header-mobile.component';
 
 @Component({
   selector: 'app-workspace-menu',
@@ -54,7 +55,7 @@ export class WorkspaceMenuComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private cd: ChangeDetectorRef,
-    private location: Location
+    private location: Location,
   ) {
     // this.currentUrl = window.location.href;
   }
