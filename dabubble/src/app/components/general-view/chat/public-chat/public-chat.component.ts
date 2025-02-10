@@ -83,27 +83,6 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     setTimeout(() => this.scrollToElement('auto'), 1000);
   }
 
-  // loadFilter() {
-  //   this.filteredMessages$ = combineLatest([
-  //     this.messages$,
-  //     this.filterService.filterText$.pipe(distinctUntilChanged())
-  //   ]).pipe(
-  //     map(([messages, filterText]) => {
-  //       if (!filterText) {
-  //         return messages;
-  //       }
-  //       const searchLower = filterText.toLowerCase();
-  //       return messages.filter(message => {
-  //         const contentMatch = message.content?.toLowerCase().startsWith(searchLower);
-  //         const senderMatch = message.sender?.toLowerCase().startsWith(searchLower);
-  //         const dateStr = new Date(message.createdAt).toLocaleDateString('de-DE');
-  //         const dateMatch = dateStr.toLowerCase().includes(searchLower);
-  //         return contentMatch || senderMatch || dateMatch;
-  //       });
-  //     })
-  //   );
-  // }
-  
   loadFilter() {
     this.filteredMessages$ = combineLatest([
       this.messages$,
@@ -127,7 +106,7 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   reactionEntries(message: Message): { emoji: string, count: number }[] {
     return Object.entries(message.reaction || {}).map(([emoji, users]) => ({
       emoji,
-      count: (users as string[]).length // Typ-Cast, um `unknown` zu vermeiden
+      count: (users as string[]).length
     }));
   }
   
