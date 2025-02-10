@@ -59,9 +59,10 @@
           </span>
         </div>
       </div>
-      <div>
-        <span class="chat-content_conversation_reacts" (click)="openThread()">2 Antworten</span>
-        <span class="chat-content_conversation_last-react">letzte Antwort 14:56 Uhr</span>
+      <div *ngFor="let reaction of reactions$ | async">
+        <span>{{reaction.emoji}} {{reaction.count}}</span>
+        <!-- <span class="chat-content_conversation_reacts" (click)="openThread()">2 Antworten</span>
+        <span class="chat-content_conversation_last-react">letzte Antwort 14:56 Uhr</span> -->
       </div>
     </div>
   </div>

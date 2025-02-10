@@ -40,8 +40,9 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('chatContainer') chatContainer!: ElementRef;
 
-  messages$!: Observable<any[]>;
+  messages$!: Observable<Message[]>;
   filteredMessages$!: Observable<any[]>;
+  reactions$!:Observable<any[]>
   channelId: string = 'ER84UOYc0F2jptDjWxFo';
   newMessage: boolean = false;
   hoveredMessageId: string | null = null;
@@ -74,14 +75,35 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     const messages = this.chatService.getMessages(this.channelId);
     this.messages$ = messages.pipe(
       map((messages: Message[]) => this.returnNewObservable(messages, null)),
-      tap(() => {
+      tap((updatedMessages) => {
+        console.log("Updated messages:", updatedMessages); // Logge die transformierten Nachrichten
         this.newMessage = true;
       })
     );
-
     setTimeout(() => this.scrollToElement('auto'), 1000);
   }
 
+  // loadFilter() {
+  //   this.filteredMessages$ = combineLatest([
+  //     this.messages$,
+  //     this.filterService.filterText$.pipe(distinctUntilChanged())
+  //   ]).pipe(
+  //     map(([messages, filterText]) => {
+  //       if (!filterText) {
+  //         return messages;
+  //       }
+  //       const searchLower = filterText.toLowerCase();
+  //       return messages.filter(message => {
+  //         const contentMatch = message.content?.toLowerCase().startsWith(searchLower);
+  //         const senderMatch = message.sender?.toLowerCase().startsWith(searchLower);
+  //         const dateStr = new Date(message.createdAt).toLocaleDateString('de-DE');
+  //         const dateMatch = dateStr.toLowerCase().includes(searchLower);
+  //         return contentMatch || senderMatch || dateMatch;
+  //       });
+  //     })
+  //   );
+  // }
+  
   loadFilter() {
     this.filteredMessages$ = combineLatest([
       this.messages$,
@@ -101,9 +123,24 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
         });
       })
     );
+  
+    // Reaktionen aus gefilterten Nachrichten extrahieren
+    this.reactions$ = this.filteredMessages$.pipe(
+      map((messages) => {
+        const reactionMap: Record<string, number> = {};
+    
+        messages.forEach((message) => {
+          Object.entries(message.reaction as Record<string, string[]> || {}).forEach(([emoji, users]) => {
+            reactionMap[emoji] = (reactionMap[emoji] || 0) + users.length;
+          });
+        });
+    
+        return Object.entries(reactionMap).map(([emoji, count]) => ({ emoji, count }));
+      })
+    );
+    
   }
   
-
 
   /**
    * Subscribes to URL Changes
