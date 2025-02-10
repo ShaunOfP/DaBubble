@@ -42,7 +42,7 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
 
   messages$!: Observable<any[]>;
   filteredMessages$!: Observable<any[]>;
-  channelId: string = 'public';
+  channelId: string = 'ER84UOYc0F2jptDjWxFo';
   newMessage: boolean = false;
   hoveredMessageId: string | null = null;
   currentChannelName: string = `Entwicklerchannel`; //ändern via abfrage
