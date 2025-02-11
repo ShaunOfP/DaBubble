@@ -58,7 +58,7 @@
 <div *ngIf="showProfileEdit" class="profile-edit">
     <div class="profile-info-header">
         <h3>Dein Profil bearbeiten</h3>
-        <div class="change-image-on-hover" (click)="closeEditForm()">
+        <div class="change-image-on-hover" (click)="closeEditForm(); newNameInput = ''">
             <img src="/img/general-view/workspace-menu/close.svg" />
             <img class="d-none" src="/img/general-view/workspace-menu/hover_close.svg" />
         </div>
@@ -80,24 +80,12 @@
                 name="newNameInputField" />
             <span *ngIf="name.touched && name.invalid" class="error-message">This field is required</span>
         </div>
-        <div class="profile-edit-form">
-            <div>
-                <div class="profile-edit-form-image">
-                    <img class="profile-edit-form-image--secondary" src="/img/public/mail-black.svg" />
-                </div>
-                <span class="font-size--20--700 cursor-no-change">E-Mail-Adresse</span>
-            </div>
-            <input class="input-field" placeholder="{{ this.currentUserData?.mail }}" required
-                [class.invalid]="mail.touched && mail.invalid" #mail="ngModel" [(ngModel)]="newMailInput"
-                name="newMailInputField" />
-            <span *ngIf="mail.touched && mail.invalid" class="error-message">This field is required</span>
-        </div>
         <div class="profile-edit-form-buttons">
-            <button class="btn-secondary--default font-size--18--700" (click)="closeEditForm()">
+            <button class="btn-secondary--default font-size--18--700" (click)="closeEditForm(); newNameInput = ''">
                 Abbrechen
             </button>
-            <button class="font-size--18--700" [class.btn-primary--default]="form.touched && form.valid"
-                [class.btn-primary--disable]="form.invalid" [disabled]="form.invalid" type="submit">
+            <button class="font-size--18--700" [class.btn-primary--default]="form.valid"
+            [class.btn-primary--disable]="form.invalid || (form.touched && form.invalid)" type="submit">
                 Speichern
             </button>
         </div>

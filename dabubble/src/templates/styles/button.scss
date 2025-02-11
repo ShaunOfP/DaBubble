@@ -8,14 +8,17 @@
 .btn-primary {
   @include btn;
   color: var(--color-white);
+
   &--default {
     @extend .btn-primary;
     background-color: var(--color-purple-primary-default);
+
     &:hover {
       transition: all ease-in 100ms;
       background-color: var(--color-purple-primary-disabled);
     }
   }
+
   &--disable {
     @extend .btn-primary;
     background-color: var(--color-grey-primary-disable);
@@ -30,16 +33,19 @@
 .btn-secondary {
   @include btn;
   color: var(--color-purple-primary-disabled);
+
   &--default {
     @extend .btn-secondary;
     background-color: var(--color-white);
     border: 1px solid var(--color-purple-primary-disabled);
+
     &:hover {
       transition: all ease-in 100ms;
       background-color: var(--color-purple-secondary-hover);
       color: var(--color-white);
     }
   }
+
   &--disable {
     @extend .btn-secondary;
     background-color: var(--color-white);
@@ -47,22 +53,29 @@
     border: 1px solid var(--color-grey-primary-disable);
     cursor: not-allowed;
   }
+
+  @media (max-width: 450px) {
+    padding: 8px 18px;
+  }
 }
 
 .btn-glass {
   @include btn;
+
   &--default {
     @extend .btn-secondary;
     background-color: var(--color-transparent);
     border: 1px solid var(--color-transparent);
     color: var(--color-purple-primary-disabled);
     padding: 10px 15px;
+
     &:hover {
       color: var(--color-purple-primary-default);
       border: 1px solid var(--color-blue-border);
       transition: all ease-in 100ms;
     }
   }
+
   &--disable {
     @extend .btn-secondary;
     background-color: var(--color-white);

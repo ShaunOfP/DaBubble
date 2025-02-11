@@ -27,27 +27,23 @@ export class HeaderComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     public userDatasService: UserDatasService,
-    private filterService : FilterService
+    private filterService: FilterService
   ) { }
 
   @ViewChild('menu') menu!: MatMenu;
   @ViewChild('menuTrigger') menuTrigger!: MatMenuTrigger;
-
   showProfileInfo: boolean = false;
   showGreyScreen: boolean = false;
   showProfileEdit: boolean = false;
-
   newNameInput: string = ``;
-  newMailInput: string = ``;
-
-  inputSearch:string=''
+  inputSearch: string = ''
 
   async ngOnInit(): Promise<void> {
-    await this.userDatasService.getUserDataById(); 
-    await this.userDatasService.getCurrentChannelId() 
+    await this.userDatasService.getUserDataById();
+    await this.userDatasService.getCurrentChannelId()
     this.userDatasService.currentUserData$.subscribe((userData) => {
-    this.currentUserData = userData
-  })
+      this.currentUserData = userData
+    })
     // if(this.userData === undefined){
     //   const user = setInterval(() => {
     //     this.userData = this.userDatasService.currentUserData
@@ -57,14 +53,14 @@ export class HeaderComponent implements OnInit {
     //     }
     //   }, 100);
     // }
-    
-    
+
+
     //  this.userDatasService.userIds$.pipe(
     //   map((ids) => console.log(ids))
     // )
     // .subscribe();
   }
-  
+
   // async getUserDatas(): Promise<void> {
   //   this.route.queryParams.pipe(take(1)).subscribe(async (params) => {
   //     const userID = params['userID'];
@@ -74,7 +70,7 @@ export class HeaderComponent implements OnInit {
   //     }
   //   });
   // }
-  
+
   /**
    * Takes boolean as input to decide wether the menu should be open or not
    */
@@ -87,6 +83,7 @@ export class HeaderComponent implements OnInit {
       this.openDropdownMenu();
     }
   }
+
 
   /**
    * Navigating to a specific site via the router using a given route
@@ -155,9 +152,9 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  searchInDevspace(){
+  searchInDevspace() {
     console.log(this.inputSearch);
-    this.filterService.updateFilter(this.inputSearch)
+    this.filterService.updateFilter(this.inputSearch);
     // this.publicChatComponent.updateFilter(this.inputSearch)
   }
 }
