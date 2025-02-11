@@ -291,12 +291,20 @@ h3 {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+
+    @media (max-width: 370px) {
+      max-width: 120px;
+    }
   }
 
   &:hover {
     cursor: pointer;
     background-color: var(--color-blue-bg);
     color: var(--color-purple-secondary-hover);
+  }
+
+  @media (max-width: 370px) {
+    margin-left: 0;
   }
 }
 
@@ -306,12 +314,12 @@ h3 {
   background-color: var(--color-purple-primary-default);
   border-radius: 30px;
   position: fixed;
-  right: 22px;
-  bottom: 60px;
+  right: 14px;
+  bottom: 30px;
   @include arrangement();
   cursor: pointer;
-  
-  >img{
+
+  >img {
     filter: invert(1);
   }
 

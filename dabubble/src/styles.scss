@@ -110,7 +110,6 @@ h3 {
 
 .cdk-overlay-connected-position-bounding-box {
   position: absolute;
-  // right: 40px;
   background-color: white;
   top: 100px !important;
   height: 181px !important;
@@ -209,23 +208,37 @@ app-emoji-picker {
 }
 
 ::-webkit-scrollbar {
-  /* Styles the overall scrollbar */
   width: 7px;
-  /* Adjust the width of the scrollbar */
+
+  @media (max-width: 700px) {
+    display: none;
+  }
 }
 
 ::-webkit-scrollbar-track {
   background: #f1f1f1;
   border-radius: 30px;
+
+  @media (max-width: 700px) {
+    display: none;
+  }
 }
 
 ::-webkit-scrollbar-thumb {
   background: var(--color-purple-secondary-hover);
   border-radius: 30px;
+
+  @media (max-width: 700px) {
+    display: none;
+  }
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-purple-primary-disabled);
+
+  @media (max-width: 700px) {
+    display: none;
+  }
 }
 
 .mat-expansion-panel-body {
@@ -250,7 +263,7 @@ app-emoji-picker {
 .mat-drawer-inner-container {
   overflow: visible !important;
 
-  @media (max-width: 700px){
+  @media (max-width: 700px) {
     @include arrangement($fd: column, $g: 25px, $ai: normal, $jc: normal);
   }
 }
