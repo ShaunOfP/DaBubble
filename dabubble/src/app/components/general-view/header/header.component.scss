@@ -360,6 +360,14 @@ form {
 
 .profile-edit-form-buttons {
     @include arrangement($g: 45px, $ai: normal);
+
+    @media (max-width: 450px){
+        @include arrangement($g: 0px, $jc: space-around);
+    }
+
+    @media (max-width: 330px){
+        @include arrangement($fd: column-reverse, $g: 10px);
+    }
 }
 
 .d-none {
