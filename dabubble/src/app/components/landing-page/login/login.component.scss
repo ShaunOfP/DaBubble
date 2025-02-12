@@ -94,7 +94,6 @@
   }
 }
 
-
 .login-header {
   @include arrangement($d: flex, $jc: space-between, $ai: center, $fd: row);
   width: 100%;
@@ -116,7 +115,7 @@
 
     .header-logo-overlay {
       position: absolute;
-      z-index: 99;
+      // z-index: 99;
       width: 300px;
       height: 100%;
       background-color: transparent;
@@ -141,9 +140,12 @@
   }
 }
 
+.login-header-link-mobile {
+  display: none;
+}
+
 .responsive-login-footer {
   display: none;
-
 }
 
 .header-animation {
@@ -214,6 +216,10 @@
   }
 }
 
+form {
+  width: 100%;
+}
+
 .login-card {
   @include arrangement($d: flex, $jc: center, $ai: center, $fd: column);
 
@@ -262,6 +268,10 @@
         width: 200px;
         height: 1px;
         background-color: lightgray;
+      }
+
+      span {
+        margin: 0 8px;
       }
     }
   }
@@ -321,4 +331,77 @@
 
 .d-none {
   display: none;
+}
+
+// Media Querys
+
+@media (max-width: 1550px) {
+  .logo-wrapper {
+    animation: slideAndShrinkMid 0.2s forwards 4s, fadeOut 0.1s forwards 4.2s;
+  }
+}
+
+@media (max-width: 900px) {
+  .logo-wrapper {
+    animation: slideAndShrinkSmall 0.2s forwards 4s, fadeOut 0.1s forwards 4.2s;
+  }
+}
+
+@media (max-width: 700px) {
+  .login-header-link {
+    display: none;
+  }
+
+  .app-wrapper app-footer {
+    display: none;
+  }
+
+  .login-header-link-mobile {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 450px) {
+  h1 {
+    font-size: 32px;
+  }
+
+  .login-header-logo {
+    img {
+      height: 50px !important;
+    }
+  }
+
+  .app-wrapper {
+    justify-content: center;
+    gap: 16px;
+  }
+
+  .login-header {
+    display: flex;
+    justify-content: center;
+    padding: 16px 32px;
+  }
+
+  h2 {
+    font-size: 32px;
+  }
+
+  .login-card {
+    mat-card {
+      padding: 16px;
+      gap: 16px;
+    }
+  }
+
+  .btn-secondary--default {
+    padding: 8px;
+  }
+
+  .input-field {
+    span {
+      font-size: 17px;
+    }
+  }
 }

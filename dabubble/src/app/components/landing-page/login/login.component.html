@@ -53,15 +53,14 @@
           <input
             type="email"
             placeholder="beispielname@email.com"
-            formControlName="email" pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
+            formControlName="email"
+            pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
             required
           />
         </div>
 
         <div class="error-message">
-          <span 
-            >{{ loginErrorMail }}</span
-          >
+          <span>{{ loginErrorMail }}</span>
         </div>
 
         <div class="input-field">
@@ -76,9 +75,7 @@
         </div>
 
         <div class="error-message">
-          <span 
-            >{{ loginErrorPassword }}</span
-          >
+          <span>{{ loginErrorPassword }}</span>
         </div>
       </div>
 
@@ -90,43 +87,30 @@
         <div class="border-line"></div>
       </div>
 
-    <div class="google-login">
-      <button class="input-field" type="button" (click)="googleLogIn()">
-        <img src="/img/general-view/log-in/google-logo.svg" alt="" />
-        <span>Anmelden mit Google</span>
-      </button>
-    </div>
+      <div class="google-login">
+        <button class="input-field" type="button" (click)="googleLogIn()">
+          <img src="/img/general-view/log-in/google-logo.svg" alt="" />
+          <span>Anmelden mit Google</span>
+        </button>
+      </div>
 
-    <div class="login-button">
-      <button class="btn-primary--default" type="submit">Anmelden</button>
-      <button class="btn-secondary--default" type="button" (click)="guestLogIn()">Gäste-Login</button>
-    </div>
-  </mat-card>
-</form>
+      <div class="login-button">
+        <button class="btn-primary--default" type="submit">Anmelden</button>
+        <button
+          class="btn-secondary--default"
+          type="button"
+          (click)="guestLogIn()"
+        >
+          Gäste-Login
+        </button>
+      </div>
+    </mat-card>
+  </form>
 
-  <div>
-    <p>login works!</p>
-    <button
-      class="btn-primary--default"
-      (click)="navigateTo('general/public-chat')"
-    >
-      Go to chat
-    </button>
-    <button class="btn-secondary--disable">secondary--disable</button>
-    <button class="btn-primary--default" (click)="navigateTo('imprint')">
-      Impressum
-    </button>
-    <button class="btn-primary--default" (click)="navigateTo('sign-in')">
+  <div class="login-header-link-mobile">
+    <span>Neu bei DA Bubble?</span>
+    <button class="btn-glass--default" [routerLink]="['sign-in']">
       Konto erstellen
-    </button>
-    <button
-      class="btn-primary--default"
-      (click)="navigateTo('forgot-password')"
-    >
-      Passwort vergessen
-    </button>
-    <button class="btn-primary--default" (click)="navigateTo('create-avatar')">
-      Avatar
     </button>
   </div>
 
