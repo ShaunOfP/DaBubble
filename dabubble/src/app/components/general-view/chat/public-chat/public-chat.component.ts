@@ -46,12 +46,13 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   channelId: string = 'ER84UOYc0F2jptDjWxFo';
   newMessage: boolean = false;
   hoveredMessageId: string | null = null;
-  currentChannelName: string = `Entwicklerchannel`; //ändern via abfrage
+  currentChannelName: string = `Entwicklerchannel`;
   chatDetails: boolean = false;
   showGreyScreen: boolean = false;
   showMembersInfo: boolean = false;
   showAddMembers: boolean = false;
   showPicker:boolean = false
+  showPopoverReaction: number| null= null
 
   private scrollListener!: () => void;
 
@@ -76,7 +77,7 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     this.messages$ = messages.pipe(
       map((messages: Message[]) => this.returnNewObservable(messages, null)),
       tap((updatedMessages) => {
-        console.log("Updated messages:", updatedMessages); // Logge die transformierten Nachrichten
+        console.log("Updated messages:", updatedMessages);
         this.newMessage = true;
       })
     );
@@ -162,23 +163,9 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     this.showGreyScreen = false;
   }
 
-  // loadChatOnIdChange() {
-  //   this.getChatMessages();
-  // }
+  togglePopover(i:number){
 
-  // getChatMessages() {
-  //   if (this.channelId != ``) {
-  //     this.messages$ = this.chatService.getMessages(this.channelId).pipe(
-  //       map((messages: Message[]) => this.returnNewObservable(messages, null)),
-  //       tap(() => {
-  //         this.newMessage = true;
-  //       })
-  //     );
-  //     setTimeout(() => this.scrollToElement('auto'), 1000);
-  //   } else {
-  //     console.log("No ChatId provided yet");
-  //   }
-  // }
+  }
 
   ngAfterViewInit(): void {
     if (this.chatContainer) {
@@ -274,58 +261,3 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     // Logic for opening a thread
   }
 }
-
-// ngAfterViewInit(): void {
-//   if (this.chatContainer) {
-//     console.log('chatContainer is defined');
-//     this.scrollToBottom();
-//     this.observer = new MutationObserver(() => {
-//       this.scrollToBottom();
-//     });
-//     this.observer.observe(this.chatContainer.nativeElement, { childList: true, subtree: true });
-//     console.log('Chat container:', this.chatContainer);
-//   } else {
-//     console.error('chatContainer is not defined in ngAfterViewInit');
-//   }
-// }
-
-// ngAfterViewChecked() {
-//   this.scrollToBottom();
-// }
-
-// ngOnDestroy(): void {
-//   if (this.observer) {
-//     this.observer.disconnect();
-//   }
-// }
-
-// private scrollToBottom(): void {
-//   try {
-//     console.log('scrollToBottom called');
-//     if (this.chatContainer) {
-//       const chatContainerElement = this.chatContainer.nativeElement;
-//       const numberOfChildren = chatContainerElement.children.length;
-//       console.log('Number of children:', numberOfChildren);
-//       console.log('Previous number of children:', this.previousNumberOfChildren);
-
-//       // Log the class of the parent element
-//       console.log('Parent element class:', chatContainerElement.className);
-
-//       // Log the classes of the child elements
-//       for (let i = 0; i < chatContainerElement.children.length; i++) {
-//         const child = chatContainerElement.children[i];
-//         console.log(`Child ${i} class:`, child.className);
-//       }
-
-//       if (numberOfChildren > this.previousNumberOfChildren) {
-//         chatContainerElement.scrollTop = chatContainerElement.scrollHeight;
-//         console.log('Scrolled to bottom');
-//         this.previousNumberOfChildren = numberOfChildren;
-//       }
-//     } else {
-//       console.error('chatContainer is not defined');
-//     }
-//   } catch (err) {
-//     console.error('Error scrolling to bottom:', err);
-//   }
-// }
