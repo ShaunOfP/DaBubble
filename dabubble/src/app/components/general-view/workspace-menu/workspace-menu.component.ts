@@ -41,10 +41,8 @@ export class WorkspaceMenuComponent implements OnInit {
   currentChannels: string[] = [];
   readableChannels: any[] = [];
   showCreateChannelOverlay: boolean = false;
-  currentUrl: string = ``;
   workspaceUserData!: UserObserver | null;
   toggleMarginLeft: boolean = true;
-  previousChatId: string = ``;
   userDatas: any[] = [];
   allUsers: any[] = [];
 
@@ -57,7 +55,6 @@ export class WorkspaceMenuComponent implements OnInit {
     private cd: ChangeDetectorRef,
     private location: Location,
   ) {
-    // this.currentUrl = window.location.href;
   }
 
   ngOnInit() {
