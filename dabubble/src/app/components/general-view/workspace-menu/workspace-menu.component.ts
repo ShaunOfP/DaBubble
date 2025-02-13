@@ -125,7 +125,7 @@ export class WorkspaceMenuComponent implements OnInit {
   readonly messagesOpenState = signal(false);
 
   modifyUrlWithChatString(channelId: string) {
-    this.router.navigate([], {
+    this.router.navigate(['/general/public-chat'], {
       queryParams: { chatId: channelId },
       queryParamsHandling: 'merge',
       replaceUrl: true
@@ -134,6 +134,10 @@ export class WorkspaceMenuComponent implements OnInit {
 
 
   openDirectMessage(userId: string) {
-    //implement logic to open a message
+      this.router.navigate(['/general/private-chat'], {
+      queryParams: { chatId: userId },
+      queryParamsHandling: 'merge',
+      replaceUrl: true
+    });
   }
 }

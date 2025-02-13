@@ -80,7 +80,7 @@
               <img src="{{ workspaceUserData?.avatar }}" />
               <span>{{ workspaceUserData?.username }} (Du)</span>
             </div>
-            <div *ngFor="let user of allUsers" class="contact" (click)="openDirectMessage('id')">
+            <div *ngFor="let user of allUsers" class="contact" (click)="openDirectMessage(user.id)">
               <img src="{{ user.avatar }}" />
               <span>{{ user.username }}</span>
             </div>

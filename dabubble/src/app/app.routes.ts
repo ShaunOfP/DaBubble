@@ -26,7 +26,7 @@ export const routes: Routes = [
     path: 'general', component: GeneralViewComponent,
     children: [
       { path: 'public-chat', component: PublicChatComponent },
-      { path: 'privat-chat', component: PrivateChatComponent },
+      { path: 'private-chat', component: PrivateChatComponent },
       { path: 'new-message', component: NewMessageComponent },
     ],
   },
