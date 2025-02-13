@@ -145,7 +145,7 @@ export class HeaderComponent implements OnInit {
    */
   submitForm(form: NgForm) {
     if (form.touched && form.valid) {
-      // this.userDatasService.updateUserData(this.userId, this.newMailInput, this.newNameInput);
+      // this.userDatasService.updateUserData(this.userId, this.newNameInput);
       console.log("successful");
     } else {
       console.log("invalid");

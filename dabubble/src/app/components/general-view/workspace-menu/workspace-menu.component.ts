@@ -125,27 +125,13 @@ export class WorkspaceMenuComponent implements OnInit {
   readonly messagesOpenState = signal(false);
 
   modifyUrlWithChatString(channelId: string) {
-    this.currentUrl = window.location.href;
-    if (this.currentUrl.includes('chatID')) {
-      if (this.previousChatId != ``) {
-        this.currentUrl = this.currentUrl.replace(
-          `%2FchatID=${this.previousChatId}`,
-          ''
-        );
-      }
-    }
-    let newUrl = `${this.currentUrl}%2FchatID=${channelId}`;
-    this.location.replaceState(this.fixDuplicateUrl(newUrl));
-    this.previousChatId = channelId;
+    this.router.navigate([], {
+      queryParams: { chatId: channelId },
+      queryParamsHandling: 'merge',
+      replaceUrl: true
+    });
   }
 
-  fixDuplicateUrl(url: string): string {
-    const currentHost = window.location.origin;
-    if (url.startsWith(currentHost + '/')) {
-      return url.replace(currentHost + '/', '');
-    }
-    return url;
-  }
 
   openDirectMessage(userId: string) {
     //implement logic to open a message
