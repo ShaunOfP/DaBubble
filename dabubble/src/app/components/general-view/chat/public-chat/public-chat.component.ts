@@ -167,16 +167,22 @@ async showPopover(index: number, users: string[]) {
   this.showPopoverReaction = index;
 }
 
-hidePopover() {
-  this.showPopoverReaction = null;
+hidePopover(i:number) {
+  this.showPopoverReaction = i-(i+1);
 }
 
 async formatUserNames(users: string[]): Promise<string[]> {
   let formattedNames = await Promise.all(
     users.map(async (id) => id === this.userDataService.currentUserId ? "Du" : await this.userDataService.getUserName(id))
   );
-  return formattedNames.slice(0, 2);
+  const hasDu = formattedNames.includes("Du");
+  let maxNames = hasDu ? 1 : 2;
+  formattedNames.sort((a, b) => (a === "Du" ? 1 : b === "Du" ? -1 : 0));
+
+  return formattedNames.slice(0, maxNames).concat(hasDu ? ["Du"] : []);
 }
+
+
 
 
 

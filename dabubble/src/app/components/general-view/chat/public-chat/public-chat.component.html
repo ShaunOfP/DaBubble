@@ -65,7 +65,7 @@
          <div *ngFor="let reaction of reactionEntries(message); let i = index">
           <div 
             (mouseenter)="showPopover(i, reaction.users)"
-            (mouseleave)="hidePopover()"
+            (mouseleave)="hidePopover(i)"
             class="message-reactions_btn"> 
             {{ reaction.emoji }} {{ reaction.count }} 
           </div>
@@ -75,10 +75,10 @@
         
             <div *ngIf="reactionUserNamesCache[i]"> 
               <b *ngFor="let name of reactionUserNamesCache[i]">
-                {{ name }}
+                {{ name }} <br>
               </b> 
               <span *ngIf="reaction.users.length > 2">
-                und {{ reaction.users.length - 2 }} weitere
+               und {{ reaction.users.length - 2 }} weitere
               </span>
             </div>
             <br>hat reagiert
