@@ -70,7 +70,7 @@
             {{ reaction.emoji }} {{ reaction.count }} 
           </div>
         
-          <div class="message-reactions_popover" *ngIf="showPopoverReaction === i">
+          <div class="message-reactions_popover--{{checkStyle(message.userId)}}" *ngIf="showPopoverReaction === i">
             {{ reaction.emoji }} <br>
         
             <div *ngIf="reactionUserNamesCache[i]"> 
