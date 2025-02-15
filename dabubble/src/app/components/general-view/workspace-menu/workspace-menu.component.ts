@@ -53,21 +53,20 @@ export class WorkspaceMenuComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private cd: ChangeDetectorRef,
-    private location: Location,
-  ) {
-  }
+    private location: Location
+  ) {}
 
   ngOnInit() {
     this.userDatasService.currentUserData$.subscribe((userDatas) => {
       this.workspaceUserData = userDatas;
       this.fetchUserData();
-      // console.log(userDatas?.channels);
     });
     this.subscribeAllMembers();
   }
 
   async subscribeAllMembers() {
     await this.channelService.selectAllMembers();
+    console.log(this.workspaceUserData);
     this.channelService.allMembersSubject$.subscribe((allUsers) => {
       this.allUsers = allUsers.filter(
         (user) =>
@@ -125,16 +124,15 @@ export class WorkspaceMenuComponent implements OnInit {
     this.router.navigate(['/general/public-chat'], {
       queryParams: { chatId: channelId },
       queryParamsHandling: 'merge',
-      replaceUrl: true
+      replaceUrl: true,
     });
   }
 
-
   openDirectMessage(userId: string) {
-      this.router.navigate(['/general/private-chat'], {
+    this.router.navigate(['/general/private-chat'], {
       queryParams: { chatId: userId },
       queryParamsHandling: 'merge',
-      replaceUrl: true
+      replaceUrl: true,
     });
   }
 }
