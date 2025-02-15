@@ -79,6 +79,21 @@ export class UserDatasService {
     });
   }
 
+  async getUserName(id:string):Promise<string>{
+    try {
+      const docRef = doc(this.userDatasRef(), id);
+      const docSnap = await getDoc(docRef);
+      if(docSnap.exists()){
+        return docSnap.data()['username'] as string
+      }
+      else{
+        return ""
+      }
+    } catch (error) {
+      return 'noUser'
+    }
+  }
+
   async saveUser(accountData: UserDatas, userId: string): Promise<void> {
     try {
       const userDocRef = doc(this.userDatasRef(), userId);

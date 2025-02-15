@@ -61,22 +61,31 @@
           </span>
         </div>
       </div>
-      <div class="message-reactions">
-        <div *ngFor="let reaction of  reactionEntries(message) let i=index" >
+      <div class="message-reactions"  >
+         <div *ngFor="let reaction of reactionEntries(message); let i = index">
           <div 
-            (mouseover)="showPopoverReaction = i" 
-            (mouseout)="showPopoverReaction = null"
+            (mouseenter)="showPopover(i, reaction.users)"
+            (mouseleave)="hidePopover()"
             class="message-reactions_btn"> 
-              {{reaction.emoji}} {{reaction.count}} 
+            {{ reaction.emoji }} {{ reaction.count }} 
           </div>
-          <div class="message-reactions_popover" *ngIf="showPopoverReaction === i">
-            {{reaction.emoji}} <br>
-            <b>Alladin</b> und <b>Du</b> <br>
-            hat reagiert
+        
+          <div class="message-reactions_popover--{{checkStyle(message.userId)}}" *ngIf="showPopoverReaction === i">
+            {{ reaction.emoji }} <br>
+        
+            <div *ngIf="reactionUserNamesCache[i]"> 
+              <b *ngFor="let name of reactionUserNamesCache[i]">
+                {{ name }}
+              </b> 
+              <span *ngIf="reaction.users.length > 2">
+                und {{ reaction.users.length - 2 }} weitere
+              </span>
+            </div>
+            <br>hat reagiert
           </div>
-          <!-- <span class="chat-content_conversation_reacts" (click)="openThread()">2 Antworten</span>
-          <span class="chat-content_conversation_last-react">letzte Antwort 14:56 Uhr</span> -->
         </div>
+        
+        
       </div>
     </div>
   </div>
