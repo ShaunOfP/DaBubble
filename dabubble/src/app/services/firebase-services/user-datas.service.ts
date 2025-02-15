@@ -60,10 +60,17 @@ export class UserDatasService {
     this.route.queryParams.pipe().subscribe(async (params) => {
       const userID = params['userID'];
       const userDocRef = doc(this.firestore, `userDatas/${userID}`);
-      const userDoc = await getDoc(userDocRef);
+      const guestDocRef = doc(this.firestore, `guestDatas/${userID}`);
+      const [userDoc, guestDoc] = await Promise.all([
+        getDoc(userDocRef),
+        getDoc(guestDocRef),
+      ]);
 
       if (userDoc.exists()) {
         const userData = userDoc.data() as UserObserver;
+        this.currentUserDataSubject.next(userData);
+      } else if (guestDoc.exists()) {
+        const userData = guestDoc.data() as UserObserver;
         this.currentUserDataSubject.next(userData);
       } else {
         console.error('User not found');
@@ -103,6 +110,7 @@ export class UserDatasService {
         username: accountData.username,
         avatar: accountData.avatar,
         channels: accountData.channels,
+        privateChats: accountData.privateChats,
       };
       await setDoc(guestDocRef, guestData);
 
