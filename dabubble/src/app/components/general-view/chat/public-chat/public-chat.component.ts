@@ -21,6 +21,7 @@ import { ChatDetailsComponent } from './chat-details/chat-details.component';
 import { FormsModule } from '@angular/forms';
 import { FilterService } from '../../../../services/component-services/filter.service';
 import { EmojiPickerComponent } from '../../emoji-picker/emoji-picker.component';
+import { UserDatasService } from '../../../../services/firebase-services/user-datas.service';
 
 @Component({
   selector: 'app-public-chat',
@@ -53,6 +54,7 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   showAddMembers: boolean = false;
   showPicker:boolean = false
   showPopoverReaction: number| null= null
+  reactionUserNamesCache: { [key: number]: string[] } = {}; // Cache für Benutzernamen
 
   private scrollListener!: () => void;
 
@@ -60,7 +62,8 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     private chatService: ChatService,
     private route: ActivatedRoute,
     private location: Location,
-    private filterService : FilterService
+    private filterService : FilterService,
+    private userDataService : UserDatasService
   ) {}
 
   ngOnInit(): void {
@@ -84,6 +87,40 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     setTimeout(() => this.scrollToElement('auto'), 1000);
   }
 
+
+    /**
+   * Transforms an array of messages to include display-related metadata for dates.
+   *
+   * This method maps over a list of messages and determines whether the date
+   * of each message should be displayed. It compares the current message's date
+   * with the last seen date to decide if a new date separator is needed.
+   *
+   * @param {Message[]} messages - An array of messages to process.
+   * @param {string | null} lastDate - The last displayed date in 'dd.mm.yy' format or null if none.
+   * @returns {Array} - A new array of messages, each with added properties:
+   *   - `showDate` (boolean): Whether to display the date for this message.
+   *   - `formattedDate` (string | null): The formatted date to display if `showDate` is true.
+   */
+    returnNewObservable(messages: Message[], lastDate: string | null) {
+      return messages.map((message) => {
+        const currentDate = new Date(message.createdAt).toLocaleDateString(
+          'de-DE',
+          {
+            day: '2-digit',
+            month: '2-digit',
+            year: '2-digit',
+          }
+        );
+        const showDate = currentDate !== lastDate;
+        lastDate = currentDate;
+        return {
+          ...message,
+          showDate,
+          formattedDate: showDate ? currentDate : null,
+        };
+      });
+    }
+
   loadFilter() {
     this.filteredMessages$ = combineLatest([
       this.messages$,
@@ -104,13 +141,44 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
-  reactionEntries(message: Message): { emoji: string, count: number }[] {
-    return Object.entries(message.reaction || {}).map(([emoji, users]) => ({
-      emoji,
-      count: (users as string[]).length
-    }));
+  // reactionEntries(message: Message): { emoji: string, count: number }[] {
+  //   return Object.entries(message.reaction || {}).map(([emoji, users]) => ({
+  //     emoji,
+  //     count: (users as string[]).length,
+  //   }));
+  // }
+
+
+reactionEntries(message: Message): { emoji: string, count: number, users: string[] }[] {
+  return Object.entries(message.reaction || {}).map(([emoji, users]) => ({
+    emoji,
+    count: (users as string[]).length,
+    users: users as string[],
+  }));
+}
+
+
+
+async showPopover(index: number, users: string[]) {
+  if (!this.reactionUserNamesCache[index]) { 
+    // Falls Namen noch nicht geladen wurden, erst jetzt abrufen
+    this.reactionUserNamesCache[index] = await this.formatUserNames(users);
   }
-  
+  this.showPopoverReaction = index;
+}
+
+hidePopover() {
+  this.showPopoverReaction = null;
+}
+
+async formatUserNames(users: string[]): Promise<string[]> {
+  let formattedNames = await Promise.all(
+    users.map(async (id) => id === this.userDataService.currentUserId ? "Du" : await this.userDataService.getUserName(id))
+  );
+  return formattedNames.slice(0, 2);
+}
+
+
 
   /**
    * Subscribes to URL Changes
@@ -163,9 +231,6 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     this.showGreyScreen = false;
   }
 
-  togglePopover(i:number){
-
-  }
 
   ngAfterViewInit(): void {
     if (this.chatContainer) {
@@ -208,39 +273,6 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  /**
-   * Transforms an array of messages to include display-related metadata for dates.
-   *
-   * This method maps over a list of messages and determines whether the date
-   * of each message should be displayed. It compares the current message's date
-   * with the last seen date to decide if a new date separator is needed.
-   *
-   * @param {Message[]} messages - An array of messages to process.
-   * @param {string | null} lastDate - The last displayed date in 'dd.mm.yy' format or null if none.
-   * @returns {Array} - A new array of messages, each with added properties:
-   *   - `showDate` (boolean): Whether to display the date for this message.
-   *   - `formattedDate` (string | null): The formatted date to display if `showDate` is true.
-   */
-  returnNewObservable(messages: Message[], lastDate: string | null) {
-    return messages.map((message) => {
-      const currentDate = new Date(message.createdAt).toLocaleDateString(
-        'de-DE',
-        {
-          day: '2-digit',
-          month: '2-digit',
-          year: '2-digit',
-        }
-      );
-      const showDate = currentDate !== lastDate;
-      lastDate = currentDate;
-      return {
-        ...message,
-        showDate,
-        formattedDate: showDate ? currentDate : null,
-      };
-    });
-  }
-
   formatTime(timestamp: number): string {
     const date = new Date(timestamp);
     return date.toLocaleTimeString('de-DE', {
@@ -256,6 +288,8 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     });
     return userId === currentUser ? 'secondary' : 'primary';
   }
+
+  
 
   openThread(): void {
     // Logic for opening a thread
