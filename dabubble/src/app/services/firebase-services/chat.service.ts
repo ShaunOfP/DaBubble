@@ -31,8 +31,10 @@ export class ChatService {
 
   getCurrentChatId() {
     this.route.queryParams.subscribe((params) => {
-      if (params['userID']) {
-        this.currentChatId = params['userID'];
+      if (params['chatId']) {
+        this.currentChatId = params['chatId'];
+        console.log(this.currentChatId);
+        
       } else {
         console.error('No userID found in query parameters');
       }
@@ -43,9 +45,9 @@ export class ChatService {
     return collection(this.firestore, 'chat');
   }
 
-  getMessages(channelId: string): Observable<Message[]> {
+  getMessages(): Observable<Message[]> {
     const messagesRef = query(
-      collection(this.firestore, `channels/${channelId}/messages`),
+      collection(this.firestore, `channels/${this.currentChatId}/messages`),
       orderBy('createdAt', 'asc')
     );
     return collectionData(messagesRef, { idField: 'id' }) as Observable<
@@ -53,9 +55,9 @@ export class ChatService {
     >;
   }
 
-  saveMessage(channelId: string, message: Message) {
-    return addDoc(
-      collection(this.firestore, `channels/${channelId}/messages`),
+  async saveMessage( message: Message) {
+    await addDoc(
+      collection(this.firestore, `channels/${this.currentChatId}/messages`),
       message
     );
   }
@@ -107,4 +109,10 @@ export class ChatService {
       });
     }
   }
+
+  // changeChannel(channelId:string){
+  //   this.currentChatId = channelId
+  //   console.log(this.currentChatId);
+    
+  // }
 }

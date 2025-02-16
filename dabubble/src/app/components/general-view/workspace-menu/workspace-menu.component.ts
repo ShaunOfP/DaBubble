@@ -126,6 +126,7 @@ export class WorkspaceMenuComponent implements OnInit {
       queryParamsHandling: 'merge',
       replaceUrl: true,
     });
+    // this.chatService.changeChannel(channelId)
   }
 
   openDirectMessage(userId: string) {

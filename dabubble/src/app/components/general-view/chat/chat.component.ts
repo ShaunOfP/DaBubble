@@ -107,15 +107,15 @@ export class ChatComponent implements OnInit {
   }
 
 
-  async sendMessage(content: string, chatId: string): Promise<void> {
+  async sendMessage(content: string): Promise<void> {
+    debugger
     if (!this.userDatasService.currentUserId || !content) {
       console.error('User ID is not available');
       return;
     }
 
-    // const userData = await this.userDatasService.getUserDataById(this.userDatasService.currentUserId);
-    this.userDatasService.currentUserData$.subscribe((userData) => {
-      const userName = userData
+      const userId = this.userDatasService.currentUserId
+      const userName = await this.userDatasService.getUserName(userId)
       if (!userName) {
         console.error('User data is not available');
         return;
@@ -123,58 +123,29 @@ export class ChatComponent implements OnInit {
 
       const message: Message = {
         id: this.generateId(), // Generate a unique ID for the message
-        sender: userName.username, // Replace with actual sender name
+        sender: userName, // Replace with actual sender name
         createdAt: new Date().getTime(),
         content: content,
         userId: this.userDatasService.currentUserId, // Use the actual user ID
         reaction: {}
       };
 
-      if (chatId == ``) {
+      if (this.chatService.currentChatId== ``) {
         console.log("No chat Id provided");
         return;
       }
 
       this.chatService
-        .saveMessage(chatId, message)
+        .saveMessage( message)
         .then(() => {
           // this.publicChatComponent.scrollToElement('auto');
           this.messageInput.nativeElement.value = '';
           console.log('Message saved successfully');
+          
         })
         .catch((error) => {
           console.error('Error saving message:', error);
         });
-    })
-    // if (!userName) {
-    //   console.error('User data is not available');
-    //   return;
-    // }
-
-    // const message: Message = {
-    //   id: this.generateId(), // Generate a unique ID for the message
-    //   sender: userName, // Replace with actual sender name
-    //   createdAt: new Date().getTime(),
-    //   content: content,
-    //   userId: this.userDatasService.currentUserId, // Use the actual user ID
-    // };
-
-    // if (chatId == ``){
-    //   console.log("No chat Id provided");
-    //   return;
-    // }
-
-    // this.chatService
-    //   .saveMessage(chatId, message)
-    //   .then(() => {
-    //     console.log('Message saved successfully');
-    //     this.publicChatComponent.scrollToElement('auto');
-    //     this.messageInput.nativeElement.value = ''
-    //   })
-    //   .catch((error) => {
-    //     console.error('Error saving message:', error);
-    //   });
-
   }
 
 

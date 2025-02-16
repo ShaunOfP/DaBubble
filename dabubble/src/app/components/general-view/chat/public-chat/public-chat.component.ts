@@ -9,7 +9,7 @@ import {
   Injectable,
 } from '@angular/core';
 import { ChatService } from '../../../../services/firebase-services/chat.service';
-import { BehaviorSubject, Observable, combineLatest, distinctUntilChanged, map, tap } from 'rxjs';
+import { BehaviorSubject, Observable, combineLatest, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs';
 import { CommonModule, Location } from '@angular/common';
 import { Message } from '../../../../models/interfaces';
 import { ActivatedRoute } from '@angular/router';
@@ -76,15 +76,38 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   loadMessages() {
-    const messages = this.chatService.getMessages(this.channelId);
-    this.messages$ = messages.pipe(
+    // const messages = this.chatService.getMessages();
+    // this.messages$ = messages.pipe(
+    //   map((messages: Message[]) => this.returnNewObservable(messages, null)),
+    //   tap((updatedMessages) => {
+    //     console.log("Updated messages:", updatedMessages);
+    //     this.newMessage = true;
+    //   })
+    // );
+    // setTimeout(() => this.scrollToElement('auto'), 1000);
+    debugger
+    this.messages$ = this.route.queryParams.pipe(
+      map(params => params['chatId']),
+      distinctUntilChanged(), // Nur weiter, wenn sich die chatId wirklich ändert
+      tap(chatId => {
+        if (!chatId) {
+          console.error("Keine chatId in den Query-Parametern gefunden!");
+        } else {
+          this.chatService.currentChatId = chatId;
+          console.log("Aktuelle chatId:", this.chatService.currentChatId);
+        }
+      }),
+      filter(chatId => !!chatId), // Nur fortfahren, wenn eine gültige chatId vorhanden ist
+      switchMap(() => this.chatService.getMessages()),
       map((messages: Message[]) => this.returnNewObservable(messages, null)),
-      tap((updatedMessages) => {
-        console.log("Updated messages:", updatedMessages);
+      tap((updatedMessages: Message[]) => {
+        console.log("Aktualisierte Nachrichten:", updatedMessages);
         this.newMessage = true;
+        setTimeout(() => this.scrollToElement('auto'), 1000);
       })
     );
-    setTimeout(() => this.scrollToElement('auto'), 1000);
+    
+    
   }
 
 
@@ -161,7 +184,6 @@ reactionEntries(message: Message): { emoji: string, count: number, users: string
 
 async showPopover(index: number, users: string[]) {
   if (!this.reactionUserNamesCache[index]) { 
-    // Falls Namen noch nicht geladen wurden, erst jetzt abrufen
     this.reactionUserNamesCache[index] = await this.formatUserNames(users);
   }
   this.showPopoverReaction = index;
@@ -178,13 +200,8 @@ async formatUserNames(users: string[]): Promise<string[]> {
   const hasDu = formattedNames.includes("Du");
   let maxNames = hasDu ? 1 : 2;
   formattedNames.sort((a, b) => (a === "Du" ? 1 : b === "Du" ? -1 : 0));
-
   return formattedNames.slice(0, maxNames).concat(hasDu ? ["Du"] : []);
 }
-
-
-
-
 
   /**
    * Subscribes to URL Changes

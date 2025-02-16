@@ -69,10 +69,8 @@
             class="message-reactions_btn"> 
             {{ reaction.emoji }} {{ reaction.count }} 
           </div>
-        
           <div class="message-reactions_popover--{{checkStyle(message.userId)}}" *ngIf="showPopoverReaction === i">
             {{ reaction.emoji }} <br>
-        
             <div *ngIf="reactionUserNamesCache[i]"> 
               <b *ngFor="let name of reactionUserNamesCache[i]">
                 {{ name }} <br>
@@ -84,8 +82,6 @@
             <br>hat reagiert
           </div>
         </div>
-        
-        
       </div>
     </div>
   </div>
