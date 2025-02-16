@@ -12,7 +12,7 @@ import { ChatService } from '../../../../services/firebase-services/chat.service
 import { BehaviorSubject, Observable, combineLatest, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs';
 import { CommonModule, Location } from '@angular/common';
 import { Message } from '../../../../models/interfaces';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ChatComponent } from '../chat.component';
 
 import { ChannelMembersComponent } from './channel-members/channel-members.component';
@@ -63,7 +63,8 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     private route: ActivatedRoute,
     private location: Location,
     private filterService: FilterService,
-    private userDataService: UserDatasService
+    private userDataService: UserDatasService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -207,10 +208,15 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
    * Subscribes to URL Changes
    */
   detectUrlChange() {
-    this.location.onUrlChange((url) => {
-      this.extractCurrentChannelIdFromUrl(url);
-      this.loadMessages();
-    });
+    const currentRoute = this.router.url;
+    if (currentRoute.includes('private-chat')) {
+      return;
+    } else {
+      this.location.onUrlChange((url) => {
+        this.extractCurrentChannelIdFromUrl(url);
+        this.loadMessages();
+      });
+    }
   }
 
   /**

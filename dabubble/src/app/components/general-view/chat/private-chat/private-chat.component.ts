@@ -1,9 +1,9 @@
 import { CommonModule, Location } from '@angular/common';
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { combineLatest, distinctUntilChanged, map, Observable, tap } from 'rxjs';
+import { combineLatest, distinctUntilChanged, filter, map, Observable, switchMap, tap } from 'rxjs';
 import { Message } from '../../../../models/interfaces';
 import { ChatService } from '../../../../services/firebase-services/chat.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FilterService } from '../../../../services/component-services/filter.service';
 import { EmojiPickerComponent } from '../../emoji-picker/emoji-picker.component';
 import { MatCardModule } from '@angular/material/card';
@@ -33,7 +33,8 @@ export class PrivateChatComponent {
     private chatService: ChatService,
     private route: ActivatedRoute,
     private location: Location,
-    private filterService: FilterService
+    private filterService: FilterService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -49,15 +50,26 @@ export class PrivateChatComponent {
 
 
   loadMessages() {
-    const messages = this.chatService.getMessages();
-    this.messages$ = messages.pipe(
+    this.messages$ = this.route.queryParams.pipe(
+      map(params => params['chatId']),
+      distinctUntilChanged(), // Nur weiter, wenn sich die chatId wirklich ändert
+      tap(chatId => {
+        if (!chatId) {
+          console.error("Keine chatId in den Query-Parametern gefunden!");
+        } else {
+          this.chatService.currentChatId = chatId;
+          console.log("Aktuelle chatId:", this.chatService.currentChatId);
+        }
+      }),
+      filter(chatId => !!chatId), // Nur fortfahren, wenn eine gültige chatId vorhanden ist
+      switchMap(() => this.chatService.getMessages()),
       map((messages: Message[]) => this.returnNewObservable(messages, null)),
-      tap((updatedMessages) => {
-        console.log("Updated messages:", updatedMessages);
+      tap((updatedMessages: Message[]) => {
+        console.log("Aktualisierte Nachrichten:", updatedMessages);
         this.newMessage = true;
+        setTimeout(() => this.scrollToElement('auto'), 1000);
       })
     );
-    setTimeout(() => this.scrollToElement('auto'), 1000);
   }
 
   loadFilter() {
@@ -92,10 +104,15 @@ export class PrivateChatComponent {
    * Subscribes to URL Changes
    */
   detectUrlChange() {
-    this.location.onUrlChange((url) => {
-      this.extractCurrentChannelIdFromUrl(url);
-      this.loadMessages();
-    });
+    const currentRoute = this.router.url;
+    if (currentRoute.includes('public-chat')) {
+      return;
+    } else {
+      this.location.onUrlChange((url) => {
+        this.extractCurrentChannelIdFromUrl(url);
+        this.loadMessages();
+      });
+    }
   }
 
   /**
@@ -206,7 +223,7 @@ export class PrivateChatComponent {
     return userId === currentUser ? 'secondary' : 'primary';
   }
 
-  openMessageToUser(){
+  openMessageToUser() {
     this.memberInfoVisible = false;
   }
 }
