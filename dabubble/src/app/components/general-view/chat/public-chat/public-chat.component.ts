@@ -43,7 +43,7 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
 
   messages$!: Observable<Message[]>;
   filteredMessages$!: Observable<any[]>;
-  reactions$!:Observable<any[]>
+  reactions$!: Observable<any[]>;
   channelId: string = 'ER84UOYc0F2jptDjWxFo';
   newMessage: boolean = false;
   hoveredMessageId: string | null = null;
@@ -52,8 +52,8 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   showGreyScreen: boolean = false;
   showMembersInfo: boolean = false;
   showAddMembers: boolean = false;
-  showPicker:boolean = false
-  showPopoverReaction: number| null= null
+  showPicker: boolean = false
+  showPopoverReaction: number | null = null;
   reactionUserNamesCache: { [key: number]: string[] } = {}; // Cache für Benutzernamen
 
   private scrollListener!: () => void;
@@ -62,14 +62,14 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     private chatService: ChatService,
     private route: ActivatedRoute,
     private location: Location,
-    private filterService : FilterService,
-    private userDataService : UserDatasService
-  ) {}
+    private filterService: FilterService,
+    private userDataService: UserDatasService
+  ) { }
 
   ngOnInit(): void {
-/*     this.route.queryParams.subscribe((params) => {
-      this.channelId = params['chatID'];
-    }); */
+    /*     this.route.queryParams.subscribe((params) => {
+          this.channelId = params['chatID'];
+        }); */
     this.loadMessages();
     this.loadFilter();
     this.detectUrlChange();
@@ -106,43 +106,43 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
         setTimeout(() => this.scrollToElement('auto'), 1000);
       })
     );
-    
-    
+
+
   }
 
 
-    /**
-   * Transforms an array of messages to include display-related metadata for dates.
-   *
-   * This method maps over a list of messages and determines whether the date
-   * of each message should be displayed. It compares the current message's date
-   * with the last seen date to decide if a new date separator is needed.
-   *
-   * @param {Message[]} messages - An array of messages to process.
-   * @param {string | null} lastDate - The last displayed date in 'dd.mm.yy' format or null if none.
-   * @returns {Array} - A new array of messages, each with added properties:
-   *   - `showDate` (boolean): Whether to display the date for this message.
-   *   - `formattedDate` (string | null): The formatted date to display if `showDate` is true.
-   */
-    returnNewObservable(messages: Message[], lastDate: string | null) {
-      return messages.map((message) => {
-        const currentDate = new Date(message.createdAt).toLocaleDateString(
-          'de-DE',
-          {
-            day: '2-digit',
-            month: '2-digit',
-            year: '2-digit',
-          }
-        );
-        const showDate = currentDate !== lastDate;
-        lastDate = currentDate;
-        return {
-          ...message,
-          showDate,
-          formattedDate: showDate ? currentDate : null,
-        };
-      });
-    }
+  /**
+ * Transforms an array of messages to include display-related metadata for dates.
+ *
+ * This method maps over a list of messages and determines whether the date
+ * of each message should be displayed. It compares the current message's date
+ * with the last seen date to decide if a new date separator is needed.
+ *
+ * @param {Message[]} messages - An array of messages to process.
+ * @param {string | null} lastDate - The last displayed date in 'dd.mm.yy' format or null if none.
+ * @returns {Array} - A new array of messages, each with added properties:
+ *   - `showDate` (boolean): Whether to display the date for this message.
+ *   - `formattedDate` (string | null): The formatted date to display if `showDate` is true.
+ */
+  returnNewObservable(messages: Message[], lastDate: string | null) {
+    return messages.map((message) => {
+      const currentDate = new Date(message.createdAt).toLocaleDateString(
+        'de-DE',
+        {
+          day: '2-digit',
+          month: '2-digit',
+          year: '2-digit',
+        }
+      );
+      const showDate = currentDate !== lastDate;
+      lastDate = currentDate;
+      return {
+        ...message,
+        showDate,
+        formattedDate: showDate ? currentDate : null,
+      };
+    });
+  }
 
   loadFilter() {
     this.filteredMessages$ = combineLatest([
@@ -151,7 +151,7 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     ]).pipe(
       map(([messages, filterText]) => {
         if (!filterText) return messages;
-    
+
         const searchLower = filterText.toLowerCase();
         return messages.filter(message => {
           const contentMatch = message.content?.toLowerCase().startsWith(searchLower);
@@ -172,36 +172,36 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   // }
 
 
-reactionEntries(message: Message): { emoji: string, count: number, users: string[] }[] {
-  return Object.entries(message.reaction || {}).map(([emoji, users]) => ({
-    emoji,
-    count: (users as string[]).length,
-    users: users as string[],
-  }));
-}
-
-
-
-async showPopover(index: number, users: string[]) {
-  if (!this.reactionUserNamesCache[index]) { 
-    this.reactionUserNamesCache[index] = await this.formatUserNames(users);
+  reactionEntries(message: Message): { emoji: string, count: number, users: string[] }[] {
+    return Object.entries(message.reaction || {}).map(([emoji, users]) => ({
+      emoji,
+      count: (users as string[]).length,
+      users: users as string[],
+    }));
   }
-  this.showPopoverReaction = index;
-}
 
-hidePopover(i:number) {
-  this.showPopoverReaction = i-(i+1);
-}
 
-async formatUserNames(users: string[]): Promise<string[]> {
-  let formattedNames = await Promise.all(
-    users.map(async (id) => id === this.userDataService.currentUserId ? "Du" : await this.userDataService.getUserName(id))
-  );
-  const hasDu = formattedNames.includes("Du");
-  let maxNames = hasDu ? 1 : 2;
-  formattedNames.sort((a, b) => (a === "Du" ? 1 : b === "Du" ? -1 : 0));
-  return formattedNames.slice(0, maxNames).concat(hasDu ? ["Du"] : []);
-}
+
+  async showPopover(index: number, users: string[]) {
+    if (!this.reactionUserNamesCache[index]) {
+      this.reactionUserNamesCache[index] = await this.formatUserNames(users);
+    }
+    this.showPopoverReaction = index;
+  }
+
+  hidePopover(i: number) {
+    this.showPopoverReaction = i - (i + 1);
+  }
+
+  async formatUserNames(users: string[]): Promise<string[]> {
+    let formattedNames = await Promise.all(
+      users.map(async (id) => id === this.userDataService.currentUserId ? "Du" : await this.userDataService.getUserName(id))
+    );
+    const hasDu = formattedNames.includes("Du");
+    let maxNames = hasDu ? 1 : 2;
+    formattedNames.sort((a, b) => (a === "Du" ? 1 : b === "Du" ? -1 : 0));
+    return formattedNames.slice(0, maxNames).concat(hasDu ? ["Du"] : []);
+  }
 
   /**
    * Subscribes to URL Changes
@@ -312,7 +312,7 @@ async formatUserNames(users: string[]): Promise<string[]> {
     return userId === currentUser ? 'secondary' : 'primary';
   }
 
-  
+
 
   openThread(): void {
     // Logic for opening a thread

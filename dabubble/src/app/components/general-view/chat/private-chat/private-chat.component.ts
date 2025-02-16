@@ -205,4 +205,8 @@ export class PrivateChatComponent {
     });
     return userId === currentUser ? 'secondary' : 'primary';
   }
+
+  openMessageToUser(){
+    this.memberInfoVisible = false;
+  }
 }
