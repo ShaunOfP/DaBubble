@@ -1,5 +1,18 @@
-import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+import { inject, Injectable } from '@angular/core';
+import {
+  Firestore,
+  collection,
+  getDocs,
+  where,
+  query,
+  doc,
+  setDoc,
+  updateDoc,
+  arrayUnion,
+  CollectionReference,
+  collectionData,
+  getDoc,
+} from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -7,23 +20,21 @@ export interface Channel {
   id: string;
   name: string;
   description?: string;
-  // Weitere Felder je nach Bedarf
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChannelService {
-  private channelsCollection: AngularFirestoreCollection<Channel>;
   channels$: Observable<Channel[]>;
+  private channelsCollection: CollectionReference<Channel>;
 
-  constructor(private firestore: AngularFirestore) {
-    this.channelsCollection = firestore.collection<Channel>('channels');
-    this.channels$ = this.channelsCollection.snapshotChanges().pipe(
+  constructor(private firestore: Firestore) {
+    this.channelsCollection = collection(this.firestore, 'channels') as CollectionReference<Channel>;
+    this.channels$ = collectionData(this.channelsCollection, { idField: 'id' }).pipe(
       map(actions => actions.map(a => {
-        const { id: dataId, ...data } = a.payload.doc.data() as Channel;
-        const id = a.payload.doc.id;
-        return { id, ...data };
+        const { id, ...data } = a;
+        return { id, ...data } as Channel;
       }))
     );
   }
@@ -33,12 +44,31 @@ export class ChannelService {
   }
 
   async getChannelById(id: string): Promise<Channel | undefined> {
-    const doc = await this.channelsCollection.doc(id).ref.get();
-    if (doc.exists) {
-      const data = doc.data() as Channel;
-      return { ...data, id: doc.id };
+    const docRef = doc(this.channelsCollection, id);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      const data = docSnap.data() as Channel;
+      return { ...data, id: docSnap.id };
     } else {
       return undefined;
     }
+  }
+
+  async addChannel(channel: Channel): Promise<void> {
+    const docRef = doc(this.channelsCollection, channel.id);
+    await setDoc(docRef, channel);
+  }
+
+  async updateChannel(id: string, data: Partial<Channel>): Promise<void> {
+    const docRef = doc(this.channelsCollection, id);
+    await updateDoc(docRef, data);
+  }
+
+  // Neue Methode zum Ausloggen der Channels
+  async logChannels(): Promise<void> {
+    const querySnapshot = await getDocs(this.channelsCollection);
+    querySnapshot.forEach((doc) => {
+      console.log(doc.id, ' => ', doc.data());
+    });
   }
 }
