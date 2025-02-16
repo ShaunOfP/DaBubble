@@ -19,7 +19,7 @@ export class PrivateChatComponent {
   @ViewChild('chatContainer') chatContainer!: ElementRef;
   messages$!: Observable<Message[]>;
   filteredMessages$!: Observable<any[]>;
-  reactions$!: Observable<any[]>
+  reactions$!: Observable<any[]>;
   channelId: string = 'ER84UOYc0F2jptDjWxFo';
   newMessage: boolean = false;
   hoveredMessageId: string | null = null;
@@ -49,7 +49,7 @@ export class PrivateChatComponent {
 
 
   loadMessages() {
-    const messages = this.chatService.getMessages(this.channelId);
+    const messages = this.chatService.getMessages();
     this.messages$ = messages.pipe(
       map((messages: Message[]) => this.returnNewObservable(messages, null)),
       tap((updatedMessages) => {
