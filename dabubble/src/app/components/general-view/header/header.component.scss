@@ -136,11 +136,6 @@ h3 {
     background-color: transparent !important;
 }
 
-.mat-elevation-z8,
-.mat-mdc-elevation-specific.mat-elevation-z8 {
-    box-shadow: none !important;
-}
-
 .profile-info {
     @include arrangement($fd: column, $g: 45px, $ai: normal, $jc: normal);
     width: 500px;

@@ -108,6 +108,11 @@ h3 {
   color: var(--color-purple-primary-default) !important;
 }
 
+.mat-elevation-z8,
+.mat-mdc-elevation-specific.mat-elevation-z8 {
+    box-shadow: none !important;
+}
+
 .cdk-overlay-connected-position-bounding-box {
   position: absolute;
   background-color: white;

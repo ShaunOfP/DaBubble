@@ -15,7 +15,7 @@
                 <img src="/img/general-view/workspace-menu/arrow_drop_down_thin.svg" />
                 <img class="d-none" src="/img/general-view/workspace-menu/hover_arrow_drop_down_thin.svg" />
             </button>
-            <mat-menu #menu="matMenu">
+            <mat-menu #menu="matMenu" class="drop-down-menu">
                 <button mat-menu-item (click)="toggleGreyScreen(); toggleProfileInfo(true)"><img class="mat-menu-button-img" src="/img/general-view/header/account_circle.svg">Profil</button>
                 <button mat-menu-item (click)="navigateTo('')"><img class="mat-menu-button-img" src="/img/general-view/header/logout.svg">Log out</button>
             </mat-menu>
