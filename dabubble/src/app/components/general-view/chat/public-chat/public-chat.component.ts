@@ -51,8 +51,8 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   showGreyScreen: boolean = false;
   showMembersInfo: boolean = false;
   showAddMembers: boolean = false;
-  showPicker:boolean = false
-  showPopoverReaction: number| null= null
+  showPicker:boolean = false;
+  showPopoverReaction: number| null= null;
 
   private scrollListener!: () => void;
 
