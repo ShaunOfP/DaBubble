@@ -52,7 +52,9 @@ export class LoginComponent implements OnInit {
     private userService: UserDatasService,
     private form: FormBuilder
   ) {
-    this.userDatas$ = collectionData(this.userDatasRef()) as Observable<UserDatas[]>;
+    this.userDatas$ = collectionData(this.userDatasRef()) as Observable<
+      UserDatas[]
+    >;
     const animation = sessionStorage.getItem('animation');
     this.animationPlayed = animation === 'true';
 
@@ -72,25 +74,24 @@ export class LoginComponent implements OnInit {
 
   async logIn(): Promise<void> {
     this.resetLoginError();
-  
+
     if (this.loginForm.valid) {
       this.loginForm.markAllAsTouched();
       const { email, password } = this.loginForm.value;
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      
+
       if (!emailRegex.test(email)) {
-        this.loginErrorMail = 'Bitte geben Sie eine gültige E-Mail-Adresse ein.';
+        this.loginErrorMail =
+          'Bitte geben Sie eine gültige E-Mail-Adresse ein.';
       }
-  
+
       try {
         const result = await this.authService.signInWithEmail(email, password);
         console.log(result);
         this.handleLogin(result);
-
-      } catch (error ) {
+      } catch (error) {
         console.error('Fehler beim log in:', error);
       }
-
     } else {
       this.loginErrorMail = 'Gib hier deine gültige Email ein';
       this.loginErrorPassword = 'Gib hier dein gültiges Passwort ein';
@@ -107,13 +108,15 @@ export class LoginComponent implements OnInit {
     } else {
       const chatId = 'ER84UOYc0F2jptDjWxFo';
       //macht die url
-      this.router.navigate([`/general/public-chat`], { queryParams: { chatId:chatId, userID: result?.uid } });
+      this.router.navigate([`/general/public-chat`], {
+        queryParams: { chatId: chatId, userID: result?.uid },
+      });
     }
   }
-  
+
   resetLoginError() {
     this.loginErrorMail = '';
-    this.loginErrorPassword = ''; 
+    this.loginErrorPassword = '';
   }
 
   async guestLogIn() {
@@ -122,23 +125,30 @@ export class LoginComponent implements OnInit {
       const guestUser = this.authService.currentUser;
       const guestDocRef = doc(this.guestDatasRef(), guestUser?.uid);
       const guestSnap = await getDoc(guestDocRef);
+
+      const chatId = 'ER84UOYc0F2jptDjWxFo';
+
       if (guestSnap.exists()) {
         console.log('Gast schon vorhanden', guestSnap.data());
-        this.router.navigate(['/general']);
+        this.router.navigate(['/general'], {
+          queryParams: { chatId, userID: guestUser?.uid },
+        });
       } else {
         if (guestUser) {
           const newGuest: GuestDatas = new GuestDatas({
             username: 'Gast',
-            avatar: 'default-avatar',
+            avatar: '/img/general-view/create-avatar/default-avatar.svg',
             channels: ['ER84UOYc0F2jptDjWxFo'],
+            privateChats: ['pCER84UOYc0F2jptDjWxFo'],
           });
           this.userService.saveGuest(newGuest, guestUser.uid);
-          this.router.navigate(['/general']);
+          this.router.navigate(['/general'], {
+            queryParams: { chatId, userID: guestUser?.uid },
+          });
           console.log(newGuest);
           console.log(guestUser.uid);
         }
       }
-
     } catch (error) {
       console.error('Fehler beim Gast log in:', error);
     }
@@ -153,10 +163,11 @@ export class LoginComponent implements OnInit {
       const userDocRef = doc(this.userDatasRef(), googleUser?.uid);
       const userSnap = await getDoc(userDocRef);
       console.log(this.user);
-      this.router.navigate([`/general/public-chat`], { queryParams: { userID: googleUser?.uid } });
+      this.router.navigate([`/general/public-chat`], {
+        queryParams: { userID: googleUser?.uid },
+      });
       if (userSnap.exists()) {
         console.log('Benutzer schon vorhanden', userSnap.data());
-
       } else {
         if (googleUser) {
           this.setNewUser(googleUser);
@@ -173,7 +184,8 @@ export class LoginComponent implements OnInit {
       username_lowercase: user.displayName?.toLowerCase() ?? '',
       mail: user.email ?? '',
       password: '',
-      avatar: user.photoURL ?? 'default-avatar',
+      avatar:
+        user.photoURL ?? '/img/general-view/create-avatar/default-avatar.svg',
       channels: ['ER84UOYc0F2jptDjWxFo'],
       privateChats: [],
       online: false,
