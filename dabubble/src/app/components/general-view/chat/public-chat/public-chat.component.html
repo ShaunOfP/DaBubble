@@ -38,8 +38,8 @@
       (mouseover)="hoveredMessageId = message.id"
       (mouseout)="hoveredMessageId = null">
         <div class="chat-content_reaction" *ngIf="hoveredMessageId === message.id">
-          <button><img src="img/general-view/chat/green_check.svg" alt="check"></button>
-          <button><img src="img/general-view/chat/clap_hands.svg" alt="check"></button>
+          <button (click)="sendReaction('green_check', message.id)"><img src="img/general-view/chat/green_check.svg" alt="check"></button>
+          <button (click)="sendReaction('🙌', message.id)"><img src="img/general-view/chat/clap_hands.svg" alt="clap"></button>
           <button (click)="showPicker = !showPicker"><img src="img/general-view/chat/add_reaction.svg"
               alt="check"></button>
           <app-emoji-picker *ngIf="showPicker" (mouseleave)="showPicker = false"
@@ -62,26 +62,55 @@
         </div>
       </div>
       <div class="message-reactions"  >
-         <div *ngFor="let reaction of reactionEntries(message); let i = index">
+         <!-- <div *ngFor="let reaction of reactionEntries(message); let i = index">
           <div 
             (mouseenter)="showPopover(i, reaction.users)"
             (mouseleave)="hidePopover(i)"
             class="message-reactions_btn"> 
             {{ reaction.emoji }} {{ reaction.count }} 
-          </div>
-          <div class="message-reactions_popover--{{checkStyle(message.userId)}}" *ngIf="showPopoverReaction === i">
-            {{ reaction.emoji }} <br>
-            <div *ngIf="reactionUserNamesCache[i]"> 
-              <b *ngFor="let name of reactionUserNamesCache[i]">
-                {{ name }} <br>
-              </b> 
-              <span *ngIf="reaction.users.length > 2">
-               und {{ reaction.users.length - 2 }} weitere
-              </span>
+          </div> -->
+          <div *ngFor="let reaction of reactionEntries(message); let i = index">
+            <div (mouseenter)="showPopover(i, reaction.users)"
+                 (mouseleave)="hidePopover(i)"
+                 class="message-reactions_btn">
+                 
+              <!-- Zeige das Bild, falls isImage true ist, sonst das Emoji -->
+              <ng-container *ngIf="reaction.isImage; else textEmoji">
+                <img [src]="reaction.value" alt="Reaction" />
+              </ng-container>
+              <ng-template #textEmoji>
+                {{ reaction.value }}
+              </ng-template>
+              
+              <!-- Anzeige der Anzahl -->
+              {{ reaction.count }}
             </div>
-            <br>hat reagiert
+            
+            <div class="message-reactions_popover--{{ checkStyle(message.userId) }}"
+                 *ngIf="showPopoverReaction === i">
+                 
+              <!-- Auch im Popover unterscheiden wir zwischen Bild und Emoji -->
+              <ng-container *ngIf="reaction.isImage; else textEmojiPopover">
+                <img [src]="reaction.value" alt="Reaction" />
+              </ng-container>
+              <ng-template #textEmojiPopover>
+                {{ reaction.value }}
+              </ng-template>
+              
+              <br>
+              <div *ngIf="reactionUserNamesCache[i]">
+                <b *ngFor="let name of reactionUserNamesCache[i]">
+                  {{ name }} <br>
+                </b>
+                <span *ngIf="reaction.users.length > 2">
+                  und {{ reaction.users.length - 2 }} weitere
+                </span>
+              </div>
+              <br>
+              hat reagiert
+            </div>
           </div>
-        </div>
+          
       </div>
     </div>
   </div>
