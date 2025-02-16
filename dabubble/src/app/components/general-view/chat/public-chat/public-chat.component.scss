@@ -314,6 +314,7 @@ header {
 .message-reactions{
  display: flex;
  gap: 10px;
+ flex-wrap: wrap;
  >div{
   border-radius: 20px;
   border: 1px solid #ADB0D9;
