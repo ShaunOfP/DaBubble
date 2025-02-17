@@ -166,6 +166,7 @@ export class UserDatasService {
     return collection(this.firestore, 'guestDatas');
   }
 
+  // Sollte die nicht eher getCurrentUserId heissen?
   async getCurrentChannelId() {
     this.route.queryParams.subscribe((params) => {
       const wholeString = params['userID'];

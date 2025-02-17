@@ -23,7 +23,7 @@ import { AltHeaderMobileComponent } from "../alt-header-mobile/alt-header-mobile
     SharedModule,
     RouterModule,
     AltHeaderMobileComponent
-],
+  ],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss',
 })
@@ -110,42 +110,50 @@ export class ChatComponent implements OnInit {
   async sendMessage(content: string): Promise<void> {
     debugger
     if (!this.userDatasService.currentUserId || !content) {
-      console.error('User ID is not available');
+      this.userDatasService.getCurrentChannelId();
+
+      if (!this.userDatasService.currentUserId) {
+        console.error('User ID is not available');
+        return;
+      }
+      if (!content){
+        console.error('Bitte geben sie eine Nachricht für den Chat ein');
+        return;
+      }
+    }
+
+    const userId = this.userDatasService.currentUserId
+    const userName = await this.userDatasService.getUserName(userId)
+    if (!userName) {
+      console.error('User data is not available');
       return;
     }
 
-      const userId = this.userDatasService.currentUserId
-      const userName = await this.userDatasService.getUserName(userId)
-      if (!userName) {
-        console.error('User data is not available');
-        return;
-      }
+    const message: Message = {
+      id: this.generateId(), // Generate a unique ID for the message
+      sender: userName, // Replace with actual sender name
+      createdAt: new Date().getTime(),
+      content: content,
+      userId: this.userDatasService.currentUserId, // Use the actual user ID
+      reaction: {}
+    };
 
-      const message: Message = {
-        id: this.generateId(), // Generate a unique ID for the message
-        sender: userName, // Replace with actual sender name
-        createdAt: new Date().getTime(),
-        content: content,
-        userId: this.userDatasService.currentUserId, // Use the actual user ID
-        reaction: {}
-      };
+    if (this.chatService.currentChatId == ``) {
+      console.log("No chat Id provided");
+      return;
+    }
 
-      if (this.chatService.currentChatId== ``) {
-        console.log("No chat Id provided");
-        return;
-      }
+    this.chatService
+      .saveMessage(message)
+      .then(() => {
+        // this.publicChatComponent.scrollToElement('auto');
+        this.messageInput.nativeElement.value = '';
+        console.log('Message saved successfully');
 
-      this.chatService
-        .saveMessage( message)
-        .then(() => {
-          // this.publicChatComponent.scrollToElement('auto');
-          this.messageInput.nativeElement.value = '';
-          console.log('Message saved successfully');
-          
-        })
-        .catch((error) => {
-          console.error('Error saving message:', error);
-        });
+      })
+      .catch((error) => {
+        console.error('Error saving message:', error);
+      });
   }
 
 

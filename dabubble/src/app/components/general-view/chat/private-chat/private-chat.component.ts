@@ -108,7 +108,7 @@ export class PrivateChatComponent {
    * Subscribes to URL Changes
    */
   detectUrlChange() {
-    const currentRoute = this.router.url;
+    const currentRoute = this.router.url; //Idee hierhinter war dass keine nachrichten geladen werden, wenn privateChat nicht offen ist
     if (currentRoute.includes('public-chat')) {
       return;
     } else {

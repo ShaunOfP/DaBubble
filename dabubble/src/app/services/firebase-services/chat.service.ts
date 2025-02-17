@@ -17,7 +17,7 @@ import {
 } from '@angular/fire/firestore';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Message } from '../../models/interfaces';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +26,7 @@ export class ChatService {
   private firestore = inject(Firestore);
   currentChatId: string = ``;
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private router: Router) {
     this.getCurrentChatId();
   }
 
@@ -35,7 +35,7 @@ export class ChatService {
       if (params['chatId']) {
         this.currentChatId = params['chatId'];
         console.log(this.currentChatId);
-        
+
       } else {
         console.error('No userID found in query parameters');
       }
@@ -56,16 +56,37 @@ export class ChatService {
     >;
   }
 
-  async saveMessage( message: Message) {
-    await addDoc(
-      collection(this.firestore, `channels/${this.currentChatId}/messages`),
-      message
-    );
+  async saveMessage(message: Message) {
+    if (this.getCurrentRoute() === 'public') {
+      await addDoc(
+        collection(this.firestore, `channels/${this.currentChatId}/messages`),
+        message
+      );
+    }
+    if (this.getCurrentRoute() === 'private') {
+      await addDoc(
+        collection(this.firestore, `privateChats/${this.currentChatId}/messages`),
+        message
+      );
+    }
   }
+
+
+  getCurrentRoute(): string {
+    const currentRoute = this.router.url;
+    if (currentRoute.includes('public-chat')) {
+      return 'public';
+    }
+    if (currentRoute.includes('private-chat')) {
+      return 'private';
+    }
+    return 'undefined';
+  }
+
 
   async updateMessage(emoji: string, messageId: string, userId: string) {
     const messageRef = doc(this.firestore, `channels/${this.currentChatId}/messages/${messageId}`);
-  
+
     try {
       await runTransaction(this.firestore, async (transaction) => {
         // Aktuellen Stand des Dokuments abrufen
@@ -73,15 +94,15 @@ export class ChatService {
         if (!messageSnap.exists()) {
           throw new Error("Das Dokument existiert nicht!");
         }
-  
+
         // Daten aus dem Dokument lesen
         const data = messageSnap.data();
         const reaction = data?.['reaction'] || {};
-  
+
         // Liste aller User-IDs für das übergebene Emoji ermitteln (oder leeres Array)
         const currentUsers = reaction[emoji] || [];
         const userIndex = currentUsers.indexOf(userId);
-  
+
         if (userIndex === -1) {
           // User war noch nicht in der Liste -> hinzufügen
           currentUsers.push(userId);
@@ -96,14 +117,14 @@ export class ChatService {
             delete reaction[emoji];
           }
         }
-  
+
         // Aktualisierte Daten zurückschreiben
         transaction.update(messageRef, { reaction });
       });
-  
+
       // Optional: Hier kannst du eine Erfolgsmeldung oder weitere Aktionen einbauen
       console.log("Reaction erfolgreich aktualisiert.");
-  
+
     } catch (error) {
       // Fehlerbehandlung
       console.error("Fehler beim Aktualisieren der Reaction:", error);
@@ -161,6 +182,6 @@ export class ChatService {
   // changeChannel(channelId:string){
   //   this.currentChatId = channelId
   //   console.log(this.currentChatId);
-    
+
   // }
 }
