@@ -54,7 +54,7 @@ export class UserDatasService {
   public currentUserData$: Observable<UserObserver | null> =
     this.currentUserDataSubject.asObservable();
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute) { }
 
   async getUserDataById(): Promise<void> {
     this.route.queryParams.pipe().subscribe(async (params) => {
@@ -79,14 +79,14 @@ export class UserDatasService {
     });
   }
 
-  async getUserName(id:string):Promise<string>{
+  async getUserName(id: string): Promise<string> {
     try {
       const docRef = doc(this.userDatasRef(), id);
       const docSnap = await getDoc(docRef);
-      if(docSnap.exists()){
+      if (docSnap.exists()) {
         return docSnap.data()['username'] as string
       }
-      else{
+      else {
         return ""
       }
     } catch (error) {
@@ -199,6 +199,15 @@ export class UserDatasService {
       return docSnapshot.data();
     } else {
       return undefined;
+    }
+  }
+
+  async getPrivateChannel(userId: string) {
+    const userDocRef = doc(this.firestore, `userDatas/${userId}`);
+    const userDoc = await getDoc(userDocRef);
+
+    if (userDoc.exists()) {
+      return userDoc.get('privateChats');
     }
   }
 }

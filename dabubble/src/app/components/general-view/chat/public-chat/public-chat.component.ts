@@ -86,7 +86,7 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     //   })
     // );
     // setTimeout(() => this.scrollToElement('auto'), 1000);
-    debugger
+    console.log("public");
     this.messages$ = this.route.queryParams.pipe(
       map(params => params['chatId']),
       distinctUntilChanged(), // Nur weiter, wenn sich die chatId wirklich ändert

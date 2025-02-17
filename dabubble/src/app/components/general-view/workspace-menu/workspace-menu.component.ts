@@ -129,9 +129,10 @@ export class WorkspaceMenuComponent implements OnInit {
     // this.chatService.changeChannel(channelId)
   }
 
-  openDirectMessage(userId: string) {
+  async openDirectMessage(userId: string) {
+    const privateChatId = await this.userDatasService.getPrivateChannel(userId);
     this.router.navigate(['/general/private-chat'], {
-      queryParams: { chatId: userId },
+      queryParams: { chatId: privateChatId },
       queryParamsHandling: 'merge',
       replaceUrl: true,
     });
