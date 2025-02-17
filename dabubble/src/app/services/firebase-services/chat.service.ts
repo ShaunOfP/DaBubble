@@ -5,17 +5,14 @@ import {
   collection,
   collectionData,
   addDoc,
-  getDocs,
-  where,
   query,
   doc,
   getDoc,
-  onSnapshot,
   orderBy,
   updateDoc,
   runTransaction,
 } from '@angular/fire/firestore';
-import { BehaviorSubject, firstValueFrom, Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Message } from '../../models/interfaces';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';

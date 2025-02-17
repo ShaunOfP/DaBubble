@@ -1,5 +1,5 @@
 import { CommonModule, Location } from '@angular/common';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { combineLatest, distinctUntilChanged, filter, map, Observable, switchMap, tap } from 'rxjs';
 import { Message } from '../../../../models/interfaces';
 import { ChatService } from '../../../../services/firebase-services/chat.service';
@@ -15,7 +15,7 @@ import { MatCardModule } from '@angular/material/card';
   templateUrl: './private-chat.component.html',
   styleUrl: './private-chat.component.scss'
 })
-export class PrivateChatComponent {
+export class PrivateChatComponent implements OnInit {
   @ViewChild('chatContainer') chatContainer!: ElementRef;
   messages$!: Observable<Message[]>;
   filteredMessages$!: Observable<any[]>;
@@ -53,7 +53,7 @@ export class PrivateChatComponent {
     // Umschreiben in den Service, sodass entweder das hier geladen wird, wenn url private enthält oder sonst das andere wenn url public enthält
     // if private dann folgender code, besser anpassen durch url auslesung
     // je nach public/private in den jeweiligen collections suchen
-    console.log("private");
+
     this.messages$ = this.route.queryParams.pipe(
       map(params => params['chatId']),
       distinctUntilChanged(), // Nur weiter, wenn sich die chatId wirklich ändert
