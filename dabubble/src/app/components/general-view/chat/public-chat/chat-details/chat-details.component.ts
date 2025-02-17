@@ -15,10 +15,10 @@ import { UserDatasService } from '../../../../../services/firebase-services/user
 export class ChatDetailsComponent {
   @Output() callParent: EventEmitter<void> = new EventEmitter();
 
-  currentChannelId: string = 'ER84UOYc0F2jptDjWxFo'; // change through input
-  currentChannelName: string = 'Entwicklerteam';
-  currentChannelOwner: string = 'Noah Braun';
-  currentChannelDescription: string = 'Dieser Channel ist für alles rund um #asdas vorgesehen. Hier kannst du zusammen mit deinem Team Meetings abhalten, Dokumente teilen und Entscheidungen treffen.';
+  currentChannelId: string = '';
+  currentChannelName: string = '';
+  currentChannelOwner: string = '';
+  currentChannelDescription: string = '';
 
   currentChannelData: any;
 
@@ -35,6 +35,9 @@ export class ChatDetailsComponent {
   }
 
 
+  /**
+   * Assigns the correct Values to the matching Variables when initialized
+   */
   async ngOnInit() {
     this.currentChannelId = this.publicChat.currentChannelData['channelId'];
     this.currentChannelName = this.publicChat.currentChannelData['channelName'];
@@ -43,6 +46,11 @@ export class ChatDetailsComponent {
   }
 
 
+  /**
+   * Converts the Owner-Id to the Owner-Name aka readable Name (also removes the double quotes from the Owners name)
+   * @param ownerId A string from the Database field "owner" containing the User-Id of the Channel-Owner
+   * @returns The name of the Owner rather than the ID (as a string)
+   */
   async getNameOfChannelOwner(ownerId: string) {
     if (ownerId != "DABubble385-Team") {
       const ownerName = await this.userDataService.getUserName(ownerId);
