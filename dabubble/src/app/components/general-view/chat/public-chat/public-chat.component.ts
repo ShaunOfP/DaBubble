@@ -5,16 +5,12 @@ import {
   ViewChild,
   AfterViewInit,
   OnDestroy,
-  viewChild,
-  Injectable,
 } from '@angular/core';
 import { ChatService } from '../../../../services/firebase-services/chat.service';
-import { BehaviorSubject, Observable, combineLatest, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs';
-import { CommonModule, Location } from '@angular/common';
+import { Observable, combineLatest, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs';
+import { CommonModule } from '@angular/common';
 import { Message } from '../../../../models/interfaces';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ChatComponent } from '../chat.component';
-
 import { ChannelMembersComponent } from './channel-members/channel-members.component';
 import { AddMembersComponent } from './add-members/add-members.component';
 import { ChatDetailsComponent } from './chat-details/chat-details.component';
@@ -22,6 +18,7 @@ import { FormsModule } from '@angular/forms';
 import { FilterService } from '../../../../services/component-services/filter.service';
 import { EmojiPickerComponent } from '../../emoji-picker/emoji-picker.component';
 import { UserDatasService } from '../../../../services/firebase-services/user-datas.service';
+import { getDoc } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-public-chat',
@@ -44,7 +41,6 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   messages$!: Observable<Message[]>;
   filteredMessages$!: Observable<any[]>;
   reactions$!: Observable<any[]>;
-  channelId: string = 'ER84UOYc0F2jptDjWxFo';
   newMessage: boolean = false;
   hoveredMessageId: string | null = null;
   currentChannelName: string = `Entwicklerchannel`;
@@ -55,25 +51,55 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   showPicker: boolean = false
   showPopoverReaction: number | null = null;
   reactionUserNamesCache: { [key: number]: string[] } = {}; // Cache für Benutzernamen
+  currentChannelData: any;
+  currentChatId: string = '';
 
   private scrollListener!: () => void;
 
   constructor(
     private chatService: ChatService,
     private route: ActivatedRoute,
-    private location: Location,
     private filterService: FilterService,
     private userDataService: UserDatasService,
     private router: Router
   ) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.getCurrentChatId();
     this.loadMessages();
     this.loadFilter();
-    this.detectUrlChange();
+  }
+
+
+  // Funktion in service, oder bedingung einfügen, dass nur ausgeführt wird, wenn url auch public-chat steht
+  getCurrentChatId() {
+    this.route.queryParams.subscribe((params) => {
+      if (params['chatId']) {
+        this.currentChatId = params['chatId'];
+        this.loadChannelInfo();
+        this.loadMessages();
+      } else {
+        console.error('No userID found in query parameters');
+      }
+    });
+  }
+
+
+  async loadChannelInfo() {
+    const data = await getDoc(this.chatService.getChannelDocRef(this.currentChatId));
+
+    if (data.exists()) {
+      this.currentChannelData = data.data();
+      console.log(this.currentChannelData);
+    }
   }
 
   loadMessages() {
+    const currentRoute = this.router.url;
+    if (currentRoute.includes('private-chat')) {
+      return;
+    }
+
     this.messages$ = this.route.queryParams.pipe(
       map(params => params['chatId']),
       distinctUntilChanged(),
@@ -152,7 +178,7 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
-   // reactionEntries(message: Message): { emoji: string, count: number, users: string[] }[] {
+  // reactionEntries(message: Message): { emoji: string, count: number, users: string[] }[] {
   //   return Object.entries(message.reaction || {}).map(([emoji, users]) => ({
   //     emoji,
   //     count: (users as string[]).length,
@@ -187,7 +213,7 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     });
   }
-  
+
 
   async showPopover(index: number, users: string[]) {
     if (!this.reactionUserNamesCache[index]) {
@@ -214,48 +240,24 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     return result;
   }
 
-  /**
-   * Subscribes to URL Changes
-   */
-  detectUrlChange() {
-    const currentRoute = this.router.url;
-    if (currentRoute.includes('private-chat')) {
-      return;
-    } else {
-      this.location.onUrlChange((url) => {
-        this.extractCurrentChannelIdFromUrl(url);
-        this.loadMessages();
-      });
-    }
-  }
-
-  /**
-   * Extracts the ChatID from the current URL and assigns it to the channelId-Variable
-   * @param url The current URL as a string
-   */
-  extractCurrentChannelIdFromUrl(url: string) {
-    const fixedUrl = url.replace('/chatID=', '&chatID=');
-    const queryParams = new URLSearchParams(fixedUrl.split('?')[1]);
-    const chatID = queryParams.get('chatID');
-    if (chatID) {
-      this.channelId = chatID;
-    }
-  }
 
   toggleChatDetails() {
     this.showGreyScreen = !this.showGreyScreen;
     this.chatDetails = !this.chatDetails;
   }
 
+
   openMembersInfo() {
     this.showGreyScreen = true;
     this.showMembersInfo = true;
   }
 
+
   closeMembersInfo() {
     this.showMembersInfo = false;
     this.showGreyScreen = false;
   }
+
 
   openAddMembersMenu() {
     if (this.showMembersInfo) {
@@ -264,6 +266,7 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     this.showGreyScreen = true;
     this.showAddMembers = true;
   }
+
 
   closeAddMembersMenu() {
     this.showAddMembers = false;
@@ -328,7 +331,7 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     return userId === currentUser ? 'secondary' : 'primary';
   }
 
-  sendReaction(emoji:string, id:string){
+  sendReaction(emoji: string, id: string) {
     console.log(emoji + id);
     this.chatService.updateMessage(emoji, id, this.userDataService.currentUserId)
   }

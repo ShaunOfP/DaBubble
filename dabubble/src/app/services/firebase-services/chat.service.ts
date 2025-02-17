@@ -15,9 +15,10 @@ import {
   updateDoc,
   runTransaction,
 } from '@angular/fire/firestore';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, Observable, Subject } from 'rxjs';
 import { Message } from '../../models/interfaces';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -26,21 +27,22 @@ export class ChatService {
   private firestore = inject(Firestore);
   currentChatId: string = ``;
 
-  constructor(private route: ActivatedRoute, private router: Router) {
+  constructor(private route: ActivatedRoute, private router: Router, private location: Location) {
     this.getCurrentChatId();
   }
+
 
   getCurrentChatId() {
     this.route.queryParams.subscribe((params) => {
       if (params['chatId']) {
         this.currentChatId = params['chatId'];
         console.log(this.currentChatId);
-
       } else {
         console.error('No userID found in query parameters');
       }
     });
   }
+
 
   getChatRef() {
     return collection(this.firestore, 'chat');
@@ -156,13 +158,16 @@ export class ChatService {
     ) as Observable<any[]>;
   }
 
+
   getChannelDocRef(channelId: string) {
     return doc(this.firestore, `channels/${channelId}`);
   }
 
+
   async getChannelDocSnapshot(channelId: string) {
     return await getDoc(this.getChannelDocRef(channelId));
   }
+
 
   async updateChatInformation(
     channelId: string,

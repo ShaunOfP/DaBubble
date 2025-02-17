@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 import { ChatService } from '../../../../../services/firebase-services/chat.service';
+import { PublicChatComponent } from '../public-chat.component';
+import { UserDatasService } from '../../../../../services/firebase-services/user-datas.service';
 
 @Component({
   selector: 'app-chat-details',
@@ -18,6 +20,8 @@ export class ChatDetailsComponent {
   currentChannelOwner: string = 'Noah Braun';
   currentChannelDescription: string = 'Dieser Channel ist für alles rund um #asdas vorgesehen. Hier kannst du zusammen mit deinem Team Meetings abhalten, Dokumente teilen und Entscheidungen treffen.';
 
+  currentChannelData: any;
+
   newDescriptionInput: string = '';
   newChannelNameInput: string = '';
 
@@ -26,9 +30,28 @@ export class ChatDetailsComponent {
   descriptionContainerVisible: boolean = true;
   newDescriptionContainerVisible: boolean = false;
 
-  constructor(private chatService: ChatService) {
+  constructor(private chatService: ChatService, public publicChat: PublicChatComponent, public userDataService: UserDatasService) {
 
   }
+
+
+  async ngOnInit() {
+    this.currentChannelId = this.publicChat.currentChannelData['channelId'];
+    this.currentChannelName = this.publicChat.currentChannelData['channelName'];
+    this.currentChannelOwner = await this.getNameOfChannelOwner(this.publicChat.currentChannelData['owner']);
+    this.currentChannelDescription = this.publicChat.currentChannelData['description'];
+  }
+
+
+  async getNameOfChannelOwner(ownerId: string) {
+    if (ownerId != "DABubble385-Team") {
+      const ownerName = await this.userDataService.getUserName(ownerId);
+      return JSON.stringify(ownerName).replace(/^"|"$/g, '');
+    } else {
+      return ownerId;
+    }
+  }
+
 
   closeChatDetails() {
     this.callParent.emit();
@@ -88,7 +111,9 @@ export class ChatDetailsComponent {
     }
   }
 
-  leaveChannel(){
+  leaveChannel() {
     //logic for leaving the channel
   }
+
+
 }
