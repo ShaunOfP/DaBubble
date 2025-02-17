@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserDatas } from '../../../../models/user.class';
 import { ChannelMemberService, Member } from '../../../../services/firebase-services/channel-member.service';
+import { ChannelService, Channel } from "../../../../services/firebase-services/channel.service";
 import { CommonModule } from '@angular/common';
 import { AllMembersComponent } from "../../all-members/all-members.component";
 import { FormsModule } from '@angular/forms';
@@ -19,13 +20,19 @@ export class NewMessageComponent implements OnInit {
   searchQuery: string = '';
   searchFocus: boolean = false;
   selectedOption: boolean = true;
+  channels: Channel[] = []; 
   
-  constructor(private memberService: ChannelMemberService) { }
+  constructor(private memberService: ChannelMemberService, private channelService: ChannelService) { }
 
   ngOnInit(): void {
     this.memberService.selectedMembers$.subscribe((members) => {
       console.log(members);
       this.selectedMembers = members;
+    });
+
+    this.channelService.getChannels().subscribe((channels) => {
+      this.channels = channels;
+      console.log('Channels:', this.channels);
     });
   }
   
@@ -39,7 +46,7 @@ export class NewMessageComponent implements OnInit {
     const input = (event.target as HTMLInputElement).value;
     console.log(input);
     if (input.startsWith('#')) {
-      
+      console.log('channels', this.channels);
     } else if (input.startsWith('@')) {
       this.selectedOption = false;  
       this.searchQuery = input;
