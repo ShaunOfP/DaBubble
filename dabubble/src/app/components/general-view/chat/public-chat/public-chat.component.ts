@@ -196,8 +196,8 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     this.showPopoverReaction = index;
   }
 
-  hidePopover(i: number) {
-    this.showPopoverReaction = i - (i + 1);
+  hidePopover() {
+    this.showPopoverReaction = null;
   }
 
   async formatUserNames(users: string[]): Promise<string[]> {

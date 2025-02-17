@@ -36,7 +36,7 @@
     <div 
       class="chat-content--{{ checkStyle(message.userId) }}" 
       (mouseover)="hoveredMessageId = message.id"
-      (mouseout)="hoveredMessageId = null">
+      (mouseout)="hoveredMessageId = null; hidePopover()">
         <div class="chat-content_reaction" *ngIf="hoveredMessageId === message.id">
           <button (click)="sendReaction('green_check', message.id)"><img src="img/general-view/chat/green_check.svg" alt="check"></button>
           <button (click)="sendReaction('🙌', message.id)"><img src="img/general-view/chat/clap_hands.svg" alt="clap"></button>
@@ -61,10 +61,10 @@
           </span>
         </div>
       </div>
-      <div class="message-reactions"  >
-          <div *ngFor="let reaction of reactionEntries(message); let i = index">
+      <div class="message-reactions" >
+          <div *ngFor="let reaction of reactionEntries(message); let i = index" (mouseleave)="hidePopover()">
             <div (mouseenter)="showPopover(i, reaction.users)"
-                 (mouseleave)="hidePopover(i)"
+                 
                  class="message-reactions_btn">
               <ng-container *ngIf="reaction.isImage; else textEmoji">
                 <img [src]="reaction.value" alt="Reaction" />
