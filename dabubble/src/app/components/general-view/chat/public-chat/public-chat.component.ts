@@ -204,10 +204,14 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     let formattedNames = await Promise.all(
       users.map(async (id) => id === this.userDataService.currentUserId ? "Du" : await this.userDataService.getUserName(id))
     );
-    const hasDu = formattedNames.includes("Du");
-    let maxNames = hasDu ? 1 : 2;
-    formattedNames.sort((a, b) => (a === "Du" ? 1 : b === "Du" ? -1 : 0));
-    return formattedNames.slice(0, maxNames).concat(hasDu ? ["Du"] : []);
+    const yourself = formattedNames.includes("Du");
+    formattedNames = formattedNames.filter(name => name !== "Du");
+    let maxNames = yourself ? 1 : 2;
+    let result = formattedNames.slice(0, maxNames);
+    if (yourself) {
+      result.push("Du");
+    }
+    return result;
   }
 
   /**
