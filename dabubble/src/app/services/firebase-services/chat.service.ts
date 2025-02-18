@@ -46,8 +46,15 @@ export class ChatService {
   }
 
   getMessages(): Observable<Message[]> {
+    let currentRoute: string = '';
+    if (this.getCurrentRoute() === 'public') {
+      currentRoute = 'channels';
+    }
+    if (this.getCurrentRoute() === 'private') {
+      currentRoute = 'privateChats'
+    }
     const messagesRef = query(
-      collection(this.firestore, `channels/${this.currentChatId}/messages`),
+      collection(this.firestore, `${currentRoute}/${this.currentChatId}/messages`),
       orderBy('createdAt', 'asc')
     );
     return collectionData(messagesRef, { idField: 'id' }) as Observable<
