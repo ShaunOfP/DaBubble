@@ -171,8 +171,18 @@ export class ChatService {
   }
 
 
-  async getChannelDocSnapshot(channelId: string) {
-    return await getDoc(this.getChannelDocRef(channelId));
+  async getChannelDocSnapshot(channelId: string): Promise<string> {
+    const channelRef = await getDoc(this.getChannelDocRef(channelId));
+    try {
+      if(channelRef.exists()){
+        const channelData = channelRef.data();
+        return  channelData['channelName']
+      }
+      else return "no channel"
+    } catch (error) {
+      return 'cant load channel!'
+    }
+   
   }
 
 
@@ -181,8 +191,7 @@ export class ChatService {
     updatedField: string,
     updateValue: string
   ) {
-    let channelDoc = await this.getChannelDocSnapshot(channelId);
-
+    const channelDoc = await getDoc(this.getChannelDocRef(channelId));
     if (channelDoc.exists()) {
       console.log(channelDoc.data());
       await updateDoc(this.getChannelDocRef(channelId), {

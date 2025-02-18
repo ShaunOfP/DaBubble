@@ -66,11 +66,12 @@ export class ChatComponent implements OnInit {
    * @param id The Chat-Id from the URL
    */
   async getChannelNameViaId(id: string) {
-    let data = await this.chatService.getChannelDocSnapshot(id);
-    if (data.exists()) {
-      let channelData = data.data();
-      this.currentChannelName = channelData['channelName'];
-    }
+    // let data = await this.chatService.getChannelDocSnapshot(id);
+    // if (data.exists()) {
+    //   let channelData = data.data();
+    //   this.currentChannelName = channelData['channelName'];
+    // }
+    this.currentChannelName = await this.chatService.getChannelDocSnapshot(id);
   }
 
 
@@ -114,7 +115,6 @@ export class ChatComponent implements OnInit {
 
 
   async sendMessage(content: string): Promise<void> {
-    debugger
     if (!this.userDatasService.currentUserId || !content) {
       this.userDatasService.getCurrentChannelId();
 
