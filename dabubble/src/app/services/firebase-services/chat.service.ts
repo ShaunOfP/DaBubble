@@ -174,15 +174,14 @@ export class ChatService {
   async getChannelDocSnapshot(channelId: string): Promise<string> {
     const channelRef = await getDoc(this.getChannelDocRef(channelId));
     try {
-      if(channelRef.exists()){
+      if (channelRef.exists()) {
         const channelData = channelRef.data();
-        return  channelData['channelName']
+        return channelData['channelName'];
       }
-      else return "no channel"
+      else return "no channel";
     } catch (error) {
-      return 'cant load channel!'
+      return 'cant load channel!';
     }
-   
   }
 
 
