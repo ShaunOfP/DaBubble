@@ -53,6 +53,10 @@ export class PrivateChatComponent implements OnInit {
     // Umschreiben in den Service, sodass entweder das hier geladen wird, wenn url private enthält oder sonst das andere wenn url public enthält
     // if private dann folgender code, besser anpassen durch url auslesung
     // je nach public/private in den jeweiligen collections suchen
+    const currentRoute = this.router.url;
+    if (currentRoute.includes('public-chat')) {
+      return;
+    }
 
     this.messages$ = this.route.queryParams.pipe(
       map(params => params['chatId']),
