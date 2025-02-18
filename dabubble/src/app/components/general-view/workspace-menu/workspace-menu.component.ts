@@ -4,10 +4,8 @@ import {
   EventEmitter,
   OnInit,
   ChangeDetectorRef,
-  ViewChild,
-  ElementRef,
 } from '@angular/core';
-import { CommonModule, Location } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { ChangeDetectionStrategy, signal } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -15,12 +13,9 @@ import {
   UserDatasService,
   UserObserver,
 } from '../../../services/firebase-services/user-datas.service';
-import { ChatService } from '../../../services/firebase-services/chat.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, Subject } from 'rxjs';
 import { WorkspaceStateToggleButtonComponent } from './workspace-state-toggle-button/workspace-state-toggle-button.component';
 import { ChannelMemberService } from '../../../services/firebase-services/channel-member.service';
-import { AltHeaderMobileComponent } from '../alt-header-mobile/alt-header-mobile.component';
 
 @Component({
   selector: 'app-workspace-menu',
@@ -48,12 +43,10 @@ export class WorkspaceMenuComponent implements OnInit {
 
   constructor(
     public userDatasService: UserDatasService,
-    private chatService: ChatService,
     private channelService: ChannelMemberService,
     private router: Router,
     private route: ActivatedRoute,
     private cd: ChangeDetectorRef,
-    private location: Location
   ) {}
 
   ngOnInit() {
@@ -126,7 +119,6 @@ export class WorkspaceMenuComponent implements OnInit {
       queryParamsHandling: 'merge',
       replaceUrl: true,
     });
-    // this.chatService.changeChannel(channelId)
   }
 
   async openDirectMessage(userId: string) {

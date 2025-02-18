@@ -2,9 +2,7 @@
 
 
 header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    @include arrangement($jc: space-between);
 
     >h3 {
         margin: 0;
@@ -12,9 +10,7 @@ header {
 }
 
 .close-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include arrangement();
     height: 40px;
     width: 40px;
 
@@ -34,28 +30,24 @@ header {
 }
 
 .members-list-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 15px;
+    @include arrangement($fd: column, $ai: flex-start, $jc: normal, $g: 15px);
+    max-height: 300px;
+    overflow-y: scroll;
 }
 
 .members-list {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    @include arrangement($fd: column, $ai: flex-start, $jc: normal);
 }
 
 .member {
-    display: flex;
-    align-items: center;
-    gap: 15px;
+    @include arrangement($jc: normal, $g: 15px);
     height: 58px;
     padding: 4px 20px;
 
     >img {
         height: 50px;
         width: 50px;
+        border-radius: 30px;
     }
 
     >span {
@@ -64,10 +56,8 @@ header {
 }
 
 button {
-    display: flex;
-    align-items: center;
+    @include arrangement($jc: normal, $g: 15px);
     padding: 12px 29px;
-    gap: 15px;
     background-color: transparent;
     border-radius: 30px;
     border: none;

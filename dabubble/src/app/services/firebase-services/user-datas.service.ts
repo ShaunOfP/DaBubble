@@ -46,7 +46,7 @@ export class UserDatasService {
   // userDatas$: Observable<UserObserver[]> = new Subject<UserObserver[]>();
   userIdsSubject = new BehaviorSubject<string[]>([]);
   userIds$ = this.userIdsSubject.asObservable();
-  channelData: any = []; //datentyp ändern
+  channelData: any = [];
   currentUserId: string = ``;
   private currentUserDataSubject = new BehaviorSubject<UserObserver | null>(
     null

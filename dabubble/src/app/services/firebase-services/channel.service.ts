@@ -1,14 +1,11 @@
-import { inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
   Firestore,
   collection,
   getDocs,
-  where,
-  query,
   doc,
   setDoc,
   updateDoc,
-  arrayUnion,
   CollectionReference,
   collectionData,
   getDoc,

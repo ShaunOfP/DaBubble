@@ -2,17 +2,18 @@
   <h3>Mitglieder</h3>
   <div class="close-button" (click)="closeChannelMembersMenu()">
     <img src="/img/general-view/workspace-menu/close.svg" />
-    <img
-      class="d-none"
-      src="/img/general-view/workspace-menu/hover_close.svg"
-    />
+    <img class="d-none" src="/img/general-view/workspace-menu/hover_close.svg" />
   </div>
 </header>
 <div class="members-list-container">
   <div class="members-list">
     <div class="member" (click)="openProfileInfo()">
-      <img src="/img/public/user_icon_male_2.svg" />
-      <span>Frederik Beck (Du)</span>
+      <img src="{{ currentUserData?.avatar }}" />
+      <span>{{ currentUserData?.username }} (Du)</span>
+    </div>
+    <div *ngFor="let user of allUsers" class="member" (click)="openProfileInfo()">
+      <img src="{{ user.avatar }}" />
+      <span>{{ user.username }}</span>
     </div>
   </div>
   <button (click)="openAddMembersMenu()">
