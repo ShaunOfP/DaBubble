@@ -19,7 +19,7 @@
         <img class="user-icon margin-left-minus-10" src="/img/public/user_icon_male_2.svg">
         <img class="user-icon margin-left-minus-10" src="/img/public/user_icon_male_2.svg">
       </div>
-      <span class="count">{{ currentChannelData['users'].length }}</span>
+      <span class="count">{{ currentChannelData?.users?.length || 0}}</span>
     </div>
     <div class="change-image-on-hover" (click)="openAddMembersMenu()">
       <img src="/img/general-view/workspace-menu/add_person.svg">
