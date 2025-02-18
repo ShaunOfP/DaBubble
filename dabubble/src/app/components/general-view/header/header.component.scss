@@ -37,7 +37,7 @@ h3 {
 
 .bar-info-searchbar {
     background-color: var(--color-white);
-    min-width: 560px; //eventuell anpassen
+    min-width: 300px;
 
     @media(max-width: 700px) {
         display: none;
@@ -51,6 +51,7 @@ h3 {
     >button {
         background-color: var(--color-white);
         border: none;
+        display: flex;
 
         &:hover {
             cursor: pointer;
@@ -361,11 +362,11 @@ form {
 .profile-edit-form-buttons {
     @include arrangement($g: 45px, $ai: normal);
 
-    @media (max-width: 450px){
+    @media (max-width: 450px) {
         @include arrangement($g: 0px, $jc: space-around);
     }
 
-    @media (max-width: 330px){
+    @media (max-width: 330px) {
         @include arrangement($fd: column-reverse, $g: 10px);
     }
 }

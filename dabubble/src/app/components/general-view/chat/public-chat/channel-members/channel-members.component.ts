@@ -1,8 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { UserDatasService } from '../../../../../services/firebase-services/user-datas.service';
 import { CommonModule } from '@angular/common';
-import { ChannelService } from '../../../../../services/firebase-services/channel.service';
-import { ChannelMemberService } from '../../../../../services/firebase-services/channel-member.service';
+import { ChannelMemberService, Member } from '../../../../../services/firebase-services/channel-member.service';
+import { PublicChatComponent } from '../public-chat.component';
 
 @Component({
   selector: 'app-channel-members',
@@ -17,7 +17,11 @@ export class ChannelMembersComponent implements OnInit {
   currentUserData: any = '';
   allUsers: any = '';
 
-  constructor(public userDataService: UserDatasService, private channelMemberService: ChannelMemberService) {
+  constructor(
+    public userDataService: UserDatasService,
+    private channelMemberService: ChannelMemberService,
+    private publicChatComponent: PublicChatComponent,
+  ) {
 
   }
 
@@ -25,19 +29,15 @@ export class ChannelMembersComponent implements OnInit {
   ngOnInit() {
     this.userDataService.currentUserData$.subscribe((userDatas) => {
       this.currentUserData = userDatas;
-      this.subscribeAllMembers();
+      this.addMembers();
     });
   }
 
 
-  //Wenn user id im channel dann sollen die hier angezeigt werden
-  async subscribeAllMembers() {
-    await this.channelMemberService.selectAllMembers();
-    this.channelMemberService.allMembersSubject$.subscribe((allUsers) => {
-      this.allUsers = allUsers.filter(
-        (user) => user.privateChats[0] !== this.currentUserData?.privateChats[0]
-      );
-    });
+  addMembers() {
+    // this.publicChatComponent.currentChannelData.users.forEach((member: Member) => {
+    //   this.channelMemberService.selectMember(member);
+    // });
   }
 
 
