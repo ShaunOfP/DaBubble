@@ -45,6 +45,10 @@ export class ChatComponent implements OnInit {
   userIds!: string[];
   currentChannelName: string = ``;
 
+
+  /**
+   * Subscribes to the current URL to get the newest Chat-ID
+   */
   ngOnInit() {
     this.route.queryParams.subscribe((params) => {
       if (params['chatId']) {
@@ -57,6 +61,10 @@ export class ChatComponent implements OnInit {
   }
 
 
+  /**
+   * Retrieves the Chat-Data from the Firebase and extracts the Channel-Name to assign it to a variable
+   * @param id The Chat-Id from the URL
+   */
   async getChannelNameViaId(id: string) {
     let data = await this.chatService.getChannelDocSnapshot(id);
     if (data.exists()) {

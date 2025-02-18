@@ -70,7 +70,6 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
-  // Funktion in service, oder bedingung einfügen, dass nur ausgeführt wird, wenn url auch public-chat steht
   getCurrentChatId() {
     this.route.queryParams.subscribe((params) => {
       if (params['chatId']) {
