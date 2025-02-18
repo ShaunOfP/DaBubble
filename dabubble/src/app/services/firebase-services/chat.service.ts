@@ -51,7 +51,7 @@ export class ChatService {
       currentRoute = 'channels';
     }
     if (this.getCurrentRoute() === 'private') {
-      currentRoute = 'privateChats'
+      currentRoute = 'privateChats';
     }
     const messagesRef = query(
       collection(this.firestore, `${currentRoute}/${this.currentChatId}/messages`),
