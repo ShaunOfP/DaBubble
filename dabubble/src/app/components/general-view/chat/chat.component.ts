@@ -46,26 +46,8 @@ export class ChatComponent implements OnInit {
   showGreyScreen: boolean = false;
   userIds!: string[];
   currentChannelName: string = ``; //holen vom service via url
-  currentChannelId: string = `ER84UOYc0F2jptDjWxFo`;
 
   ngOnInit() { }
-
-
-  detectUrlChange() {
-    this.location.onUrlChange((url) => {
-      this.extractCurrentChannelIdFromUrl(url);
-    });
-  }
-
-
-  extractCurrentChannelIdFromUrl(url: string) {
-    const fixedUrl = url.replace('/chatID=', '&chatID=');
-    const queryParams = new URLSearchParams(fixedUrl.split('?')[1]);
-    const chatID = queryParams.get('chatID');
-    if (chatID) {
-      this.currentChannelId = chatID;
-    }
-  }
 
 
   onEmojiReceived(emoji: string) {

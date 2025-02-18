@@ -78,6 +78,10 @@ export class ChatService {
   }
 
 
+  /**
+   * Helper function to determine the current route
+   * @returns a string with a simplified version of the current route
+   */
   getCurrentRoute(): string {
     const currentRoute = this.router.url;
     if (currentRoute.includes('public-chat')) {

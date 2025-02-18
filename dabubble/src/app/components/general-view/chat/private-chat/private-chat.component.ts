@@ -20,7 +20,7 @@ export class PrivateChatComponent implements OnInit {
   messages$!: Observable<Message[]>;
   filteredMessages$!: Observable<any[]>;
   reactions$!: Observable<any[]>;
-  channelId: string = 'ER84UOYc0F2jptDjWxFo';
+  channelId: string = '';
   newMessage: boolean = false;
   hoveredMessageId: string | null = null;
   showPicker: boolean = false;
@@ -32,15 +32,12 @@ export class PrivateChatComponent implements OnInit {
   constructor(
     private chatService: ChatService,
     private route: ActivatedRoute,
-    private location: Location,
     private filterService: FilterService,
-    private router: Router
   ) { }
 
   ngOnInit(): void {
     this.loadMessages();
     this.loadFilter();
-    this.detectUrlChange();
   }
 
 
@@ -53,14 +50,13 @@ export class PrivateChatComponent implements OnInit {
     // Umschreiben in den Service, sodass entweder das hier geladen wird, wenn url private enthält oder sonst das andere wenn url public enthält
     // if private dann folgender code, besser anpassen durch url auslesung
     // je nach public/private in den jeweiligen collections suchen
-    const currentRoute = this.router.url;
-    if (currentRoute.includes('public-chat')) {
+    if (this.chatService.getCurrentRoute() === 'public') {
       return;
     }
 
     this.messages$ = this.route.queryParams.pipe(
       map(params => params['chatId']),
-      distinctUntilChanged(), // Nur weiter, wenn sich die chatId wirklich ändert
+      distinctUntilChanged(),
       tap(chatId => {
         if (!chatId) {
           console.error("Keine chatId in den Query-Parametern gefunden!");
@@ -69,7 +65,7 @@ export class PrivateChatComponent implements OnInit {
           console.log("Aktuelle chatId:", this.chatService.currentChatId);
         }
       }),
-      filter(chatId => !!chatId), // Nur fortfahren, wenn eine gültige chatId vorhanden ist
+      filter(chatId => !!chatId),
       switchMap(() => this.chatService.getMessages()),
       map((messages: Message[]) => this.returnNewObservable(messages, null)),
       tap((updatedMessages: Message[]) => {
@@ -105,35 +101,6 @@ export class PrivateChatComponent implements OnInit {
       emoji,
       count: (users as string[]).length
     }));
-  }
-
-
-  /**
-   * Subscribes to URL Changes
-   */
-  detectUrlChange() {
-    const currentRoute = this.router.url; //Idee hierhinter war dass keine nachrichten geladen werden, wenn privateChat nicht offen ist
-    if (currentRoute.includes('public-chat')) {
-      return;
-    } else {
-      this.location.onUrlChange((url) => {
-        this.extractCurrentChannelIdFromUrl(url);
-        this.loadMessages();
-      });
-    }
-  }
-
-  /**
-   * Extracts the ChatID from the current URL and assigns it to the channelId-Variable
-   * @param url The current URL as a string
-   */
-  extractCurrentChannelIdFromUrl(url: string) {
-    const fixedUrl = url.replace('/chatID=', '&chatID=');
-    const queryParams = new URLSearchParams(fixedUrl.split('?')[1]);
-    const chatID = queryParams.get('chatID');
-    if (chatID) {
-      this.channelId = chatID;
-    }
   }
 
 
