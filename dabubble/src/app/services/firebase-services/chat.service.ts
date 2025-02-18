@@ -15,7 +15,6 @@ import {
 import { Observable } from 'rxjs';
 import { Message } from '../../models/interfaces';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Location } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +23,7 @@ export class ChatService {
   private firestore = inject(Firestore);
   currentChatId: string = ``;
 
-  constructor(private route: ActivatedRoute, private router: Router, private location: Location) {
+  constructor(private route: ActivatedRoute, private router: Router) {
     this.getCurrentChatId();
   }
 

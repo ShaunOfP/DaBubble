@@ -43,7 +43,6 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   reactions$!: Observable<any[]>;
   newMessage: boolean = false;
   hoveredMessageId: string | null = null;
-  currentChannelName: string = `Entwicklerchannel`;
   chatDetails: boolean = false;
   showGreyScreen: boolean = false;
   showMembersInfo: boolean = false;

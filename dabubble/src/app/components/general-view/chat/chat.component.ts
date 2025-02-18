@@ -6,9 +6,7 @@ import { SharedModule } from '../../../shared/shared.module';
 import { ChatService } from '../../../services/firebase-services/chat.service';
 import { Message } from '../../../models/interfaces';
 import { UserDatasService } from '../../../services/firebase-services/user-datas.service';
-import { RouterModule } from '@angular/router';
-import { PrivateChatComponent } from "./private-chat/private-chat.component";
-import { map, Observable } from 'rxjs';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { PublicChatComponent } from './public-chat/public-chat.component';
 import { AltHeaderMobileComponent } from "../alt-header-mobile/alt-header-mobile.component";
 
@@ -31,11 +29,11 @@ export class ChatComponent implements OnInit {
   constructor(
     private chatService: ChatService,
     private userDatasService: UserDatasService,
-    private location: Location
+    private route: ActivatedRoute
   ) { }
 
 
-  @ViewChild(PublicChatComponent) publicChatComponent!: PublicChatComponent;
+  // @ViewChild(PublicChatComponent) publicChatComponent!: PublicChatComponent;
   @ViewChild('emojiTarget', { static: true }) emojiTarget!: ElementRef;
   @ViewChild('messageInput', { static: false }) messageInput!: ElementRef;
   selectedEmoji: string = '';
@@ -45,9 +43,27 @@ export class ChatComponent implements OnInit {
   showAddMembers: boolean = false;
   showGreyScreen: boolean = false;
   userIds!: string[];
-  currentChannelName: string = ``; //holen vom service via url
+  currentChannelName: string = ``;
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.route.queryParams.subscribe((params) => {
+      if (params['chatId']) {
+        let id = params['chatId'];
+        this.getChannelNameViaId(id);
+      } else {
+        console.error('No userID found in query parameters');
+      }
+    });
+  }
+
+
+  async getChannelNameViaId(id: string) {
+    let data = await this.chatService.getChannelDocSnapshot(id);
+    if (data.exists()) {
+      let channelData = data.data();
+      this.currentChannelName = channelData['channelName'];
+    }
+  }
 
 
   onEmojiReceived(emoji: string) {
@@ -98,7 +114,7 @@ export class ChatComponent implements OnInit {
         console.error('User ID is not available');
         return;
       }
-      if (!content){
+      if (!content) {
         console.error('Bitte geben sie eine Nachricht für den Chat ein');
         return;
       }
