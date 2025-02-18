@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { PublicChatComponent } from '../public-chat.component';
 
 @Component({
   selector: 'app-add-members',
@@ -9,7 +10,11 @@ import { Component, EventEmitter, Output } from '@angular/core';
 })
 export class AddMembersComponent {
   @Output() closeMe: EventEmitter<void> = new EventEmitter();
-  currentChannelName: string = 'Entwicklerchannel'; //change
+  currentChannelName: string = '';
+
+  constructor(public publicChatComponent: PublicChatComponent){
+
+  }
 
   /**
    * Emits a signal to the parent component to close the Add Members Menu
