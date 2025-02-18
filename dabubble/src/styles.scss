@@ -297,3 +297,15 @@ app-public-chat {
     $g: 0px); //gap geändert von 20 auf 0, falls doof aussieht dann eben wieder ändern
   // overflow-y: auto; //verhindert, dass chat-details richtig angezeigt werden kann
 }
+
+app-private-chat {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  // padding: 0 35px;
+  // box-sizing: border-box;
+  @include arrangement($jc: normal,
+    $fd: column,
+    $g: 0px); //gap geändert von 20 auf 0, falls doof aussieht dann eben wieder ändern
+  // overflow-y: auto; //verhindert, dass chat-details richtig angezeigt werden kann
+}
