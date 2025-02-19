@@ -45,11 +45,12 @@ export class ChatComponent implements OnInit {
   userIds!: string[];
   currentChannelName: string = ``;
   currentUserId: string = '';
+  privateChatOtherUserData: any;
 
   /**
-   * Subscribes to the current URL to get the newest Chat-ID
+   * Subscribes to the current URL to get the newest Chat-ID and the User-Id from the logged in User
    */
-  ngOnInit() {
+  async ngOnInit() {
     this.route.queryParams.subscribe((params) => {
       if (params['chatId']) {
         let id = params['chatId'];
@@ -66,22 +67,14 @@ export class ChatComponent implements OnInit {
   }
 
 
-  /**
-   * Retrieves the Chat-Data from the Firebase and extracts the Channel-Name to assign it to a variable
-   * @param id The Chat-Id from the URL
-   */
   async getChannelNameViaId(chatId: string) {
     if (this.chatService.getCurrentRoute() === 'public') {
       this.currentChannelName = await this.chatService.getChannelDocSnapshot(chatId);
     } else {
       let otherUserInPrivateChatId = await this.chatService.getOtherUserNameFromPrivateChat(chatId, this.currentUserId);
-      this.currentChannelName = await this.getCurrentUserNameViaId(otherUserInPrivateChatId);
+      this.privateChatOtherUserData = await this.userDatasService.getSingleUserData(otherUserInPrivateChatId);
+      this.currentChannelName = this.privateChatOtherUserData['username'];
     }
-  }
-
-
-  async getCurrentUserNameViaId(userId: string) {
-    return await this.userDatasService.getUserName(userId);
   }
 
 

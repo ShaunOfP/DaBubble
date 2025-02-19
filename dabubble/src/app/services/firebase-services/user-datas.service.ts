@@ -94,6 +94,18 @@ export class UserDatasService {
     }
   }
 
+
+  async getSingleUserData(userId: string){
+    const userDataSnapshot = await getDoc(doc(this.userDatasRef(), userId));
+    if (userDataSnapshot.exists()){
+      return userDataSnapshot.data();
+    } else {
+      console.error("User doesnt exist in the database");
+      return;
+    }
+  }
+
+
   async saveUser(accountData: UserDatas, userId: string): Promise<void> {
     try {
       const userDocRef = doc(this.userDatasRef(), userId);
@@ -167,7 +179,7 @@ export class UserDatasService {
   }
 
   // Sollte die nicht eher getCurrentUserId heissen?
-  async getCurrentChannelId() {
+  getCurrentChannelId() {
     this.route.queryParams.subscribe((params) => {
       const wholeString = params['userID'];
       const extractedUserID = wholeString.split('/', 1)[0];

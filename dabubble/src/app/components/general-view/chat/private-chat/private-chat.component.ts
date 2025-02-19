@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FilterService } from '../../../../services/component-services/filter.service';
 import { EmojiPickerComponent } from '../../emoji-picker/emoji-picker.component';
 import { MatCardModule } from '@angular/material/card';
+import { ChatComponent } from '../chat.component';
 
 @Component({
   selector: 'app-private-chat',
@@ -26,7 +27,6 @@ export class PrivateChatComponent implements OnInit {
   showPicker: boolean = false;
   showPopoverReaction: number | null = null;
   memberInfoVisible: boolean = false;
-  receiverUserName: string = 'Sarah';
 
   private scrollListener!: () => void;
 
@@ -34,6 +34,7 @@ export class PrivateChatComponent implements OnInit {
     private chatService: ChatService,
     private route: ActivatedRoute,
     private filterService: FilterService,
+    public chatComponent: ChatComponent
   ) { }
 
   ngOnInit(): void {
