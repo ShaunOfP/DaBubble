@@ -11,6 +11,7 @@ import {
   orderBy,
   updateDoc,
   runTransaction,
+  arrayUnion
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { Message } from '../../models/interfaces';
@@ -192,16 +193,15 @@ export class ChatService {
   ) {
     const channelDoc = await getDoc(this.getChannelDocRef(channelId));
     if (channelDoc.exists()) {
-      console.log(channelDoc.data());
-      await updateDoc(this.getChannelDocRef(channelId), {
-        [updatedField]: updateValue,
-      });
+      if (updatedField === 'users'){
+        await updateDoc(this.getChannelDocRef(channelId), {
+          [updatedField]: arrayUnion(updateValue),
+        });
+      } else {
+        await updateDoc(this.getChannelDocRef(channelId), {
+          [updatedField]: updateValue,
+        });
+      }      
     }
   }
-
-  // changeChannel(channelId:string){
-  //   this.currentChatId = channelId
-  //   console.log(this.currentChatId);
-
-  // }
 }

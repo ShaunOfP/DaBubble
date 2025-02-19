@@ -27,17 +27,25 @@ export class ChannelMembersComponent implements OnInit {
 
 
   ngOnInit() {
-    this.userDataService.currentUserData$.subscribe((userDatas) => {
+    this.userDataService.currentUserData$.subscribe((userDatas) => { //hier subscribe nötig?
       this.currentUserData = userDatas;
-      this.addMembers();
+      // this.addMembers();
     });
+    // this.addMembers();
   }
 
 
   addMembers() {
-    // this.publicChatComponent.currentChannelData.users.forEach((member: Member) => {
-    //   this.channelMemberService.selectMember(member);
+    this.publicChatComponent.currentChannelData.users.forEach((member: Member) => {
+      this.channelMemberService.selectMember(member);
+      console.log(member);
+      // sind im selectedMembersSubject im channel-member.service
+    });
+    // this.channelMemberService.selectedMembers$.subscribe((members) => {
+    //   console.log(members);
     // });
+    // console.log(this.channelMemberService.selectedMembers$);
+    // add-members-to-new-channel-component app-all-selected-members angucken
   }
 
 

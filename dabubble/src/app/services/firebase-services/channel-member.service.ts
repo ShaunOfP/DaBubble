@@ -9,8 +9,10 @@ import {
   setDoc,
   updateDoc,
   arrayUnion,
+  getDoc,
 } from '@angular/fire/firestore';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { ChatService } from './chat.service';
 
 export interface Member {
   privateChats: string;
@@ -38,6 +40,7 @@ export class ChannelMemberService {
   channelDescription$ = this.channelDescription.asObservable();
   private isComponentVisibleSource = new BehaviorSubject<boolean>(false);
   isComponentVisible$ = this.isComponentVisibleSource.asObservable();
+
 
   updateComponentStatus(isVisible: boolean) {
     this.isComponentVisibleSource.next(isVisible);
