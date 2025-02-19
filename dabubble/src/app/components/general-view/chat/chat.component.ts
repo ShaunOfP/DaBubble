@@ -44,7 +44,7 @@ export class ChatComponent implements OnInit {
   showGreyScreen: boolean = false;
   userIds!: string[];
   currentChannelName: string = ``;
-
+  currentUserId: string = '';
 
   /**
    * Subscribes to the current URL to get the newest Chat-ID
@@ -54,6 +54,11 @@ export class ChatComponent implements OnInit {
       if (params['chatId']) {
         let id = params['chatId'];
         this.getChannelNameViaId(id);
+      } else {
+        console.error('No chatId found in query parameters');
+      }
+      if (params['userID']) {
+        this.currentUserId = params['userID'];
       } else {
         console.error('No userID found in query parameters');
       }
@@ -65,8 +70,18 @@ export class ChatComponent implements OnInit {
    * Retrieves the Chat-Data from the Firebase and extracts the Channel-Name to assign it to a variable
    * @param id The Chat-Id from the URL
    */
-  async getChannelNameViaId(id: string) {
-    this.currentChannelName = await this.chatService.getChannelDocSnapshot(id);
+  async getChannelNameViaId(chatId: string) {
+    if (this.chatService.getCurrentRoute() === 'public') {
+      this.currentChannelName = await this.chatService.getChannelDocSnapshot(chatId);
+    } else {
+      let otherUserInPrivateChatId = await this.chatService.getOtherUserNameFromPrivateChat(chatId, this.currentUserId);
+      this.currentChannelName = await this.getCurrentUserNameViaId(otherUserInPrivateChatId);
+    }
+  }
+
+
+  async getCurrentUserNameViaId(userId: string) {
+    return await this.userDatasService.getUserName(userId);
   }
 
 

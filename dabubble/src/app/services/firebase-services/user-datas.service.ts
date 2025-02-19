@@ -84,13 +84,13 @@ export class UserDatasService {
       const docRef = doc(this.userDatasRef(), id);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        return docSnap.data()['username'] as string
+        return docSnap.data()['username'] as string;
       }
       else {
-        return ""
+        return "";
       }
     } catch (error) {
-      return 'noUser'
+      return 'noUser';
     }
   }
 
@@ -173,7 +173,6 @@ export class UserDatasService {
       const extractedUserID = wholeString.split('/', 1)[0];
       if (extractedUserID) {
         this.currentUserId = extractedUserID;
-        console.log(this.currentUserId);
       } else {
         console.error('No user ID provided');
       }
