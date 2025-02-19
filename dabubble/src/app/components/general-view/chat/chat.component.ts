@@ -67,6 +67,11 @@ export class ChatComponent implements OnInit {
   }
 
 
+  /**
+   * Takes the chatId-string and returns either the current Name of the Chat or the whole Data for the other User from
+   * a private Chat
+   * @param chatId a string containing the ID of the currently opened Chat
+   */
   async getChannelNameViaId(chatId: string) {
     if (this.chatService.getCurrentRoute() === 'public') {
       this.currentChannelName = await this.chatService.getChannelDocSnapshot(chatId);

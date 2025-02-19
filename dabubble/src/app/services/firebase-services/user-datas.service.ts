@@ -95,6 +95,11 @@ export class UserDatasService {
   }
 
 
+  /**
+   * Takes an id-string and returns the matching Data from the Database
+   * @param userId the id for which the data is searched
+   * @returns The Object with the userData from the Database
+   */
   async getSingleUserData(userId: string){
     const userDataSnapshot = await getDoc(doc(this.userDatasRef(), userId));
     if (userDataSnapshot.exists()){

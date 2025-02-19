@@ -168,11 +168,21 @@ export class ChatService {
   }
 
 
+  /**
+   * Takes the channelId and returns the reference for that document
+   * @param channelId id of the currently opened channel
+   * @returns a document reference of a public Chat
+   */
   getChannelDocRef(channelId: string) {
     return doc(this.firestore, `channels/${channelId}`);
   }
 
 
+  /**
+   * Takes a channelId from the currently opened Public Chat and returns a string
+   * @param channelId a string containing the Id of the currently opened Channel
+   * @returns The channel name for the currently opened Public Chat or a string containing an error message
+   */
   async getChannelDocSnapshot(channelId: string): Promise<string> {
     const channelRef = await getDoc(this.getChannelDocRef(channelId));
     try {
@@ -187,6 +197,12 @@ export class ChatService {
   }
 
 
+  /**
+   * Takes a channelId from the currently opened Private Chat and the UserId and returns a string
+   * @param channelId a string containing the Id of the currently opened Channel
+   * @param currentUserId a string containing the ID of the User which is currently logged in
+   * @returns a string with either the Id of the other User from a Private Chat or the error message
+   */
   async getOtherUserNameFromPrivateChat(channelId: string, currentUserId: string): Promise<string> {
     const privateChatRef = await getDoc(this.getPrivateChatDocRef(channelId));
     if (privateChatRef.exists()) {
@@ -202,6 +218,11 @@ export class ChatService {
   }
 
 
+  /**
+   * Takes the channelId and returns the reference for that document
+   * @param channelId id of the currently opened channel
+   * @returns a document reference of a private Chat
+   */
   getPrivateChatDocRef(channelId: string) {
     return doc(this.firestore, `privateChats/${channelId}`);
   }
