@@ -24,6 +24,7 @@ import { UserDatasService } from './user-datas.service';
 export class ChatService {
   private firestore = inject(Firestore);
   currentChatId: string = ``;
+  currentThreads?: Observable<Message[]>
 
   constructor(private route: ActivatedRoute, private router: Router, private userDataService: UserDatasService) {
     this.getCurrentChatId();
@@ -230,5 +231,16 @@ export class ChatService {
         });
       }
     }
+  }
+
+
+
+async getMessageThread(messageId:string){
+    const thread = query(
+      collection(this.firestore, `channels/${this.currentChatId}/messages/${messageId}/thread`),
+      orderBy('createdAt', 'asc')
+    );
+    this.currentThreads = collectionData(thread, {idField: 'id'}) as Observable<Message[]>
+    this.currentThreads.subscribe(thread => console.log(thread));
   }
 }

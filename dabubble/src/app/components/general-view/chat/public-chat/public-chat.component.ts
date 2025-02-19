@@ -334,7 +334,9 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     this.chatService.updateMessage(emoji, id, this.userDataService.currentUserId)
   }
 
-  openThread(): void {
-    // Logic for opening a thread
+  openThread(messageId:string): void {
+    debugger
+    
+    this.chatService.getMessageThread(messageId)
   }
 }
