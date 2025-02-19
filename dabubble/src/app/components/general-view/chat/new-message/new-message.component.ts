@@ -42,11 +42,14 @@ export class NewMessageComponent implements OnInit {
     document.getElementById('chat-container')?.classList.remove('height-new-message');
   }
 
-  onSearchInput(event: Event): void {
+  async onSearchInput(event: Event): Promise<void> {
     const input = (event.target as HTMLInputElement).value;
     console.log(input);
     if (input.startsWith('#')) {
       console.log('channels', this.channels);
+      this.searchQuery = input;
+      const channels = await this.channelService.searchChannels(input);
+      console.log('Found Channels:', channels);
     } else if (input.startsWith('@')) {
       this.selectedOption = false;  
       this.searchQuery = input;
