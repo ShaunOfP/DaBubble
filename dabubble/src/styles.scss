@@ -120,7 +120,7 @@ h3 {
   align-items: center !important;
   z-index: 11;
 
-  @media (max-width: 700px) {
+  @media (max-width: 800px) {
     top: auto !important;
     bottom: 0 !important;
     left: 0 !important;
@@ -210,7 +210,7 @@ app-emoji-picker {
 ::-webkit-scrollbar {
   width: 7px;
 
-  @media (max-width: 700px) {
+  @media (max-width: 800px) {
     display: none;
   }
 }
@@ -219,7 +219,7 @@ app-emoji-picker {
   background: #f1f1f1;
   border-radius: 30px;
 
-  @media (max-width: 700px) {
+  @media (max-width: 800px) {
     display: none;
   }
 }
@@ -228,7 +228,7 @@ app-emoji-picker {
   background: var(--color-purple-secondary-hover);
   border-radius: 30px;
 
-  @media (max-width: 700px) {
+  @media (max-width: 800px) {
     display: none;
   }
 }
@@ -236,7 +236,7 @@ app-emoji-picker {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-purple-primary-disabled);
 
-  @media (max-width: 700px) {
+  @media (max-width: 800px) {
     display: none;
   }
 }
@@ -263,7 +263,7 @@ app-emoji-picker {
 .mat-drawer-inner-container {
   overflow: visible !important;
 
-  @media (max-width: 700px) {
+  @media (max-width: 800px) {
     @include arrangement($fd: column, $g: 25px, $ai: normal, $jc: normal);
   }
 }
