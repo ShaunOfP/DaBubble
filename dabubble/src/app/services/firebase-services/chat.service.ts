@@ -65,10 +65,12 @@ export class ChatService {
 
   async saveMessage(message: Message) {
     if (this.getCurrentRoute() === 'public') {
-      await addDoc(
+     const newMessage = await addDoc(
         collection(this.firestore, `channels/${this.currentChatId}/messages`),
         message
       );
+      this.generateThread(newMessage.id, message)
+    
     }
     if (this.getCurrentRoute() === 'private') {
       await addDoc(
@@ -78,6 +80,12 @@ export class ChatService {
     }
   }
 
+  async generateThread(messageId:string, message:Message){
+    await addDoc(collection(this.firestore, `channels/${this.currentChatId}/messages/${messageId}/thread`),
+    message)
+    console.log('thread erfolgreich in Message mit ID:' + messageId + ' erstellt');
+    
+  }
 
   /**
    * Helper function to determine the current route
@@ -97,47 +105,30 @@ export class ChatService {
 
   async updateMessage(emoji: string, messageId: string, userId: string) {
     const messageRef = doc(this.firestore, `channels/${this.currentChatId}/messages/${messageId}`);
-
     try {
       await runTransaction(this.firestore, async (transaction) => {
-        // Aktuellen Stand des Dokuments abrufen
         const messageSnap = await transaction.get(messageRef);
         if (!messageSnap.exists()) {
           throw new Error("Das Dokument existiert nicht!");
         }
-
-        // Daten aus dem Dokument lesen
         const data = messageSnap.data();
         const reaction = data?.['reaction'] || {};
-
-        // Liste aller User-IDs für das übergebene Emoji ermitteln (oder leeres Array)
         const currentUsers = reaction[emoji] || [];
         const userIndex = currentUsers.indexOf(userId);
-
         if (userIndex === -1) {
-          // User war noch nicht in der Liste -> hinzufügen
           currentUsers.push(userId);
           reaction[emoji] = currentUsers;
         } else {
-          // User ist schon in der Liste -> entfernen
           currentUsers.splice(userIndex, 1);
           if (currentUsers.length > 0) {
             reaction[emoji] = currentUsers;
           } else {
-            // Keine User mehr für dieses Emoji -> Emoji-Key entfernen
             delete reaction[emoji];
           }
         }
-
-        // Aktualisierte Daten zurückschreiben
         transaction.update(messageRef, { reaction });
       });
-
-      // Optional: Hier kannst du eine Erfolgsmeldung oder weitere Aktionen einbauen
-      console.log("Reaction erfolgreich aktualisiert.");
-
     } catch (error) {
-      // Fehlerbehandlung
       console.error("Fehler beim Aktualisieren der Reaction:", error);
     }
   }
