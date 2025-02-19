@@ -9,7 +9,7 @@
         </mat-card-header>
         <mat-card-content>
             <div class="card-image-container">
-                <img src="{{ chatComponent.privateChatOtherUserData.avatar }}">
+                <img src="{{ chatComponent.privateChatOtherUserData?.avatar }}">
             </div>
             <div class="middle-container-upper">
                 <span class="cursor-no-change">{{ chatComponent.currentChannelName }}</span>
@@ -22,7 +22,7 @@
                 <img src="/img/public/mail-black.svg">
                 <div>
                     <span class="cursor-no-change">E-Mail-Adresse</span>
-                    <a class="cursor-no-change">{{ chatComponent.privateChatOtherUserData.mail }}</a>
+                    <a class="cursor-no-change">{{ chatComponent.privateChatOtherUserData?.mail }}</a>
                 </div>
             </div>
         </mat-card-content>
@@ -36,7 +36,7 @@
 </div>
 <header>
     <div (click)="showMemberInfo()">
-        <img src="{{ chatComponent.privateChatOtherUserData.avatar }}">
+        <img src="{{ chatComponent.privateChatOtherUserData?.avatar }}">
         <span>{{ chatComponent.currentChannelName }}</span>
     </div>
 </header>
