@@ -315,6 +315,7 @@ header {
  display: flex;
  gap: 10px;
  flex-wrap: wrap;
+ align-items: center;
  >div{
   border-radius: 20px;
   border: 1px solid #ADB0D9;
@@ -322,6 +323,11 @@ header {
   position: relative;
   .message-reactions_btn{
     cursor: pointer;
+    display: flex;
+    gap: 8px;
+    >img{
+      width: 18px;
+    }
   }
   .message-reactions_popover{
     position: absolute;
