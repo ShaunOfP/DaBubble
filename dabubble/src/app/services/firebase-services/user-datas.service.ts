@@ -54,7 +54,7 @@ export class UserDatasService {
   public currentUserData$: Observable<UserObserver | null> =
     this.currentUserDataSubject.asObservable();
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute) {}
 
   async getUserDataById(): Promise<void> {
     this.route.queryParams.pipe().subscribe(async (params) => {
@@ -82,34 +82,39 @@ export class UserDatasService {
   async getUserName(id: string): Promise<string> {
     try {
       const docRef = doc(this.userDatasRef(), id);
-      const docSnap = await getDoc(docRef);
+      const guestDocRef = doc(this.guestDatasRef(), id);
+
+      const [docSnap, guestSnap] = await Promise.all([
+        getDoc(docRef),
+        getDoc(guestDocRef),
+      ]);
+
       if (docSnap.exists()) {
         return docSnap.data()['username'] as string;
-      }
-      else {
-        return "";
+      } else if (guestSnap.exists()) {
+        return guestSnap.data()['username'] as string;
+      } else {
+        return '';
       }
     } catch (error) {
       return 'noUser';
     }
   }
 
-
   /**
    * Takes an id-string and returns the matching Data from the Database
    * @param userId the id for which the data is searched
    * @returns The Object with the userData from the Database
    */
-  async getSingleUserData(userId: string){
+  async getSingleUserData(userId: string) {
     const userDataSnapshot = await getDoc(doc(this.userDatasRef(), userId));
-    if (userDataSnapshot.exists()){
+    if (userDataSnapshot.exists()) {
       return userDataSnapshot.data();
     } else {
-      console.error("User doesnt exist in the database");
+      console.error('User doesnt exist in the database');
       return;
     }
   }
-
 
   async saveUser(accountData: UserDatas, userId: string): Promise<void> {
     try {
