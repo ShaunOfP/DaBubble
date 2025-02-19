@@ -5,7 +5,7 @@ mat-drawer-container {
   @include arrangement($ai: normal, $jc: normal);
   background-color: transparent;
 
-  @media (max-width: 700px) {
+  @media (max-width: 800px) {
     height: calc(100vh - 100px);
     margin: 0 !important;
   }
@@ -21,7 +21,7 @@ mat-drawer {
   z-index: 1 !important;
   overflow: visible !important;
 
-  @media (max-width: 700px) {
+  @media (max-width: 800px) {
     width: 100vw;
     border-radius: 0;
     box-sizing: border-box;
@@ -33,7 +33,7 @@ app-workspace-state-toggle-button {
   left: 0;
   bottom: 127px;
 
-  @media (max-width: 700px) {
+  @media (max-width: 800px) {
     display: none;
   }
 }

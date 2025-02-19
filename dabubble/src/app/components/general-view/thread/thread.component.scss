@@ -11,7 +11,7 @@ mat-drawer-container {
     background-color: transparent;
     height: calc(100vh - 130px);
 
-    @media (max-width: 700px) {
+    @media (max-width: 800px) {
         height: calc(100vh - 100px);
         margin: 0 !important;
     }
@@ -23,7 +23,7 @@ mat-drawer {
     border-radius: 30px !important;
     border: none;
 
-    @media (max-width: 700px) {
+    @media (max-width: 800px) {
         width: 100%;
         border-radius: 0 !important;
     }
@@ -39,7 +39,7 @@ header {
         @include arrangement($g: 5px);
     }
 
-    @media (max-width: 700px) {
+    @media (max-width: 800px) {
         padding: 10px 16px;
     }
 }
@@ -73,7 +73,7 @@ h3 {
     @include arrangement($ai: normal, $jc: normal, $fd: column, $g: 25px);
     height: calc(100% - 104px);
 
-    @media (max-width: 700px) {
+    @media (max-width: 800px) {
         height: 100%;
     }
 }
@@ -89,7 +89,7 @@ h3 {
     padding: 0 20px 40px 20px;
     @include arrangement($ai: normal, $jc: normal, $fd: column);
 
-    @media (max-width: 700px) {
+    @media (max-width: 800px) {
         padding: 0 16px 30px 16px;
     }
 }
@@ -119,7 +119,7 @@ textarea {
         @include arrangement();
     }
 
-    @media (max-width: 700px) {
+    @media (max-width: 800px) {
         width: auto;
         bottom: 40px;
         right: 40px;
