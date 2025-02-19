@@ -41,11 +41,6 @@ export class ChatService {
     });
   }
 
-
-  getChatRef() {
-    return collection(this.firestore, 'chat');
-  }
-
   getMessages(): Observable<Message[]> {
     let currentRoute: string = '';
     if (this.getCurrentRoute() === 'public') {
@@ -70,7 +65,6 @@ export class ChatService {
         message
       );
       this.generateThread(newMessage.id, message)
-    
     }
     if (this.getCurrentRoute() === 'private') {
       await addDoc(
@@ -83,7 +77,7 @@ export class ChatService {
   async generateThread(messageId:string, message:Message){
     await addDoc(collection(this.firestore, `channels/${this.currentChatId}/messages/${messageId}/thread`),
     message)
-    console.log('thread erfolgreich in Message mit ID:' + messageId + ' erstellt');
+    console.log('thread erfolgreich in Message:' + messageId + ' erstellt');
     
   }
 
