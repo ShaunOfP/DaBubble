@@ -112,7 +112,7 @@ export class ChatDetailsComponent {
 
   submitNewDescription(ngForm: NgForm) {
     if (ngForm.touched && ngForm.valid) {
-      this.chatService.updateChatInformation(this.currentChannelId, 'channelDescription', this.newDescriptionInput)
+      this.chatService.updateChatInformation(this.currentChannelId, 'description', this.newDescriptionInput)
         .then(() => {
           this.showChannelDescriptionContainer();
         });
