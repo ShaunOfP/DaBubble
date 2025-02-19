@@ -12,7 +12,7 @@
                 <img src="/img/general-view/create-avatar/avatar3.svg"><!--Placeholder Image-->
             </div>
             <div class="middle-container-upper">
-                <span class="cursor-no-change">Username</span><!--Placeholder Name-->
+                <span class="cursor-no-change">{{ receiverUserName }}</span><!--Placeholder Name-->
                 <div>
                     <div class="active-circle"></div><!--Placeholder Image-->
                     <span class="active-font cursor-no-change">Aktiv</span><!--Placeholder Status und Color-->
@@ -37,7 +37,7 @@
 <header>
     <div (click)="showMemberInfo()">
         <img src="/img/general-view/create-avatar/avatar3.svg"><!--Placeholder Image-->
-        <span>Sarah</span><!--Placeholder Name-->
+        <span>{{ receiverUserName }}</span><!--Placeholder Name-->
     </div>
 </header>
 <div #chatContainer class="all-chat-container">

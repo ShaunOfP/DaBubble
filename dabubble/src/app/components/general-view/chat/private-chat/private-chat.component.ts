@@ -26,6 +26,7 @@ export class PrivateChatComponent implements OnInit {
   showPicker: boolean = false;
   showPopoverReaction: number | null = null;
   memberInfoVisible: boolean = false;
+  receiverUserName: string = 'Sarah';
 
   private scrollListener!: () => void;
 

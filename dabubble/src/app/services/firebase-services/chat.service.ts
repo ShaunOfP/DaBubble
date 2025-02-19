@@ -16,6 +16,7 @@ import {
 import { Observable } from 'rxjs';
 import { Message } from '../../models/interfaces';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UserDatasService } from './user-datas.service';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +25,7 @@ export class ChatService {
   private firestore = inject(Firestore);
   currentChatId: string = ``;
 
-  constructor(private route: ActivatedRoute, private router: Router) {
+  constructor(private route: ActivatedRoute, private router: Router, private userDataService: UserDatasService) {
     this.getCurrentChatId();
   }
 
@@ -35,7 +36,7 @@ export class ChatService {
         this.currentChatId = params['chatId'];
         console.log(this.currentChatId);
       } else {
-        console.error('No userID found in query parameters');
+        console.error('No chatId found in query parameters');
       }
     });
   }
@@ -186,6 +187,26 @@ export class ChatService {
   }
 
 
+  async getOtherUserNameFromPrivateChat(channelId: string, currentUserId: string): Promise<string> {
+    const privateChatRef = await getDoc(this.getPrivateChatDocRef(channelId));
+    if (privateChatRef.exists()) {
+      if (privateChatRef.data()['participants'].length < 1) return 'There are no users in this channel';
+      let otherPrivateChatUser;
+      for (const user of privateChatRef.data()['participants']){
+        if (user != currentUserId){
+          otherPrivateChatUser = user;
+        }
+      }
+      return otherPrivateChatUser;
+    } else return 'Private Chat doesnt exist';
+  }
+
+
+  getPrivateChatDocRef(channelId: string) {
+    return doc(this.firestore, `privateChats/${channelId}`);
+  }
+
+
   async updateChatInformation(
     channelId: string,
     updatedField: string,
@@ -193,7 +214,7 @@ export class ChatService {
   ) {
     const channelDoc = await getDoc(this.getChannelDocRef(channelId));
     if (channelDoc.exists()) {
-      if (updatedField === 'users'){
+      if (updatedField === 'users') {
         await updateDoc(this.getChannelDocRef(channelId), {
           [updatedField]: arrayUnion(updateValue),
         });
@@ -201,7 +222,7 @@ export class ChatService {
         await updateDoc(this.getChannelDocRef(channelId), {
           [updatedField]: updateValue,
         });
-      }      
+      }
     }
   }
 }
