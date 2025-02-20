@@ -51,8 +51,7 @@ export class WorkspaceMenuComponent implements OnInit {
 
   ngOnInit() {
     this.userDatasService.currentUserData$.subscribe((userDatas) => {
-      // Das ist null wenn der Gast eingeloggt ist
-      if (!userDatas == null) {
+      if (!this.userDatasService.checkIfGuestIsLoggedIn()) {
         this.workspaceUserData = userDatas;
         this.fetchUserData();
       } else {
