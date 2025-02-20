@@ -124,7 +124,7 @@ export class ChatComponent implements OnInit {
 
   async sendMessage(content: string): Promise<void> {
     if (!this.userDatasService.currentUserId || !content) {
-      this.userDatasService.getCurrentChannelId();
+      this.userDatasService.getCurrentUserId();
 
       if (!this.userDatasService.currentUserId) {
         console.error('User ID is not available');

@@ -3,23 +3,14 @@ import { inject } from '@angular/core';
 import {
   Firestore,
   collection,
-  collectionData,
   setDoc,
-  getDocs,
-  where,
-  query,
   doc,
   updateDoc,
   getDoc,
-  addDoc,
-  docData,
-  onSnapshot,
 } from '@angular/fire/firestore';
-import { Observable, BehaviorSubject, Subject, map, take } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { UserDatas } from './../../models/user.class';
-import { user } from '@angular/fire/auth';
 import { GuestDatas } from '../../models/guest.class';
-import { initializeApp } from '@angular/fire/app';
 import { ActivatedRoute } from '@angular/router';
 
 interface SingleUserData {
@@ -54,7 +45,7 @@ export class UserDatasService {
   public currentUserData$: Observable<UserObserver | null> =
     this.currentUserDataSubject.asObservable();
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute) { }
 
   async getUserDataById(): Promise<void> {
     this.route.queryParams.pipe().subscribe(async (params) => {
@@ -79,6 +70,7 @@ export class UserDatasService {
     });
   }
 
+
   async getUserName(id: string): Promise<string> {
     try {
       const docRef = doc(this.userDatasRef(), id);
@@ -101,6 +93,31 @@ export class UserDatasService {
     }
   }
 
+
+  guestDatasRef() {
+    return collection(this.firestore, 'guestDatas');
+  }
+
+
+  async saveGuest(accountData: GuestDatas, userId: string): Promise<void> {
+    try {
+      const guestDocRef = doc(this.guestDatasRef(), userId);
+
+      const guestData = {
+        username: accountData.username,
+        avatar: accountData.avatar,
+        channels: accountData.channels,
+        privateChats: accountData.privateChats,
+      };
+      await setDoc(guestDocRef, guestData);
+
+      console.log('✅ Gast erfolgreich gespeichert:', guestData);
+    } catch (error) {
+      console.error('❌ Fehler beim Speichern des Gastes:', error);
+    }
+  }
+
+
   /**
    * Takes an id-string and returns the matching Data from the Database
    * @param userId the id for which the data is searched
@@ -115,6 +132,7 @@ export class UserDatasService {
       return;
     }
   }
+
 
   async saveUser(accountData: UserDatas, userId: string): Promise<void> {
     try {
@@ -139,23 +157,6 @@ export class UserDatasService {
     }
   }
 
-  async saveGuest(accountData: GuestDatas, userId: string): Promise<void> {
-    try {
-      const guestDocRef = doc(this.guestDatasRef(), userId);
-
-      const guestData = {
-        username: accountData.username,
-        avatar: accountData.avatar,
-        channels: accountData.channels,
-        privateChats: accountData.privateChats,
-      };
-      await setDoc(guestDocRef, guestData);
-
-      console.log('✅ Gast erfolgreich gespeichert:', guestData);
-    } catch (error) {
-      console.error('❌ Fehler beim Speichern des Gastes:', error);
-    }
-  }
 
   async createPrivateChat(userId: string) {
     const generatedId = this.generateRandomId();
@@ -167,6 +168,7 @@ export class UserDatasService {
     await setDoc(userDocRef, chatData);
     return generatedId;
   }
+
 
   generateRandomId() {
     const array = new Uint8Array(22);
@@ -180,16 +182,13 @@ export class UserDatasService {
     return generatedRandomId;
   }
 
+
   userDatasRef() {
     return collection(this.firestore, 'userDatas');
   }
 
-  guestDatasRef() {
-    return collection(this.firestore, 'guestDatas');
-  }
 
-  // Sollte die nicht eher getCurrentUserId heissen?
-  getCurrentChannelId() {
+  getCurrentUserId() {
     this.route.queryParams.subscribe((params) => {
       const wholeString = params['userID'];
       const extractedUserID = wholeString.split('/', 1)[0];
@@ -200,6 +199,7 @@ export class UserDatasService {
       }
     });
   }
+
 
   async updateUserData(userId: string, newUserName: string) {
     try {
@@ -213,6 +213,7 @@ export class UserDatasService {
     }
   }
 
+
   async getChannelNames(channelId: string) {
     const docRef = doc(this.firestore, `channels/${channelId}`);
     const docSnapshot = await getDoc(docRef);
@@ -223,6 +224,7 @@ export class UserDatasService {
       return undefined;
     }
   }
+
 
   async getPrivateChannel(userId: string) {
     const userDocRef = doc(this.firestore, `userDatas/${userId}`);

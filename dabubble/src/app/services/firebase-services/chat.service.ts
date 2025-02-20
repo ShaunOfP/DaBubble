@@ -11,7 +11,7 @@ import {
   orderBy,
   updateDoc,
   runTransaction,
-  arrayUnion
+  arrayUnion,
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { Message } from '../../models/interfaces';
@@ -26,7 +26,9 @@ export class ChatService {
   currentChatId: string = ``;
   currentThreads?: Observable<Message[]>
 
-  constructor(private route: ActivatedRoute, private router: Router, private userDataService: UserDatasService) {
+  constructor(private route: ActivatedRoute,
+    private router: Router,
+  ) {
     this.getCurrentChatId();
   }
 
@@ -41,6 +43,7 @@ export class ChatService {
       }
     });
   }
+
 
   getMessages(): Observable<Message[]> {
     let currentRoute: string = '';
@@ -59,9 +62,10 @@ export class ChatService {
     >;
   }
 
+
   async saveMessage(message: Message) {
     if (this.getCurrentRoute() === 'public') {
-     const newMessage = await addDoc(
+      const newMessage = await addDoc(
         collection(this.firestore, `channels/${this.currentChatId}/messages`),
         message
       );
@@ -75,12 +79,14 @@ export class ChatService {
     }
   }
 
-  async generateThread(messageId:string, message:Message){
+
+  async generateThread(messageId: string, message: Message) {
     await addDoc(collection(this.firestore, `channels/${this.currentChatId}/messages/${messageId}/thread`),
-    message)
+      message)
     console.log('thread erfolgreich in Message:' + messageId + ' erstellt');
-    
+
   }
+
 
   /**
    * Helper function to determine the current route
@@ -194,8 +200,8 @@ export class ChatService {
     if (privateChatRef.exists()) {
       if (privateChatRef.data()['participants'].length < 1) return 'There are no users in this channel';
       let otherPrivateChatUser;
-      for (const user of privateChatRef.data()['participants']){
-        if (user != currentUserId){
+      for (const user of privateChatRef.data()['participants']) {
+        if (user != currentUserId) {
           otherPrivateChatUser = user;
         }
       }
@@ -234,13 +240,12 @@ export class ChatService {
   }
 
 
-
-async getMessageThread(messageId:string){
+  async getMessageThread(messageId: string) {
     const thread = query(
       collection(this.firestore, `channels/${this.currentChatId}/messages/${messageId}/thread`),
       orderBy('createdAt', 'asc')
     );
-    this.currentThreads = collectionData(thread, {idField: 'id'}) as Observable<Message[]>
+    this.currentThreads = collectionData(thread, { idField: 'id' }) as Observable<Message[]>
     this.currentThreads.subscribe(thread => console.log(thread));
   }
 }
