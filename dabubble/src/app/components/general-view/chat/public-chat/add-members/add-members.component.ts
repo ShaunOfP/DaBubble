@@ -100,22 +100,26 @@ export class AddMembersComponent {
   }
 
 
-  onSubmit(){
-    this.addSelectedMembersToExistingChannel();
-    setTimeout(() => {
-      this.closeAddMembersMenu();
-    }, 2000);
+  onSubmit() {
+    if (!this.userDataService.checkIfGuestIsLoggedIn()) {
+      this.addSelectedMembersToExistingChannel();
+      setTimeout(() => {
+        this.closeAddMembersMenu();
+      }, 2000);
+    } else {
+      console.warn("Log in to add Members to a Public Channel");
+    }
   }
 
 
-  getCurrentChatId(): string{
+  getCurrentChatId(): string {
     return this.chatSerivce.currentChatId;
   }
 
 
   addSelectedMembersToExistingChannel() {
     const channelId = this.getCurrentChatId();
-    if (this.selectedMembers.length > 0){
+    if (this.selectedMembers.length > 0) {
       this.selectedMembers.forEach(selectedMember => {
         this.chatSerivce.updateChatInformation(channelId, 'users', selectedMember.id);
       });

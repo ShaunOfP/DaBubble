@@ -53,7 +53,11 @@ export class ChannelMembersComponent implements OnInit {
    * Emits a signal to the parent component to open the Add Members Menu
    */
   openAddMembersMenu() {
-    this.openAddMembers.emit();
+    if (!this.userDataService.checkIfGuestIsLoggedIn()){
+      this.openAddMembers.emit();
+    } else {
+      console.warn("Log in to add Members to a Public Channel");
+    }
   }
 
 

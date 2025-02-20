@@ -1,9 +1,6 @@
 <div class="app-wrapper">
   <div class="login-header">
-    <div
-      [ngClass]="{ 'header-animation': !animationPlayed }"
-      class="login-header-logo"
-    >
+    <div [ngClass]="{ 'header-animation': !animationPlayed }" class="login-header-logo">
       <img src="/img/general-view/workspace-menu/Logo.svg" alt="Logo" />
       <h1>DABubble</h1>
       <div class="header-logo-overlay"></div>
@@ -26,11 +23,7 @@
   </div>
 
   <div [ngClass]="{ 'd-none': animationPlayed }" class="overlay"></div>
-  <div
-    [ngClass]="{ 'd-none': animationPlayed }"
-    class="overlay"
-    class="logo-wrapper"
-  >
+  <div [ngClass]="{ 'd-none': animationPlayed }" class="overlay" class="logo-wrapper">
     <img src="/img/general-view/workspace-menu/Logo.svg" alt="Logo" />
     <div class="animated-text">
       <p>DABubble</p>
@@ -41,22 +34,15 @@
     <mat-card>
       <div class="card-header">
         <h2>Anmeldung</h2>
-        <span
-          >Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der
-          Arbeit verwendest.</span
-        >
+        <span>Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der
+          Arbeit verwendest.</span>
       </div>
 
       <div class="login-input">
         <div class="input-field">
           <img src="/img/public/mail.svg" alt="" />
-          <input
-            type="email"
-            placeholder="beispielname@email.com"
-            formControlName="email"
-            pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
-            required
-          />
+          <input type="email" placeholder="beispielname@email.com" formControlName="email"
+            pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}" required />
         </div>
 
         <div class="error-message">
@@ -65,13 +51,7 @@
 
         <div class="input-field">
           <img src="/img/public/password-lock.svg" alt="" />
-          <input
-            type="password"
-            placeholder="Passwort"
-            formControlName="password"
-            minlength="6"
-            req
-          />
+          <input type="password" placeholder="Passwort" formControlName="password" minlength="6" req />
         </div>
 
         <div class="error-message">
@@ -96,11 +76,7 @@
 
       <div class="login-button">
         <button class="btn-primary--default" type="submit">Anmelden</button>
-        <button
-          class="btn-secondary--default"
-          type="button"
-          (click)="guestLogIn()"
-        >
+        <button class="btn-secondary--default" type="button" (click)="guestLogIn()">
           Gäste-Login
         </button>
       </div>

@@ -43,24 +43,33 @@ export class WorkspaceMenuComponent implements OnInit {
 
   constructor(
     public userDatasService: UserDatasService,
-    private channelService: ChannelMemberService,
+    private channelMemberService: ChannelMemberService,
     private router: Router,
     private route: ActivatedRoute,
     private cd: ChangeDetectorRef,
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.userDatasService.currentUserData$.subscribe((userDatas) => {
-      this.workspaceUserData = userDatas;
-      this.fetchUserData();
+      // Das ist null wenn der Gast eingeloggt ist
+      if (!userDatas == null) {
+        this.workspaceUserData = userDatas;
+        this.fetchUserData();
+      } else {
+        //Lädt nur den Entwicklerchannel wenn Gast eingeloggt ist
+        this.fetchChannelNames(['ER84UOYc0F2jptDjWxFo']);
+      }
     });
-    this.subscribeAllMembers();
+    if (!this.userDatasService.checkIfGuestIsLoggedIn()) {
+      this.subscribeAllMembers();
+    }
   }
 
+
   async subscribeAllMembers() {
-    await this.channelService.selectAllMembers();
+    await this.channelMemberService.selectAllMembers();
     console.log(this.workspaceUserData);
-    this.channelService.allMembersSubject$.subscribe((allUsers) => {
+    this.channelMemberService.allMembersSubject$.subscribe((allUsers) => {
       this.allUsers = allUsers.filter(
         (user) =>
           user.privateChats[0] !== this.workspaceUserData?.privateChats[0]
@@ -98,16 +107,24 @@ export class WorkspaceMenuComponent implements OnInit {
   }
 
   openCreateChannelOverlay() {
-    this.openCreateChannel.emit();
+    if (!this.userDatasService.checkIfGuestIsLoggedIn()){
+      this.openCreateChannel.emit();
+    } else {
+      console.warn("Log in to create Channels");
+    }    
   }
 
   openNewMessage() {
-    this.route.queryParams.subscribe((params) => {
-      const userID = params['userID'];
-      this.router.navigate(['/general/new-message'], {
-        queryParams: { userID: userID },
+    if (!this.userDatasService.checkIfGuestIsLoggedIn()){
+      this.route.queryParams.subscribe((params) => {
+        const userID = params['userID'];
+        this.router.navigate(['/general/new-message'], {
+          queryParams: { userID: userID },
+        });
       });
-    });
+    } else {
+      console.warn("Log in to send Private Messages");
+    }    
   }
 
   readonly channelOpenState = signal(false);

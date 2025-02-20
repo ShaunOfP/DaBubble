@@ -63,9 +63,14 @@ export class UserDatasService {
       } else if (guestDoc.exists()) {
         const userData = guestDoc.data() as UserObserver;
         this.currentUserDataSubject.next(userData);
+        this.currentUserId = 'guest';
       } else {
-        console.error('User not found');
-        this.currentUserDataSubject.next(null);
+        if (userID === 'guest') {
+          this.currentUserId = 'guest';
+        } else {
+          console.error('User not found');
+          this.currentUserDataSubject.next(null);
+        }
       }
     });
   }
@@ -86,7 +91,9 @@ export class UserDatasService {
       } else if (guestSnap.exists()) {
         return guestSnap.data()['username'] as string;
       } else {
-        return '';
+        if (this.checkIfGuestIsLoggedIn()) {
+          return 'Guest';
+        } else return '';
       }
     } catch (error) {
       return 'noUser';
@@ -188,10 +195,20 @@ export class UserDatasService {
   }
 
 
+  checkIfGuestIsLoggedIn(): boolean {
+    this.getCurrentUserId();
+    return this.currentUserId === 'guest' ? true : false;
+  }
+
+
   getCurrentUserId() {
     this.route.queryParams.subscribe((params) => {
       if (params['userID']) {
-        this.currentUserId = params['userID']
+        if (params['userID'] != 'guest') {
+          this.currentUserId = params['userID'];
+        } else {
+          this.currentUserId = 'guest';
+        }
       } else {
         console.error("No user ID provided");
       }

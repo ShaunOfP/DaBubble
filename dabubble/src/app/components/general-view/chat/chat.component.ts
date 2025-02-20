@@ -59,7 +59,11 @@ export class ChatComponent implements OnInit {
         console.error('No chatId found in query parameters');
       }
       if (params['userID']) {
-        this.currentUserId = params['userID'];
+        if (params['userID'] === 'guest') {
+          this.currentUserId = 'guest';
+        } else {
+          this.currentUserId = params['userID'];
+        }
       } else {
         console.error('No userID found in query parameters');
       }
@@ -69,16 +73,20 @@ export class ChatComponent implements OnInit {
 
   /**
    * Takes the chatId-string and returns either the current Name of the Chat or the whole Data for the other User from
-   * a private Chat
+   * a private Chat. If the Guest is logged in the Name is hardcoded because it can't be changed.
    * @param chatId a string containing the ID of the currently opened Chat
    */
   async getChannelNameViaId(chatId: string) {
-    if (this.chatService.getCurrentRoute() === 'public') {
-      this.currentChannelName = await this.chatService.getChannelDocSnapshot(chatId);
+    if (this.userDatasService.checkIfGuestIsLoggedIn()) {
+      this.currentChannelName = `Entwicklerchannel`;
     } else {
-      let otherUserInPrivateChatId = await this.chatService.getOtherUserNameFromPrivateChat(chatId, this.currentUserId);
-      this.privateChatOtherUserData = await this.userDatasService.getSingleUserData(otherUserInPrivateChatId);
-      this.currentChannelName = this.privateChatOtherUserData['username'];
+      if (this.chatService.getCurrentRoute() === 'public') {
+        this.currentChannelName = await this.chatService.getChannelDocSnapshot(chatId);
+      } else {
+        let otherUserInPrivateChatId = await this.chatService.getOtherUserNameFromPrivateChat(chatId, this.currentUserId);
+        this.privateChatOtherUserData = await this.userDatasService.getSingleUserData(otherUserInPrivateChatId);
+        this.currentChannelName = this.privateChatOtherUserData['username'];
+      }
     }
   }
 

@@ -66,8 +66,12 @@ export class ChatDetailsComponent {
   }
 
   openNewChannelInput() {
-    this.toggleNewChannelNameInputVisibility();
-    this.toggleChannelNameContainerVisibility();
+    if (!this.userDataService.checkIfGuestIsLoggedIn()) {
+      this.toggleNewChannelNameInputVisibility();
+      this.toggleChannelNameContainerVisibility();
+    } else {
+      console.warn("Log in to Edit the Channel Name");
+    }
   }
 
   showChannelNameContainer() {
@@ -76,8 +80,12 @@ export class ChatDetailsComponent {
   }
 
   openDesciptionEdit() {
-    this.toggleChannelDescriptionVisibility();
-    this.toggleNewChannelDescriptionVisibility();
+    if (!this.userDataService.checkIfGuestIsLoggedIn()) {
+      this.toggleChannelDescriptionVisibility();
+      this.toggleNewChannelDescriptionVisibility();
+    } else {
+      console.warn("Log in to Edit the Channel Description");
+    }
   }
 
   showChannelDescriptionContainer() {
@@ -120,8 +128,11 @@ export class ChatDetailsComponent {
   }
 
   leaveChannel() {
-    //logic for leaving the channel
+    if (!this.userDataService.checkIfGuestIsLoggedIn()){
+      //logic for leaving the channel
+      console.log("Channel Verlassen ist noch nicht implementiert");
+    } else {
+      console.warn("Log in to Leave the Channel");
+    }
   }
-
-
 }
