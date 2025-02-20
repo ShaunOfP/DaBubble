@@ -16,9 +16,11 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 export interface Channel {
-  id: string;
-  name: string;
-  description?: string;
+  channelId: string;
+  channelName: string;
+  createdAt: string;
+  description: string;
+  owner: string;
 }
 
 @Injectable({
@@ -31,10 +33,10 @@ export class ChannelService {
 
   constructor(private firestore: Firestore) {
     this.channelsCollection = collection(this.firestore, 'channels') as CollectionReference<Channel>;
-    this.channels$ = collectionData(this.channelsCollection, { idField: 'id' }).pipe(
+    this.channels$ = collectionData(this.channelsCollection, { idField: 'channelId' }).pipe(
       map(actions => actions.map(a => {
-        const { id, ...data } = a;
-        return { id, ...data } as Channel;
+        const { channelId, ...data } = a;
+        return { channelId, ...data } as Channel;
       }))
     );
   }
@@ -44,7 +46,7 @@ export class ChannelService {
   }
 
   channelDataRef(): CollectionReference<Channel> {
-    return this.channelsCollection;
+    return collection(this.firestore, 'channels') as CollectionReference<Channel>;
   }
 
   async getChannelById(id: string): Promise<Channel | undefined> {
@@ -52,14 +54,14 @@ export class ChannelService {
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       const data = docSnap.data() as Channel;
-      return { ...data, id: docSnap.id };
+      return { ...data, channelId: docSnap.id };
     } else {
       return undefined;
     }
   }
 
   async addChannel(channel: Channel): Promise<void> {
-    const docRef = doc(this.channelsCollection, channel.id);
+    const docRef = doc(this.channelsCollection, channel.channelId);
     await setDoc(docRef, channel);
   }
 
@@ -69,8 +71,8 @@ export class ChannelService {
   }
 
   async searchChannels(queryString: string): Promise<Channel[]> {
-    const cleanedQuery = queryString.startsWith('#') ? queryString.substring(1) : queryString;
-    const normalizedQuery = cleanedQuery.toLowerCase();
+    const normalizedQuery = queryString.startsWith('#') ? queryString.substring(1) : queryString;
+    /* const normalizedQuery = cleanedQuery.toLowerCase(); */
     console.log('Normalized Query:', normalizedQuery);
     const channelQuery = query(
       this.channelDataRef(),
@@ -82,7 +84,9 @@ export class ChannelService {
       const querySnapshot = await getDocs(channelQuery);
       const channels: Channel[] = [];
       querySnapshot.forEach((doc) => {
-        channels.push({ ...(doc.data() as Channel), id: doc.id });
+        const channel = {...(doc.data() as Channel), channelId: doc.id};
+        channels.push(channel);
+        console.log('found channel:', channel.channelName);
       });
       console.log(channels);  
       this.channelSubject.next(channels);

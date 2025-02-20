@@ -49,7 +49,6 @@ export class NewMessageComponent implements OnInit {
       console.log('channels', this.channels);
       this.searchQuery = input;
       const channels = await this.channelService.searchChannels(input);
-      console.log('Found Channels:', channels);
     } else if (input.startsWith('@')) {
       this.selectedOption = false;  
       this.searchQuery = input;
