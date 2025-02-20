@@ -190,12 +190,10 @@ export class UserDatasService {
 
   getCurrentUserId() {
     this.route.queryParams.subscribe((params) => {
-      const wholeString = params['userID'];
-      const extractedUserID = wholeString.split('/', 1)[0];
-      if (extractedUserID) {
-        this.currentUserId = extractedUserID;
+      if (params['userID']) {
+        this.currentUserId = params['userID']
       } else {
-        console.error('No user ID provided');
+        console.error("No user ID provided");
       }
     });
   }
