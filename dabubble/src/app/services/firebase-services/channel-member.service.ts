@@ -9,10 +9,8 @@ import {
   setDoc,
   updateDoc,
   arrayUnion,
-  getDoc,
 } from '@angular/fire/firestore';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { ChatService } from './chat.service';
 
 export interface Member {
   privateChats: string;
@@ -228,5 +226,20 @@ export class ChannelMemberService {
     } catch (error) {
       console.error('Error adding channel to members:', error);
     }
+  }
+
+
+  /**
+   * Updates the Database to remove the current User from the Public Channel
+   * @param userId a string with the ID of the currently logged in User
+   * @param channelData 
+   */
+  async removeCurrentUserFromChannel(userId: string, channelData: any) {
+    let userArray = channelData.users;
+    userArray = userArray.filter((user: any) => user !== userId);
+    const docRef = doc(this.firestore, 'channels', channelData.channelId);
+    await updateDoc(docRef, {
+      users: userArray
+    });
   }
 }

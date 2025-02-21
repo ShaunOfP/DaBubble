@@ -4,6 +4,7 @@ import { NgForm, FormsModule } from '@angular/forms';
 import { ChatService } from '../../../../../services/firebase-services/chat.service';
 import { PublicChatComponent } from '../public-chat.component';
 import { UserDatasService } from '../../../../../services/firebase-services/user-datas.service';
+import { ChannelMemberService, Member } from '../../../../../services/firebase-services/channel-member.service';
 
 @Component({
   selector: 'app-chat-details',
@@ -30,7 +31,12 @@ export class ChatDetailsComponent {
   descriptionContainerVisible: boolean = true;
   newDescriptionContainerVisible: boolean = false;
 
-  constructor(private chatService: ChatService, public publicChat: PublicChatComponent, public userDataService: UserDatasService) {
+  constructor(
+    private chatService: ChatService,
+    public publicChat: PublicChatComponent,
+    public userDataService: UserDatasService,
+    private channelMemberService: ChannelMemberService
+  ) {
 
   }
 
@@ -128,9 +134,17 @@ export class ChatDetailsComponent {
   }
 
   leaveChannel() {
-    if (!this.userDataService.checkIfGuestIsLoggedIn()){
-      //logic for leaving the channel
-      console.log("Channel Verlassen ist noch nicht implementiert");
+    if (!this.userDataService.checkIfGuestIsLoggedIn()) {
+      let currentChannelData = this.publicChat.currentChannelData;
+      this.userDataService.getCurrentUserId();
+      let currentUserId = this.userDataService.currentUserId;
+      if (currentChannelData.channelName != "Entwicklerchannel") {
+        this.channelMemberService.removeCurrentUserFromChannel(currentUserId, currentChannelData);
+        console.log("Benutzer erfolgreich entfernt");
+        //neu laden bzw aktualisieren von chat oberfläche und channels im workspace und url auch
+      } else {
+        console.warn("Entwicklerchannel kann nicht verlassen werden");
+      }
     } else {
       console.warn("Log in to Leave the Channel");
     }
