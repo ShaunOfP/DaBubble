@@ -134,7 +134,7 @@ export class UserDatasService {
   async getSingleUserData(userId: string) {
     const userDataSnapshot = await getDoc(doc(this.userDatasRef(), userId));
     if (userDataSnapshot.exists()) {
-      return userDataSnapshot.data();
+      return { id: userDataSnapshot.id, ...userDataSnapshot.data() };
     } else {
       console.error('User doesnt exist in the database');
       return;

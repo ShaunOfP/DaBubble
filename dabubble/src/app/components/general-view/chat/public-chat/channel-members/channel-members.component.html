@@ -7,13 +7,9 @@
 </header>
 <div class="members-list-container">
   <div class="members-list">
-    <div class="member" (click)="openProfileInfo()">
-      <img src="{{ currentUserData?.avatar }}" />
-      <span>{{ currentUserData?.username }} (Du)</span>
-    </div>
     <div *ngFor="let user of allUsers" class="member" (click)="openProfileInfo()">
       <img src="{{ user.avatar }}" />
-      <span>{{ user.username }}</span>
+      <span>{{ user.username }} <span *ngIf="currentUserId == user.id">(Du)</span></span>
     </div>
   </div>
   <button (click)="openAddMembersMenu()">

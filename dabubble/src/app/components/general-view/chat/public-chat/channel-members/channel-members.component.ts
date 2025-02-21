@@ -1,7 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { UserDatasService } from '../../../../../services/firebase-services/user-datas.service';
 import { CommonModule } from '@angular/common';
-import { ChannelMemberService, Member } from '../../../../../services/firebase-services/channel-member.service';
 import { PublicChatComponent } from '../public-chat.component';
 
 @Component({
@@ -14,12 +13,11 @@ import { PublicChatComponent } from '../public-chat.component';
 export class ChannelMembersComponent implements OnInit {
   @Output() closeMe: EventEmitter<void> = new EventEmitter();
   @Output() openAddMembers: EventEmitter<void> = new EventEmitter();
-  currentUserData: any = '';
-  allUsers: any = '';
+  allUsers: any = [];
+  currentUserId: string = '';
 
   constructor(
     public userDataService: UserDatasService,
-    private channelMemberService: ChannelMemberService,
     private publicChatComponent: PublicChatComponent,
   ) {
 
@@ -27,25 +25,23 @@ export class ChannelMembersComponent implements OnInit {
 
 
   ngOnInit() {
-    this.userDataService.currentUserData$.subscribe((userDatas) => { //hier subscribe nötig?
-      this.currentUserData = userDatas;
-      // this.addMembers();
-    });
-    // this.addMembers();
+    this.userDataService.getCurrentUserId();
+    this.currentUserId = this.userDataService.currentUserId;
+    this.addMembersToComponent();
   }
 
 
-  addMembers() {
-    this.publicChatComponent.currentChannelData.users.forEach((member: Member) => {
-      this.channelMemberService.selectMember(member);
-      console.log(member);
-      // sind im selectedMembersSubject im channel-member.service
+  /**
+   * Adds the Members to the Component List
+   */
+  addMembersToComponent() {
+    this.publicChatComponent.currentChannelData.users.forEach((userId: string) => {
+      console.log(userId);
+      this.userDataService.getSingleUserData(userId)
+        .then(result => {
+          this.allUsers.push(result);
+        });
     });
-    // this.channelMemberService.selectedMembers$.subscribe((members) => {
-    //   console.log(members);
-    // });
-    // console.log(this.channelMemberService.selectedMembers$);
-    // add-members-to-new-channel-component app-all-selected-members angucken
   }
 
 
@@ -53,7 +49,7 @@ export class ChannelMembersComponent implements OnInit {
    * Emits a signal to the parent component to open the Add Members Menu
    */
   openAddMembersMenu() {
-    if (!this.userDataService.checkIfGuestIsLoggedIn()){
+    if (!this.userDataService.checkIfGuestIsLoggedIn()) {
       this.openAddMembers.emit();
     } else {
       console.warn("Log in to add Members to a Public Channel");
