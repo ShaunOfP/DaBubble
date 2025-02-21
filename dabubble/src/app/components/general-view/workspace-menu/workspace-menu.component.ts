@@ -46,8 +46,8 @@ export class WorkspaceMenuComponent implements OnInit {
     private channelMemberService: ChannelMemberService,
     private router: Router,
     private route: ActivatedRoute,
-    private cd: ChangeDetectorRef,
-  ) { }
+    private cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.userDatasService.currentUserData$.subscribe((userDatas) => {
@@ -63,7 +63,6 @@ export class WorkspaceMenuComponent implements OnInit {
       this.subscribeAllMembers();
     }
   }
-
 
   async subscribeAllMembers() {
     await this.channelMemberService.selectAllMembers();
@@ -106,15 +105,15 @@ export class WorkspaceMenuComponent implements OnInit {
   }
 
   openCreateChannelOverlay() {
-    if (!this.userDatasService.checkIfGuestIsLoggedIn()){
+    if (!this.userDatasService.checkIfGuestIsLoggedIn()) {
       this.openCreateChannel.emit();
     } else {
-      console.warn("Log in to create Channels");
-    }    
+      console.warn('Log in to create Channels');
+    }
   }
 
   openNewMessage() {
-    if (!this.userDatasService.checkIfGuestIsLoggedIn()){
+    if (!this.userDatasService.checkIfGuestIsLoggedIn()) {
       this.route.queryParams.subscribe((params) => {
         const userID = params['userID'];
         this.router.navigate(['/general/new-message'], {
@@ -122,8 +121,8 @@ export class WorkspaceMenuComponent implements OnInit {
         });
       });
     } else {
-      console.warn("Log in to send Private Messages");
-    }    
+      console.warn('Log in to send Private Messages');
+    }
   }
 
   readonly channelOpenState = signal(false);

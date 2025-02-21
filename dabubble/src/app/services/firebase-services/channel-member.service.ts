@@ -9,9 +9,11 @@ import {
   setDoc,
   updateDoc,
   arrayUnion,
+  getDoc,
 } from '@angular/fire/firestore';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { Channel } from './channel.service';
+import { UserDatasService } from './user-datas.service';
 
 export interface Member {
   privateChats: string;
@@ -40,6 +42,7 @@ export class ChannelMemberService {
   private isComponentVisibleSource = new BehaviorSubject<boolean>(false);
   isComponentVisible$ = this.isComponentVisibleSource.asObservable();
 
+  constructor(private userDatasService: UserDatasService) {}
 
   updateComponentStatus(isVisible: boolean) {
     this.isComponentVisibleSource.next(isVisible);
@@ -171,8 +174,9 @@ export class ChannelMemberService {
       users: members.map((member) => member.id),
     };
     await setDoc(channelDocRef, channelData);
-    this.addNewChannelToMembers(members, generatedId);
-    this.addNewChannelToOwner(ownerId, generatedId);
+    await this.addNewChannelToMembers(members, generatedId);
+    await this.addNewChannelToOwner(ownerId, generatedId);
+    await this.userDatasService.refreshCurrentUserData(ownerId);
   }
 
   /**
@@ -229,18 +233,17 @@ export class ChannelMemberService {
     }
   }
 
-
   /**
    * Updates the Database to remove the current User from the Public Channel
    * @param userId a string with the ID of the currently logged in User
-   * @param channelData 
+   * @param channelData
    */
   async removeCurrentUserFromChannel(userId: string, channelData: Channel) {
     let userArray = channelData.users;
     userArray = userArray.filter((user: string) => user !== userId);
     const docRef = doc(this.firestore, 'channels', channelData.channelId);
     await updateDoc(docRef, {
-      users: userArray
+      users: userArray,
     });
   }
 }

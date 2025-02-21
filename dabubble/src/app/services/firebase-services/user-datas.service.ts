@@ -46,7 +46,7 @@ export class UserDatasService {
   public currentUserData$: Observable<UserObserver | null> =
     this.currentUserDataSubject.asObservable();
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute) {}
 
   async getUserDataById(): Promise<void> {
     this.route.queryParams.pipe().subscribe(async (params) => {
@@ -76,7 +76,6 @@ export class UserDatasService {
     });
   }
 
-
   async getUserName(id: string): Promise<string> {
     try {
       const docRef = doc(this.userDatasRef(), id);
@@ -101,11 +100,9 @@ export class UserDatasService {
     }
   }
 
-
   guestDatasRef() {
     return collection(this.firestore, 'guestDatas');
   }
-
 
   async saveGuest(accountData: GuestDatas, userId: string): Promise<void> {
     try {
@@ -125,7 +122,6 @@ export class UserDatasService {
     }
   }
 
-
   /**
    * Takes an id-string and returns the matching Data from the Database
    * @param userId the id for which the data is searched
@@ -140,7 +136,6 @@ export class UserDatasService {
       return;
     }
   }
-
 
   async saveUser(accountData: UserDatas, userId: string): Promise<void> {
     try {
@@ -165,7 +160,6 @@ export class UserDatasService {
     }
   }
 
-
   async createPrivateChat(userId: string) {
     const generatedId = this.generateRandomId();
     const userDocRef = doc(this.firestore, 'privateChats', generatedId);
@@ -176,7 +170,6 @@ export class UserDatasService {
     await setDoc(userDocRef, chatData);
     return generatedId;
   }
-
 
   generateRandomId() {
     const array = new Uint8Array(22);
@@ -190,17 +183,14 @@ export class UserDatasService {
     return generatedRandomId;
   }
 
-
   userDatasRef() {
     return collection(this.firestore, 'userDatas');
   }
-
 
   checkIfGuestIsLoggedIn(): boolean {
     this.getCurrentUserId();
     return this.currentUserId === 'guest' ? true : false;
   }
-
 
   getCurrentUserId() {
     this.route.queryParams.subscribe((params) => {
@@ -211,11 +201,10 @@ export class UserDatasService {
           this.currentUserId = 'guest';
         }
       } else {
-        console.error("No user ID provided");
+        console.error('No user ID provided');
       }
     });
   }
-
 
   async updateUserData(userId: string, newUserName: string) {
     try {
@@ -229,7 +218,6 @@ export class UserDatasService {
     }
   }
 
-
   async getChannelNames(channelId: string) {
     const docRef = doc(this.firestore, `channels/${channelId}`);
     const docSnapshot = await getDoc(docRef);
@@ -241,7 +229,6 @@ export class UserDatasService {
     }
   }
 
-
   async getPrivateChannel(userId: string) {
     const userDocRef = doc(this.firestore, `userDatas/${userId}`);
     const userDoc = await getDoc(userDocRef);
@@ -251,7 +238,6 @@ export class UserDatasService {
     }
   }
 
-
   /**
    * Removes a channel from the Userdata of the currently logged in User
    * @param channelData Data from the current Channel
@@ -260,28 +246,42 @@ export class UserDatasService {
     console.log(channelData);
     this.getCurrentUserId();
     let channelArray = channelData;
-    channelArray = channelArray.filter((channel: string) => channel !== channelId);
+    channelArray = channelArray.filter(
+      (channel: string) => channel !== channelId
+    );
     console.log(channelArray);
     const docRef = doc(this.firestore, 'userDatas', this.currentUserId);
     await updateDoc(docRef, {
-      channels: channelArray
+      channels: channelArray,
     });
   }
-
 
   /**
    * Alternative way of getting the current User Data
    * @returns Data of the currently logged in User
    */
   async getCurrentUserData() {
-    let data = await getDoc(doc(this.firestore, 'userDatas', this.currentUserId));
+    let data = await getDoc(
+      doc(this.firestore, 'userDatas', this.currentUserId)
+    );
     if (data.exists()) {
       return data.data();
     } else {
-      return "No data found";
+      return 'No data found';
     }
   }
 
+  async refreshCurrentUserData(userId: string) {
+    const userDocRef = doc(this.firestore, `userDatas/${userId}`);
+    const userDoc = await getDoc(userDocRef);
+
+    if (userDoc.exists()) {
+      const userData = userDoc.data() as UserObserver;
+      this.currentUserDataSubject.next(userData);
+    } else {
+      console.error('User not found');
+    }
+  }
 }
 
 // async getUserDatas(email: string, password: string) {
