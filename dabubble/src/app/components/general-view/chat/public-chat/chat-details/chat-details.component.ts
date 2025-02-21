@@ -5,6 +5,7 @@ import { ChatService } from '../../../../../services/firebase-services/chat.serv
 import { PublicChatComponent } from '../public-chat.component';
 import { UserDatasService } from '../../../../../services/firebase-services/user-datas.service';
 import { ChannelMemberService, Member } from '../../../../../services/firebase-services/channel-member.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-chat-details',
@@ -35,7 +36,8 @@ export class ChatDetailsComponent {
     private chatService: ChatService,
     public publicChat: PublicChatComponent,
     public userDataService: UserDatasService,
-    private channelMemberService: ChannelMemberService
+    private channelMemberService: ChannelMemberService,
+    private router: Router
   ) {
 
   }
@@ -140,13 +142,26 @@ export class ChatDetailsComponent {
       let currentUserId = this.userDataService.currentUserId;
       if (currentChannelData.channelName != "Entwicklerchannel") {
         this.channelMemberService.removeCurrentUserFromChannel(currentUserId, currentChannelData);
-        console.log("Benutzer erfolgreich entfernt");
-        //neu laden bzw aktualisieren von chat oberfläche und channels im workspace und url auch
+        this.userDataService.getCurrentUserData().then((result: any) => {
+          this.userDataService.removeChannelFromUserData(result['channels']);
+        });
+        this.closeChatDetails();
+        this.goBackToMainChannel();
+        //neu laden bzw aktualisieren von channels im workspace
       } else {
         console.warn("Entwicklerchannel kann nicht verlassen werden");
       }
     } else {
       console.warn("Log in to Leave the Channel");
     }
+  }
+
+
+  goBackToMainChannel(){
+    this.router.navigate(['/general/public-chat'], {
+      queryParams: { chatId: 'ER84UOYc0F2jptDjWxFo' },
+      queryParamsHandling: 'merge',
+      replaceUrl: true,
+    });
   }
 }

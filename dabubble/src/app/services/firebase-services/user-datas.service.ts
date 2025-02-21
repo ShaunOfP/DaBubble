@@ -249,6 +249,36 @@ export class UserDatasService {
       return userDoc.get('privateChats');
     }
   }
+
+
+  /**
+   * Removes a channel from the Userdata of the currently logged in User
+   * @param channelData Data from the current Channel
+   */
+  async removeChannelFromUserData(channelData: any) {
+    this.getCurrentUserId();
+    let channelArray = channelData;
+    channelArray = channelArray.filter((channel: any) => channel !== channelData.id);
+    const docRef = doc(this.firestore, 'userDatas', this.currentUserId);
+    await updateDoc(docRef, {
+    channels: channelArray
+    });
+  }
+
+
+  /**
+   * Alternative way of getting the current User Data
+   * @returns Data of the currently logged in User
+   */
+  async getCurrentUserData() {
+    let data = await getDoc(doc(this.firestore, 'userDatas', this.currentUserId));
+    if (data.exists()) {
+      return data.data();
+    } else {
+      return "No data found";
+    }
+  }
+
 }
 
 // async getUserDatas(email: string, password: string) {
