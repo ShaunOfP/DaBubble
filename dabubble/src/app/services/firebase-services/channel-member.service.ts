@@ -11,6 +11,7 @@ import {
   arrayUnion,
 } from '@angular/fire/firestore';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { Channel } from './channel.service';
 
 export interface Member {
   privateChats: string;
@@ -234,9 +235,9 @@ export class ChannelMemberService {
    * @param userId a string with the ID of the currently logged in User
    * @param channelData 
    */
-  async removeCurrentUserFromChannel(userId: string, channelData: any) {
+  async removeCurrentUserFromChannel(userId: string, channelData: Channel) {
     let userArray = channelData.users;
-    userArray = userArray.filter((user: any) => user !== userId);
+    userArray = userArray.filter((user: string) => user !== userId);
     const docRef = doc(this.firestore, 'channels', channelData.channelId);
     await updateDoc(docRef, {
       users: userArray

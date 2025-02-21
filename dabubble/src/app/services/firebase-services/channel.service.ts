@@ -21,6 +21,7 @@ export interface Channel {
   createdAt: string;
   description: string;
   owner: string;
+  users: string[];
 }
 
 @Injectable({

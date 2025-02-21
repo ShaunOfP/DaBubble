@@ -12,6 +12,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { UserDatas } from './../../models/user.class';
 import { GuestDatas } from '../../models/guest.class';
 import { ActivatedRoute } from '@angular/router';
+import { Channel } from './channel.service';
 
 interface SingleUserData {
   mail: string;
@@ -255,13 +256,15 @@ export class UserDatasService {
    * Removes a channel from the Userdata of the currently logged in User
    * @param channelData Data from the current Channel
    */
-  async removeChannelFromUserData(channelData: any) {
+  async removeChannelFromUserData(channelData: string[], channelId: string) {
+    console.log(channelData);
     this.getCurrentUserId();
     let channelArray = channelData;
-    channelArray = channelArray.filter((channel: any) => channel !== channelData.id);
+    channelArray = channelArray.filter((channel: string) => channel !== channelId);
+    console.log(channelArray);
     const docRef = doc(this.firestore, 'userDatas', this.currentUserId);
     await updateDoc(docRef, {
-    channels: channelArray
+      channels: channelArray
     });
   }
 

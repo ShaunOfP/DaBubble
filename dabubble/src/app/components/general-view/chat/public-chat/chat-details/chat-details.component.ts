@@ -147,7 +147,7 @@ export class ChatDetailsComponent {
       if (currentChannelData.channelName != "Entwicklerchannel") {
         this.channelMemberService.removeCurrentUserFromChannel(currentUserId, currentChannelData);
         this.userDataService.getCurrentUserData().then((result: any) => {
-          this.userDataService.removeChannelFromUserData(result['channels']);
+          this.userDataService.removeChannelFromUserData(result['channels'], this.currentChannelId);
         });
         this.closeChatDetails();
         this.goBackToMainChannel();
@@ -163,7 +163,7 @@ export class ChatDetailsComponent {
   /**
    * Navigates back to the Main Public Channel
    */
-  goBackToMainChannel(){
+  goBackToMainChannel() {
     this.router.navigate(['/general/public-chat'], {
       queryParams: { chatId: 'ER84UOYc0F2jptDjWxFo' },
       queryParamsHandling: 'merge',
