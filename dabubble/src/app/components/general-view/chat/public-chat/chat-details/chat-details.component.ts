@@ -135,6 +135,10 @@ export class ChatDetailsComponent {
     }
   }
 
+
+  /**
+   * Lets the user leave the current Channel
+   */
   leaveChannel() {
     if (!this.userDataService.checkIfGuestIsLoggedIn()) {
       let currentChannelData = this.publicChat.currentChannelData;
@@ -147,7 +151,6 @@ export class ChatDetailsComponent {
         });
         this.closeChatDetails();
         this.goBackToMainChannel();
-        //neu laden bzw aktualisieren von channels im workspace
       } else {
         console.warn("Entwicklerchannel kann nicht verlassen werden");
       }
@@ -157,6 +160,9 @@ export class ChatDetailsComponent {
   }
 
 
+  /**
+   * Navigates back to the Main Public Channel
+   */
   goBackToMainChannel(){
     this.router.navigate(['/general/public-chat'], {
       queryParams: { chatId: 'ER84UOYc0F2jptDjWxFo' },
