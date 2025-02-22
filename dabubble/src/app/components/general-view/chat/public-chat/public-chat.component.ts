@@ -5,6 +5,8 @@ import {
   ViewChild,
   AfterViewInit,
   OnDestroy,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import { ChatService } from '../../../../services/firebase-services/chat.service';
 import { Observable, combineLatest, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs';
@@ -35,7 +37,7 @@ import { getDoc } from '@angular/fire/firestore';
   styleUrls: ['./public-chat.component.scss'],
 })
 export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
-
+  @Output() openCurrentThread= new EventEmitter<void>() 
   @ViewChild('chatContainer') chatContainer!: ElementRef;
 
   messages$!: Observable<Message[]>;
@@ -337,5 +339,6 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
 
   openThread(messageId: string): void {
     this.chatService.getMessageThread(messageId)
+    this.chatService.setThreadVisible(true);
   }
 }

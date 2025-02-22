@@ -13,7 +13,7 @@ import {
   runTransaction,
   arrayUnion,
 } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Message } from '../../models/interfaces';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -24,6 +24,7 @@ export class ChatService {
   private firestore = inject(Firestore);
   currentChatId: string = ``;
   currentThreads?: Observable<Message[]>
+  showCurrentThread= new BehaviorSubject(false)
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -76,6 +77,10 @@ export class ChatService {
         message
       );
     }
+  }
+
+  setThreadVisible(value:boolean){
+    this.showCurrentThread.next(value)
   }
 
 
