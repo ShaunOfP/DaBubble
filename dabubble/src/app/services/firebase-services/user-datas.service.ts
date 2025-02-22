@@ -12,7 +12,6 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { UserDatas } from './../../models/user.class';
 import { GuestDatas } from '../../models/guest.class';
 import { ActivatedRoute } from '@angular/router';
-import { Channel } from './channel.service';
 
 interface SingleUserData {
   mail: string;
@@ -40,6 +39,7 @@ export class UserDatasService {
   userIds$ = this.userIdsSubject.asObservable();
   channelData: any = [];
   currentUserId: string = ``;
+  showUserInfoCard: boolean = false; //wird benötigt da UserInfoCard anzeige hierüber läuft
   private currentUserDataSubject = new BehaviorSubject<UserObserver | null>(
     null
   );

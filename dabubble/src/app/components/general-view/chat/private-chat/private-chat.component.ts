@@ -8,11 +8,13 @@ import { FilterService } from '../../../../services/component-services/filter.se
 import { EmojiPickerComponent } from '../../emoji-picker/emoji-picker.component';
 import { MatCardModule } from '@angular/material/card';
 import { ChatComponent } from '../chat.component';
+import { UserInfoCardComponent } from "../user-info-card/user-info-card.component";
+import { UserDatasService } from '../../../../services/firebase-services/user-datas.service';
 
 @Component({
   selector: 'app-private-chat',
   standalone: true,
-  imports: [CommonModule, EmojiPickerComponent, MatCardModule],
+  imports: [CommonModule, EmojiPickerComponent, MatCardModule, UserInfoCardComponent],
   templateUrl: './private-chat.component.html',
   styleUrl: './private-chat.component.scss'
 })
@@ -26,7 +28,6 @@ export class PrivateChatComponent implements OnInit {
   hoveredMessageId: string | null = null;
   showPicker: boolean = false;
   showPopoverReaction: number | null = null;
-  memberInfoVisible: boolean = false;
 
   private scrollListener!: () => void;
 
@@ -34,7 +35,8 @@ export class PrivateChatComponent implements OnInit {
     private chatService: ChatService,
     private route: ActivatedRoute,
     private filterService: FilterService,
-    public chatComponent: ChatComponent
+    public chatComponent: ChatComponent,
+    public userDatasService: UserDatasService
   ) { }
 
   ngOnInit(): void {
@@ -44,7 +46,7 @@ export class PrivateChatComponent implements OnInit {
 
 
   showMemberInfo() {
-    this.memberInfoVisible = !this.memberInfoVisible;
+    this.userDatasService.showUserInfoCard = true;
   }
 
 
@@ -198,9 +200,5 @@ export class PrivateChatComponent implements OnInit {
       currentUser = params['userID'];
     });
     return userId === currentUser ? 'secondary' : 'primary';
-  }
-
-  openMessageToUser() {
-    this.memberInfoVisible = false;
   }
 }

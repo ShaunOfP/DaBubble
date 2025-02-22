@@ -1,5 +1,12 @@
 @import './../../../../../../styles.scss';
 
+app-user-info-card {
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    inset: 0;
+    @include arrangement();
+}
 
 header {
     @include arrangement($jc: space-between);
@@ -43,6 +50,7 @@ header {
     @include arrangement($jc: normal, $g: 15px);
     height: 58px;
     padding: 4px 20px;
+    border-radius: 35px;
 
     >img {
         height: 50px;
@@ -52,6 +60,11 @@ header {
 
     >span {
         font-size: 18px;
+    }
+
+    &:hover {
+        cursor: pointer;
+        background-color: var(--color-blue-bg);
     }
 }
 

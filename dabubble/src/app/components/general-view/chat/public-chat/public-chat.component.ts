@@ -53,6 +53,7 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   currentChannelData: any;
   currentChatId: string = '';
 
+
   private scrollListener!: () => void;
 
   constructor(
@@ -334,7 +335,7 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     this.chatService.updateMessage(emoji, id, this.userDataService.currentUserId)
   }
 
-  openThread(messageId:string): void {
+  openThread(messageId: string): void {
     this.chatService.getMessageThread(messageId)
   }
 }

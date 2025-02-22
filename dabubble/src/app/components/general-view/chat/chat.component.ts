@@ -91,6 +91,16 @@ export class ChatComponent implements OnInit {
   }
 
 
+
+  /**
+   * Assigns data to the variable, which is needed to load the UserInfoCard correctly
+   * @param userId string containing the User Id
+   */
+  async getUserDataFromSingleMemberOfPublicChat(userId: string){
+    this.privateChatOtherUserData = await this.userDatasService.getSingleUserData(userId);
+  }
+
+
   onEmojiReceived(emoji: string) {
     this.selectedEmoji = emoji;
     this.emojiTarget.nativeElement.value += emoji;
