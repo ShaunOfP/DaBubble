@@ -64,8 +64,9 @@ export class ChannelMembersComponent implements OnInit {
    * Fetches the data of the selected User and opens the UserInfoCard for that user
    */
   openProfileInfoCard(userId: string) {
-    this.chatComponent.getUserDataFromSingleMemberOfPublicChat(userId);
-    this.userDataService.showUserInfoCard = true;
+    this.chatComponent.getUserDataFromSingleMemberOfPublicChat(userId).then(() => {
+      this.userDataService.showUserInfoCard = true;
+    });
   }
 
 

@@ -13,13 +13,19 @@ import { UserDatasService } from '../../../../services/firebase-services/user-da
 })
 export class UserInfoCardComponent {
   showUserInfoCard: boolean = false;
+  currentChannelName: string = '';
 
   constructor(
     public chatComponent: ChatComponent,
     private chatService: ChatService,
     private userDatasService: UserDatasService
   ){
-
+    if (this.chatService.getCurrentRoute() === 'private'){
+      this.currentChannelName = this.chatComponent.currentChannelName;
+    } else {
+      this.chatComponent.getChannelNameViaId(this.chatComponent.currentChatId);
+      this.currentChannelName = this.chatComponent.privateChatOtherUserData.username;
+    }
   }
 
   closeUserInfoCard(){
@@ -27,11 +33,10 @@ export class UserInfoCardComponent {
   }
 
   openMessageToUser() {
-    console.log(this.chatComponent.privateChatOtherUserData);
-    // if (this.chatService.getCurrentRoute() === 'private'){
-    //   this.userDatasService.showUserInfoCard = false;
-    // } else {
-
-    // }
+    if (this.chatService.getCurrentRoute() === 'private'){
+      this.userDatasService.showUserInfoCard = false;
+    } else {
+      //implementieren
+    }
   }
 }

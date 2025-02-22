@@ -46,6 +46,7 @@ export class ChatComponent implements OnInit {
   currentChannelName: string = ``;
   currentUserId: string = '';
   privateChatOtherUserData: any;
+  currentChatId: string = '';
 
   /**
    * Subscribes to the current URL to get the newest Chat-ID and the User-Id from the logged in User
@@ -53,8 +54,8 @@ export class ChatComponent implements OnInit {
   async ngOnInit() {
     this.route.queryParams.subscribe((params) => {
       if (params['chatId']) {
-        let id = params['chatId'];
-        this.getChannelNameViaId(id);
+        this.currentChatId = params['chatId'];
+        this.getChannelNameViaId(this.currentChatId);
       } else {
         console.error('No chatId found in query parameters');
       }
