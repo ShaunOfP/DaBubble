@@ -13,7 +13,7 @@ import { Message } from '../../../../models/interfaces';
   styleUrl: './thread-messages.component.scss'
 })
 export class ThreadMessagesComponent {
-  messages$!: Observable<Message[]> | undefined;
+  messages$!: Observable<any[]> | undefined;
   showReaction: boolean = true;
   showEmojiPicker: boolean = false;
   @ViewChild('emojiTarget', { static: true }) emojiTarget!: ElementRef;
