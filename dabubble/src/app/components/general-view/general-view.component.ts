@@ -49,6 +49,8 @@ export class GeneralViewComponent implements OnInit{
     this.threadMenuState = 'closed';
     setTimeout(() => {
       this.chatService.setThreadVisible(false);
+      console.log(this.threadIsVisible);
+      
     }, 125);
   }
 

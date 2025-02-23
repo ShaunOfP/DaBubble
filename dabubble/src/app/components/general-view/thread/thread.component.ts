@@ -20,6 +20,7 @@ export class ThreadComponent {
 
   toggleMargin(){
     this.toggleMarginLeft ? this.toggleMarginLeft = false : this.toggleMarginLeft = true;
+    this.callParent.emit()
   }
 
   onEmojiReceived(emoji: string) {

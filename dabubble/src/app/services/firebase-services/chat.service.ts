@@ -23,7 +23,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ChatService {
   private firestore = inject(Firestore);
   currentChatId: string = ``;
-  currentThreads?: Observable<Message[]>
+  private currentThreadsSubject = new BehaviorSubject<Message[]>([]);
+ currentThreads$ = this.currentThreadsSubject.asObservable(); 
   showCurrentThread= new BehaviorSubject(false)
 
   constructor(private route: ActivatedRoute,
@@ -81,6 +82,7 @@ export class ChatService {
 
   setThreadVisible(value:boolean){
     this.showCurrentThread.next(value)
+    this.showCurrentThread.subscribe(value => console.log(value))
   }
 
 
@@ -249,7 +251,10 @@ export class ChatService {
       collection(this.firestore, `channels/${this.currentChatId}/messages/${messageId}/thread`),
       orderBy('createdAt', 'asc')
     );
-    this.currentThreads = collectionData(thread, { idField: 'id' }) as Observable<Message[]>
-    this.currentThreads.subscribe(thread => console.log(thread));
+    const threadObservable = collectionData(thread, { idField: 'id' }) as Observable<Message[]>;
+    threadObservable.subscribe(messages => {
+      this.currentThreadsSubject.next(messages);
+      console.log('Thread updated:', messages);
+    });
   }
 }
