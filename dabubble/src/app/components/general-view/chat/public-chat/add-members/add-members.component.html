@@ -28,11 +28,10 @@
   <div class="button-container">
     <button class="btn-primary--default" type="submit">Hinzufügen</button>
   </div>
-</form>
-<app-all-members [ngClass]="{ 'd-none': searchInput === '' }" [searchQuery]="searchInput"
+  <app-all-members [ngClass]="{ 'd-none': searchInput === '' }" [searchQuery]="searchInput"
   (memberClicked)="clearSearchField()">
 </app-all-members>
-
+</form>
 <app-all-selected-members *ngIf="openSelectedMembers" [members]="selectedMembers"
   (closeWindow)="closeSelectedMembersWindow()">
 </app-all-selected-members>

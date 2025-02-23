@@ -106,6 +106,13 @@ button {
 
 form {
     @include arrangement($jc: normal, $ai: normal, $g: 20px, $fd: column);
+    position: relative;
+
+    >app-all-members {
+        position: absolute;
+        top: 70px;
+        width: 100%;
+    }
 }
 
 .wrapper {
