@@ -88,29 +88,18 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
 
   async loadChannelInfo() {
     const data = await getDoc(this.chatService.getChannelDocRef(this.currentChatId));
-
-    if (data.exists()) {
-      this.currentChannelData = data.data();
-      console.log(this.currentChannelData);
-    }
+    if (data.exists()) this.currentChannelData = data.data();
   }
 
   loadMessages() {
     const currentRoute = this.router.url;
-    if (currentRoute.includes('private-chat')) {
-      return;
-    }
-
+    if (currentRoute.includes('private-chat')) return;
     this.messages$ = this.route.queryParams.pipe(
       map(params => params['chatId']),
       distinctUntilChanged(),
       tap(chatId => {
-        if (!chatId) {
-          console.error("Keine chatId in den Query-Parametern gefunden!");
-        } else {
-          this.chatService.currentChatId = chatId;
-          console.log("Aktuelle chatId:", this.chatService.currentChatId);
-        }
+        if (!chatId) return 
+        else this.chatService.currentChatId = chatId;
       }),
       filter(chatId => !!chatId),
       switchMap(() => this.chatService.getMessages()),
@@ -120,8 +109,6 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
         setTimeout(() => this.scrollToElement('auto'), 1000);
       })
     );
-
-
   }
 
 
@@ -178,14 +165,6 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
-  // reactionEntries(message: Message): { emoji: string, count: number, users: string[] }[] {
-  //   return Object.entries(message.reaction || {}).map(([emoji, users]) => ({
-  //     emoji,
-  //     count: (users as string[]).length,
-  //     users: users as string[],
-  //   }));
-  // }
-
   reactionEntries(message: Message): {
     isImage: boolean;
     value: string;
@@ -193,18 +172,15 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     users: string[];
   }[] {
     return Object.entries(message.reaction || {}).map(([emoji, users]) => {
-      // Falls in deiner Datenbank "green_check" als Platzhalter steht
       if (emoji === 'green_check') {
         return {
           isImage: true,
-          // Pfad zu deiner SVG oder PNG
           value: 'img/general-view/chat/green_check.svg',
           count: (users as string[]).length,
           users: users as string[],
         };
       } else {
-        // Andernfalls ist es ein normales Emoji
-        return {
+         return {
           isImage: false,
           value: emoji,
           count: (users as string[]).length,
