@@ -82,15 +82,12 @@ export class ChatService {
 
   setThreadVisible(value:boolean){
     this.showCurrentThread.next(value)
-    this.showCurrentThread.subscribe(value => console.log(value))
   }
-
 
   async generateThread(messageId: string, message: Message) {
     await addDoc(collection(this.firestore, `channels/${this.currentChatId}/messages/${messageId}/thread`),
       message)
     console.log('thread erfolgreich in Message:' + messageId + ' erstellt');
-
   }
 
 
@@ -254,7 +251,6 @@ export class ChatService {
     const threadObservable = collectionData(thread, { idField: 'id' }) as Observable<Message[]>;
     threadObservable.subscribe(messages => {
       this.currentThreadsSubject.next(messages);
-      console.log('Thread updated:', messages);
     });
   }
 }

@@ -115,8 +115,7 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
       filter(chatId => !!chatId),
       switchMap(() => this.chatService.getMessages()),
       map((messages: Message[]) => this.returnNewObservable(messages, null)),
-      tap((updatedMessages: Message[]) => {
-        console.log("Aktualisierte Nachrichten:", updatedMessages);
+      tap(() => {
         this.newMessage = true;
         setTimeout(() => this.scrollToElement('auto'), 1000);
       })
