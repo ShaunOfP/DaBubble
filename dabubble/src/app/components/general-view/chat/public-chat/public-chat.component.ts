@@ -315,5 +315,6 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   openThread(messageId: string): void {
     this.chatService.getMessageThread(messageId)
     this.chatService.setThreadVisible(true);
+    this.chatService.chatMarginRight = false;
   }
 }

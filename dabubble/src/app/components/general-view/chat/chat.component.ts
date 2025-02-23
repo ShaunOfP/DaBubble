@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
-import { CommonModule, Location } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { EmojiPickerComponent } from '../emoji-picker/emoji-picker.component';
 import { NewMessageComponent } from './new-message/new-message.component';
 import { SharedModule } from '../../../shared/shared.module';
@@ -7,7 +7,6 @@ import { ChatService } from '../../../services/firebase-services/chat.service';
 import { Message } from '../../../models/interfaces';
 import { UserDatasService } from '../../../services/firebase-services/user-datas.service';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { PublicChatComponent } from './public-chat/public-chat.component';
 import { AltHeaderMobileComponent } from "../alt-header-mobile/alt-header-mobile.component";
 
 
@@ -27,7 +26,7 @@ import { AltHeaderMobileComponent } from "../alt-header-mobile/alt-header-mobile
 })
 export class ChatComponent implements OnInit {
   constructor(
-    private chatService: ChatService,
+    public chatService: ChatService,
     private userDatasService: UserDatasService,
     private route: ActivatedRoute
   ) { }
@@ -47,6 +46,7 @@ export class ChatComponent implements OnInit {
   currentUserId: string = '';
   privateChatOtherUserData: any;
   currentChatId: string = '';
+  // toggleMarginRight: boolean = true;
 
   /**
    * Subscribes to the current URL to get the newest Chat-ID and the User-Id from the logged in User
@@ -97,7 +97,7 @@ export class ChatComponent implements OnInit {
    * Assigns data to the variable, which is needed to load the UserInfoCard correctly
    * @param userId string containing the User Id
    */
-  async getUserDataFromSingleMemberOfPublicChat(userId: string){
+  async getUserDataFromSingleMemberOfPublicChat(userId: string) {
     this.privateChatOtherUserData = await this.userDatasService.getSingleUserData(userId);
   }
 

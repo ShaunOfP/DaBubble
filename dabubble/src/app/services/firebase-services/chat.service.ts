@@ -24,8 +24,9 @@ export class ChatService {
   private firestore = inject(Firestore);
   currentChatId: string = ``;
   private currentThreadsSubject = new BehaviorSubject<Message[]>([]);
- currentThreads$ = this.currentThreadsSubject.asObservable(); 
-  showCurrentThread= new BehaviorSubject(false)
+  currentThreads$ = this.currentThreadsSubject.asObservable();
+  showCurrentThread = new BehaviorSubject(false);
+  chatMarginRight: boolean = true;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -80,8 +81,8 @@ export class ChatService {
     }
   }
 
-  setThreadVisible(value:boolean){
-    this.showCurrentThread.next(value)
+  setThreadVisible(value: boolean) {
+    this.showCurrentThread.next(value);
   }
 
   async generateThread(messageId: string, message: Message) {

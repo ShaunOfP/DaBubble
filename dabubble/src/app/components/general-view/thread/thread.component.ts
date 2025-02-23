@@ -4,6 +4,7 @@ import { SharedModule } from '../../../shared/shared.module';
 import { ThreadMessagesComponent } from "./thread-messages/thread-messages.component";
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { AltHeaderMobileComponent } from "../alt-header-mobile/alt-header-mobile.component";
+import { ChatService } from '../../../services/firebase-services/chat.service';
 
 @Component({
   selector: 'app-thread',
@@ -16,11 +17,16 @@ export class ThreadComponent {
   @Output() callParent: EventEmitter<void> = new EventEmitter();
   @ViewChild('emojiTarget', { static: true }) emojiTarget!: ElementRef;
   selectedEmoji: string = '';
-  toggleMarginLeft: boolean = true; //wenn thread geschlossen ist muss false sein
+  toggleMarginLeft: boolean = true;
 
-  toggleMargin(){
+  constructor(private chatService: ChatService) {
+
+  }
+
+  toggleMargin() {
     this.toggleMarginLeft ? this.toggleMarginLeft = false : this.toggleMarginLeft = true;
-    this.callParent.emit()
+    this.chatService.chatMarginRight = true;
+    this.callParent.emit();
   }
 
   onEmojiReceived(emoji: string) {

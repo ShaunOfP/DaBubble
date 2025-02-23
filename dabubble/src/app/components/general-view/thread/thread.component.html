@@ -1,5 +1,5 @@
 <app-alt-header-mobile></app-alt-header-mobile>
-<mat-drawer-container [class.margin-right-20]="toggleMarginLeft === true">
+<mat-drawer-container [class.margin-right-20]="toggleMarginLeft">
     <mat-drawer #threadDrawer opened mode="side" position="end">
         <header>
             <div>
@@ -41,5 +41,4 @@
             </div>
         </div>
     </mat-drawer>
-    <!-- <button (click)="threadDrawer.toggle(); toggleMargin()" class="dev-btn">open thread</button> -->
 </mat-drawer-container>
