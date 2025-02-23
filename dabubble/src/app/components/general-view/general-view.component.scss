@@ -13,7 +13,7 @@
 
 app-header {
     padding: 25px 34px 20px 45px;
-    @include arrangement($jc: normal, $g: 220px);
+    @include arrangement($jc: normal, $g: 10%);
 
     @media (max-width: 1160px){
         gap: 5%;
