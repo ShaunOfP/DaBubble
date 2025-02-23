@@ -31,7 +31,6 @@ export class AllMembersComponent implements OnChanges, OnInit {
 
   ngOnInit(): void {
     this.memberService.selectedMembers$.subscribe((members) => {
-      console.log(members);
       this.selectedMembers = members;
     });
   }

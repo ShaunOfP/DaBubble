@@ -107,7 +107,6 @@ export class LoginComponent implements OnInit {
       this.loginErrorPassword = 'Das Passwort ist ungültig!';
     } else {
       const chatId = 'ER84UOYc0F2jptDjWxFo';
-      //macht die url
       this.router.navigate([`/general/public-chat`], {
         queryParams: { chatId: chatId, userID: result?.uid },
       });
@@ -131,7 +130,8 @@ export class LoginComponent implements OnInit {
       if (guestSnap.exists()) {
         console.log('Gast schon vorhanden', guestSnap.data());
         this.router.navigate(['/general'], {
-          queryParams: { chatId, userID: guestUser?.uid },
+          queryParams: { chatId, userID: 'guest' },
+          // queryParams: { chatId, userID: guestUser?.uid },
         });
       } else {
         if (guestUser) {
@@ -143,7 +143,8 @@ export class LoginComponent implements OnInit {
           });
           this.userService.saveGuest(newGuest, guestUser.uid);
           this.router.navigate(['/general'], {
-            queryParams: { chatId, userID: guestUser?.uid },
+            // queryParams: { chatId, userID: guestUser?.uid },
+            queryParams: { chatId, userID: 'guest' },
           });
           console.log(newGuest);
           console.log(guestUser.uid);

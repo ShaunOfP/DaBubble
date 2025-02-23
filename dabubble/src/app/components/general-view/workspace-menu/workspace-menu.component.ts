@@ -4,10 +4,8 @@ import {
   EventEmitter,
   OnInit,
   ChangeDetectorRef,
-  ViewChild,
-  ElementRef,
 } from '@angular/core';
-import { CommonModule, Location } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { ChangeDetectionStrategy, signal } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -15,12 +13,9 @@ import {
   UserDatasService,
   UserObserver,
 } from '../../../services/firebase-services/user-datas.service';
-import { ChatService } from '../../../services/firebase-services/chat.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, Subject } from 'rxjs';
 import { WorkspaceStateToggleButtonComponent } from './workspace-state-toggle-button/workspace-state-toggle-button.component';
 import { ChannelMemberService } from '../../../services/firebase-services/channel-member.service';
-import { AltHeaderMobileComponent } from '../alt-header-mobile/alt-header-mobile.component';
 
 @Component({
   selector: 'app-workspace-menu',
@@ -48,26 +43,31 @@ export class WorkspaceMenuComponent implements OnInit {
 
   constructor(
     public userDatasService: UserDatasService,
-    private chatService: ChatService,
-    private channelService: ChannelMemberService,
+    private channelMemberService: ChannelMemberService,
     private router: Router,
     private route: ActivatedRoute,
-    private cd: ChangeDetectorRef,
-    private location: Location
+    private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
     this.userDatasService.currentUserData$.subscribe((userDatas) => {
-      this.workspaceUserData = userDatas;
-      this.fetchUserData();
+      if (!this.userDatasService.checkIfGuestIsLoggedIn()) {
+        this.workspaceUserData = userDatas;
+        this.fetchUserData();
+      } else {
+        //Lädt nur den Entwicklerchannel wenn Gast eingeloggt ist
+        this.fetchChannelNames(['ER84UOYc0F2jptDjWxFo']);
+      }
     });
-    this.subscribeAllMembers();
+    if (!this.userDatasService.checkIfGuestIsLoggedIn()) {
+      this.subscribeAllMembers();
+    }
   }
 
   async subscribeAllMembers() {
-    await this.channelService.selectAllMembers();
+    await this.channelMemberService.selectAllMembers();
     console.log(this.workspaceUserData);
-    this.channelService.allMembersSubject$.subscribe((allUsers) => {
+    this.channelMemberService.allMembersSubject$.subscribe((allUsers) => {
       this.allUsers = allUsers.filter(
         (user) =>
           user.privateChats[0] !== this.workspaceUserData?.privateChats[0]
@@ -105,16 +105,24 @@ export class WorkspaceMenuComponent implements OnInit {
   }
 
   openCreateChannelOverlay() {
-    this.openCreateChannel.emit();
+    if (!this.userDatasService.checkIfGuestIsLoggedIn()) {
+      this.openCreateChannel.emit();
+    } else {
+      console.warn('Log in to create Channels');
+    }
   }
 
   openNewMessage() {
-    this.route.queryParams.subscribe((params) => {
-      const userID = params['userID'];
-      this.router.navigate(['/general/new-message'], {
-        queryParams: { userID: userID },
+    if (!this.userDatasService.checkIfGuestIsLoggedIn()) {
+      this.route.queryParams.subscribe((params) => {
+        const userID = params['userID'];
+        this.router.navigate(['/general/new-message'], {
+          queryParams: { userID: userID },
+        });
       });
-    });
+    } else {
+      console.warn('Log in to send Private Messages');
+    }
   }
 
   readonly channelOpenState = signal(false);
@@ -126,12 +134,12 @@ export class WorkspaceMenuComponent implements OnInit {
       queryParamsHandling: 'merge',
       replaceUrl: true,
     });
-    // this.chatService.changeChannel(channelId)
   }
 
-  openDirectMessage(userId: string) {
+  async openDirectMessage(userId: string) {
+    const privateChatId = await this.userDatasService.getPrivateChannel(userId);
     this.router.navigate(['/general/private-chat'], {
-      queryParams: { chatId: userId },
+      queryParams: { chatId: privateChatId },
       queryParamsHandling: 'merge',
       replaceUrl: true,
     });

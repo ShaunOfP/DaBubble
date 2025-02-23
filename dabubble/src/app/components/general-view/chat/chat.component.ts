@@ -6,9 +6,7 @@ import { SharedModule } from '../../../shared/shared.module';
 import { ChatService } from '../../../services/firebase-services/chat.service';
 import { Message } from '../../../models/interfaces';
 import { UserDatasService } from '../../../services/firebase-services/user-datas.service';
-import { RouterModule } from '@angular/router';
-import { PrivateChatComponent } from "./private-chat/private-chat.component";
-import { map, Observable } from 'rxjs';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { PublicChatComponent } from './public-chat/public-chat.component';
 import { AltHeaderMobileComponent } from "../alt-header-mobile/alt-header-mobile.component";
 
@@ -23,7 +21,7 @@ import { AltHeaderMobileComponent } from "../alt-header-mobile/alt-header-mobile
     SharedModule,
     RouterModule,
     AltHeaderMobileComponent
-],
+  ],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss',
 })
@@ -31,11 +29,11 @@ export class ChatComponent implements OnInit {
   constructor(
     private chatService: ChatService,
     private userDatasService: UserDatasService,
-    private location: Location
+    private route: ActivatedRoute
   ) { }
 
 
-  @ViewChild(PublicChatComponent) publicChatComponent!: PublicChatComponent;
+  // @ViewChild(PublicChatComponent) publicChatComponent!: PublicChatComponent;
   @ViewChild('emojiTarget', { static: true }) emojiTarget!: ElementRef;
   @ViewChild('messageInput', { static: false }) messageInput!: ElementRef;
   selectedEmoji: string = '';
@@ -45,26 +43,62 @@ export class ChatComponent implements OnInit {
   showAddMembers: boolean = false;
   showGreyScreen: boolean = false;
   userIds!: string[];
-  currentChannelName: string = ``; //holen vom service via url
-  currentChannelId: string = `ER84UOYc0F2jptDjWxFo`;
+  currentChannelName: string = ``;
+  currentUserId: string = '';
+  privateChatOtherUserData: any;
+  currentChatId: string = '';
 
-  ngOnInit() { }
-
-
-  detectUrlChange() {
-    this.location.onUrlChange((url) => {
-      this.extractCurrentChannelIdFromUrl(url);
+  /**
+   * Subscribes to the current URL to get the newest Chat-ID and the User-Id from the logged in User
+   */
+  async ngOnInit() {
+    this.route.queryParams.subscribe((params) => {
+      if (params['chatId']) {
+        this.currentChatId = params['chatId'];
+        this.getChannelNameViaId(this.currentChatId);
+      } else {
+        console.error('No chatId found in query parameters');
+      }
+      if (params['userID']) {
+        if (params['userID'] === 'guest') {
+          this.currentUserId = 'guest';
+        } else {
+          this.currentUserId = params['userID'];
+        }
+      } else {
+        console.error('No userID found in query parameters');
+      }
     });
   }
 
 
-  extractCurrentChannelIdFromUrl(url: string) {
-    const fixedUrl = url.replace('/chatID=', '&chatID=');
-    const queryParams = new URLSearchParams(fixedUrl.split('?')[1]);
-    const chatID = queryParams.get('chatID');
-    if (chatID) {
-      this.currentChannelId = chatID;
+  /**
+   * Takes the chatId-string and returns either the current Name of the Chat or the whole Data for the other User from
+   * a private Chat. If the Guest is logged in the Name is hardcoded because it can't be changed.
+   * @param chatId a string containing the ID of the currently opened Chat
+   */
+  async getChannelNameViaId(chatId: string) {
+    if (this.userDatasService.checkIfGuestIsLoggedIn()) {
+      this.currentChannelName = `Entwicklerchannel`;
+    } else {
+      if (this.chatService.getCurrentRoute() === 'public') {
+        this.currentChannelName = await this.chatService.getChannelDocSnapshot(chatId);
+      } else {
+        let otherUserInPrivateChatId = await this.chatService.getOtherUserNameFromPrivateChat(chatId, this.currentUserId);
+        this.privateChatOtherUserData = await this.userDatasService.getSingleUserData(otherUserInPrivateChatId);
+        this.currentChannelName = this.privateChatOtherUserData['username'];
+      }
     }
+  }
+
+
+
+  /**
+   * Assigns data to the variable, which is needed to load the UserInfoCard correctly
+   * @param userId string containing the User Id
+   */
+  async getUserDataFromSingleMemberOfPublicChat(userId: string){
+    this.privateChatOtherUserData = await this.userDatasService.getSingleUserData(userId);
   }
 
 
@@ -108,44 +142,51 @@ export class ChatComponent implements OnInit {
 
 
   async sendMessage(content: string): Promise<void> {
-    debugger
     if (!this.userDatasService.currentUserId || !content) {
-      console.error('User ID is not available');
+      this.userDatasService.getCurrentUserId();
+
+      if (!this.userDatasService.currentUserId) {
+        console.error('User ID is not available');
+        return;
+      }
+      if (!content) {
+        console.error('Bitte geben sie eine Nachricht für den Chat ein');
+        return;
+      }
+    }
+
+    const userId = this.userDatasService.currentUserId
+    const userName = await this.userDatasService.getUserName(userId)
+    if (!userName) {
+      console.error('User data is not available');
       return;
     }
 
-      const userId = this.userDatasService.currentUserId
-      const userName = await this.userDatasService.getUserName(userId)
-      if (!userName) {
-        console.error('User data is not available');
-        return;
-      }
+    const message: Message = {
+      id: this.generateId(), // Generate a unique ID for the message
+      sender: userName, // Replace with actual sender name
+      createdAt: new Date().getTime(),
+      content: content,
+      userId: this.userDatasService.currentUserId, // Use the actual user ID
+      reaction: {}
+    };
 
-      const message: Message = {
-        id: this.generateId(), // Generate a unique ID for the message
-        sender: userName, // Replace with actual sender name
-        createdAt: new Date().getTime(),
-        content: content,
-        userId: this.userDatasService.currentUserId, // Use the actual user ID
-        reaction: {}
-      };
+    if (this.chatService.currentChatId == ``) {
+      console.log("No chat Id provided");
+      return;
+    }
 
-      if (this.chatService.currentChatId== ``) {
-        console.log("No chat Id provided");
-        return;
-      }
+    this.chatService
+      .saveMessage(message)
+      .then(() => {
+        // this.publicChatComponent.scrollToElement('auto');
+        this.messageInput.nativeElement.value = '';
+        console.log('Message saved successfully');
 
-      this.chatService
-        .saveMessage( message)
-        .then(() => {
-          // this.publicChatComponent.scrollToElement('auto');
-          this.messageInput.nativeElement.value = '';
-          console.log('Message saved successfully');
-          
-        })
-        .catch((error) => {
-          console.error('Error saving message:', error);
-        });
+      })
+      .catch((error) => {
+        console.error('Error saving message:', error);
+      });
   }
 
 

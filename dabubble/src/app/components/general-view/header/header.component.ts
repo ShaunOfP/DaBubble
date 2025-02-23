@@ -25,7 +25,6 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
     public userDatasService: UserDatasService,
     private filterService: FilterService
   ) { }
@@ -36,13 +35,17 @@ export class HeaderComponent implements OnInit {
   showGreyScreen: boolean = false;
   showProfileEdit: boolean = false;
   newNameInput: string = ``;
-  inputSearch: string = ''
+  inputSearch: string = '';
 
   async ngOnInit(): Promise<void> {
     await this.userDatasService.getUserDataById();
-    await this.userDatasService.getCurrentChannelId()
+    this.userDatasService.getCurrentUserId();
     this.userDatasService.currentUserData$.subscribe((userData) => {
-      this.currentUserData = userData
+      if (!this.userDatasService.checkIfGuestIsLoggedIn()) {
+        this.currentUserData = userData;
+      } else {
+        //currentUserData setzen wenn gast eingeloggt ist
+      }
     })
     // if(this.userData === undefined){
     //   const user = setInterval(() => {
@@ -144,11 +147,15 @@ export class HeaderComponent implements OnInit {
    * @param form 
    */
   submitForm(form: NgForm) {
-    if (form.touched && form.valid) {
-      // this.userDatasService.updateUserData(this.userId, this.newNameInput);
-      console.log("successful");
+    if (this.userDatasService.checkIfGuestIsLoggedIn()) {
+      console.warn("Log in to change your Name");
     } else {
-      console.log("invalid");
+      if (form.touched && form.valid) {
+        // this.userDatasService.updateUserData(this.userId, this.newNameInput);
+        console.log("successful");
+      } else {
+        console.log("invalid");
+      }
     }
   }
 

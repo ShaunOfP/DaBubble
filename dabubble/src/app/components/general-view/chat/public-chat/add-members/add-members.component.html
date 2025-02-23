@@ -3,20 +3,36 @@
     <h3>Leute hinzufügen</h3>
     <div class="close-button" (click)="closeAddMembersMenu()">
       <img src="/img/general-view/workspace-menu/close.svg" />
-      <img
-        class="d-none"
-        src="/img/general-view/workspace-menu/hover_close.svg"
-      />
+      <img class="d-none" src="/img/general-view/workspace-menu/hover_close.svg" />
     </div>
   </header>
   <div class="channel-name">
     <span>#</span>
-    <span>{{ currentChannelName }}</span>
+    <span>{{ publicChatComponent.currentChannelData.channelName }}</span>
   </div>
 </div>
-<form>
-  <input class="input-field" placeholder="Name eingeben" />
+<form (ngSubmit)="onSubmit()">
+  <div class="wrapper">
+    <input class="input-field" name="searchInput" placeholder="Name eingeben" [(ngModel)]="searchInput"
+      (focus)="isFocused = true" (blur)="handleBlur()" autocomplete="off" />
+    <div class="all-selected-member-container" [ngClass]="{ 'd-none': !showSelectedMembersInSearchField() }">
+      <div class="member-container" *ngFor="let member of selectedMembers | slice : 0 : (isMobile ? 1 : 2)">
+        <img class="avatar" src="{{ member?.avatar }}" alt="Member Avatar" />
+        <span>{{ member.username }}</span>
+        <div class="arrow-back" (click)="removeMember(member)">
+          <img src="/img/general-view/workspace-menu/close.svg" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="button-container">
+    <button class="btn-primary--default" type="submit">Hinzufügen</button>
+  </div>
 </form>
-<div class="button-container">
-  <button class="btn-primary--default">Hinzufügen</button>
-</div>
+<app-all-members [ngClass]="{ 'd-none': searchInput === '' }" [searchQuery]="searchInput"
+  (memberClicked)="clearSearchField()">
+</app-all-members>
+
+<app-all-selected-members *ngIf="openSelectedMembers" [members]="selectedMembers"
+  (closeWindow)="closeSelectedMembersWindow()">
+</app-all-selected-members>

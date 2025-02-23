@@ -5,16 +5,14 @@ import {
   ViewChild,
   AfterViewInit,
   OnDestroy,
-  viewChild,
-  Injectable,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import { ChatService } from '../../../../services/firebase-services/chat.service';
-import { BehaviorSubject, Observable, combineLatest, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs';
-import { CommonModule, Location } from '@angular/common';
+import { Observable, combineLatest, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs';
+import { CommonModule } from '@angular/common';
 import { Message } from '../../../../models/interfaces';
-import { ActivatedRoute } from '@angular/router';
-import { ChatComponent } from '../chat.component';
-
+import { ActivatedRoute, Router } from '@angular/router';
 import { ChannelMembersComponent } from './channel-members/channel-members.component';
 import { AddMembersComponent } from './add-members/add-members.component';
 import { ChatDetailsComponent } from './chat-details/chat-details.component';
@@ -22,6 +20,7 @@ import { FormsModule } from '@angular/forms';
 import { FilterService } from '../../../../services/component-services/filter.service';
 import { EmojiPickerComponent } from '../../emoji-picker/emoji-picker.component';
 import { UserDatasService } from '../../../../services/firebase-services/user-datas.service';
+import { getDoc } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-public-chat',
@@ -38,16 +37,14 @@ import { UserDatasService } from '../../../../services/firebase-services/user-da
   styleUrls: ['./public-chat.component.scss'],
 })
 export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
-
+  @Output() openCurrentThread= new EventEmitter<void>() 
   @ViewChild('chatContainer') chatContainer!: ElementRef;
 
   messages$!: Observable<Message[]>;
   filteredMessages$!: Observable<any[]>;
   reactions$!: Observable<any[]>;
-  channelId: string = 'ER84UOYc0F2jptDjWxFo';
   newMessage: boolean = false;
   hoveredMessageId: string | null = null;
-  currentChannelName: string = `Entwicklerchannel`;
   chatDetails: boolean = false;
   showGreyScreen: boolean = false;
   showMembersInfo: boolean = false;
@@ -55,40 +52,58 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   showPicker: boolean = false
   showPopoverReaction: number | null = null;
   reactionUserNamesCache: { [key: number]: string[] } = {}; // Cache für Benutzernamen
+  currentChannelData: any;
+  currentChatId: string = '';
+
 
   private scrollListener!: () => void;
 
   constructor(
     private chatService: ChatService,
     private route: ActivatedRoute,
-    private location: Location,
     private filterService: FilterService,
-    private userDataService: UserDatasService
+    private userDataService: UserDatasService,
+    private router: Router
   ) { }
 
-  ngOnInit(): void {
-    /*     this.route.queryParams.subscribe((params) => {
-          this.channelId = params['chatID'];
-        }); */
+  ngOnInit() {
+    this.getCurrentChatId();
     this.loadMessages();
     this.loadFilter();
-    this.detectUrlChange();
+  }
+
+
+  getCurrentChatId() {
+    this.route.queryParams.subscribe((params) => {
+      if (params['chatId']) {
+        this.currentChatId = params['chatId'];
+        this.loadChannelInfo();
+        this.loadMessages();
+      } else {
+        console.error('No userID found in query parameters');
+      }
+    });
+  }
+
+
+  async loadChannelInfo() {
+    const data = await getDoc(this.chatService.getChannelDocRef(this.currentChatId));
+
+    if (data.exists()) {
+      this.currentChannelData = data.data();
+      console.log(this.currentChannelData);
+    }
   }
 
   loadMessages() {
-    // const messages = this.chatService.getMessages();
-    // this.messages$ = messages.pipe(
-    //   map((messages: Message[]) => this.returnNewObservable(messages, null)),
-    //   tap((updatedMessages) => {
-    //     console.log("Updated messages:", updatedMessages);
-    //     this.newMessage = true;
-    //   })
-    // );
-    // setTimeout(() => this.scrollToElement('auto'), 1000);
-    debugger
+    const currentRoute = this.router.url;
+    if (currentRoute.includes('private-chat')) {
+      return;
+    }
+
     this.messages$ = this.route.queryParams.pipe(
       map(params => params['chatId']),
-      distinctUntilChanged(), // Nur weiter, wenn sich die chatId wirklich ändert
+      distinctUntilChanged(),
       tap(chatId => {
         if (!chatId) {
           console.error("Keine chatId in den Query-Parametern gefunden!");
@@ -97,7 +112,7 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
           console.log("Aktuelle chatId:", this.chatService.currentChatId);
         }
       }),
-      filter(chatId => !!chatId), // Nur fortfahren, wenn eine gültige chatId vorhanden ist
+      filter(chatId => !!chatId),
       switchMap(() => this.chatService.getMessages()),
       map((messages: Message[]) => this.returnNewObservable(messages, null)),
       tap((updatedMessages: Message[]) => {
@@ -164,22 +179,41 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
-  // reactionEntries(message: Message): { emoji: string, count: number }[] {
+  // reactionEntries(message: Message): { emoji: string, count: number, users: string[] }[] {
   //   return Object.entries(message.reaction || {}).map(([emoji, users]) => ({
   //     emoji,
   //     count: (users as string[]).length,
+  //     users: users as string[],
   //   }));
   // }
 
-
-  reactionEntries(message: Message): { emoji: string, count: number, users: string[] }[] {
-    return Object.entries(message.reaction || {}).map(([emoji, users]) => ({
-      emoji,
-      count: (users as string[]).length,
-      users: users as string[],
-    }));
+  reactionEntries(message: Message): {
+    isImage: boolean;
+    value: string;
+    count: number;
+    users: string[];
+  }[] {
+    return Object.entries(message.reaction || {}).map(([emoji, users]) => {
+      // Falls in deiner Datenbank "green_check" als Platzhalter steht
+      if (emoji === 'green_check') {
+        return {
+          isImage: true,
+          // Pfad zu deiner SVG oder PNG
+          value: 'img/general-view/chat/green_check.svg',
+          count: (users as string[]).length,
+          users: users as string[],
+        };
+      } else {
+        // Andernfalls ist es ein normales Emoji
+        return {
+          isImage: false,
+          value: emoji,
+          count: (users as string[]).length,
+          users: users as string[],
+        };
+      }
+    });
   }
-
 
 
   async showPopover(index: number, users: string[]) {
@@ -189,57 +223,42 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     this.showPopoverReaction = index;
   }
 
-  hidePopover(i: number) {
-    this.showPopoverReaction = i - (i + 1);
+  hidePopover() {
+    this.showPopoverReaction = null;
   }
 
   async formatUserNames(users: string[]): Promise<string[]> {
     let formattedNames = await Promise.all(
       users.map(async (id) => id === this.userDataService.currentUserId ? "Du" : await this.userDataService.getUserName(id))
     );
-    const hasDu = formattedNames.includes("Du");
-    let maxNames = hasDu ? 1 : 2;
-    formattedNames.sort((a, b) => (a === "Du" ? 1 : b === "Du" ? -1 : 0));
-    return formattedNames.slice(0, maxNames).concat(hasDu ? ["Du"] : []);
-  }
-
-  /**
-   * Subscribes to URL Changes
-   */
-  detectUrlChange() {
-    this.location.onUrlChange((url) => {
-      this.extractCurrentChannelIdFromUrl(url);
-      this.loadMessages();
-    });
-  }
-
-  /**
-   * Extracts the ChatID from the current URL and assigns it to the channelId-Variable
-   * @param url The current URL as a string
-   */
-  extractCurrentChannelIdFromUrl(url: string) {
-    const fixedUrl = url.replace('/chatID=', '&chatID=');
-    const queryParams = new URLSearchParams(fixedUrl.split('?')[1]);
-    const chatID = queryParams.get('chatID');
-    if (chatID) {
-      this.channelId = chatID;
+    const yourself = formattedNames.includes("Du");
+    formattedNames = formattedNames.filter(name => name !== "Du");
+    let maxNames = yourself ? 1 : 2;
+    let result = formattedNames.slice(0, maxNames);
+    if (yourself) {
+      result.push("Du");
     }
+    return result;
   }
+
 
   toggleChatDetails() {
     this.showGreyScreen = !this.showGreyScreen;
     this.chatDetails = !this.chatDetails;
   }
 
+
   openMembersInfo() {
     this.showGreyScreen = true;
     this.showMembersInfo = true;
   }
 
+
   closeMembersInfo() {
     this.showMembersInfo = false;
     this.showGreyScreen = false;
   }
+
 
   openAddMembersMenu() {
     if (this.showMembersInfo) {
@@ -248,6 +267,7 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     this.showGreyScreen = true;
     this.showAddMembers = true;
   }
+
 
   closeAddMembersMenu() {
     this.showAddMembers = false;
@@ -312,9 +332,13 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     return userId === currentUser ? 'secondary' : 'primary';
   }
 
+  sendReaction(emoji: string, id: string) {
+    console.log(emoji + id);
+    this.chatService.updateMessage(emoji, id, this.userDataService.currentUserId)
+  }
 
-
-  openThread(): void {
-    // Logic for opening a thread
+  openThread(messageId: string): void {
+    this.chatService.getMessageThread(messageId)
+    this.chatService.setThreadVisible(true);
   }
 }

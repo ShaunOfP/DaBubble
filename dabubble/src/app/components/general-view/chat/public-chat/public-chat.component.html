@@ -2,7 +2,7 @@
 <header>
   <div class="header-chat-info-container" (click)="toggleChatDetails()">
     <h3>#</h3>
-    <h3>{{ currentChannelName }}</h3>
+    <h3>{{ currentChannelData?.channelName }}</h3>
     <button>
       <img class="d-flex center" src="/img/general-view/workspace-menu/arrow_drop_down_thin.svg">
       <img class="d-none center" src="/img/general-view/workspace-menu/hover_arrow_drop_down_thin.svg">
@@ -19,7 +19,7 @@
         <img class="user-icon margin-left-minus-10" src="/img/public/user_icon_male_2.svg">
         <img class="user-icon margin-left-minus-10" src="/img/public/user_icon_male_2.svg">
       </div>
-      <span class="count">3</span> <!--Druch Variable ersetzen-->
+      <span class="count">{{ currentChannelData?.users?.length || 0}}</span>
     </div>
     <div class="change-image-on-hover" (click)="openAddMembersMenu()">
       <img src="/img/general-view/workspace-menu/add_person.svg">
@@ -33,22 +33,22 @@
       <div class="line"></div>
       <div class="chat-date_create">{{ message.formattedDate }}</div>
     </div>
-    <div 
-      class="chat-content--{{ checkStyle(message.userId) }}" 
-      (mouseover)="hoveredMessageId = message.id"
-      (mouseout)="hoveredMessageId = null">
-        <div class="chat-content_reaction" *ngIf="hoveredMessageId === message.id">
-          <button><img src="img/general-view/chat/green_check.svg" alt="check"></button>
-          <button><img src="img/general-view/chat/clap_hands.svg" alt="check"></button>
-          <button (click)="showPicker = !showPicker"><img src="img/general-view/chat/add_reaction.svg"
-              alt="check"></button>
-          <app-emoji-picker *ngIf="showPicker" (mouseleave)="showPicker = false"
-            (click)="$event.preventDefault()"></app-emoji-picker>
-          <button><img src="img/general-view/chat/add_comment.svg" alt="check"></button>
-          <button *ngIf="checkStyle(message.userId) === 'secondary'">
-            <img src="img/general-view/chat/menu_points.svg" alt="check">
-          </button>
-        </div>
+    <div class="chat-content--{{ checkStyle(message.userId) }}" (mouseover)="hoveredMessageId = message.id"
+      (mouseout)="hoveredMessageId = null; hidePopover()">
+      <div class="chat-content_reaction" *ngIf="hoveredMessageId === message.id">
+        <button (click)="sendReaction('green_check', message.id)"><img src="img/general-view/chat/green_check.svg"
+            alt="check"></button>
+        <button (click)="sendReaction('🙌', message.id)"><img src="img/general-view/chat/clap_hands.svg"
+            alt="clap"></button>
+        <button (click)="showPicker = !showPicker"><img src="img/general-view/chat/add_reaction.svg"
+            alt="check"></button>
+        <app-emoji-picker *ngIf="showPicker" (mouseleave)="showPicker = false" (click)="$event.preventDefault()"
+          (emojiSelected)="sendReaction($event, message.id)"></app-emoji-picker>
+        <button (click)="openThread(message.id)"><img src="img/general-view/chat/add_comment.svg" alt="check"></button>
+        <button *ngIf="checkStyle(message.userId) === 'secondary'">
+          <img src="img/general-view/chat/menu_points.svg" alt="check">
+        </button>
+      </div>
       <div class="row-reverse">
         <img src="img/general-view/create-avatar/avatar1.svg" alt="avatar" />
         <div class="chat-content_conversation">
@@ -61,31 +61,40 @@
           </span>
         </div>
       </div>
-      <div class="message-reactions"  >
-         <div *ngFor="let reaction of reactionEntries(message); let i = index">
-          <div 
-            (mouseenter)="showPopover(i, reaction.users)"
-            (mouseleave)="hidePopover(i)"
-            class="message-reactions_btn"> 
-            {{ reaction.emoji }} {{ reaction.count }} 
+      <div class="message-reactions">
+        <div *ngFor="let reaction of reactionEntries(message); let i = index" (mouseleave)="hidePopover()">
+          <div (mouseenter)="showPopover(i, reaction.users)" class="message-reactions_btn">
+            <ng-container *ngIf="reaction.isImage; else textEmoji">
+              <img [src]="reaction.value" alt="Reaction" />
+            </ng-container>
+            <ng-template #textEmoji>
+              {{ reaction.value }}
+            </ng-template>
+            {{ reaction.count }}
           </div>
-          <div class="message-reactions_popover--{{checkStyle(message.userId)}}" *ngIf="showPopoverReaction === i">
-            {{ reaction.emoji }} <br>
-            <div *ngIf="reactionUserNamesCache[i]"> 
+          <div class="message-reactions_popover--{{ checkStyle(message.userId) }}"
+            *ngIf="showPopoverReaction === i && hoveredMessageId ===  message.id">
+            <ng-container *ngIf="reaction.isImage; else textEmojiPopover">
+              <img [src]="reaction.value" alt="Reaction" />
+            </ng-container>
+            <ng-template #textEmojiPopover>{{ reaction.value }}</ng-template>
+            <br>
+            <div *ngIf="reactionUserNamesCache[i]">
               <b *ngFor="let name of reactionUserNamesCache[i]">
                 {{ name }} <br>
-              </b> 
+              </b>
               <span *ngIf="reaction.users.length > 2">
-               und {{ reaction.users.length - 2 }} weitere
+                und {{ reaction.users.length - 2 }} weitere
               </span>
             </div>
-            <br>hat reagiert
+            <br>
+            hat reagiert
           </div>
         </div>
+
       </div>
     </div>
   </div>
-
   <div class="new-message" *ngIf="newMessage">
     <button (click)="scrollToElement('smooth')">neue Nachricht ⬇️</button>
   </div>

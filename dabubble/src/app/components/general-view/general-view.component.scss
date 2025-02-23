@@ -5,7 +5,7 @@
     padding-bottom: 25px;
     gap: 20px;
 
-    @media (max-width: 700px) {
+    @media (max-width: 800px) {
         padding-bottom: 0;
         gap: 0;
     }
@@ -15,14 +15,18 @@ app-header {
     padding: 25px 34px 20px 45px;
     @include arrangement($jc: normal, $g: 220px);
 
-    @media (max-width: 700px) {
+    @media (max-width: 1160px){
+        gap: 5%;
+    }
+
+    @media (max-width: 800px) {
         @include arrangement($jc: space-between, $g: 0px);
         padding: 15px 16px 15px 16px;
     }
 }
 
 app-workspace-menu {
-    @media (max-width: 700px) {
+    @media (max-width: 800px) {
         position: absolute;
         left: 0;
         right: 0;
@@ -34,7 +38,7 @@ app-workspace-menu {
 app-chat {
     width: 100%;
 
-    @media (max-width: 700px) {
+    @media (max-width: 800px) {
         width: auto;
         left: 0;
         right: 0;
@@ -45,7 +49,7 @@ app-chat {
 }
 
 app-thread{
-    @media (max-width: 700px){
+    @media (max-width: 800px){
         left: 0;
         bottom: 0;
         right: 0;

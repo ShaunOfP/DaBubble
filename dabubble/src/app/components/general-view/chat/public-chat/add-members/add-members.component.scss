@@ -70,3 +70,79 @@ button {
     font-size: 18px;
     font-weight: 700;
 }
+
+.all-selected-member-container {
+    position: absolute;
+    display: flex;
+    align-items: center;
+}
+
+.member-container {
+    margin: 8px;
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    gap: 15px;
+    padding: 3px 20px 3px 20px;
+    border-radius: 35px;
+    background-color: var(--color-blue-bg);
+
+    .avatar {
+        width: 34px;
+        border-radius: 50%;
+    }
+
+    img {
+        width: 10px;
+        cursor: pointer;
+    }
+
+    @media(max-width: 500px) {
+        >span {
+            font-size: 12px;
+        }
+    }
+}
+
+form {
+    @include arrangement($jc: normal, $ai: normal, $g: 20px, $fd: column);
+}
+
+.wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+}
+
+.further-members-container {
+    background-color: var(--color-blue-bg);
+    border-radius: 30px;
+    height: fit-content;
+    width: fit-content;
+    padding: 8px 10px;
+    border: none;
+
+    &:hover {
+        cursor: pointer;
+        color: var(--color-purple-secondary-hover);
+        zoom: 1.05;
+    }
+}
+
+.members-container-mobile {
+    display: none;
+    background-color: var(--color-blue-bg);
+    border-radius: 30px;
+    height: fit-content;
+    width: fit-content;
+    padding: 8px 10px;
+    border: none;
+    margin: 10px;
+
+    &:hover {
+        cursor: pointer;
+        color: var(--color-purple-secondary-hover);
+        zoom: 1.05;
+    }
+}

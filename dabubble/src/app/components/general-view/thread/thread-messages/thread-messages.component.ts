@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { ChatService } from '../../../../services/firebase-services/chat.service';
 import { EmojiPickerComponent } from "../../emoji-picker/emoji-picker.component";
+import { Message } from '../../../../models/interfaces';
 
 @Component({
   selector: 'app-thread-messages',
@@ -12,7 +13,7 @@ import { EmojiPickerComponent } from "../../emoji-picker/emoji-picker.component"
   styleUrl: './thread-messages.component.scss'
 })
 export class ThreadMessagesComponent {
-  messages$!: Observable<any[]>;
+  messages$!: Observable<any[]> | undefined;
   showReaction: boolean = true;
   showEmojiPicker: boolean = false;
   @ViewChild('emojiTarget', { static: true }) emojiTarget!: ElementRef;
@@ -27,6 +28,31 @@ export class ThreadMessagesComponent {
 
   ngOnInit() {
     // this.messages$ = this.chatService.getThreadCollection('dOCTHJxiNDhYvmqMokLv', 'buM6uSAhw8snf948FEIh');
+    this.messages$ = this.chatService.currentThreads?.pipe(
+      map((messages:Message[])=> this.returnNewObservable(messages, null)),
+      tap(messages => console.log('Messages array:', messages))
+    )
+  }
+
+
+  returnNewObservable(messages: Message[], lastDate: string | null) {
+    return messages.map((message) => {
+      const currentDate = new Date(message.createdAt).toLocaleDateString(
+        'de-DE',
+        {
+          day: '2-digit',
+          month: '2-digit',
+          year: '2-digit',
+        }
+      );
+      const showDate = currentDate !== lastDate;
+      lastDate = currentDate;
+      return {
+        ...message,
+        showDate,
+        formattedDate: showDate ? currentDate : null,
+      };
+    });
   }
 
   //wenn reaktionen vorhanden dann showReactions auf true

@@ -3,23 +3,14 @@ import { inject } from '@angular/core';
 import {
   Firestore,
   collection,
-  collectionData,
   setDoc,
-  getDocs,
-  where,
-  query,
   doc,
   updateDoc,
   getDoc,
-  addDoc,
-  docData,
-  onSnapshot,
 } from '@angular/fire/firestore';
-import { Observable, BehaviorSubject, Subject, map, take } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { UserDatas } from './../../models/user.class';
-import { user } from '@angular/fire/auth';
 import { GuestDatas } from '../../models/guest.class';
-import { initializeApp } from '@angular/fire/app';
 import { ActivatedRoute } from '@angular/router';
 
 interface SingleUserData {
@@ -46,8 +37,9 @@ export class UserDatasService {
   // userDatas$: Observable<UserObserver[]> = new Subject<UserObserver[]>();
   userIdsSubject = new BehaviorSubject<string[]>([]);
   userIds$ = this.userIdsSubject.asObservable();
-  channelData: any = []; //datentyp ändern
+  channelData: any = [];
   currentUserId: string = ``;
+  showUserInfoCard: boolean = false; //wird benötigt da UserInfoCard anzeige hierüber läuft
   private currentUserDataSubject = new BehaviorSubject<UserObserver | null>(
     null
   );
@@ -72,25 +64,76 @@ export class UserDatasService {
       } else if (guestDoc.exists()) {
         const userData = guestDoc.data() as UserObserver;
         this.currentUserDataSubject.next(userData);
+        this.currentUserId = 'guest';
       } else {
-        console.error('User not found');
-        this.currentUserDataSubject.next(null);
+        if (userID === 'guest') {
+          this.currentUserId = 'guest';
+        } else {
+          console.error('User not found');
+          this.currentUserDataSubject.next(null);
+        }
       }
     });
   }
 
-  async getUserName(id:string):Promise<string>{
+  async getUserName(id: string): Promise<string> {
     try {
       const docRef = doc(this.userDatasRef(), id);
-      const docSnap = await getDoc(docRef);
-      if(docSnap.exists()){
-        return docSnap.data()['username'] as string
-      }
-      else{
-        return ""
+      const guestDocRef = doc(this.guestDatasRef(), id);
+
+      const [docSnap, guestSnap] = await Promise.all([
+        getDoc(docRef),
+        getDoc(guestDocRef),
+      ]);
+
+      if (docSnap.exists()) {
+        return docSnap.data()['username'] as string;
+      } else if (guestSnap.exists()) {
+        return guestSnap.data()['username'] as string;
+      } else {
+        if (this.checkIfGuestIsLoggedIn()) {
+          return 'Guest';
+        } else return '';
       }
     } catch (error) {
-      return 'noUser'
+      return 'noUser';
+    }
+  }
+
+  guestDatasRef() {
+    return collection(this.firestore, 'guestDatas');
+  }
+
+  async saveGuest(accountData: GuestDatas, userId: string): Promise<void> {
+    try {
+      const guestDocRef = doc(this.guestDatasRef(), userId);
+
+      const guestData = {
+        username: accountData.username,
+        avatar: accountData.avatar,
+        channels: accountData.channels,
+        privateChats: accountData.privateChats,
+      };
+      await setDoc(guestDocRef, guestData);
+
+      console.log('✅ Gast erfolgreich gespeichert:', guestData);
+    } catch (error) {
+      console.error('❌ Fehler beim Speichern des Gastes:', error);
+    }
+  }
+
+  /**
+   * Takes an id-string and returns the matching Data from the Database
+   * @param userId the id for which the data is searched
+   * @returns The Object with the userData from the Database
+   */
+  async getSingleUserData(userId: string) {
+    const userDataSnapshot = await getDoc(doc(this.userDatasRef(), userId));
+    if (userDataSnapshot.exists()) {
+      return { id: userDataSnapshot.id, ...userDataSnapshot.data() };
+    } else {
+      console.error('User doesnt exist in the database');
+      return;
     }
   }
 
@@ -114,24 +157,6 @@ export class UserDatasService {
       console.log('✅ Benutzer erfolgreich gespeichert:', userData);
     } catch (error) {
       console.error('❌ Fehler beim Speichern des Benutzers:', error);
-    }
-  }
-
-  async saveGuest(accountData: GuestDatas, userId: string): Promise<void> {
-    try {
-      const guestDocRef = doc(this.guestDatasRef(), userId);
-
-      const guestData = {
-        username: accountData.username,
-        avatar: accountData.avatar,
-        channels: accountData.channels,
-        privateChats: accountData.privateChats,
-      };
-      await setDoc(guestDocRef, guestData);
-
-      console.log('✅ Gast erfolgreich gespeichert:', guestData);
-    } catch (error) {
-      console.error('❌ Fehler beim Speichern des Gastes:', error);
     }
   }
 
@@ -162,17 +187,19 @@ export class UserDatasService {
     return collection(this.firestore, 'userDatas');
   }
 
-  guestDatasRef() {
-    return collection(this.firestore, 'guestDatas');
+  checkIfGuestIsLoggedIn(): boolean {
+    this.getCurrentUserId();
+    return this.currentUserId === 'guest' ? true : false;
   }
 
-  async getCurrentChannelId() {
+  getCurrentUserId() {
     this.route.queryParams.subscribe((params) => {
-      const wholeString = params['userID'];
-      const extractedUserID = wholeString.split('/', 1)[0];
-      if (extractedUserID) {
-        this.currentUserId = extractedUserID;
-        console.log(this.currentUserId);
+      if (params['userID']) {
+        if (params['userID'] != 'guest') {
+          this.currentUserId = params['userID'];
+        } else {
+          this.currentUserId = 'guest';
+        }
       } else {
         console.error('No user ID provided');
       }
@@ -199,6 +226,60 @@ export class UserDatasService {
       return docSnapshot.data();
     } else {
       return undefined;
+    }
+  }
+
+  async getPrivateChannel(userId: string) {
+    const userDocRef = doc(this.firestore, `userDatas/${userId}`);
+    const userDoc = await getDoc(userDocRef);
+
+    if (userDoc.exists()) {
+      return userDoc.get('privateChats');
+    }
+  }
+
+  /**
+   * Removes a channel from the Userdata of the currently logged in User
+   * @param channelData Data from the current Channel
+   */
+  async removeChannelFromUserData(channelData: string[], channelId: string) {
+    console.log(channelData);
+    this.getCurrentUserId();
+    let channelArray = channelData;
+    channelArray = channelArray.filter(
+      (channel: string) => channel !== channelId
+    );
+    console.log(channelArray);
+    const docRef = doc(this.firestore, 'userDatas', this.currentUserId);
+    await updateDoc(docRef, {
+      channels: channelArray,
+    });
+  }
+
+  /**
+   * Alternative way of getting the current User Data
+   * @returns Data of the currently logged in User
+   */
+  async getCurrentUserData() {
+    let data = await getDoc(
+      doc(this.firestore, 'userDatas', this.currentUserId)
+    );
+    if (data.exists()) {
+      return data.data();
+    } else {
+      return 'No data found';
+    }
+  }
+
+  async refreshCurrentUserData(userId: string) {
+    const userDocRef = doc(this.firestore, `userDatas/${userId}`);
+    const userDoc = await getDoc(userDocRef);
+
+    if (userDoc.exists()) {
+      const userData = userDoc.data() as UserObserver;
+      this.currentUserDataSubject.next(userData);
+    } else {
+      console.error('User not found');
     }
   }
 }

@@ -1,63 +1,83 @@
 import { CommonModule, Location } from '@angular/common';
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { combineLatest, distinctUntilChanged, map, Observable, tap } from 'rxjs';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { combineLatest, distinctUntilChanged, filter, map, Observable, switchMap, tap } from 'rxjs';
 import { Message } from '../../../../models/interfaces';
 import { ChatService } from '../../../../services/firebase-services/chat.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FilterService } from '../../../../services/component-services/filter.service';
 import { EmojiPickerComponent } from '../../emoji-picker/emoji-picker.component';
 import { MatCardModule } from '@angular/material/card';
+import { ChatComponent } from '../chat.component';
+import { UserInfoCardComponent } from "../user-info-card/user-info-card.component";
+import { UserDatasService } from '../../../../services/firebase-services/user-datas.service';
 
 @Component({
   selector: 'app-private-chat',
   standalone: true,
-  imports: [CommonModule, EmojiPickerComponent, MatCardModule],
+  imports: [CommonModule, EmojiPickerComponent, MatCardModule, UserInfoCardComponent],
   templateUrl: './private-chat.component.html',
   styleUrl: './private-chat.component.scss'
 })
-export class PrivateChatComponent {
+export class PrivateChatComponent implements OnInit {
   @ViewChild('chatContainer') chatContainer!: ElementRef;
   messages$!: Observable<Message[]>;
   filteredMessages$!: Observable<any[]>;
   reactions$!: Observable<any[]>;
-  channelId: string = 'ER84UOYc0F2jptDjWxFo';
+  channelId: string = '';
   newMessage: boolean = false;
   hoveredMessageId: string | null = null;
   showPicker: boolean = false;
   showPopoverReaction: number | null = null;
-  memberInfoVisible: boolean = false;
 
   private scrollListener!: () => void;
 
   constructor(
     private chatService: ChatService,
     private route: ActivatedRoute,
-    private location: Location,
-    private filterService: FilterService
+    private filterService: FilterService,
+    public chatComponent: ChatComponent,
+    public userDatasService: UserDatasService
   ) { }
 
   ngOnInit(): void {
     this.loadMessages();
     this.loadFilter();
-    this.detectUrlChange();
   }
 
 
   showMemberInfo() {
-    this.memberInfoVisible = !this.memberInfoVisible;
+    this.userDatasService.showUserInfoCard = true;
   }
 
 
   loadMessages() {
-    const messages = this.chatService.getMessages();
-    this.messages$ = messages.pipe(
+    // Umschreiben in den Service, sodass entweder das hier geladen wird, wenn url private enthält oder sonst das andere wenn url public enthält
+    // if private dann folgender code, besser anpassen durch url auslesung
+    // je nach public/private in den jeweiligen collections suchen
+    if (this.chatService.getCurrentRoute() === 'public') {
+      return;
+    }
+
+    this.messages$ = this.route.queryParams.pipe(
+      map(params => params['chatId']),
+      distinctUntilChanged(),
+      tap(chatId => {
+        if (!chatId) {
+          console.error("Keine chatId in den Query-Parametern gefunden!");
+        } else {
+          this.chatService.currentChatId = chatId;
+          console.log("Aktuelle chatId:", this.chatService.currentChatId);
+        }
+      }),
+      filter(chatId => !!chatId),
+      switchMap(() => this.chatService.getMessages()),
       map((messages: Message[]) => this.returnNewObservable(messages, null)),
-      tap((updatedMessages) => {
-        console.log("Updated messages:", updatedMessages);
+      tap((updatedMessages: Message[]) => {
+        console.log("Aktualisierte Nachrichten:", updatedMessages);
         this.newMessage = true;
+        setTimeout(() => this.scrollToElement('auto'), 1000);
       })
     );
-    setTimeout(() => this.scrollToElement('auto'), 1000);
   }
 
   loadFilter() {
@@ -85,30 +105,6 @@ export class PrivateChatComponent {
       emoji,
       count: (users as string[]).length
     }));
-  }
-
-
-  /**
-   * Subscribes to URL Changes
-   */
-  detectUrlChange() {
-    this.location.onUrlChange((url) => {
-      this.extractCurrentChannelIdFromUrl(url);
-      this.loadMessages();
-    });
-  }
-
-  /**
-   * Extracts the ChatID from the current URL and assigns it to the channelId-Variable
-   * @param url The current URL as a string
-   */
-  extractCurrentChannelIdFromUrl(url: string) {
-    const fixedUrl = url.replace('/chatID=', '&chatID=');
-    const queryParams = new URLSearchParams(fixedUrl.split('?')[1]);
-    const chatID = queryParams.get('chatID');
-    if (chatID) {
-      this.channelId = chatID;
-    }
   }
 
 
@@ -204,9 +200,5 @@ export class PrivateChatComponent {
       currentUser = params['userID'];
     });
     return userId === currentUser ? 'secondary' : 'primary';
-  }
-
-  openMessageToUser(){
-    this.memberInfoVisible = false;
   }
 }

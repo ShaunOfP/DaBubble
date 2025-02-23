@@ -6,8 +6,6 @@
 }
 
 header {
-    position: absolute;
-    top: 0;
     width: 100%;
     padding: 32px 45px 20px 45px;
     box-sizing: border-box;
@@ -20,6 +18,7 @@ header {
         padding: 4px 8px;
 
         >img {
+            border-radius: 30px;
             height: 50px;
             width: 50px;
         }
@@ -34,120 +33,8 @@ header {
         }
     }
 
-    @media (max-width: 700px) {
+    @media (max-width: 800px) {
         padding: 10px 16px;
-    }
-}
-
-mat-card {
-    border-radius: 30px;
-    width: 500px;
-    padding: 40px;
-    @include arrangement($fd: column, $g: 45px, $ai: normal);
-}
-
-mat-card-header {
-    @include arrangement($jc: space-between);
-    padding: 0;
-}
-
-mat-card-title {
-    @include fontStyle($fs: 24px, $fw: 700);
-}
-
-mat-card-content {
-    @include arrangement($fd: column, $g: 45px, $jc: normal, $ai: normal);
-    padding: 0px;
-}
-
-.card-image-container {
-    @include arrangement();
-
-    >img {
-        height: 200px;
-        width: 200px;
-    }
-}
-
-.middle-container-upper {
-    @include fontStyle($fs: 32px, $fw: 700);
-    @include arrangement($fd: column, $ai: flex-start, $g: 15px);
-
-    >div {
-        @include arrangement($g: 15px);
-    }
-}
-
-.middle-container-lower {
-    @include arrangement($g: 20px, $jc: normal, $ai: normal);
-
-    >img {
-        height: 30px;
-        width: 30px;
-    }
-
-    >div {
-        @include arrangement($fd: column, $ai: flex-start);
-
-        >span {
-            @include fontStyle($fs: 20px, $fw: 700);
-        }
-
-        >a {
-            text-decoration: none;
-            color: #1381FF;
-            @include fontStyle($fs: 18px);
-        }
-    }
-}
-
-mat-card-footer {
-    @include arrangement();
-
-    >button {
-        @include arrangement($g: 10px);
-
-        >img {
-            height: 24px;
-            width: 24px;
-        }
-
-        >span {
-            @include fontStyle($fw: 700);
-        }
-    }
-}
-
-.active-circle {
-    height: 16px;
-    width: 16px;
-    border-radius: 30px;
-    background-color: var(--color-green);
-}
-
-.active-font {
-    color: var(--color-green);
-    @include fontStyle($fs: 20px);
-}
-
-.card-header-image {
-    height: 40px;
-    width: 40px;
-    @include arrangement();
-
-    &:hover {
-        cursor: pointer;
-        border-radius: 30px;
-        background-color: var(--color-blue-bg);
-
-        >:first-child {
-            display: none;
-        }
-
-        >:last-child {
-            display: flex;
-            cursor: pointer;
-        }
     }
 }
 
@@ -212,7 +99,7 @@ mat-card-footer {
             @include arrangement($jc: normal);
         }
 
-        @media (max-width: 700px) {
+        @media (max-width: 800px) {
             display: none;
         }
     }

@@ -30,16 +30,20 @@ h3 {
     @include arrangement($jc: space-between, $g: 6vw);
     width: 100%;
 
-    @media (max-width: 700px) {
+    @media(max-width: 1160px) {
+        gap: 3vw;
+    }
+
+    @media (max-width: 800px) {
         @include arrangement($jc: flex-end);
     }
 }
 
 .bar-info-searchbar {
     background-color: var(--color-white);
-    min-width: 560px; //eventuell anpassen
+    min-width: 255px;
 
-    @media(max-width: 700px) {
+    @media(max-width: 800px) {
         display: none;
     }
 
@@ -51,6 +55,7 @@ h3 {
     >button {
         background-color: var(--color-white);
         border: none;
+        display: flex;
 
         &:hover {
             cursor: pointer;
@@ -73,7 +78,7 @@ h3 {
         max-width: 250px;
         overflow: hidden;
 
-        @media (max-width: 700px) {
+        @media(max-width: 900px) {
             display: none;
         }
     }
@@ -84,7 +89,7 @@ h3 {
     }
 
     >div {
-        @media (max-width: 700px) {
+        @media (max-width: 800px) {
             display: none;
         }
     }
@@ -127,7 +132,7 @@ h3 {
     height: 30px;
     width: 30px;
 
-    @media (max-width: 700px) {
+    @media (max-width: 800px) {
         display: flex;
     }
 }
@@ -147,7 +152,7 @@ h3 {
     background-color: var(--color-white);
     z-index: 11;
 
-    @media(max-width: 700px) {
+    @media(max-width: 800px) {
         right: 20px;
         left: 20px;
         border-radius: 30px;
@@ -201,7 +206,7 @@ h3 {
     &--font-secondary {
         @include fontStyle($fs: 18px, $fw: 700);
 
-        @media (max-width: 700px) {
+        @media (max-width: 800px) {
             display: none;
         }
     }
@@ -212,7 +217,7 @@ h3 {
         cursor: pointer;
         display: none;
 
-        @media (max-width: 700px) {
+        @media (max-width: 800px) {
             display: flex;
         }
     }
@@ -277,7 +282,7 @@ h3 {
     background-color: var(--color-white);
     z-index: 11;
 
-    @media (max-width: 700px) {
+    @media (max-width: 800px) {
         right: 20px;
         left: 20px;
         border-radius: 30px;
@@ -356,11 +361,11 @@ form {
 .profile-edit-form-buttons {
     @include arrangement($g: 45px, $ai: normal);
 
-    @media (max-width: 450px){
+    @media (max-width: 450px) {
         @include arrangement($g: 0px, $jc: space-around);
     }
 
-    @media (max-width: 330px){
+    @media (max-width: 330px) {
         @include arrangement($fd: column-reverse, $g: 10px);
     }
 }
