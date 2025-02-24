@@ -1,9 +1,9 @@
-import { CommonModule, Location } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { combineLatest, distinctUntilChanged, filter, map, Observable, switchMap, tap } from 'rxjs';
 import { Message } from '../../../../models/interfaces';
 import { ChatService } from '../../../../services/firebase-services/chat.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { FilterService } from '../../../../services/component-services/filter.service';
 import { EmojiPickerComponent } from '../../emoji-picker/emoji-picker.component';
 import { MatCardModule } from '@angular/material/card';
@@ -28,6 +28,7 @@ export class PrivateChatComponent implements OnInit {
   hoveredMessageId: string | null = null;
   showPicker: boolean = false;
   showPopoverReaction: number | null = null;
+  showFirstMessage: boolean = true;
 
   private scrollListener!: () => void;
 
@@ -74,6 +75,9 @@ export class PrivateChatComponent implements OnInit {
       map((messages: Message[]) => this.returnNewObservable(messages, null)),
       tap((updatedMessages: Message[]) => {
         console.log("Aktualisierte Nachrichten:", updatedMessages);
+        if (updatedMessages.length > 0){
+          this.showFirstMessage = false;
+        }
         this.newMessage = true;
         setTimeout(() => this.scrollToElement('auto'), 1000);
       })

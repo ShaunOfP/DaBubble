@@ -404,3 +404,41 @@ app-chat-details {
     top: 80px;
     left: 50px;
 }
+
+.end-of-chat {
+    height: 100%;
+    display: flex;
+    align-items: end;
+}
+
+.first-message-container {
+    margin-left: 45px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+
+    >div {
+        display: flex;
+        gap: 25px;
+        align-items: end;
+
+        >img {
+            height: 100px;
+            width: 100px;
+        }
+
+        >span {
+            @include fontStyle($fs: 24px, $fw: 700);
+        }
+    }
+
+    >span {
+        @include fontStyle($fs: 20px);
+
+        >a {
+            cursor: pointer;
+            @include fontStyle($fs: 20px);
+            color: var(--color-purple-secondary-hover);
+        }
+    }
+}

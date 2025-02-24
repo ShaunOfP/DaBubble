@@ -7,7 +7,14 @@
         <span>{{ chatComponent.currentChannelName }}</span>
     </div>
 </header>
-<div #chatContainer class="all-chat-container">
+<div #chatContainer [class.end-of-chat]="showFirstMessage" class="all-chat-container">
+    <div *ngIf="showFirstMessage" class="first-message-container">
+        <div>
+            <img src="{{ chatComponent.privateChatOtherUserData?.avatar }}">
+            <span>{{ chatComponent.currentChannelName }}</span>
+        </div>
+        <span>Diese Unterhaltung findet nur zwischen <a (click)="showMemberInfo()">&#64;{{ chatComponent.currentChannelName }}</a> und dir statt.</span>
+    </div>
     <div *ngFor="let message of filteredMessages$ | async" class="chat-content" (mouseleave)="showPicker = false">
         <div class="chat-date" *ngIf="message.showDate">
             <div class="line"></div>
