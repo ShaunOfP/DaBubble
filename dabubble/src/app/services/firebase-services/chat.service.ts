@@ -22,7 +22,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class ChatService {
   private firestore = inject(Firestore);
-  currentChatId: string = ``;
+  currentChatId: string = '';
+  public channelName:string = ''
+  public currentChannelUsers: number= 0
   private currentThreadsSubject = new BehaviorSubject<Message[]>([]);
   currentThreads$ = this.currentThreadsSubject.asObservable();
   showCurrentThread = new BehaviorSubject(false);
@@ -40,12 +42,24 @@ export class ChatService {
       if (params['chatId']) {
         this.currentChatId = params['chatId'];
         console.log(this.currentChatId);
+        this.loadChannelInfo()
       } else {
         console.error('No chatId found in query parameters');
       }
     });
   }
 
+  async loadChannelInfo() {
+    const data = await getDoc(this.getChannelDocRef(this.currentChatId));
+    if (data.exists()) {
+      const currentChannelData = data.data();
+      this.channelName = currentChannelData['channelName']
+      this.currentChannelUsers = currentChannelData['users'].length
+      console.log(this.channelName);
+      
+      
+    }
+  }
 
   getMessages(): Observable<Message[]> {
     let currentRoute: string = '';

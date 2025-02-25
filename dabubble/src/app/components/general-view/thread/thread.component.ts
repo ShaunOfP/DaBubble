@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { EmojiPickerComponent } from '../emoji-picker/emoji-picker.component';
 import { SharedModule } from '../../../shared/shared.module';
 import { ThreadMessagesComponent } from "./thread-messages/thread-messages.component";
@@ -13,14 +13,18 @@ import { ChatService } from '../../../services/firebase-services/chat.service';
   templateUrl: './thread.component.html',
   styleUrl: './thread.component.scss'
 })
-export class ThreadComponent {
+export class ThreadComponent implements OnInit{
   @Output() callParent: EventEmitter<void> = new EventEmitter();
   @ViewChild('emojiTarget', { static: true }) emojiTarget!: ElementRef;
   selectedEmoji: string = '';
   toggleMarginLeft: boolean = true;
 
-  constructor(private chatService: ChatService) {
+  constructor(public chatService: ChatService) {
 
+  }
+
+  ngOnInit(): void {
+      
   }
 
   toggleMargin() {

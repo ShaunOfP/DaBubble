@@ -52,14 +52,13 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   showPicker: boolean = false
   showPopoverReaction: number | null = null;
   reactionUserNamesCache: { [key: number]: string[] } = {}; // Cache für Benutzernamen
-  currentChannelData: any;
-  currentChatId: string = '';
+
 
 
   private scrollListener!: () => void;
 
   constructor(
-    private chatService: ChatService,
+    public chatService: ChatService,
     private route: ActivatedRoute,
     private filterService: FilterService,
     private userDataService: UserDatasService,
@@ -67,29 +66,10 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.getCurrentChatId();
     this.loadMessages();
     this.loadFilter();
   }
 
-
-  getCurrentChatId() {
-    this.route.queryParams.subscribe((params) => {
-      if (params['chatId']) {
-        this.currentChatId = params['chatId'];
-        this.loadChannelInfo();
-        this.loadMessages();
-      } else {
-        console.error('No userID found in query parameters');
-      }
-    });
-  }
-
-
-  async loadChannelInfo() {
-    const data = await getDoc(this.chatService.getChannelDocRef(this.currentChatId));
-    if (data.exists()) this.currentChannelData = data.data();
-  }
 
   loadMessages() {
     const currentRoute = this.router.url;

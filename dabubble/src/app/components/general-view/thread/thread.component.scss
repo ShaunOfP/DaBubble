@@ -81,7 +81,7 @@ h3 {
 .chat {
     height: 100%;
     padding-top: 20px;
-    @include arrangement($fd: column, $jc: flex-end);
+    @include arrangement($fd: column, $jc: flex-start);
 }
 
 .input-container {
