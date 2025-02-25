@@ -33,7 +33,7 @@ export class AddMembersComponent {
     public publicChatComponent: PublicChatComponent,
     public channelMemberService: ChannelMemberService,
     public userDataService: UserDatasService,
-    private chatSerivce: ChatService
+    public chatSerivce: ChatService
   ) {
 
   }

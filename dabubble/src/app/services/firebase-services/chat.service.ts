@@ -24,11 +24,11 @@ import { Channel } from './channel.service';
 export class ChatService {
   private firestore = inject(Firestore);
   currentChatId: string = '';
-  public channelName:string = ''
-  public currentChannelUsers: number= 0
+  public channelName: string = ''
+  public currentChannelUsers: number = 0;
   currentChannelOwner: string = '';
   currentChannelDescription: string = '';
-  currentChannelData?:Channel
+  currentChannelData?: Channel;
   private currentThreadsSubject = new BehaviorSubject<Message[]>([]);
   currentThreads$ = this.currentThreadsSubject.asObservable();
   showCurrentThread = new BehaviorSubject(false);
@@ -46,7 +46,7 @@ export class ChatService {
       if (params['chatId']) {
         this.currentChatId = params['chatId'];
         console.log(this.currentChatId);
-        this.loadChannelInfo()
+        this.loadChannelInfo();
       } else {
         console.error('No chatId found in query parameters');
       }
@@ -56,16 +56,16 @@ export class ChatService {
   async loadChannelInfo() {
     try {
       const data = await getDoc(this.getChannelDocRef(this.currentChatId));
-      
+
       if (data.exists()) {
-       this.currentChannelData = data.data() as Channel;
-        }
+        this.currentChannelData = data.data() as Channel;
       }
+    }
     catch (error) {
       console.error('Fehler beim Laden der Kanal-Info:', error);
     }
   }
-  
+
 
   getMessages(): Observable<Message[]> {
     let currentRoute: string = '';
