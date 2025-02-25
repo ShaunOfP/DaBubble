@@ -33,7 +33,7 @@ export class ChatDetailsComponent {
   newDescriptionContainerVisible: boolean = false;
 
   constructor(
-    private chatService: ChatService,
+    public chatService: ChatService,
     public publicChat: PublicChatComponent,
     public userDataService: UserDatasService,
     private channelMemberService: ChannelMemberService,
@@ -46,12 +46,12 @@ export class ChatDetailsComponent {
   /**
    * Assigns the correct Values to the matching Variables when initialized
    */
-  async ngOnInit() {
-    this.currentChannelId = this.publicChat.currentChannelData['channelId'];
-    this.currentChannelName = this.publicChat.currentChannelData['channelName'];
-    this.currentChannelOwner = await this.getNameOfChannelOwner(this.publicChat.currentChannelData['owner']);
-    this.currentChannelDescription = this.publicChat.currentChannelData['description'];
-  }
+  // async ngOnInit() {
+  //   this.currentChannelId = this.chatService.currentChannelData['channelId'];
+  //   this.currentChannelName = this.publicChat.currentChannelData['channelName'];
+  //   this.currentChannelOwner = await this.getNameOfChannelOwner(this.publicChat.currentChannelData['owner']);
+  //   this.currentChannelDescription = this.publicChat.currentChannelData['description'];
+  // }
 
 
   /**
@@ -141,10 +141,10 @@ export class ChatDetailsComponent {
    */
   leaveChannel() {
     if (!this.userDataService.checkIfGuestIsLoggedIn()) {
-      let currentChannelData = this.publicChat.currentChannelData;
+      let currentChannelData = this.chatService.currentChannelData;
       this.userDataService.getCurrentUserId();
       let currentUserId = this.userDataService.currentUserId;
-      if (currentChannelData.channelName != "Entwicklerchannel") {
+      if (currentChannelData?.channelName != "Entwicklerchannel" && currentChannelData != undefined) {
         this.channelMemberService.removeCurrentUserFromChannel(currentUserId, currentChannelData);
         this.userDataService.getCurrentUserData().then((result: any) => {
           this.userDataService.removeChannelFromUserData(result['channels'], this.currentChannelId);

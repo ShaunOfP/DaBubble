@@ -1,7 +1,7 @@
 <header>
   <div class="header-headline">
     <h3>#</h3>
-    <h3>{{ currentChannelName }}</h3>
+    <h3>{{ chatService.currentChannelData?.channelName }}</h3>
   </div>
   <div class="img-container change-image-on-hover" (click)="closeChatDetails()">
     <img src="/img/general-view/workspace-menu/close.svg" />
@@ -17,7 +17,7 @@
       </div>
       <div>
         <h5>#</h5>
-        <span class="fs18">{{ currentChannelName }}</span>
+        <span class="fs18">{{ chatService.currentChannelData?.channelName }}</span>
       </div>
     </div>
   </div>
@@ -31,7 +31,7 @@
     </div>
     <div class="overlap-children">
       <h5>#</h5>
-      <input class="input-field" placeholder="{{ currentChannelName }}" [(ngModel)]="newChannelNameInput"
+      <input class="input-field" placeholder="{{ chatService.currentChannelData?.channelName }}" [(ngModel)]="newChannelNameInput"
         name="newChannelNameInput" />
     </div>
   </form>
@@ -41,12 +41,12 @@
         <h5>Beschreibung</h5>
         <button class="channel-name_btn" (click)="openDesciptionEdit()">Bearbeiten</button>
       </div>
-      <p>{{ currentChannelDescription }}</p>
+      <p>{{ chatService.currentChannelData?.description }}</p>
     </div>
     <span class="separator"></span>
     <div class="owner-info">
       <h5>Erstellt von</h5>
-      <span>{{ currentChannelOwner }}</span>
+      <span>{{ chatService.currentChannelData?.owner }}</span>
     </div>
   </div>
   <div class="description-container" *ngIf="newDescriptionContainerVisible">

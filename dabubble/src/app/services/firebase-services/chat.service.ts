@@ -16,6 +16,7 @@ import {
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Message } from '../../models/interfaces';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Channel } from './channel.service';
 
 @Injectable({
   providedIn: 'root',
@@ -25,6 +26,9 @@ export class ChatService {
   currentChatId: string = '';
   public channelName:string = ''
   public currentChannelUsers: number= 0
+  currentChannelOwner: string = '';
+  currentChannelDescription: string = '';
+  currentChannelData?:Channel
   private currentThreadsSubject = new BehaviorSubject<Message[]>([]);
   currentThreads$ = this.currentThreadsSubject.asObservable();
   showCurrentThread = new BehaviorSubject(false);
@@ -50,16 +54,18 @@ export class ChatService {
   }
 
   async loadChannelInfo() {
-    const data = await getDoc(this.getChannelDocRef(this.currentChatId));
-    if (data.exists()) {
-      const currentChannelData = data.data();
-      this.channelName = currentChannelData['channelName']
-      this.currentChannelUsers = currentChannelData['users'].length
-      console.log(this.channelName);
+    try {
+      const data = await getDoc(this.getChannelDocRef(this.currentChatId));
       
-      
+      if (data.exists()) {
+       this.currentChannelData = data.data() as Channel;
+        }
+      }
+    catch (error) {
+      console.error('Fehler beim Laden der Kanal-Info:', error);
     }
   }
+  
 
   getMessages(): Observable<Message[]> {
     let currentRoute: string = '';

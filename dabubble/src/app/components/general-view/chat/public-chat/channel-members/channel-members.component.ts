@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { PublicChatComponent } from '../public-chat.component';
 import { UserInfoCardComponent } from "../../user-info-card/user-info-card.component";
 import { ChatComponent } from '../../chat.component';
+import { ChatService } from '../../../../../services/firebase-services/chat.service';
 
 @Component({
   selector: 'app-channel-members',
@@ -21,7 +22,7 @@ export class ChannelMembersComponent implements OnInit {
 
   constructor(
     public userDataService: UserDatasService,
-    private publicChatComponent: PublicChatComponent,
+    private chatService: ChatService,
     private chatComponent: ChatComponent
   ) {
 
@@ -39,7 +40,7 @@ export class ChannelMembersComponent implements OnInit {
    * Adds the Members to the Component List
    */
   addMembersToComponent() {
-    this.publicChatComponent.currentChannelData.users.forEach((userId: string) => {
+    this.chatService.currentChannelData?.users.forEach((userId: string) => {
       this.userDataService.getSingleUserData(userId)
         .then(result => {
           this.allUsers.push(result);
