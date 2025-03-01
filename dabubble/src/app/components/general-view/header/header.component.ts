@@ -6,16 +6,27 @@ import { NgForm, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { User } from '@angular/fire/auth';
 import { AuthService } from '../../../services/firebase-services/auth.service';
-import { UserDatasService, UserObserver } from '../../../services/firebase-services/user-datas.service';
+import {
+  UserDatasService,
+  UserObserver,
+} from '../../../services/firebase-services/user-datas.service';
 import { UserDatas } from '../../../models/user.class';
 import { map, Observable, take } from 'rxjs';
 import { PublicChatComponent } from '../chat/public-chat/public-chat.component';
 import { FilterService } from '../../../services/component-services/filter.service';
+import { SearchResultsComponent } from './search-results/search-results.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [MatButtonModule, MatMenuModule, RouterModule, FormsModule, CommonModule],
+  imports: [
+    MatButtonModule,
+    MatMenuModule,
+    RouterModule,
+    FormsModule,
+    CommonModule,
+    SearchResultsComponent,
+  ],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
@@ -27,7 +38,7 @@ export class HeaderComponent implements OnInit {
     private router: Router,
     public userDatasService: UserDatasService,
     private filterService: FilterService
-  ) { }
+  ) {}
 
   @ViewChild('menu') menu!: MatMenu;
   @ViewChild('menuTrigger') menuTrigger!: MatMenuTrigger;
@@ -36,6 +47,7 @@ export class HeaderComponent implements OnInit {
   showProfileEdit: boolean = false;
   newNameInput: string = ``;
   inputSearch: string = '';
+  searchFocused: boolean = false;
 
   async ngOnInit(): Promise<void> {
     await this.userDatasService.getUserDataById();
@@ -46,7 +58,7 @@ export class HeaderComponent implements OnInit {
       } else {
         //currentUserData setzen wenn gast eingeloggt ist
       }
-    })
+    });
     // if(this.userData === undefined){
     //   const user = setInterval(() => {
     //     this.userData = this.userDatasService.currentUserData
@@ -56,7 +68,6 @@ export class HeaderComponent implements OnInit {
     //     }
     //   }, 100);
     // }
-
 
     //  this.userDatasService.userIds$.pipe(
     //   map((ids) => console.log(ids))
@@ -86,7 +97,6 @@ export class HeaderComponent implements OnInit {
       this.openDropdownMenu();
     }
   }
-
 
   /**
    * Navigating to a specific site via the router using a given route
@@ -143,18 +153,18 @@ export class HeaderComponent implements OnInit {
   }
 
   /**
-   * 
-   * @param form 
+   *
+   * @param form
    */
   submitForm(form: NgForm) {
     if (this.userDatasService.checkIfGuestIsLoggedIn()) {
-      console.warn("Log in to change your Name");
+      console.warn('Log in to change your Name');
     } else {
       if (form.touched && form.valid) {
         // this.userDatasService.updateUserData(this.userId, this.newNameInput);
-        console.log("successful");
+        console.log('successful');
       } else {
-        console.log("invalid");
+        console.log('invalid');
       }
     }
   }
@@ -163,5 +173,9 @@ export class HeaderComponent implements OnInit {
     console.log(this.inputSearch);
     this.filterService.updateFilter(this.inputSearch);
     // this.publicChatComponent.updateFilter(this.inputSearch)
+  }
+
+  searchFocus() {
+    this.searchFocused = !this.searchFocused;
   }
 }

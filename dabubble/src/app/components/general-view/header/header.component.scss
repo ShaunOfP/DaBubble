@@ -1,384 +1,392 @@
-@import './../../../../styles.scss';
+@import "./../../../../styles.scss";
 
 @mixin fontStyle($fs: 18px, $fw: 700) {
-    font-size: $fs;
-    font-weight: $fw;
+  font-size: $fs;
+  font-weight: $fw;
 }
 
 .font-size--18--700 {
-    @include fontStyle();
+  @include fontStyle();
 }
 
 .font-size--20--700 {
-    @include fontStyle($fs: 20px);
+  @include fontStyle($fs: 20px);
 }
 
 h3 {
-    margin: 0;
+  margin: 0;
 }
 
 .header-logo {
-    @include arrangement($jc: normal, $g: 16px);
+  @include arrangement($jc: normal, $g: 16px);
 
-    >img {
-        height: 70px;
-        width: 70px;
-    }
+  > img {
+    height: 70px;
+    width: 70px;
+  }
 }
 
 .bar-info {
-    @include arrangement($jc: space-between, $g: 6vw);
-    width: 100%;
+  @include arrangement($jc: space-between, $g: 6vw);
+  width: 100%;
 
-    @media(max-width: 1160px) {
-        gap: 3vw;
-    }
+  @media (max-width: 1160px) {
+    gap: 3vw;
+  }
 
-    @media (max-width: 800px) {
-        @include arrangement($jc: flex-end);
-    }
+  @media (max-width: 800px) {
+    @include arrangement($jc: flex-end);
+  }
 }
 
 .bar-info-searchbar {
+  background-color: var(--color-white);
+  min-width: 255px;
+
+  @media (max-width: 800px) {
+    display: none;
+  }
+
+  > input {
+    @include fontStyle($fs: 24px, $fw: 400);
     background-color: var(--color-white);
-    min-width: 255px;
+  }
 
-    @media(max-width: 800px) {
-        display: none;
+  > button {
+    background-color: var(--color-white);
+    border: none;
+    display: flex;
+
+    &:hover {
+      cursor: pointer;
     }
 
-    >input {
-        @include fontStyle($fs: 24px, $fw: 400);
-        background-color: var(--color-white);
+    > img {
+      height: 25px;
+      width: 25px;
     }
-
-    >button {
-        background-color: var(--color-white);
-        border: none;
-        display: flex;
-
-        &:hover {
-            cursor: pointer;
-        }
-
-        >img {
-            height: 25px;
-            width: 25px;
-        }
-    }
+  }
 }
 
 .bar-info-account-info {
-    @include arrangement($g: 20px, $jc: normal);
+  @include arrangement($g: 20px, $jc: normal);
+  height: 70px;
+
+  > span {
+    @include fontStyle($fs: 32px);
+    width: max-content;
+    max-width: 250px;
+    overflow: hidden;
+
+    @media (max-width: 1050px) {
+      display: none;
+    }
+  }
+
+  > img {
     height: 70px;
+    width: 70px;
+  }
 
-    >span {
-        @include fontStyle($fs: 32px);
-        width: max-content;
-        max-width: 250px;
-        overflow: hidden;
+  > div {
+    @media (max-width: 800px) {
+      display: none;
+    }
+  }
 
-        @media(max-width: 1050px) {
-            display: none;
+  &:hover {
+    color: var(--color-purple-primary-disabled);
+    cursor: pointer;
+
+    > div {
+      > button {
+        :first-child {
+          display: none;
         }
-    }
 
-    >img {
-        height: 70px;
-        width: 70px;
-    }
-
-    >div {
-        @media (max-width: 800px) {
-            display: none;
+        :last-child {
+          display: flex;
         }
+      }
     }
-
-    &:hover {
-        color: var(--color-purple-primary-disabled);
-        cursor: pointer;
-
-        >div {
-            >button {
-                :first-child {
-                    display: none;
-                }
-
-                :last-child {
-                    display: flex;
-                }
-            }
-        }
-    }
+  }
 }
 
 .grey-layer {
-    position: absolute;
-    inset: 0;
-    background-color: rgba(0, 0, 0, 0.4);
-    z-index: 10;
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 10;
 }
 
 .mdc-button {
-    min-width: 30px;
+  min-width: 30px;
 }
 
 .mat-mdc-menu-trigger {
-    padding: 0;
+  padding: 0;
 }
 
 .mat-menu-button-img {
-    display: none;
-    height: 30px;
-    width: 30px;
+  display: none;
+  height: 30px;
+  width: 30px;
 
-    @media (max-width: 800px) {
-        display: flex;
-    }
+  @media (max-width: 800px) {
+    display: flex;
+  }
 }
 
 .mat-mdc-menu-item {
-    background-color: transparent !important;
+  background-color: transparent !important;
 }
 
 .profile-info {
-    @include arrangement($fd: column, $g: 45px, $ai: normal, $jc: normal);
-    width: 500px;
-    position: absolute;
-    top: 100px;
-    right: 40px;
-    border-radius: 30px 0px 30px 30px;
-    padding: 40px;
-    background-color: var(--color-white);
-    z-index: 11;
+  @include arrangement($fd: column, $g: 45px, $ai: normal, $jc: normal);
+  width: 500px;
+  position: absolute;
+  top: 100px;
+  right: 40px;
+  border-radius: 30px 0px 30px 30px;
+  padding: 40px;
+  background-color: var(--color-white);
+  z-index: 11;
 
-    @media(max-width: 800px) {
-        right: 20px;
-        left: 20px;
-        border-radius: 30px;
-        width: auto;
-        padding: 45px 20px 45px 20px;
-        // center the div
-    }
+  @media (max-width: 800px) {
+    right: 20px;
+    left: 20px;
+    border-radius: 30px;
+    width: auto;
+    padding: 45px 20px 45px 20px;
+    // center the div
+  }
 }
 
 .profile-info-header {
-    @include arrangement($jc: space-between);
+  @include arrangement($jc: space-between);
 
-    >div {
-        height: 40px;
-        width: 40px;
-        @include arrangement();
+  > div {
+    height: 40px;
+    width: 40px;
+    @include arrangement();
 
-        &:hover {
-            background-color: var(--color-blue-border);
-            border-radius: 30px;
-        }
+    &:hover {
+      background-color: var(--color-blue-border);
+      border-radius: 30px;
     }
+  }
 }
 
 .profile-info-image {
-    @include arrangement();
-    height: 200px;
-    width: 100%;
+  @include arrangement();
+  height: 200px;
+  width: 100%;
 
-    >img {
-        width: 200px;
-        border-radius: 100%;
-    }
+  > img {
+    width: 200px;
+    border-radius: 100%;
+  }
 }
 
 .avatar-small {
-    border-radius: 100%;
+  border-radius: 100%;
 }
 
 .profile-info-name-status {
-    @include arrangement($fd: column, $jc: normal, $ai: normal, $g: 15px);
+  @include arrangement($fd: column, $jc: normal, $ai: normal, $g: 15px);
 }
 
 .profile-info-name-status-upper {
-    @include arrangement($jc: space-between);
+  @include arrangement($jc: space-between);
 
-    &--font-primary {
-        @include fontStyle($fs: 32px, $fw: 700);
+  &--font-primary {
+    @include fontStyle($fs: 32px, $fw: 700);
+  }
+
+  &--font-secondary {
+    @include fontStyle($fs: 18px, $fw: 700);
+
+    @media (max-width: 800px) {
+      display: none;
     }
+  }
 
-    &--font-secondary {
-        @include fontStyle($fs: 18px, $fw: 700);
+  > img {
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+    display: none;
 
-        @media (max-width: 800px) {
-            display: none;
-        }
+    @media (max-width: 800px) {
+      display: flex;
     }
-
-    >img {
-        height: 30px;
-        width: 30px;
-        cursor: pointer;
-        display: none;
-
-        @media (max-width: 800px) {
-            display: flex;
-        }
-    }
+  }
 }
 
 .profile-info-name-status-lower {
-    @include arrangement($ai: center, $jc: normal, $g: 15px);
+  @include arrangement($ai: center, $jc: normal, $g: 15px);
 
-    >span {
-        @include fontStyle($fs: 20px, $fw: 400);
-        color: var(--color-green);
-    }
+  > span {
+    @include fontStyle($fs: 20px, $fw: 400);
+    color: var(--color-green);
+  }
 }
 
 .color-purple-with-hover {
-    color: var(--color-purple-primary-disabled);
-    transition: all ease-in 100ms;
+  color: var(--color-purple-primary-disabled);
+  transition: all ease-in 100ms;
 
-    &:hover {
-        cursor: pointer;
-        color: var(--color-purple-secondary-hover);
-    }
+  &:hover {
+    cursor: pointer;
+    color: var(--color-purple-secondary-hover);
+  }
 }
 
 .active-circle {
-    height: 16px;
-    width: 16px;
-    border-radius: 30px;
-    background-color: var(--color-green);
+  height: 16px;
+  width: 16px;
+  border-radius: 30px;
+  background-color: var(--color-green);
 }
 
 .profile-info-mail {
-    >a {
-        margin-left: 50px;
-        text-decoration: none;
-        color: #1381FF;
-    }
+  > a {
+    margin-left: 50px;
+    text-decoration: none;
+    color: #1381ff;
+  }
 }
 
 .profile-info-mail-title {
-    @include arrangement($jc: normal, $g: 20px);
+  @include arrangement($jc: normal, $g: 20px);
 
-    &--image {
-        @extend .profile-info-mail-title;
-        height: 30px;
-        width: 30px;
-    }
+  &--image {
+    @extend .profile-info-mail-title;
+    height: 30px;
+    width: 30px;
+  }
 
-    >span {
-        @include fontStyle($fs: 20px);
-    }
+  > span {
+    @include fontStyle($fs: 20px);
+  }
 }
 
 .profile-edit {
-    @include arrangement($fd: column, $g: 45px, $ai: normal);
-    width: 500px;
-    position: absolute;
-    top: 100px;
-    right: 40px;
-    border-radius: 30px 0px 30px 30px;
-    padding: 40px;
-    background-color: var(--color-white);
-    z-index: 11;
+  @include arrangement($fd: column, $g: 45px, $ai: normal);
+  width: 500px;
+  position: absolute;
+  top: 100px;
+  right: 40px;
+  border-radius: 30px 0px 30px 30px;
+  padding: 40px;
+  background-color: var(--color-white);
+  z-index: 11;
 
-    @media (max-width: 800px) {
-        right: 20px;
-        left: 20px;
-        border-radius: 30px;
-        width: auto;
-        padding: 45px 20px 45px 20px;
-        // center the div
-    }
+  @media (max-width: 800px) {
+    right: 20px;
+    left: 20px;
+    border-radius: 30px;
+    width: auto;
+    padding: 45px 20px 45px 20px;
+    // center the div
+  }
 }
 
 .color-active {
-    color: var(--color-green);
+  color: var(--color-green);
 }
 
 .change-image-on-hover {
-    cursor: pointer;
+  cursor: pointer;
 
-    &:hover {
-        >:first-child {
-            display: none;
-        }
-
-        >:last-child {
-            display: flex;
-        }
+  &:hover {
+    > :first-child {
+      display: none;
     }
+
+    > :last-child {
+      display: flex;
+    }
+  }
 }
 
 .input-field {
-    background-color: var(--color-white);
-    border: 1px solid var(--color-blue-border);
-    @include fontStyle($fs: 18px, $fw: 400);
+  background-color: var(--color-white);
+  border: 1px solid var(--color-blue-border);
+  @include fontStyle($fs: 18px, $fw: 400);
 
-    &:hover {
-        border: 1px solid var(--color-purple-primary-disabled);
-    }
+  &:hover {
+    border: 1px solid var(--color-purple-primary-disabled);
+  }
 
-    &:focus {
-        border: 1px solid var(--color-purple-secondary-hover);
-        outline: none;
-    }
+  &:focus {
+    border: 1px solid var(--color-purple-secondary-hover);
+    outline: none;
+  }
 }
 
 ::placeholder {
-    @include fontStyle($fw: 400);
+  @include fontStyle($fw: 400);
 }
 
 form {
-    @include arrangement($ai: normal, $fd: column, $g: 20px);
+  @include arrangement($ai: normal, $fd: column, $g: 20px);
 }
 
 .profile-edit-form {
-    @include arrangement($g: 8px, $fd: column, $ai: normal, $jc: normal);
+  @include arrangement($g: 8px, $fd: column, $ai: normal, $jc: normal);
 
-    >div {
-        @include arrangement($g: 20px, $ai: center, $jc: normal);
-    }
+  > div {
+    @include arrangement($g: 20px, $ai: center, $jc: normal);
+  }
 }
 
 .profile-edit-form-image {
-    height: 30px;
-    width: 30px;
-    @include arrangement($ai: center, $jc: normal);
+  height: 30px;
+  width: 30px;
+  @include arrangement($ai: center, $jc: normal);
 
-    &--primary {
-        @extend .profile-edit-form-image;
-        height: 100%;
-    }
+  &--primary {
+    @extend .profile-edit-form-image;
+    height: 100%;
+  }
 
-    &--secondary {
-        @extend .profile-edit-form-image;
-        width: 100%;
-        height: 25px;
-    }
+  &--secondary {
+    @extend .profile-edit-form-image;
+    width: 100%;
+    height: 25px;
+  }
 }
 
 .profile-edit-form-buttons {
-    @include arrangement($g: 45px, $ai: normal);
+  @include arrangement($g: 45px, $ai: normal);
 
-    @media (max-width: 450px) {
-        @include arrangement($g: 0px, $jc: space-around);
-    }
+  @media (max-width: 450px) {
+    @include arrangement($g: 0px, $jc: space-around);
+  }
 
-    @media (max-width: 330px) {
-        @include arrangement($fd: column-reverse, $g: 10px);
-    }
+  @media (max-width: 330px) {
+    @include arrangement($fd: column-reverse, $g: 10px);
+  }
 }
 
 .d-none {
-    display: none;
+  display: none;
 }
 
 .invalid {
-    border: 1px solid var(--color-purple-error);
+  border: 1px solid var(--color-purple-error);
 }
 
 .error-message {
-    @include fontStyle($fs: 18px, $fw: 400);
-    color: var(--color-purple-error);
+  @include fontStyle($fs: 18px, $fw: 400);
+  color: var(--color-purple-error);
+}
+
+.search-container {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  position: relative;
+  width: 65%;
 }
