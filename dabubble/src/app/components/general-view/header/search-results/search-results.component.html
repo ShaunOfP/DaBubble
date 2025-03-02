@@ -1,30 +1,32 @@
-<div class="all">
-  <div class="members-list-container">
-    <ng-container>
-      <div>
-        <p>Channel:</p>
-        <ng-template #noChannels>
-          <div class="no-results">
-            <p>Keine Channels gefunden</p>
-          </div>
-        </ng-template>
+<div class="main">
+  <div class="search-info">
+    <span>Suche mit &#64; nach Mitgliedern und mit # nach einem Channel</span>
+    <div class="close-button" (click)="onCloseClick()">
+      <img src="/img/general-view/workspace-menu/close.svg" />
+      <img
+        class="d-none"
+        src="/img/general-view/workspace-menu/hover_close.svg"
+      />
+    </div>
+  </div>
+  <div class="search-results">
+    <div>
+      <p>Channel:</p>
+      <div class="no-results">
+        <span>Keine Channels gefunden</span>
       </div>
-      <div>
-        <p>Mitglieder:</p>
-        <ng-template #noMembers>
-          <div class="no-results">
-            <p>Keine Mitglieder gefunden</p>
-          </div>
-        </ng-template>
+    </div>
+    <div>
+      <p>Mitglieder:</p>
+      <div class="no-results">
+        <span>Keine Mitglieder gefunden</span>
       </div>
-      <div>
-        <p>Nachrichten:</p>
-        <ng-template #noMessages>
-          <div class="no-results">
-            <p>Keine Nachrichten gefunden</p>
-          </div>
-        </ng-template>
+    </div>
+    <div>
+      <p>Nachrichten:</p>
+      <div class="no-results">
+        <span>Keine Nachrichten gefunden</span>
       </div>
-    </ng-container>
+    </div>
   </div>
 </div>

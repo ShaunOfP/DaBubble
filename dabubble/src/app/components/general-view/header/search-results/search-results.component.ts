@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FilterService } from '../../../../services/component-services/filter.service';
 
 @Component({
@@ -10,5 +10,12 @@ import { FilterService } from '../../../../services/component-services/filter.se
   styleUrl: './search-results.component.scss',
 })
 export class SearchResultsComponent {
+  @Input() inputSearch!: string;
+  @Output() closeClicked = new EventEmitter<void>();
+
   constructor(private filterService: FilterService) {}
+
+  onCloseClick() {
+    this.closeClicked.emit();
+  }
 }

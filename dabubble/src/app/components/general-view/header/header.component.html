@@ -9,14 +9,15 @@
         placeholder="Devspace durchsuchen"
         [(ngModel)]="inputSearch"
         (focus)="searchFocus()"
-        (blur)="searchFocus()"
       />
       <button (click)="searchInDevspace()">
         <img src="/img/general-view/workspace-menu/search.svg" />
       </button>
     </div>
     <app-search-results
-      [ngClass]="{ 'd-none': inputSearch === '' }"
+      *ngIf="searchFocused"
+      [inputSearch]="inputSearch"
+      (closeClicked)="closeSearch()"
     ></app-search-results>
   </div>
 
