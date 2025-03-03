@@ -5,6 +5,10 @@ section {
   height: calc(100vh - 130px);
   border-radius: 30px;
 
+  @media(max-width: 1600px) {
+    margin-right: 20px;
+  }
+
   @media (max-width: 800px) {
     height: calc(100vh - 100px);
   }
