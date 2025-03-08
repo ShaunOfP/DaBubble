@@ -5,6 +5,8 @@ import { ThreadMessagesComponent } from "./thread-messages/thread-messages.compo
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { AltHeaderMobileComponent } from "../alt-header-mobile/alt-header-mobile.component";
 import { ChatService } from '../../../services/firebase-services/chat.service';
+import { UserDatasService } from '../../../services/firebase-services/user-datas.service';
+import { Message } from '../../../models/interfaces';
 
 @Component({
   selector: 'app-thread',
@@ -19,7 +21,8 @@ export class ThreadComponent implements OnInit{
   selectedEmoji: string = '';
   toggleMarginLeft: boolean = true;
 
-  constructor(public chatService: ChatService) {
+  constructor(public chatService: ChatService,
+  private userDatasService: UserDatasService) {
 
   }
 
@@ -51,5 +54,27 @@ export class ThreadComponent implements OnInit{
     if (emojiPickerElement) {
       emojiPickerElement.classList.add('d-none');
     }
+  }
+
+  async sendMessage(content:string){
+  console.log(this.chatService.currentMessageId);
+ 
+    if(!content) return
+    const userId = this.userDatasService.currentUserId
+    const userName = await this.userDatasService.getUserName(userId)
+    const message:  Message = {
+          id: this.generateId(), 
+          sender: userName, 
+          createdAt: new Date().getTime(),
+          content: content,
+          userId: this.userDatasService.currentUserId, // Use the actual user ID
+          reaction: {}
+        };
+    const messageId = this.chatService.currentMessageId
+    this.chatService.generateThread(messageId, message)
+  }
+  private generateId(): string {
+    // Generate a unique ID for the message (e.g., using a UUID library or custom logic)
+    return 'unique-id-' + Math.random().toString(36).substr(2, 9);
   }
 }

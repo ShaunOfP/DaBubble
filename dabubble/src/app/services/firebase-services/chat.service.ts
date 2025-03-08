@@ -13,7 +13,7 @@ import {
   runTransaction,
   arrayUnion,
 } from '@angular/fire/firestore';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Message } from '../../models/interfaces';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Channel } from './channel.service';
@@ -33,6 +33,7 @@ export class ChatService {
   currentThreads$ = this.currentThreadsSubject.asObservable();
   showCurrentThread = new BehaviorSubject(false);
   chatMarginRight: boolean = true;
+  currentMessageId: string = ''
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -273,5 +274,8 @@ export class ChatService {
     threadObservable.subscribe(messages => {
       this.currentThreadsSubject.next(messages);
     });
+    this.currentMessageId = messageId
+
   }
+
 }
