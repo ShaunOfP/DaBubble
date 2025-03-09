@@ -12,20 +12,24 @@
   <div class="search-results">
     <div>
       <p>Channel:</p>
-      <div class="no-results">
+      <div class="results" *ngIf="channelResults.length > 0">
+        <span *ngFor="let channel of channelResults">
+          {{ channel.channelName }}
+        </span>
+      </div>
+      <div class="no-results" *ngIf="channelResults.length == 0">
         <span>Keine Channels gefunden</span>
       </div>
     </div>
     <div>
       <p>Mitglieder:</p>
-      <div class="no-results">
-        <span>Keine Mitglieder gefunden</span>
+      <div class="results" *ngIf="memberResults.length > 0">
+        <span *ngFor="let member of memberResults">
+          {{ member.username }}
+        </span>
       </div>
-    </div>
-    <div>
-      <p>Nachrichten:</p>
-      <div class="no-results">
-        <span>Keine Nachrichten gefunden</span>
+      <div class="no-results" *ngIf="memberResults.length == 0">
+        <span>Keine Mitglieder gefunden</span>
       </div>
     </div>
   </div>

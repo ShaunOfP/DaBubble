@@ -170,7 +170,7 @@ export class HeaderComponent implements OnInit {
   }
 
   searchInDevspace() {
-    console.log(this.inputSearch);
+    this.filterService.resetSearchResults();
     this.filterService.updateFilter(this.inputSearch);
     // this.publicChatComponent.updateFilter(this.inputSearch)
   }
