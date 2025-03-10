@@ -109,7 +109,7 @@ app-workspace-state-toggle-button {
     }
   }
 
-  @media (max-width:700px) {
+  @media (max-width: 800px) {
     display: none;
   }
 }
@@ -139,7 +139,7 @@ app-workspace-state-toggle-button {
     cursor: pointer;
   }
 
-  @media (min-width: 701px) {
+  @media (min-width: 801px) {
     display: none;
   }
 }
