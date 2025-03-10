@@ -1,6 +1,6 @@
 <div *ngFor="let message of messages$ | async" class="thread-content--primary">
     <img src="img/general-view/create-avatar/avatar1.svg" alt="avatar" />
-    <div class="thread-content_conversation">
+    <div class="thread-content_conversation" (mouseenter)="hoveredMessageId = message.id" (mouseleave)="hoveredMessageId = null">
         <div class="thread-content_header">
             <span>{{ message.sender }}</span>
             <span>{{ message.formattedDate }}</span>
@@ -8,30 +8,6 @@
         <span class="thread-content_conversation--primary">
             <p>{{ message.content }}</p>
         </span>
-        <div class="reaction-container" *ngIf="showReaction">
-            <div class="reaction-container-wrapper">
-                <div class="reaction-container--primary" *ngFor="let reaction of reactions; let i = index">
-                    <div class="thread-content_reactions" appClickOutside (appClickOutside)="hideEmojiPicker()"
-                        (mouseenter)="toggleReactionSender(i)" (mouseleave)="toggleReactionSender(null)">
-                        <div class="reaction-container-info" [class.hovered]="hoverIndex === i">
-                            <span>{{ reaction.emoji }}</span>
-                            <span>{{ reaction.sender }}</span>
-                            <span>hat reagiert</span>
-                        </div>
-                        <div class="thread-content_reactions--primary">
-                            <span>{{ reaction.emoji }}</span>
-                            <span>1</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="add-reaction">
-                <app-emoji-picker class="right-corner-0" *ngIf="showEmojiPicker" (emojiSelected)="onEmojiReceived($event)"></app-emoji-picker>
-                <button class="add-reaction-button image-swap-on-hover" (click)="openEmojiPicker()">
-                    <img src="img/general-view/thread/add_reaction.svg">
-                    <img src="img/general-view/thread/hover_add_reaction.svg">
-                </button>
-            </div>
-        </div>
+        <app-reactions [message]="message" [hoveredMessageId]="hoveredMessageId"></app-reactions>
     </div>
 </div>
