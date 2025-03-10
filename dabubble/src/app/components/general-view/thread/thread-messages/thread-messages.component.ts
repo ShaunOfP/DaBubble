@@ -5,6 +5,8 @@ import { ChatService } from '../../../../services/firebase-services/chat.service
 import { EmojiPickerComponent } from "../../emoji-picker/emoji-picker.component";
 import { Message } from '../../../../models/interfaces';
 import { ReactionsComponent } from '../../chat/public-chat/reactions/reactions.component';
+import { ActivatedRoute } from '@angular/router';
+import { UserDatasService } from '../../../../services/firebase-services/user-datas.service';
 
 @Component({
   selector: 'app-thread-messages',
@@ -18,15 +20,18 @@ export class ThreadMessagesComponent {
   showReaction: boolean = true;
   showEmojiPicker: boolean = false;
   hoveredMessageId: string| null = null
+  showPicker:boolean = false
+  
   @ViewChild('emojiTarget', { static: true }) emojiTarget!: ElementRef;
   selectedEmoji: string = '';
-  reactions: any[] = [{ //type zu object wenn sender berücksichtigt wird
-    'emoji': '😁',
-    'sender': 'Jake'
-  }];
   hoverIndex: number | null = null;
 
-  constructor(private chatService: ChatService) { }
+  constructor(
+    private chatService: ChatService,
+    private route: ActivatedRoute,
+    private userDataService: UserDatasService,
+
+  ) { }
 
   ngOnInit() {
     // this.messages$ = this.chatService.getThreadCollection('dOCTHJxiNDhYvmqMokLv', 'buM6uSAhw8snf948FEIh');
@@ -63,16 +68,6 @@ export class ThreadMessagesComponent {
     this.showEmojiPicker ? this.hideEmojiPicker() : this.showEmojiPicker = true;
   }
 
-  onEmojiReceived(emoji: string) {
-    this.selectedEmoji = emoji;
-    this.reactions.push({
-      'emoji': emoji,
-      'sender': 'Peter'
-    });
-    console.log(this.reactions);
-    this.hideEmojiPicker();
-  }
-
   hideEmojiPicker() {
     this.showEmojiPicker = false;
   }
@@ -81,5 +76,18 @@ export class ThreadMessagesComponent {
     if (!this.showEmojiPicker) {
       this.hoverIndex = index;
     }
+  }
+
+  checkStyle(userId: string): string {
+    let currentUser: string = '';
+    this.route.queryParams.subscribe((params) => {
+      currentUser = params['userID'];
+    });
+    return userId === currentUser ? 'secondary' : 'primary';
+  }
+
+  sendReaction(emoji: string, id: string) {
+    console.log(emoji + id);
+    this.chatService.updateMessage(emoji, id, this.userDataService.currentUserId)
   }
 }

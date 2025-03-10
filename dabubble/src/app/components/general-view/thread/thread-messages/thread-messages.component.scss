@@ -161,6 +161,84 @@
     // overflow-x: scroll;
 }
 
+
+.chat-content {
+    transition: background-color 0.1s ease;
+    padding: 10px 0px;
+    box-sizing: border-box;
+    width: 100%;
+    position: relative;
+  
+    &--primary {
+      @extend .chat-content;
+      @include arrangement($jc: normal, $g: 20px, $fd: column, $ai: start);
+      padding: 10px 40px;
+  
+      >div {
+        @include arrangement($jc: flex-start, $g: 20px);
+      }
+  
+      &:hover {
+        background-color: var(--color-blue-bg);
+  
+        .chat-content_message {
+          background-color: var(--color-white);
+        }
+      }
+    }
+  
+    &--secondary {
+      @extend .chat-content;
+      @include arrangement($jc: normal, $g: 20px, $fd: column, $ai: end);
+      padding: 10px 40px;
+  
+      .row-reverse {
+        @include arrangement($jc: flex-start, $g: 20px, $fd: row-reverse);
+      }
+  
+      &:hover {
+        background-color: var(--color-blue-bg);
+      }
+  
+      .chat-content_header {
+        flex-direction: row-reverse;
+      }
+  
+      .chat-content_reaction {
+        flex-direction: unset;
+        left: 10px;
+        right: unset
+      }
+    }
+  }
+
+  .chat-content_reaction {
+    position: absolute;
+    right: 10px;
+    display: flex;
+    border: 1px solid var(--color-purple-primary-disabled);
+    padding: 3px 15px;
+    border-radius: 25px 25px 0 25px;
+    background-color: white;
+  
+    >button {
+      display: flex;
+      align-items: center;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 12px;
+      font-size: 24px;
+  
+      &:hover {
+        border-radius: 50%;
+        background-color: #ECEEFE;
+        box-sizing: border-box;
+      }
+    }
+  }
+
+
 app-emoji-picker {
     left: -270px;
 }

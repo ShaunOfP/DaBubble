@@ -315,54 +315,6 @@ header {
   z-index: 5;
 }
 
-// .message-reactions {
-//   display: flex;
-//   gap: 10px;
-//   flex-wrap: wrap;
-//   align-items: center;
-
-//   >div {
-//     border-radius: 20px;
-//     border: 1px solid #ADB0D9;
-//     padding: 5px 10px;
-//     position: relative;
-
-//     .message-reactions_btn {
-//       cursor: pointer;
-//       display: flex;
-//       gap: 8px;
-
-//       >img {
-//         width: 18px;
-//       }
-//     }
-
-//     .message-reactions_popover {
-//       position: absolute;
-//       padding: 15px 10px;
-//       width: fit-content;
-//       white-space: nowrap;
-//       text-align: center;
-//       bottom: 100%;
-//       background-color: #444DF2;
-
-//       color: white;
-//       pointer-events: none;
-
-//       &--primary {
-//         @extend .message-reactions_popover;
-//         left: 50%;
-//         border-radius: 30px 30px 30px 0px;
-//       }
-
-//       &--secondary {
-//         @extend .message-reactions_popover;
-//         right: 50%;
-//         border-radius: 30px 30px 0px 30px;
-//       }
-//     }
-//   }
-// }
 
 app-channel-members {
   display: flex;

@@ -1,6 +1,6 @@
 <div *ngFor="let message of messages$ | async" class="thread-content--primary">
     <img src="img/general-view/create-avatar/avatar1.svg" alt="avatar" />
-    <div class="thread-content_conversation" (mouseenter)="hoveredMessageId = message.id" (mouseleave)="hoveredMessageId = null">
+    <div class="chat-content--{{ checkStyle(message.userId) }}" (mouseenter)="hoveredMessageId = message.id" (mouseleave)="hoveredMessageId = null">
         <div class="thread-content_header">
             <span>{{ message.sender }}</span>
             <span>{{ message.formattedDate }}</span>
@@ -8,6 +8,12 @@
         <span class="thread-content_conversation--primary">
             <p>{{ message.content }}</p>
         </span>
+        <div class="chat-content_reaction" *ngIf="hoveredMessageId === message.id">
+            <button (click)="showPicker = !showPicker"><img src="img/general-view/chat/add_reaction.svg"
+                alt="check"></button>
+            <app-emoji-picker *ngIf="showPicker" (mouseleave)="showPicker = false" (click)="$event.preventDefault()"
+              (emojiSelected)="sendReaction($event, message.id)"></app-emoji-picker>
+        </div>
         <app-reactions [message]="message" [hoveredMessageId]="hoveredMessageId"></app-reactions>
     </div>
 </div>
