@@ -27,6 +27,9 @@ export interface Member {
   providedIn: 'root',
 })
 export class ChannelMemberService {
+  subscribe(): any {
+    throw new Error('Method not implemented.');
+  }
   public firestore = inject(Firestore);
   private allMembersSubject = new BehaviorSubject<Member[]>([]);
   allMembersSubject$: Observable<Member[]> =

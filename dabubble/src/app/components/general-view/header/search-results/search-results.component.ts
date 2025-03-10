@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FilterService } from '../../../../services/component-services/filter.service';
 
 @Component({
@@ -9,13 +9,26 @@ import { FilterService } from '../../../../services/component-services/filter.se
   templateUrl: './search-results.component.html',
   styleUrl: './search-results.component.scss',
 })
-export class SearchResultsComponent {
+export class SearchResultsComponent implements OnInit {
   @Input() inputSearch!: string;
   @Output() closeClicked = new EventEmitter<void>();
 
+  channelResults: any[] = [];
+  memberResults: any[] = [];
+
   constructor(private filterService: FilterService) {}
+
+  ngOnInit(): void {
+    this.filterService.channelMatch$.subscribe((channels) => {
+      this.channelResults = channels;
+    });
+    this.filterService.memberMatch$.subscribe((members) => {
+      this.memberResults = members;
+    });
+  }
 
   onCloseClick() {
     this.closeClicked.emit();
+    this.filterService.resetSearchResults();
   }
 }
