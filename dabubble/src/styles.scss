@@ -342,6 +342,13 @@ app-private-chat {
   // overflow-y: auto; //verhindert, dass chat-details richtig angezeigt werden kann
 }
 
+app-reactions{
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
 mat-drawer{
   overflow: hidden;
 }

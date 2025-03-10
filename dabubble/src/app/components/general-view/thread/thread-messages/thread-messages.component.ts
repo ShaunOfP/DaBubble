@@ -4,11 +4,12 @@ import { map, Observable, tap } from 'rxjs';
 import { ChatService } from '../../../../services/firebase-services/chat.service';
 import { EmojiPickerComponent } from "../../emoji-picker/emoji-picker.component";
 import { Message } from '../../../../models/interfaces';
+import { ReactionsComponent } from '../../chat/public-chat/reactions/reactions.component';
 
 @Component({
   selector: 'app-thread-messages',
   standalone: true,
-  imports: [CommonModule, EmojiPickerComponent],
+  imports: [CommonModule, EmojiPickerComponent, ReactionsComponent],
   templateUrl: './thread-messages.component.html',
   styleUrl: './thread-messages.component.scss'
 })
@@ -16,6 +17,7 @@ export class ThreadMessagesComponent {
   messages$!: Observable<any[]> | undefined;
   showReaction: boolean = true;
   showEmojiPicker: boolean = false;
+  hoveredMessageId: string| null = null
   @ViewChild('emojiTarget', { static: true }) emojiTarget!: ElementRef;
   selectedEmoji: string = '';
   reactions: any[] = [{ //type zu object wenn sender berücksichtigt wird
