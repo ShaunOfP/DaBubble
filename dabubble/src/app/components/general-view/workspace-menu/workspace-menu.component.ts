@@ -116,11 +116,9 @@ export class WorkspaceMenuComponent implements OnInit {
 
   openNewMessage() {
     if (!this.userDatasService.checkIfGuestIsLoggedIn()) {
-      this.route.queryParams.subscribe((params) => {
-        const userID = params['userID'];
-        this.router.navigate(['/general/new-message'], {
-          queryParams: { userID: userID },
-        });
+      this.router.navigate(['/general/new-message'], {
+        queryParamsHandling: 'merge',
+        replaceUrl: true,
       });
 
       this.chatService.showChatWhenResponsive = true;
