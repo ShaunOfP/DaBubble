@@ -15,7 +15,7 @@ app-header {
     padding: 25px 34px 20px 45px;
     @include arrangement($jc: normal, $g: 10%);
 
-    @media (max-width: 1160px){
+    @media (max-width: 1160px) {
         gap: 5%;
     }
 
@@ -44,23 +44,23 @@ app-chat {
         right: 0;
         bottom: 0;
         position: absolute;
-        z-index: 0;
+        z-index: 2;
     }
 }
 
-app-thread{
-    @media (max-width: 1600px){
+app-thread {
+    @media (max-width: 1600px) {
         position: absolute;
         right: 0px;
         z-index: 3;
     }
 
-    @media (max-width: 800px){
+    @media (max-width: 800px) {
         left: 0;
         bottom: 0;
         right: 0;
         position: absolute;
-        z-index: 0;
+        z-index: 3;
     }
 }
 
@@ -73,4 +73,10 @@ app-user-profile {
 
 .d-none {
     display: none;
+}
+
+.d-none-chat {
+    @media(max-width: 800px) {
+        display: none;
+    }
 }

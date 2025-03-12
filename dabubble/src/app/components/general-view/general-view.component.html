@@ -1,8 +1,9 @@
-  <app-header></app-header>
-  <div class="devspace-container">
-    <app-workspace-menu (openCreateChannel)="toggleCreateChannelOverlay()" (newMessage)="openNewMessage()" ></app-workspace-menu>
-    <app-chat></app-chat>
-    <app-thread *ngIf="threadIsVisible" (callParent)="closeThread()"></app-thread>
-  </div>
-  <app-create-channel *ngIf="showCreateChannelOverlay"
-    (callParentToClose)="toggleCreateChannelOverlay()"></app-create-channel>
+<app-header></app-header>
+<div class="devspace-container">
+  <app-workspace-menu (openCreateChannel)="toggleCreateChannelOverlay()"
+    (newMessage)="openNewMessage()"></app-workspace-menu>
+  <app-chat [class.d-none-chat]="!chatService.showChatWhenResponsive"></app-chat>
+  <app-thread *ngIf="threadIsVisible" (callParent)="closeThread()"></app-thread>
+</div>
+<app-create-channel *ngIf="showCreateChannelOverlay"
+  (callParentToClose)="toggleCreateChannelOverlay()"></app-create-channel>

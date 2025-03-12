@@ -32,7 +32,7 @@ export class GeneralViewComponent implements OnInit{
   workspaceMenuState: boolean = false;
 
 
-  constructor(private chatService : ChatService){
+  constructor(public chatService : ChatService){
 
   }
 

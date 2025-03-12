@@ -16,6 +16,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { WorkspaceStateToggleButtonComponent } from './workspace-state-toggle-button/workspace-state-toggle-button.component';
 import { ChannelMemberService } from '../../../services/firebase-services/channel-member.service';
+import { ChatService } from '../../../services/firebase-services/chat.service';
 
 @Component({
   selector: 'app-workspace-menu',
@@ -46,8 +47,9 @@ export class WorkspaceMenuComponent implements OnInit {
     private channelMemberService: ChannelMemberService,
     private router: Router,
     private route: ActivatedRoute,
-    private cd: ChangeDetectorRef
-  ) {}
+    private cd: ChangeDetectorRef,
+    private chatService: ChatService
+  ) { }
 
   ngOnInit() {
     this.userDatasService.currentUserData$.subscribe((userDatas) => {
@@ -120,6 +122,8 @@ export class WorkspaceMenuComponent implements OnInit {
           queryParams: { userID: userID },
         });
       });
+
+      this.chatService.showChatWhenResponsive = true;
     } else {
       console.warn('Log in to send Private Messages');
     }
@@ -134,6 +138,8 @@ export class WorkspaceMenuComponent implements OnInit {
       queryParamsHandling: 'merge',
       replaceUrl: true,
     });
+
+    this.chatService.showChatWhenResponsive = true;
   }
 
   async openDirectMessage(userId: string) {
@@ -143,5 +149,7 @@ export class WorkspaceMenuComponent implements OnInit {
       queryParamsHandling: 'merge',
       replaceUrl: true,
     });
+
+    this.chatService.showChatWhenResponsive = true;
   }
 }

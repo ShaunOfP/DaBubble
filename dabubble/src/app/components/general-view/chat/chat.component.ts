@@ -46,7 +46,6 @@ export class ChatComponent implements OnInit {
   currentUserId: string = '';
   privateChatOtherUserData: any;
   currentChatId: string = '';
-  // toggleMarginRight: boolean = true;
 
   /**
    * Subscribes to the current URL to get the newest Chat-ID and the User-Id from the logged in User

@@ -5,78 +5,41 @@
 <div class="bar-info">
   <div class="search-container">
     <div class="bar-info-searchbar input-field">
-      <input
-        placeholder="Devspace durchsuchen"
-        [(ngModel)]="inputSearch"
-        (focus)="searchFocus()"
-      />
+      <input placeholder="Devspace durchsuchen" [(ngModel)]="inputSearch" (focus)="searchFocus()" />
       <button (click)="searchInDevspace()">
         <img src="/img/general-view/workspace-menu/search.svg" />
       </button>
     </div>
-    <app-search-results
-      *ngIf="searchFocused"
-      [inputSearch]="inputSearch"
-      (closeClicked)="closeSearch()"
-    ></app-search-results>
+    <app-search-results *ngIf="searchFocused" [inputSearch]="inputSearch"
+      (closeClicked)="closeSearch()"></app-search-results>
   </div>
 
   <div class="bar-info-account-info" (click)="openDropdownMenu()">
     <span>{{ this.currentUserData?.username }}</span>
-    <img
-      class="avatar-small"
-      [src]="this.currentUserData?.avatar"
-      alt="User Image"
-    />
+    <img class="avatar-small" [src]="this.currentUserData?.avatar" alt="User Image" />
     <div>
-      <button
-        mat-button
-        [matMenuTriggerFor]="menu"
-        #menuTrigger="matMenuTrigger"
-      >
+      <button mat-button [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger">
         <img src="/img/general-view/workspace-menu/arrow_drop_down_thin.svg" />
-        <img
-          class="d-none"
-          src="/img/general-view/workspace-menu/hover_arrow_drop_down_thin.svg"
-        />
+        <img class="d-none" src="/img/general-view/workspace-menu/hover_arrow_drop_down_thin.svg" />
       </button>
       <mat-menu #menu="matMenu" class="drop-down-menu">
-        <button
-          mat-menu-item
-          (click)="toggleGreyScreen(); toggleProfileInfo(true)"
-        >
-          <img
-            class="mat-menu-button-img"
-            src="/img/general-view/header/account_circle.svg"
-          />Profil
+        <button mat-menu-item (click)="toggleGreyScreen(); toggleProfileInfo(true)">
+          <img class="mat-menu-button-img" src="/img/general-view/header/account_circle.svg" />Profil
         </button>
         <button mat-menu-item (click)="navigateTo('')">
-          <img
-            class="mat-menu-button-img"
-            src="/img/general-view/header/logout.svg"
-          />Log out
+          <img class="mat-menu-button-img" src="/img/general-view/header/logout.svg" />Log out
         </button>
       </mat-menu>
     </div>
   </div>
 </div>
-<div
-  class="grey-layer"
-  *ngIf="showGreyScreen"
-  (click)="toggleGreyScreen()"
-></div>
+<div class="grey-layer" *ngIf="showGreyScreen" (click)="toggleGreyScreen()"></div>
 <div *ngIf="showProfileInfo" class="profile-info">
   <div class="profile-info-header">
     <h3 class="cursor-no-change">Profil</h3>
-    <div
-      class="change-image-on-hover"
-      (click)="toggleGreyScreen(); toggleProfileInfo(false)"
-    >
+    <div class="change-image-on-hover" (click)="toggleGreyScreen(); toggleProfileInfo(false)">
       <img src="/img/general-view/workspace-menu/close.svg" />
-      <img
-        class="d-none"
-        src="/img/general-view/workspace-menu/hover_close.svg"
-      />
+      <img class="d-none" src="/img/general-view/workspace-menu/hover_close.svg" />
     </div>
   </div>
   <div class="profile-info-image">
@@ -84,19 +47,11 @@
   </div>
   <div class="profile-info-name-status">
     <div class="profile-info-name-status-upper">
-      <span
-        class="profile-info-name-status-upper--font-primary cursor-no-change"
-        >{{ this.currentUserData?.username }}</span
-      >
-      <span
-        class="profile-info-name-status-upper--font-secondary color-purple-with-hover"
-        (click)="toggleProfileEdit()"
-        >Bearbeiten</span
-      >
-      <img
-        src="/img/general-view/header/edit_icon.svg"
-        (click)="toggleProfileEdit()"
-      />
+      <span class="profile-info-name-status-upper--font-primary cursor-no-change">{{ this.currentUserData?.username
+        }}</span>
+      <span class="profile-info-name-status-upper--font-secondary color-purple-with-hover"
+        (click)="toggleProfileEdit()">Bearbeiten</span>
+      <img src="/img/general-view/header/edit_icon.svg" (click)="toggleProfileEdit()" />
     </div>
     <div class="profile-info-name-status-lower">
       <img class="active-circle" />
@@ -116,15 +71,9 @@
 <div *ngIf="showProfileEdit" class="profile-edit">
   <div class="profile-info-header">
     <h3>Dein Profil bearbeiten</h3>
-    <div
-      class="change-image-on-hover"
-      (click)="closeEditForm(); newNameInput = ''"
-    >
+    <div class="change-image-on-hover" (click)="closeEditForm(); newNameInput = ''">
       <img src="/img/general-view/workspace-menu/close.svg" />
-      <img
-        class="d-none"
-        src="/img/general-view/workspace-menu/hover_close.svg"
-      />
+      <img class="d-none" src="/img/general-view/workspace-menu/hover_close.svg" />
     </div>
   </div>
   <div class="profile-info-image">
@@ -134,43 +83,22 @@
     <div class="profile-edit-form">
       <div>
         <div class="profile-edit-form-image">
-          <img
-            class="profile-edit-form-image--primary"
-            src="/img/general-view/workspace-menu/person_circle.svg"
-          />
+          <img class="profile-edit-form-image--primary" src="/img/general-view/workspace-menu/person_circle.svg" />
         </div>
-        <span class="font-size--20--700 cursor-no-change"
-          >Vollständiger Name</span
-        >
+        <span class="font-size--20--700 cursor-no-change">Vollständiger Name</span>
       </div>
-      <input
-        class="input-field"
-        [class.invalid]="name.touched && name.invalid"
-        #name="ngModel"
-        placeholder="{{ this.currentUserData?.username }}"
-        required
-        [(ngModel)]="newNameInput"
-        name="newNameInputField"
-      />
-      <span *ngIf="name.touched && name.invalid" class="error-message"
-        >This field is required</span
-      >
+      <input class="input-field" [class.invalid]="name.touched && name.invalid" #name="ngModel"
+        placeholder="{{ this.currentUserData?.username }}" required [(ngModel)]="newNameInput"
+        name="newNameInputField" />
+      <span *ngIf="name.touched && name.invalid" class="error-message">This field is required</span>
     </div>
     <div class="profile-edit-form-buttons">
-      <button
-        class="btn-secondary--default font-size--18--700"
-        (click)="closeEditForm(); newNameInput = ''"
-      >
+      <button class="btn-secondary--default font-size--18--700" (click)="closeEditForm(); newNameInput = ''">
         Abbrechen
       </button>
-      <button
-        class="font-size--18--700"
-        [class.btn-primary--default]="form.valid"
-        [class.btn-primary--disable]="
+      <button class="font-size--18--700" [class.btn-primary--default]="form.valid" [class.btn-primary--disable]="
           form.invalid || (form.touched && form.invalid)
-        "
-        type="submit"
-      >
+        " type="submit">
         Speichern
       </button>
     </div>

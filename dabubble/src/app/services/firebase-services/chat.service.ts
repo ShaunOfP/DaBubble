@@ -24,7 +24,7 @@ import { Channel } from './channel.service';
 export class ChatService {
   private firestore = inject(Firestore);
   currentChatId: string = '';
-  public channelName: string = ''
+  public channelName: string = '';
   public currentChannelUsers: number = 0;
   currentChannelOwner: string = '';
   currentChannelDescription: string = '';
@@ -33,7 +33,8 @@ export class ChatService {
   currentThreads$ = this.currentThreadsSubject.asObservable();
   showCurrentThread = new BehaviorSubject(false);
   chatMarginRight: boolean = true;
-  currentMessageId: string = ''
+  currentMessageId: string = '';
+  showChatWhenResponsive: boolean = false;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
