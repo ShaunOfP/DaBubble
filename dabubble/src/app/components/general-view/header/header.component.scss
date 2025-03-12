@@ -153,12 +153,13 @@ h3 {
   z-index: 11;
 
   @media (max-width: 800px) {
-    right: 20px;
-    left: 20px;
     border-radius: 30px;
     width: auto;
     padding: 45px 20px 45px 20px;
-    // center the div
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 }
 
@@ -283,12 +284,13 @@ h3 {
   z-index: 11;
 
   @media (max-width: 800px) {
-    right: 20px;
-    left: 20px;
     border-radius: 30px;
     width: auto;
     padding: 45px 20px 45px 20px;
-    // center the div
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 }
 

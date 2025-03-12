@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ChatService } from '../../../services/firebase-services/chat.service';
 
 @Component({
   selector: 'app-alt-header-mobile',
@@ -8,13 +9,16 @@ import { Component } from '@angular/core';
   styleUrl: './alt-header-mobile.component.scss'
 })
 export class AltHeaderMobileComponent {
-  showAltHeader: boolean = false;
-  
-  goBackToWorkspaceMenu(){
+  constructor(public chatService: ChatService) {
+
+  }
+
+  goBackToWorkspaceMenu() {
     this.hideAltHeader();
   }
 
-  hideAltHeader(){
-    this.showAltHeader = false;
+  hideAltHeader() {
+    this.chatService.showChatWhenResponsive = false;
+    this.chatService.showAltHeader = false;
   }
 }

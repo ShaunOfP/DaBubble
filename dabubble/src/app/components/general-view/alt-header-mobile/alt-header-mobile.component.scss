@@ -16,7 +16,7 @@ div {
         margin-left: 2px;
     }
 
-    @media (min-width: 700px) {
+    @media (min-width: 801px) {
         display: none;
     }
 }
@@ -24,6 +24,7 @@ div {
 button {
     border: none;
     @include arrangement();
+    cursor: pointer;
 
     >img {
         rotate: 90deg;

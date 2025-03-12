@@ -124,6 +124,7 @@ export class WorkspaceMenuComponent implements OnInit {
       });
 
       this.chatService.showChatWhenResponsive = true;
+      this.chatService.showAltHeader = true;
     } else {
       console.warn('Log in to send Private Messages');
     }
@@ -140,6 +141,7 @@ export class WorkspaceMenuComponent implements OnInit {
     });
 
     this.chatService.showChatWhenResponsive = true;
+    this.chatService.showAltHeader = true;
   }
 
   async openDirectMessage(userId: string) {
@@ -151,5 +153,6 @@ export class WorkspaceMenuComponent implements OnInit {
     });
 
     this.chatService.showChatWhenResponsive = true;
+    this.chatService.showAltHeader = true;
   }
 }

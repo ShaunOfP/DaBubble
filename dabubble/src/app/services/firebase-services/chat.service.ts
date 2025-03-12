@@ -35,6 +35,7 @@ export class ChatService {
   chatMarginRight: boolean = true;
   currentMessageId: string = '';
   showChatWhenResponsive: boolean = false;
+  showAltHeader: boolean = false;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
