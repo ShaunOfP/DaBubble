@@ -19,7 +19,7 @@ section {
     max-width: 750px;
     margin: 32px;
 
-    @media (max-width: 800px) {
+    @media (max-width: $mobile-breakpoint) {
       padding: 32px;
       margin: 24px;
     }

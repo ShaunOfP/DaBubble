@@ -50,7 +50,7 @@ header {
 }
 
 /* Media Queries */
-// @media (max-width: 800px) {}
+// @media (max-width: $mobile-breakpoint) {}
 
 @media (max-width: 450px) {
   header {

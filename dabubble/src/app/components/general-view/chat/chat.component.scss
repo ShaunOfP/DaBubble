@@ -9,7 +9,7 @@ section {
     margin-right: 20px;
   }
 
-  @media (max-width: 800px) {
+  @media (max-width: $mobile-breakpoint) {
     height: calc(100vh - 100px);
     margin-right: 0px !important;
   }
@@ -38,7 +38,7 @@ h3 {
     background-color: var(--color-blue-bg);
   }
 
-  @media (max-width: 800px) {}
+  @media (max-width: $mobile-breakpoint) {}
 }
 
 .height-new-message {
@@ -51,7 +51,7 @@ h3 {
   margin-top: 25px;
   @include arrangement($ai: normal, $jc: normal, $fd: column);
 
-  @media (max-width: 800px) {
+  @media (max-width: $mobile-breakpoint) {
     padding: 0 16px 30px 16px;
   }
 }
@@ -81,7 +81,7 @@ textarea {
     @include arrangement();
   }
 
-  @media (max-width: 800px) {
+  @media (max-width: $mobile-breakpoint) {
     left: 40px;
     right: 40px;
     bottom: 40px;

@@ -33,7 +33,7 @@ header {
         }
     }
 
-    @media (max-width: 800px) {
+    @media (max-width: $mobile-breakpoint) {
         padding: 10px 16px;
     }
 }
@@ -99,7 +99,7 @@ header {
             @include arrangement($jc: normal);
         }
 
-        @media (max-width: 800px) {
+        @media (max-width: $mobile-breakpoint) {
             display: none;
         }
     }

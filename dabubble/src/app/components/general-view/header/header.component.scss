@@ -34,7 +34,7 @@ h3 {
     gap: 3vw;
   }
 
-  @media (max-width: 800px) {
+  @media (max-width: $mobile-breakpoint) {
     @include arrangement($jc: flex-end);
   }
 }
@@ -43,7 +43,7 @@ h3 {
   background-color: var(--color-white);
   min-width: 255px;
 
-  @media (max-width: 800px) {
+  @media (max-width: $mobile-breakpoint) {
     display: none;
   }
 
@@ -89,7 +89,7 @@ h3 {
   }
 
   > div {
-    @media (max-width: 800px) {
+    @media (max-width: $mobile-breakpoint) {
       display: none;
     }
   }
@@ -132,7 +132,7 @@ h3 {
   height: 30px;
   width: 30px;
 
-  @media (max-width: 800px) {
+  @media (max-width: $mobile-breakpoint) {
     display: flex;
   }
 }
@@ -152,7 +152,7 @@ h3 {
   background-color: var(--color-white);
   z-index: 11;
 
-  @media (max-width: 800px) {
+  @media (max-width: $mobile-breakpoint) {
     border-radius: 30px;
     width: auto;
     padding: 45px 20px 45px 20px;
@@ -207,7 +207,7 @@ h3 {
   &--font-secondary {
     @include fontStyle($fs: 18px, $fw: 700);
 
-    @media (max-width: 800px) {
+    @media (max-width: $mobile-breakpoint) {
       display: none;
     }
   }
@@ -218,7 +218,7 @@ h3 {
     cursor: pointer;
     display: none;
 
-    @media (max-width: 800px) {
+    @media (max-width: $mobile-breakpoint) {
       display: flex;
     }
   }
@@ -283,7 +283,7 @@ h3 {
   background-color: var(--color-white);
   z-index: 11;
 
-  @media (max-width: 800px) {
+  @media (max-width: $mobile-breakpoint) {
     border-radius: 30px;
     width: auto;
     padding: 45px 20px 45px 20px;

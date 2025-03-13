@@ -199,7 +199,7 @@ label {
 }
 
 /* Media Queries */
-@media (max-width: 800px) {
+@media (max-width: $mobile-breakpoint) {
   .main-content {
     padding: 32px;
     max-width: 80%;

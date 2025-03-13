@@ -5,7 +5,7 @@
     padding-bottom: 25px;
     gap: 20px;
 
-    @media (max-width: 800px) {
+    @media (max-width: $mobile-breakpoint) {
         padding-bottom: 0;
         gap: 0;
     }
@@ -19,14 +19,14 @@ app-header {
         gap: 5%;
     }
 
-    @media (max-width: 800px) {
+    @media (max-width: $mobile-breakpoint) {
         @include arrangement($jc: space-between, $g: 0px);
         padding: 15px 16px 15px 16px;
     }
 }
 
 app-workspace-menu {
-    @media (max-width: 800px) {
+    @media (max-width: $mobile-breakpoint) {
         position: absolute;
         left: 0;
         right: 0;
@@ -38,7 +38,7 @@ app-workspace-menu {
 app-chat {
     width: 100%;
 
-    @media (max-width: 800px) {
+    @media (max-width: $mobile-breakpoint) {
         width: auto;
         left: 0;
         right: 0;
@@ -76,7 +76,7 @@ app-user-profile {
 }
 
 .d-none-chat {
-    @media(max-width: 800px) {
+    @media(max-width: $mobile-breakpoint) {
         display: none;
     }
 }

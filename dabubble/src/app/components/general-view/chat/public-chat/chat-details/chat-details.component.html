@@ -14,6 +14,10 @@
       <div>
         <h5>Channel-Name</h5>
         <button class="channel-name_btn" (click)="openNewChannelInput()">Bearbeiten</button>
+        <div class="img-container--mobile change-image-on-hover" (click)="openNewChannelInput()">
+          <img src="/img/general-view/header/mobile_edit.svg">
+          <img src="/img/general-view/header/mobile_edit_hover.svg">
+        </div>
       </div>
       <div>
         <h5>#</h5>
@@ -28,11 +32,15 @@
       <button class="channel-name_btn" type="submit">
         Speichern
       </button>
+      <button class="img-container--mobile no-btn-style change-image-on-hover" type="submit">
+        <img src="/img/general-view/header/mobile_save.svg">
+        <img src="/img/general-view/header/mobile_save_hover.svg">
+      </button>
     </div>
     <div class="overlap-children">
       <h5>#</h5>
-      <input class="input-field" placeholder="{{ chatService.currentChannelData?.channelName }}" [(ngModel)]="newChannelNameInput"
-        name="newChannelNameInput" />
+      <input class="input-field" placeholder="{{ chatService.currentChannelData?.channelName }}"
+        [(ngModel)]="newChannelNameInput" name="newChannelNameInput" />
     </div>
   </form>
   <div class="description-container--primary" *ngIf="descriptionContainerVisible">
@@ -40,6 +48,10 @@
       <div>
         <h5>Beschreibung</h5>
         <button class="channel-name_btn" (click)="openDesciptionEdit()">Bearbeiten</button>
+        <div class="img-container--mobile change-image-on-hover" (click)="openDesciptionEdit()">
+          <img src="/img/general-view/header/mobile_edit.svg">
+          <img src="/img/general-view/header/mobile_edit_hover.svg">
+        </div>
       </div>
       <p>{{ chatService.currentChannelData?.description }}</p>
     </div>
@@ -56,6 +68,10 @@
         <button class="channel-name_btn" type="submit">
           Speichern
         </button>
+        <button class="img-container--mobile no-btn-style change-image-on-hover" type="submit">
+          <img src="/img/general-view/header/mobile_save.svg">
+          <img src="/img/general-view/header/mobile_save_hover.svg">
+        </button>
       </div>
       <input class="input-field" placeholder="Dein Text hier" [(ngModel)]="newDescriptionInput"
         name="newChannelDescriptionInput" />
@@ -63,8 +79,11 @@
     <span class="separator"></span>
     <div class="owner-info">
       <h5>Erstellt von</h5>
-      <span>{{ currentChannelOwner }}</span>
+      <span>{{ chatService.currentChannelData?.owner }}</span>
     </div>
+  </div>
+  <div class="channel-members-info">
+    <!-- hier weiter -->
   </div>
 </div>
 <div class="leave-channel-button-container">
