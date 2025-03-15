@@ -1,13 +1,17 @@
-<div *ngFor="let message of messages$ | async" class="thread-content--primary">
-    <img src="img/general-view/create-avatar/avatar1.svg" alt="avatar" />
+<div *ngFor="let message of messages$ | async" class="chat-content" (mouseleave)="showPicker = false">
     <div class="chat-content--{{ checkStyle(message.userId) }}" (mouseenter)="hoveredMessageId = message.id" (mouseleave)="hoveredMessageId = null">
-        <div class="thread-content_header">
+        <div class="row-reverse">
+        <img src="img/general-view/create-avatar/avatar1.svg" alt="avatar" />
+        <div class="chat-content_conversation">
+        <div class="chat-content_header">
             <span>{{ message.sender }}</span>
             <span>{{ message.formattedDate }}</span>
         </div>
-        <span class="thread-content_conversation--primary">
+        <span class="chat-content_message--{{ checkStyle(message.userId) }}">
             <p>{{ message.content }}</p>
         </span>
+        </div>
+    </div>
         <div class="chat-content_reaction" *ngIf="hoveredMessageId === message.id">
             <button (click)="showPicker = !showPicker"><img src="img/general-view/chat/add_reaction.svg"
                 alt="check"></button>

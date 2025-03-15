@@ -248,7 +248,7 @@ header {
 }
 
 .chat-content_conversation {
-  @include arrangement($fd: column, $jc: flex-start, $g: 8px);
+  @include arrangement($fd: column, $jc: flex-start, $g: 8px, $ai:end);
 }
 
 .chat-content_conversation_reacts {
