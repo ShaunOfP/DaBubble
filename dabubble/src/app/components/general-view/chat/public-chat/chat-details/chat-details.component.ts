@@ -6,11 +6,12 @@ import { PublicChatComponent } from '../public-chat.component';
 import { UserDatasService } from '../../../../../services/firebase-services/user-datas.service';
 import { ChannelMemberService, Member } from '../../../../../services/firebase-services/channel-member.service';
 import { Router } from '@angular/router';
+import { ChannelMembersComponent } from "../channel-members/channel-members.component";
 
 @Component({
   selector: 'app-chat-details',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, ChannelMembersComponent],
   templateUrl: './chat-details.component.html',
   styleUrl: './chat-details.component.scss'
 })

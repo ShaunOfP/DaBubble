@@ -154,6 +154,7 @@ h5 {
 
     @media(max-width: $mobile-breakpoint) {
         margin-right: 16px;
+        margin-bottom: 20px;
     }
 }
 
@@ -238,8 +239,15 @@ h5 {
     }
 }
 
-.channel-member-info{
-    
+.channel-members-info {
+    display: none;
+    padding: 20px;
+    border: 1px solid var(--color-blue-border);
+    border-radius: 20px;
+
+    @media(max-width: $mobile-breakpoint) {
+        display: flex;
+    }
 }
 
 .separator {
