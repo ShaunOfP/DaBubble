@@ -45,7 +45,6 @@ export class FilterService {
           channels.channelName?.toLowerCase().includes(searchLower)
       );
       this.channelMatchSource.next(this.channelMatch);
-      console.log(this.channelMatch);
     } else if (this.memberSearch) {
       const searchLower = this.query.substring(1).toLowerCase();
       this.memberMatch = this.allMembers.filter(
@@ -53,7 +52,6 @@ export class FilterService {
           member.username?.toLowerCase().includes(searchLower)
       );
       this.memberMatchSource.next(this.memberMatch);
-      console.log(this.memberMatch);
     }
   }
 
