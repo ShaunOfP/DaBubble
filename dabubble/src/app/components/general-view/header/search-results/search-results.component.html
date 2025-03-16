@@ -13,7 +13,10 @@
     <div>
       <p>Channel:</p>
       <div class="results" *ngIf="channelResults.length > 0">
-        <span *ngFor="let channel of channelResults">
+        <span
+          *ngFor="let channel of channelResults"
+          (click)="modifyUrlWithChatString(channel.channelId)"
+        >
           {{ channel.channelName }}
         </span>
       </div>
@@ -24,7 +27,10 @@
     <div>
       <p>Mitglieder:</p>
       <div class="results" *ngIf="memberResults.length > 0">
-        <span *ngFor="let member of memberResults">
+        <span
+          *ngFor="let member of memberResults"
+          (click)="openDirectMessage(member.id)"
+        >
           {{ member.username }}
         </span>
       </div>

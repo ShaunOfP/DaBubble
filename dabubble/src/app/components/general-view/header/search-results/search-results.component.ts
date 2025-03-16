@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FilterService } from '../../../../services/component-services/filter.service';
+import { Router } from '@angular/router';
+import { UserDatasService } from '../../../../services/firebase-services/user-datas.service';
 
 @Component({
   selector: 'app-search-results',
@@ -16,7 +18,11 @@ export class SearchResultsComponent implements OnInit {
   channelResults: any[] = [];
   memberResults: any[] = [];
 
-  constructor(private filterService: FilterService) {}
+  constructor(
+    private filterService: FilterService,
+    private router: Router,
+    private userDatasService: UserDatasService
+  ) {}
 
   ngOnInit(): void {
     this.filterService.channelMatch$.subscribe((channels) => {
@@ -30,5 +36,24 @@ export class SearchResultsComponent implements OnInit {
   onCloseClick() {
     this.closeClicked.emit();
     this.filterService.resetSearchResults();
+  }
+
+  modifyUrlWithChatString(channelId: string) {
+    this.router.navigate(['/general/public-chat'], {
+      queryParams: { chatId: channelId },
+      queryParamsHandling: 'merge',
+      replaceUrl: true,
+    });
+    this.onCloseClick();
+  }
+
+  async openDirectMessage(userId: string) {
+    const privateChatId = await this.userDatasService.getPrivateChannel(userId);
+    this.router.navigate(['/general/private-chat'], {
+      queryParams: { chatId: privateChatId },
+      queryParamsHandling: 'merge',
+      replaceUrl: true,
+    });
+    this.onCloseClick();
   }
 }
