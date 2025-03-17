@@ -83,6 +83,10 @@ export class ReactionsComponent {
       });
       return userId === currentUser ? 'secondary' : 'primary';
     }
-  
+    
+    updateReaction(emoji: string){
+      console.log(emoji);
+      
+    }
 
 }
