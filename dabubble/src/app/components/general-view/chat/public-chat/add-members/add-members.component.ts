@@ -97,6 +97,7 @@ export class AddMembersComponent {
    */
   closeAddMembersMenu() {
     this.closeMe.emit();
+    this.chatSerivce.showChatDetailsMobileGreyLayer = false;
   }
 
 

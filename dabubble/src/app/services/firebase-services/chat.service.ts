@@ -36,6 +36,7 @@ export class ChatService {
   currentMessageId: string = '';
   showChatWhenResponsive: boolean = false;
   showAltHeader: boolean = false;
+  showChatDetailsMobileGreyLayer: boolean = false;
 
   constructor(private route: ActivatedRoute,
     private router: Router,

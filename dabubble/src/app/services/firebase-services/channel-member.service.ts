@@ -44,6 +44,8 @@ export class ChannelMemberService {
   channelDescription$ = this.channelDescription.asObservable();
   private isComponentVisibleSource = new BehaviorSubject<boolean>(false);
   isComponentVisible$ = this.isComponentVisibleSource.asObservable();
+  showAddMembersMenu: boolean = false;
+  showChatGreyScreen: boolean = false;
 
   constructor(private userDatasService: UserDatasService) {}
 

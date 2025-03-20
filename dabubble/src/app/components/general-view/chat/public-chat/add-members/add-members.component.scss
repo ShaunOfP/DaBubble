@@ -1,5 +1,20 @@
 @import './../../../../../../styles.scss';
 
+.alt-close-btn {
+    display: none;
+
+    >div {
+        height: 6px;
+        width: 62px;
+        background-color: var(--color-grey-bar);
+        border-radius: 23px;
+        cursor: pointer;
+    }
+
+    @media(max-width: $mobile-breakpoint) {
+        @include arrangement();
+    }
+}
 
 header {
     display: flex;

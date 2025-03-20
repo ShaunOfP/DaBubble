@@ -5,6 +5,7 @@ import { PublicChatComponent } from '../public-chat.component';
 import { UserInfoCardComponent } from "../../user-info-card/user-info-card.component";
 import { ChatComponent } from '../../chat.component';
 import { ChatService } from '../../../../../services/firebase-services/chat.service';
+import { ChannelMemberService } from '../../../../../services/firebase-services/channel-member.service';
 
 @Component({
   selector: 'app-channel-members',
@@ -23,7 +24,8 @@ export class ChannelMembersComponent implements OnInit {
   constructor(
     public userDataService: UserDatasService,
     private chatService: ChatService,
-    private chatComponent: ChatComponent
+    private chatComponent: ChatComponent,
+    public channelMemberService: ChannelMemberService
   ) {
 
   }
@@ -54,7 +56,9 @@ export class ChannelMembersComponent implements OnInit {
    */
   openAddMembersMenu() {
     if (!this.userDataService.checkIfGuestIsLoggedIn()) {
+      this.channelMemberService.showAddMembersMenu = true;
       this.openAddMembers.emit();
+      this.chatService.showChatDetailsMobileGreyLayer = true;
     } else {
       console.warn("Log in to add Members to a Public Channel");
     }

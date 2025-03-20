@@ -22,6 +22,7 @@ import { EmojiPickerComponent } from '../../emoji-picker/emoji-picker.component'
 import { UserDatasService } from '../../../../services/firebase-services/user-datas.service';
 import { getDoc } from '@angular/fire/firestore';
 import { ReactionsComponent } from './reactions/reactions.component';
+import { ChannelMemberService } from '../../../../services/firebase-services/channel-member.service';
 
 @Component({
   selector: 'app-public-chat',
@@ -48,9 +49,7 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   newMessage: boolean = false;
   hoveredMessageId: string | null = null;
   chatDetails: boolean = false;
-  showGreyScreen: boolean = false;
   showMembersInfo: boolean = false;
-  showAddMembers: boolean = false;
   showPicker: boolean = false
   // showPopoverReaction: number | null = null;
   // reactionUserNamesCache: { [key: number]: string[] } = {};
@@ -64,7 +63,8 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     private route: ActivatedRoute,
     private filterService: FilterService,
     private userDataService: UserDatasService,
-    private router: Router
+    private router: Router,
+    public channelMembersService: ChannelMemberService
   ) { }
 
   ngOnInit() {
@@ -200,20 +200,20 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   toggleChatDetails() {
-    this.showGreyScreen = !this.showGreyScreen;
+    this.channelMembersService.showChatGreyScreen = !this.channelMembersService.showChatGreyScreen;
     this.chatDetails = !this.chatDetails;
   }
 
 
   openMembersInfo() {
-    this.showGreyScreen = true;
+    this.channelMembersService.showChatGreyScreen = true;
     this.showMembersInfo = true;
   }
 
 
   closeMembersInfo() {
     this.showMembersInfo = false;
-    this.showGreyScreen = false;
+    this.channelMembersService.showChatGreyScreen = false;
   }
 
 
@@ -221,14 +221,14 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.showMembersInfo) {
       this.closeMembersInfo();
     }
-    this.showGreyScreen = true;
-    this.showAddMembers = true;
+    this.channelMembersService.showChatGreyScreen = true;
+    this.channelMembersService.showAddMembersMenu = true;
   }
 
 
   closeAddMembersMenu() {
-    this.showAddMembers = false;
-    this.showGreyScreen = false;
+    this.channelMembersService.showAddMembersMenu = false;
+    this.channelMembersService.showChatGreyScreen = false;
   }
 
 

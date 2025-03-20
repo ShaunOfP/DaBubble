@@ -250,6 +250,20 @@ h5 {
     }
 }
 
+.mobile-grey-layer {
+    display: none;
+
+    @media (max-width: $mobile-breakpoint) {
+        display: flex;
+        inset: 0;
+        height: 100vh;
+        width: 100vw;
+        position: fixed;
+        background-color: var(--color-grey-primary-overlay);
+        z-index: 1;
+    }
+}
+
 .separator {
     border: 1px solid var(--color-blue-border);
 }

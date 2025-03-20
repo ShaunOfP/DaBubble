@@ -72,6 +72,7 @@ export class ChatDetailsComponent {
 
   closeChatDetails() {
     this.callParent.emit();
+    this.channelMemberService.showChatGreyScreen = false;
   }
 
   openNewChannelInput() {
