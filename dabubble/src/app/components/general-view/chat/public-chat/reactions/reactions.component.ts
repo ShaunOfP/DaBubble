@@ -55,9 +55,7 @@ export class ReactionsComponent {
       if (!this.reactionUserNamesCache[index]) {
         this.reactionUserNamesCache[index] = await this.formatUserNames(users);
       }
-      this.showPopoverReaction = index;
-      console.log(this.showPopoverReaction);
-      
+      this.showPopoverReaction = index;      
     }
   
     hidePopover() {
@@ -85,6 +83,10 @@ export class ReactionsComponent {
       });
       return userId === currentUser ? 'secondary' : 'primary';
     }
-  
+    
+    updateReaction(emoji: string){
+      console.log(emoji);
+      
+    }
 
 }

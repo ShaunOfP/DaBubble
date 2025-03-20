@@ -87,7 +87,7 @@ export class ThreadMessagesComponent {
   }
 
   sendReaction(emoji: string, id: string) {
-    console.log(emoji + id);
-    this.chatService.updateMessage(emoji, id, this.userDataService.currentUserId)
+    
+    this.chatService.updateMessage(emoji, id, this.userDataService.currentUserId, true)
   }
 }

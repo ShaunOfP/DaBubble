@@ -132,8 +132,9 @@ export class ChatService {
   }
 
 
-  async updateMessage(emoji: string, messageId: string, userId: string) {
-    const messageRef = doc(this.firestore, `channels/${this.currentChatId}/messages/${messageId}`);
+  async updateMessage(emoji: string, messageId: string, userId: string, isThread: boolean) {
+    const messagePath = this.getMessagePath(messageId, isThread);
+    const messageRef = doc(this.firestore, messagePath);
     try {
       await runTransaction(this.firestore, async (transaction) => {
         const messageSnap = await transaction.get(messageRef);
@@ -161,6 +162,14 @@ export class ChatService {
       console.error("Fehler beim Aktualisieren der Reaction:", error);
     }
   }
+
+  private getMessagePath(messageId: string, isThread: boolean): string {
+    return isThread
+      ? `channels/${this.currentChatId}/messages/${this.currentMessageId}/thread/${messageId}`
+      : `channels/${this.currentChatId}/messages/${messageId}`;
+  }
+
+
 
   // getMessages(channelId: string): Observable<Message[]> {
   //   return new Observable((observer) => {

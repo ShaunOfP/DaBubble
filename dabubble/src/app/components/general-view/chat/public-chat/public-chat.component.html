@@ -34,7 +34,7 @@
       <div class="chat-date_create">{{ message.formattedDate }}</div>
     </div>
     <div class="chat-content--{{ checkStyle(message.userId) }}" (mouseover)="hoveredMessageId = message.id"
-      (mouseout)="hoveredMessageId = null;">
+      (mouseout)="hoveredMessageId = null">
       <div class="chat-content_reaction" *ngIf="hoveredMessageId === message.id">
         <button (click)="sendReaction('green_check', message.id)"><img src="img/general-view/chat/green_check.svg"
             alt="check"></button>
