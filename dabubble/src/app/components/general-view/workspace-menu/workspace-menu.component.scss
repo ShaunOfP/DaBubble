@@ -161,7 +161,7 @@ h3 {
 
 .channels-and-chat-container-upper {
   @include arrangement($jc: space-between, $ai: normal, $g: 25px);
-  max-height: 30%;
+  // max-height: 30%;
   width: 100%;
 }
 

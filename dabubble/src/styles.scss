@@ -268,9 +268,10 @@ app-emoji-picker {
 #expansion-panel-2 {
   >div {
     height: 393px;
-    @media (max-width: $mobile-breakpoint){
+
+    @media (max-width: $mobile-breakpoint) {
       height: 100%;
-    }    
+    }
   }
 }
 
@@ -337,4 +338,11 @@ app-reactions {
 
 mat-drawer {
   overflow: hidden;
+}
+
+app-new-message {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
 }

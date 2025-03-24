@@ -21,9 +21,7 @@ h3 {
 
 .chat-container {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: end;
+  @include arrangement($fd: column, $ai: normal, $jc: flex-end);
   height: 100%;
 }
 
