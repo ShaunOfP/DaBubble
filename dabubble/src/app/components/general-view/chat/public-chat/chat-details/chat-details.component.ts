@@ -48,7 +48,7 @@ export class ChatDetailsComponent {
    * Assigns the correct Values to the matching Variables when initialized
    */
   // async ngOnInit() {
-  //   this.currentChannelId = this.chatService.currentChannelData['channelId'];
+  // this.currentChannelId = this.chatService.currentChannelData['channelId'];
   //   this.currentChannelName = this.publicChat.currentChannelData['channelName'];
   //   this.currentChannelOwner = await this.getNameOfChannelOwner(this.publicChat.currentChannelData['owner']);
   //   this.currentChannelDescription = this.publicChat.currentChannelData['description'];
@@ -121,19 +121,23 @@ export class ChatDetailsComponent {
 
   submitNewName(ngForm: NgForm) {
     if (ngForm.touched && ngForm.valid) {
-      this.chatService.updateChatInformation(this.currentChannelId, 'channelName', this.newChannelNameInput)
-        .then(() => {
-          this.showChannelNameContainer();
-        });
+      if (this.chatService.currentChannelData?.channelId) {
+        this.chatService.updateChatInformation(this.chatService.currentChannelData.channelId, 'channelName', this.newChannelNameInput)
+          .then(() => {
+            this.showChannelNameContainer();
+          });
+      }
     }
   }
 
   submitNewDescription(ngForm: NgForm) {
     if (ngForm.touched && ngForm.valid) {
-      this.chatService.updateChatInformation(this.currentChannelId, 'description', this.newDescriptionInput)
+      if (this.chatService.currentChannelData?.description) {
+      this.chatService.updateChatInformation(this.chatService.currentChannelData?.description, 'description', this.newDescriptionInput)
         .then(() => {
           this.showChannelDescriptionContainer();
         });
+      }
     }
   }
 
