@@ -53,8 +53,8 @@ export class WorkspaceMenuComponent implements OnInit {
 
   ngOnInit() {
     this.userDatasService.currentUserData$.subscribe((userDatas) => {
+      this.workspaceUserData = userDatas;
       if (!this.userDatasService.checkIfGuestIsLoggedIn()) {
-        this.workspaceUserData = userDatas;
         this.fetchUserData();
       } else {
         //Lädt nur den Entwicklerchannel wenn Gast eingeloggt ist

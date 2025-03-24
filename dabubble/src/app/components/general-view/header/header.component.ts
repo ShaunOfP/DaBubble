@@ -38,7 +38,7 @@ export class HeaderComponent implements OnInit {
     private router: Router,
     public userDatasService: UserDatasService,
     private filterService: FilterService
-  ) {}
+  ) { }
 
   @ViewChild('menu') menu!: MatMenu;
   @ViewChild('menuTrigger') menuTrigger!: MatMenuTrigger;
@@ -53,11 +53,7 @@ export class HeaderComponent implements OnInit {
     await this.userDatasService.getUserDataById();
     this.userDatasService.getCurrentUserId();
     this.userDatasService.currentUserData$.subscribe((userData) => {
-      if (!this.userDatasService.checkIfGuestIsLoggedIn()) {
-        this.currentUserData = userData;
-      } else {
-        //currentUserData setzen wenn gast eingeloggt ist
-      }
+      this.currentUserData = userData;
     });
     // if(this.userData === undefined){
     //   const user = setInterval(() => {
