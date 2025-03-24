@@ -269,9 +269,13 @@ export class ChatService {
           [updatedField]: arrayUnion(updateValue),
         });
       } else {
-        await updateDoc(this.getChannelDocRef(channelId), {
-          [updatedField]: updateValue,
-        });
+        if (channelId === 'ER84UOYc0F2jptDjWxFo') {
+          //Soll nicht geändert werden
+        } else {
+          await updateDoc(this.getChannelDocRef(channelId), {
+            [updatedField]: updateValue,
+          });
+        }
       }
     }
   }
