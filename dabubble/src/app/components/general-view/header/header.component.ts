@@ -157,8 +157,10 @@ export class HeaderComponent implements OnInit {
       console.warn('Log in to change your Name');
     } else {
       if (form.touched && form.valid) {
-        // this.userDatasService.updateUserData(this.userId, this.newNameInput);
+        this.userDatasService.updateUserData(this.userDatasService.currentUserId, this.newNameInput);
         console.log('successful');
+        this.closeEditForm();
+        this.showProfileInfo = true;
       } else {
         console.log('invalid');
       }

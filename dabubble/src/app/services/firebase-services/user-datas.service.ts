@@ -39,7 +39,7 @@ export class UserDatasService {
   userIds$ = this.userIdsSubject.asObservable();
   channelData: any = [];
   currentUserId: string = ``;
-  showUserInfoCard: boolean = false; //wird benötigt da UserInfoCard anzeige hierüber läuft
+  showUserInfoCard: boolean = false;
   private currentUserDataSubject = new BehaviorSubject<UserObserver | null>(
     null
   );

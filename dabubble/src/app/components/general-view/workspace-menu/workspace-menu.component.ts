@@ -13,7 +13,7 @@ import {
   UserDatasService,
   UserObserver,
 } from '../../../services/firebase-services/user-datas.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { WorkspaceStateToggleButtonComponent } from './workspace-state-toggle-button/workspace-state-toggle-button.component';
 import { ChannelMemberService } from '../../../services/firebase-services/channel-member.service';
 import { ChatService } from '../../../services/firebase-services/chat.service';
@@ -46,7 +46,6 @@ export class WorkspaceMenuComponent implements OnInit {
     public userDatasService: UserDatasService,
     private channelMemberService: ChannelMemberService,
     private router: Router,
-    private route: ActivatedRoute,
     private cd: ChangeDetectorRef,
     private chatService: ChatService
   ) { }

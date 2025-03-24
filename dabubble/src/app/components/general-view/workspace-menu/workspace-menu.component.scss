@@ -155,7 +155,7 @@ h3 {
 }
 
 .channels-and-chat-container {
-  height: calc(100vh - 223px);
+  height: calc(100vh - 255px);
   @include arrangement($jc: normal, $ai: normal, $fd: column);
 }
 
