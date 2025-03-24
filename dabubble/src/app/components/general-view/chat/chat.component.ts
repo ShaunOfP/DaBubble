@@ -6,7 +6,7 @@ import { SharedModule } from '../../../shared/shared.module';
 import { ChatService } from '../../../services/firebase-services/chat.service';
 import { Message } from '../../../models/interfaces';
 import { UserDatasService } from '../../../services/firebase-services/user-datas.service';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { AltHeaderMobileComponent } from "../alt-header-mobile/alt-header-mobile.component";
 
 
@@ -28,7 +28,8 @@ export class ChatComponent implements OnInit {
   constructor(
     public chatService: ChatService,
     private userDatasService: UserDatasService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
 
@@ -61,6 +62,11 @@ export class ChatComponent implements OnInit {
       if (params['userID']) {
         if (params['userID'] === 'guest') {
           this.currentUserId = 'guest';
+          this.router.navigate(['/general/public-chat'], {
+            queryParams: { chatId: 'ER84UOYc0F2jptDjWxFo' },
+            queryParamsHandling: 'merge',
+            replaceUrl: true,
+          });
         } else {
           this.currentUserId = params['userID'];
         }
