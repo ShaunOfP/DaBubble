@@ -261,10 +261,14 @@ h3 {
   border-radius: 30px;
   transition: all ease-in 100ms;
 
-  >img {
-    height: 50px;
-    width: 50px;
-    border-radius: 30px;
+  >div {
+    position: relative;
+
+    >img {
+      height: 50px;
+      width: 50px;
+      border-radius: 30px;
+    }
   }
 
   >span {
@@ -276,6 +280,24 @@ h3 {
     cursor: pointer;
     background-color: var(--color-blue-bg);
   }
+}
+
+.status-circle {
+  height: 12px;
+  width: 12px;
+  border-radius: 30px;
+  border: 2px solid white;
+  position: absolute;
+  right: 0;
+  bottom: 6px;
+}
+
+.online {
+  background-color: var(--color-green);
+}
+
+.offline {
+  background-color: var(--color-grey-primary-disable);
 }
 
 .channel--primary {

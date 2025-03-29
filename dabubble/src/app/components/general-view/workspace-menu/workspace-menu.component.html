@@ -77,11 +77,17 @@
           </mat-expansion-panel-header>
           <div class="contacts-container">
             <div class="contact">
-              <img src="{{ workspaceUserData?.avatar }}" />
+              <div>
+                <img src="{{ workspaceUserData?.avatar }}" />
+                <div class="status-circle online"></div>
+              </div>
               <span>{{ workspaceUserData?.username }} (Du)</span>
             </div>
             <div *ngFor="let user of allUsers" class="contact" (click)="openDirectMessage(user.id)">
-              <img src="{{ user.avatar }}" />
+              <div>
+                <img src="{{ user.avatar }}" />
+                <div class="status-circle offline"></div>
+              </div>
               <span>{{ user.username }}</span>
             </div>
           </div>
