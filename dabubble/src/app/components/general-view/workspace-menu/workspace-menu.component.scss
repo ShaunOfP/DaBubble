@@ -282,24 +282,6 @@ h3 {
   }
 }
 
-.status-circle {
-  height: 12px;
-  width: 12px;
-  border-radius: 30px;
-  border: 2px solid white;
-  position: absolute;
-  right: 0;
-  bottom: 6px;
-}
-
-.online {
-  background-color: var(--color-green);
-}
-
-.offline {
-  background-color: var(--color-grey-primary-disable);
-}
-
 .channel--primary {
   @include arrangement($g: 10px, $jc: normal);
   padding: 4px 20px;

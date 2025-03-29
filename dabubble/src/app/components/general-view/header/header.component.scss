@@ -20,7 +20,7 @@ h3 {
 .header-logo {
   @include arrangement($jc: normal, $g: 16px);
 
-  > img {
+  >img {
     height: 70px;
     width: 70px;
   }
@@ -47,12 +47,12 @@ h3 {
     display: none;
   }
 
-  > input {
+  >input {
     @include fontStyle($fs: 24px, $fw: 400);
     background-color: var(--color-white);
   }
 
-  > button {
+  >button {
     background-color: var(--color-white);
     border: none;
     display: flex;
@@ -61,7 +61,7 @@ h3 {
       cursor: pointer;
     }
 
-    > img {
+    >img {
       height: 25px;
       width: 25px;
     }
@@ -72,7 +72,7 @@ h3 {
   @include arrangement($g: 20px, $jc: normal);
   height: 70px;
 
-  > span {
+  >span {
     @include fontStyle($fs: 32px);
     width: max-content;
     max-width: 250px;
@@ -83,12 +83,21 @@ h3 {
     }
   }
 
-  > img {
-    height: 70px;
-    width: 70px;
+  .status-container {
+    position: relative;
+
+    .status-circle {
+      height: 16px;
+      width: 16px;
+    }
+
+    >img {
+      height: 70px;
+      width: 70px;
+    }
   }
 
-  > div {
+  .dropdown-btn-container {
     @media (max-width: $mobile-breakpoint) {
       display: none;
     }
@@ -98,8 +107,8 @@ h3 {
     color: var(--color-purple-primary-disabled);
     cursor: pointer;
 
-    > div {
-      > button {
+    >div {
+      >button {
         :first-child {
           display: none;
         }
@@ -166,7 +175,7 @@ h3 {
 .profile-info-header {
   @include arrangement($jc: space-between);
 
-  > div {
+  >div {
     height: 40px;
     width: 40px;
     @include arrangement();
@@ -183,7 +192,7 @@ h3 {
   height: 200px;
   width: 100%;
 
-  > img {
+  >img {
     width: 200px;
     border-radius: 100%;
   }
@@ -212,7 +221,7 @@ h3 {
     }
   }
 
-  > img {
+  >img {
     height: 30px;
     width: 30px;
     cursor: pointer;
@@ -227,7 +236,7 @@ h3 {
 .profile-info-name-status-lower {
   @include arrangement($ai: center, $jc: normal, $g: 15px);
 
-  > span {
+  >span {
     @include fontStyle($fs: 20px, $fw: 400);
     color: var(--color-green);
   }
@@ -251,7 +260,7 @@ h3 {
 }
 
 .profile-info-mail {
-  > a {
+  >a {
     margin-left: 50px;
     text-decoration: none;
     color: #1381ff;
@@ -267,7 +276,7 @@ h3 {
     width: 30px;
   }
 
-  > span {
+  >span {
     @include fontStyle($fs: 20px);
   }
 }
@@ -338,7 +347,7 @@ form {
 .profile-edit-form {
   @include arrangement($g: 8px, $fd: column, $ai: normal, $jc: normal);
 
-  > div {
+  >div {
     @include arrangement($g: 20px, $ai: center, $jc: normal);
   }
 }

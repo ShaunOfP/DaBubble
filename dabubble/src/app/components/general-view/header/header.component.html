@@ -16,8 +16,11 @@
 
   <div class="bar-info-account-info" (click)="openDropdownMenu()">
     <span>{{ this.currentUserData?.username }}</span>
-    <img class="avatar-small" [src]="this.currentUserData?.avatar" alt="User Image" />
-    <div>
+    <div class="status-container">
+      <img class="avatar-small" [src]="this.currentUserData?.avatar" alt="User Image" />
+      <div class="status-circle online"></div>
+    </div>
+    <div class="dropdown-btn-container">
       <button mat-button [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger">
         <img src="/img/general-view/workspace-menu/arrow_drop_down_thin.svg" />
         <img class="d-none" src="/img/general-view/workspace-menu/hover_arrow_drop_down_thin.svg" />
