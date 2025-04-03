@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { CreateChannelComponent } from './create-channel/create-channel.component';
 import { ChatService } from '../../services/firebase-services/chat.service';
+import { AuthService } from '../../services/firebase-services/auth.service';
 
 @Component({
   selector: 'app-general-view',
@@ -24,7 +25,7 @@ import { ChatService } from '../../services/firebase-services/chat.service';
   templateUrl: './general-view.component.html',
   styleUrl: './general-view.component.scss'
 })
-export class GeneralViewComponent implements OnInit{
+export class GeneralViewComponent implements OnInit {
   threadIsVisible?: boolean;
   showCreateChannelOverlay: boolean = false;
   @ViewChild(ChatComponent) chatComponent!: ChatComponent;
@@ -32,23 +33,25 @@ export class GeneralViewComponent implements OnInit{
   workspaceMenuState: boolean = false;
 
 
-  constructor(public chatService : ChatService){
+  constructor(public chatService: ChatService, private authService: AuthService) {
 
   }
 
   ngOnInit(): void {
-      this.chatService.showCurrentThread.subscribe(
-        status => {this.threadIsVisible = status}
-      )
+    this.authService.trackUserPresence(); //Aktiviert das Tracking der User mit Status Online
+
+    this.chatService.showCurrentThread.subscribe(
+      status => { this.threadIsVisible = status }
+    );
   }
-  
+
   /**
    * Hides/Closes the Thread-Component
    */
   closeThread() {
     this.threadMenuState = 'closed';
     setTimeout(() => {
-      this.chatService.setThreadVisible(false);    
+      this.chatService.setThreadVisible(false);
     }, 125);
   }
 

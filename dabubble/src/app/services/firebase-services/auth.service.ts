@@ -17,6 +17,7 @@ import {
 import { BehaviorSubject } from 'rxjs';
 import { UserDatas } from '../../models/user.class';
 import { UserDatasService } from './user-datas.service';
+import { Database, ref, onDisconnect, set, serverTimestamp } from '@angular/fire/database';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +26,26 @@ export class AuthService {
   private userSubject = new BehaviorSubject<User | null>(null);
   user$ = this.userSubject.asObservable();
 
-  constructor(private auth: Auth, private userDataService: UserDatasService) {}
+  constructor(private auth: Auth, private userDataService: UserDatasService, private db: Database) { }
+
+
+  /**
+   * Tracks if User is online/offline
+   */
+  trackUserPresence() {
+    this.auth.onAuthStateChanged(user => {
+      if (user) {
+        const userStatusRef = ref(this.db, `status/${user.uid}`);
+
+        // Set user online in Realtime DB
+        set(userStatusRef, { state: 'online', lastChanged: serverTimestamp() });
+
+        // Mark user as offline on disconnect
+        onDisconnect(userStatusRef).set({ state: 'offline', lastChanged: serverTimestamp() });
+      }
+    });
+  }
+
 
   // Logout
   async logout(): Promise<void> {
@@ -54,8 +74,8 @@ export class AuthService {
         const errorMessage = error.message;
         console.error('error Code' + errorCode);
         console.error('error Message' + errorMessage);
-        
-        
+
+
       });
   }
 
@@ -80,7 +100,7 @@ export class AuthService {
       console.log('Google Login erfolgreich:', result.user.uid);
       console.log('Google Account Image URL:', result.user.photoURL); // Log the image path
       // this.userSubject.next(result.user); // Push the user data to userSubject
-      return result; 
+      return result;
     } catch (error) {
       console.error('Fehler beim Google Login:', error);
       return null;
@@ -111,7 +131,7 @@ export class AuthService {
         const errorMessage = error.message;
         onError(errorCode, errorMessage);
       });
-  } 
+  }
 
 
   verifyCode(oobCode: string): Promise<string> {

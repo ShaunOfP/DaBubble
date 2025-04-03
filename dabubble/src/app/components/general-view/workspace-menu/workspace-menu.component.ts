@@ -67,13 +67,13 @@ export class WorkspaceMenuComponent implements OnInit {
 
   async subscribeAllMembers() {
     await this.channelMemberService.selectAllMembers();
-    console.log(this.workspaceUserData);
     this.channelMemberService.allMembersSubject$.subscribe((allUsers) => {
       this.allUsers = allUsers.filter(
         (user) =>
           user.privateChats[0] !== this.workspaceUserData?.privateChats[0]
       );
     });
+    this.userDatasService.getOnlineUsers(); //Ruf die User mit Status: Online ab
   }
 
   toggleMargin() {

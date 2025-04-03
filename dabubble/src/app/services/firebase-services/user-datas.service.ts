@@ -7,6 +7,9 @@ import {
   doc,
   updateDoc,
   getDoc,
+  query,
+  where,
+  getDocs
 } from '@angular/fire/firestore';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { UserDatas } from './../../models/user.class';
@@ -46,7 +49,22 @@ export class UserDatasService {
   public currentUserData$: Observable<UserObserver | null> =
     this.currentUserDataSubject.asObservable();
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute) { }
+
+
+  /**
+   * Console Logs the Users that are online
+   */
+  async getOnlineUsers() {
+    const usersRef = collection(this.firestore, 'users');
+    const onlineUsersQuery = query(usersRef, where('isOnline', '==', true));
+    const querySnapshot = await getDocs(onlineUsersQuery);
+
+    querySnapshot.forEach((doc) => {
+      console.log(`User ID: ${doc.id}, Data:`, doc.data());
+    });
+  }
+
 
   async getUserDataById(): Promise<void> {
     this.route.queryParams.pipe().subscribe(async (params) => {
@@ -283,6 +301,7 @@ export class UserDatasService {
     }
   }
 }
+
 
 // async getUserDatas(email: string, password: string) {
 //   const q = query(this.userDatasRef(), where('mail', '==', email));
