@@ -148,7 +148,7 @@ export class UserDatasService {
   async getSingleUserData(userId: string) {
     const userDataSnapshot = await getDoc(doc(this.userDatasRef(), userId));
     if (userDataSnapshot.exists()) {
-      return { id: userDataSnapshot.id, ...userDataSnapshot.data() };
+      return { id: userDataSnapshot.id, ...userDataSnapshot.data() } as any;
     } else {
       console.error('User doesnt exist in the database');
       return;
@@ -246,6 +246,23 @@ export class UserDatasService {
       return undefined;
     }
   }
+
+
+  /**
+   * Fetches the URL of the Avatar(IMG) for the Chat
+   * @param id ID of the currently logged in User
+   * @returns a string containing the URL of the Avatar of the currently logged in User
+   */
+  async getUserAvatar(id: string): Promise<string> {
+    return this.getSingleUserData(id).then(result => {
+      if (result && result.avatar) {
+        return result.avatar;
+      } else {
+        return "/img/general-view/create-avatar/default-avatar.svg";
+      }
+    });
+  }
+
 
   async getPrivateChannel(userId: string) {
     const userDocRef = doc(this.firestore, `userDatas/${userId}`);

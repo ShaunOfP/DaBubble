@@ -60,18 +60,20 @@ export class ThreadComponent implements OnInit{
   console.log(this.chatService.currentMessageId);
  
     if(!content) return
-    const userId = this.userDatasService.currentUserId
-    const userName = await this.userDatasService.getUserName(userId)
+    const userId = this.userDatasService.currentUserId;
+    const userName = await this.userDatasService.getUserName(userId);
+    const avatarUrl = await this.userDatasService.getUserAvatar(this.userDatasService.currentUserId);
     const message:  Message = {
           id: this.generateId(), 
           sender: userName, 
           createdAt: new Date().getTime(),
           content: content,
           userId: this.userDatasService.currentUserId, // Use the actual user ID
-          reaction: {}
+          reaction: {},
+          avatar: avatarUrl
         };
-    const messageId = this.chatService.currentMessageId
-    this.chatService.generateThread(messageId, message)
+    const messageId = this.chatService.currentMessageId;
+    this.chatService.generateThread(messageId, message);
   }
   private generateId(): string {
     // Generate a unique ID for the message (e.g., using a UUID library or custom logic)

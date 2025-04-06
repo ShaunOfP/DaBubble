@@ -167,13 +167,16 @@ export class ChatComponent implements OnInit {
       return;
     }
 
+    const avatarUrl = await this.userDatasService.getUserAvatar(this.userDatasService.currentUserId);
+
     const message: Message = {
       id: this.generateId(), // Generate a unique ID for the message
       sender: userName, // Replace with actual sender name
       createdAt: new Date().getTime(),
       content: content,
       userId: this.userDatasService.currentUserId, // Use the actual user ID
-      reaction: {}
+      reaction: {},
+      avatar: avatarUrl
     };
 
     if (this.chatService.currentChatId == ``) {

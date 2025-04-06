@@ -20,7 +20,6 @@ import { FormsModule } from '@angular/forms';
 import { FilterService } from '../../../../services/component-services/filter.service';
 import { EmojiPickerComponent } from '../../emoji-picker/emoji-picker.component';
 import { UserDatasService } from '../../../../services/firebase-services/user-datas.service';
-import { getDoc } from '@angular/fire/firestore';
 import { ReactionsComponent } from './reactions/reactions.component';
 import { ChannelMemberService } from '../../../../services/firebase-services/channel-member.service';
 
@@ -146,6 +145,7 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
       })
     );
   }
+
 
   // reactionEntries(message: Message): {
   //   isImage: boolean;
