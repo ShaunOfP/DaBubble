@@ -56,6 +56,9 @@ export class ReactionsComponent {
 
 
   async showPopover(index: number, users: string[]) {
+    console.log(index); //Zur Überprüfung, wie oft das mouseenter event getriggert wird. 
+    // Vorher wurde der Console.log durchgehend gemacht
+    
     if (!this.reactionUserNamesCache[index]) {
       this.reactionUserNamesCache[index] = await this.formatUserNames(users);
     }
