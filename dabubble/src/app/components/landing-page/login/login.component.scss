@@ -220,6 +220,10 @@ form {
   width: 100%;
 }
 
+.card-wrapper {
+  width: 100%;
+}
+
 .login-card {
   @include arrangement($d: flex, $jc: center, $ai: center, $fd: column);
 
@@ -321,7 +325,7 @@ form {
 }
 
 .login-button {
-  @include arrangement($d: flex, $jc: space-between, $ai: center, $fd: row);
+  @include arrangement($d: flex, $jc: center, $ai: center, $fd: row);
   gap: 16px;
 
   button {
