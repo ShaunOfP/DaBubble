@@ -27,7 +27,7 @@ export class AllMembersComponent implements OnChanges, OnInit {
   selectedMembers: Member[] = [];
   lowerCaseQuery!: string;
 
-  constructor(private memberService: ChannelMemberService) {}
+  constructor(private memberService: ChannelMemberService) { }
 
   ngOnInit(): void {
     this.memberService.selectedMembers$.subscribe((members) => {

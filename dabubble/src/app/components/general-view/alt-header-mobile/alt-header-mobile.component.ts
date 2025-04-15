@@ -13,10 +13,18 @@ export class AltHeaderMobileComponent {
 
   }
 
+
+  /**
+   * Calls function to make other Component visible again
+   */
   goBackToWorkspaceMenu() {
     this.hideAltHeader();
   }
 
+
+  /**
+   * Changes boolean of variables to hide the component
+   */
   hideAltHeader() {
     this.chatService.showChatWhenResponsive = false;
     this.chatService.showAltHeader = false;

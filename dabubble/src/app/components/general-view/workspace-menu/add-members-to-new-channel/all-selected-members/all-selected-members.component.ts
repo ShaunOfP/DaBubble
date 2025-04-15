@@ -13,11 +13,12 @@ import { CommonModule } from '@angular/common';
   styleUrl: './all-selected-members.component.scss',
 })
 export class AllSelectedMembersComponent {
-  constructor(private memberService: ChannelMemberService) {}
-
   @Input() members: Member[] = [];
   @Output() memberRemoved = new EventEmitter<Member>();
   @Output() closeWindow = new EventEmitter();
+
+  constructor(private memberService: ChannelMemberService) { }
+
 
   /**
    * Removes a member and notifies the parent component:
@@ -28,6 +29,8 @@ export class AllSelectedMembersComponent {
     this.memberRemoved.emit(member);
     this.memberService.removeMember(member);
   }
+
+
   /**
    * Closes the current dialog
    */

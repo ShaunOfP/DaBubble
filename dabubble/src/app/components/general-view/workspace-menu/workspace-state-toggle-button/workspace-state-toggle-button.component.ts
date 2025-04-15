@@ -15,6 +15,9 @@ export class WorkspaceStateToggleButtonComponent {
   displayCloseMessage: boolean = true;
 
 
+  /**
+   * Toggles the workspace menu via button click
+   */
   toggleWorkspaceMenu() {
     this.menu.emit();
     this.switchMessage();

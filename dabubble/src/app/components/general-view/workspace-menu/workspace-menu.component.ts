@@ -51,38 +51,55 @@ export class WorkspaceMenuComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.getCurrentUserData();
+  }
+
+
+  /**
+   * Sets the current user data and fetches all the channels, direct messages, etc..
+   * If the guest is logged in it only loads the main channel
+   */
+  getCurrentUserData() {
     this.userDatasService.currentUserData$.subscribe((userDatas) => {
       this.workspaceUserData = userDatas;
       if (!this.userDatasService.checkIfGuestIsLoggedIn()) {
-        this.fetchUserData();
+        this.fetchChannelData();
+        this.subscribeAllMembers();
       } else {
-        //Lädt nur den Entwicklerchannel wenn Gast eingeloggt ist
         this.fetchChannelNames(['ER84UOYc0F2jptDjWxFo']);
       }
     });
-    if (!this.userDatasService.checkIfGuestIsLoggedIn()) {
-      this.subscribeAllMembers();
-    }
   }
 
+
+  /**
+   * Subscribes to all members and filters the own private chat out. Checks for online status afterwards
+   */
   async subscribeAllMembers() {
     await this.channelMemberService.selectAllMembers();
     this.channelMemberService.allMembersSubject$.subscribe((allUsers) => {
       this.allUsers = allUsers.filter(
-        (user) =>
-          user.privateChats[0] !== this.workspaceUserData?.privateChats[0]
+        (user) => user.privateChats[0] !== this.workspaceUserData?.privateChats[0]
       );
     });
-    this.userDatasService.getOnlineUsers(); //Ruf die User mit Status: Online ab
+    this.userDatasService.getOnlineUsers();
   }
 
+
+  /**
+   * Toggles the left margin when a specific condition is met
+   */
   toggleMargin() {
     this.toggleMarginLeft
       ? (this.toggleMarginLeft = false)
       : (this.toggleMarginLeft = true);
   }
 
-  fetchUserData(): void {
+
+  /**
+   * Fetches the current channels for the logged in user
+   */
+  fetchChannelData(): void {
     try {
       if (this.workspaceUserData) {
         this.fetchChannelNames(this.workspaceUserData.channels);
@@ -92,6 +109,11 @@ export class WorkspaceMenuComponent implements OnInit {
     }
   }
 
+
+  /**
+   * Fetches the current channel ids and converts them to readable names
+   * @param channelIdArray array with channel ids
+   */
   async fetchChannelNames(channelIdArray: string[]): Promise<void> {
     let array: any[] = [];
     for (const channelId of channelIdArray) {
@@ -105,6 +127,10 @@ export class WorkspaceMenuComponent implements OnInit {
     this.cd.detectChanges();
   }
 
+
+  /**
+   * If guest is not logged in opens the create channel component
+   */
   openCreateChannelOverlay() {
     if (!this.userDatasService.checkIfGuestIsLoggedIn()) {
       this.openCreateChannel.emit();
@@ -113,6 +139,10 @@ export class WorkspaceMenuComponent implements OnInit {
     }
   }
 
+
+  /**
+   * If guest is not logged in opens the new message component
+   */
   openNewMessage() {
     if (!this.userDatasService.checkIfGuestIsLoggedIn()) {
       this.router.navigate(['/general/new-message'], {
@@ -120,8 +150,7 @@ export class WorkspaceMenuComponent implements OnInit {
         replaceUrl: true,
       });
 
-      this.chatService.showChatWhenResponsive = true;
-      this.chatService.showAltHeader = true;
+      this.showResponsiveComponents();
     } else {
       console.warn('Log in to send Private Messages');
     }
@@ -130,17 +159,26 @@ export class WorkspaceMenuComponent implements OnInit {
   readonly channelOpenState = signal(false);
   readonly messagesOpenState = signal(false);
 
-  modifyUrlWithChatString(channelId: string) {
+
+  /**
+   * Opens the public chat with the provided channel id
+   * @param channelId Id of the channel that should be displayed
+   */
+  openPublicChatViaId(channelId: string) {
     this.router.navigate(['/general/public-chat'], {
       queryParams: { chatId: channelId },
       queryParamsHandling: 'merge',
       replaceUrl: true,
     });
 
-    this.chatService.showChatWhenResponsive = true;
-    this.chatService.showAltHeader = true;
+    this.showResponsiveComponents();
   }
 
+
+  /**
+   * Opens the direct message with the user of the provided id
+   * @param userId Id of the user
+   */
   async openDirectMessage(userId: string) {
     const privateChatId = await this.userDatasService.getPrivateChannel(userId);
     this.router.navigate(['/general/private-chat'], {
@@ -149,6 +187,14 @@ export class WorkspaceMenuComponent implements OnInit {
       replaceUrl: true,
     });
 
+    this.showResponsiveComponents();
+  }
+
+
+  /**
+   * Sets variables to true to make them visible for responsive needs
+   */
+  showResponsiveComponents() {
     this.chatService.showChatWhenResponsive = true;
     this.chatService.showAltHeader = true;
   }

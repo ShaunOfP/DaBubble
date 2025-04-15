@@ -12,11 +12,14 @@ import { MatCardModule } from '@angular/material/card';
 export class EmojiPickerComponent {
   emojis = ['😁', '😀', '😃', '😄', '😉', '😊', '😋', '😎', '🙂', '😚', '😪', '😴', '😌', '😛', '🤐', '😂', '🤣', '😐', '🤔', '😮', '😬', '🤯', '😇', '🥳'];
   reactions = ['🤯', '😇', '🥳'];
-
   @Input() showReactionsOnly: boolean = false;
-
   @Output() emojiSelected = new EventEmitter<string>(); 
 
+
+  /**
+   * Adds an emoji
+   * @param emoji the currently clicked Emoji from the emojis-array
+   */
   addEmoji(emoji: string) {
     this.emojiSelected.emit(emoji); 
   }

@@ -1,11 +1,10 @@
-import { Component, Input, input, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { WorkspaceMenuComponent } from './workspace-menu/workspace-menu.component';
 import { HeaderComponent } from './header/header.component';
 import { ThreadComponent } from './thread/thread.component';
 import { ChatComponent } from './chat/chat.component';
 import { CommonModule } from '@angular/common';
-import { animate, state, style, transition, trigger } from '@angular/animations';
 import { CreateChannelComponent } from './create-channel/create-channel.component';
 import { ChatService } from '../../services/firebase-services/chat.service';
 import { AuthService } from '../../services/firebase-services/auth.service';
@@ -37,13 +36,22 @@ export class GeneralViewComponent implements OnInit {
 
   }
 
+
   ngOnInit(): void {
     this.authService.trackUserPresence(); //Aktiviert das Tracking der User mit Status Online
+    this.subscribeToThreadVisibilityStatus();
+  }
 
+
+  /**
+   * Subscribes to the visibility status of the thread component
+   */
+  subscribeToThreadVisibilityStatus() {
     this.chatService.showCurrentThread.subscribe(
       status => { this.threadIsVisible = status }
     );
   }
+
 
   /**
    * Hides/Closes the Thread-Component
@@ -64,6 +72,9 @@ export class GeneralViewComponent implements OnInit {
   }
 
 
+  /**
+   * Opens the new message component
+   */
   openNewMessage() {
     this.chatComponent.openNewMessageWindow();
   }

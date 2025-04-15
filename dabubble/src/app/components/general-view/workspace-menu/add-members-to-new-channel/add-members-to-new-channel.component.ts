@@ -35,7 +35,6 @@ import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 export class AddMembersToNewChannelComponent implements OnInit {
   @ViewChild('nameInput') nameInputField!: ElementRef;
   @Output() closeAll: EventEmitter<void> = new EventEmitter();
-
   selectedOption: boolean = true;
   searchQuery: string = '';
   selectedMembers: Member[] = [];
@@ -53,10 +52,14 @@ export class AddMembersToNewChannelComponent implements OnInit {
     private memberService: ChannelMemberService,
     private userDataService: UserDatasService,
     private eRef: ElementRef
-  ) {}
+  ) { }
 
-  @HostListener('document:click', ['$event']) //Trackt alle Klick-Events im gesamten Dokument
-  // Sobald irgendwo auf der Seite geklickt wird, wird die Funktion ausgelöst und das HTML-Element, auf das geklickt wurde, mitgegeben
+
+  /**
+   * Listens to all events of the document. When the click event is fired the function is called
+   * @param event Click Event
+   */
+  @HostListener('document:click', ['$event'])
   onClickOutside(event: Event) {
     if (
       this.openAddMembers &&
@@ -72,17 +75,34 @@ export class AddMembersToNewChannelComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.memberService.selectedMembers$.subscribe((members) => {
-      this.selectedMembers = members;
-    });
-    this.memberService.isComponentVisible$.subscribe((isVisible) => {
-      this.isComponentVisible = isVisible;
-    });
+    this.subscribeToSelectedMembers();
+    this.subscribeToVisibilityOfComponent();
     this.openAddMembers = true;
     if (window.innerWidth < 450) {
       this.isMobile = true;
     }
   }
+
+
+  /**
+   * Subscribes to the currently selected members
+   */
+  subscribeToSelectedMembers() {
+    this.memberService.selectedMembers$.subscribe((members) => {
+      this.selectedMembers = members;
+    });
+  }
+
+
+  /**
+   * Subscribes to the current state of the visibility of the component
+   */
+  subscribeToVisibilityOfComponent() {
+    this.memberService.isComponentVisible$.subscribe((isVisible) => {
+      this.isComponentVisible = isVisible;
+    });
+  }
+
 
   /**
    * Handles the submission process to create a new channel after member selection.

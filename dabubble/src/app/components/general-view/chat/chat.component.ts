@@ -33,7 +33,6 @@ export class ChatComponent implements OnInit {
   ) { }
 
 
-  // @ViewChild(PublicChatComponent) publicChatComponent!: PublicChatComponent;
   @ViewChild('emojiTarget', { static: true }) emojiTarget!: ElementRef;
   @ViewChild('messageInput', { static: false }) messageInput!: ElementRef;
   selectedEmoji: string = '';
@@ -107,6 +106,10 @@ export class ChatComponent implements OnInit {
   }
 
 
+  /**
+   * Handles the Emoji selection and hides the Emoji picker
+   * @param emoji the Emoji as a string
+   */
   onEmojiReceived(emoji: string) {
     this.selectedEmoji = emoji;
     this.emojiTarget.nativeElement.value += emoji;
@@ -114,14 +117,20 @@ export class ChatComponent implements OnInit {
   }
 
 
-  toggleEmojiPicker() {
+  /**
+   * Shows the Emoji picker
+   */
+  showEmojiPicker() {
     const emojiPickerElement = document.getElementById('emojiChat');
     if (emojiPickerElement) {
-      emojiPickerElement.classList.toggle('d-none');
+      emojiPickerElement.classList.remove('d-none');
     }
   }
 
 
+  /**
+   * Hides the Emoji picker
+   */
   hideEmojiPicker() {
     const emojiPickerElement = document.getElementById('emojiChat');
     if (emojiPickerElement) {
@@ -130,12 +139,18 @@ export class ChatComponent implements OnInit {
   }
 
 
+  /**
+   * Changes components to add a new message
+   */
   openNewMessageWindow() {
     this.showNewMessageHeader = true;
     this.changeHeaders();
   }
 
 
+  /**
+   * Changes styling of the header to allow design for different use cases
+   */
   changeHeaders() {
     document
       .getElementById('chat-container')
@@ -146,6 +161,11 @@ export class ChatComponent implements OnInit {
   }
 
 
+  /**
+   * 
+   * @param content 
+   * @returns 
+   */
   async sendMessage(content: string): Promise<void> {
     if (!this.userDatasService.currentUserId || !content) {
       this.userDatasService.getCurrentUserId();
@@ -198,8 +218,11 @@ export class ChatComponent implements OnInit {
   }
 
 
+  /**
+   * Generates a unique id
+   * @returns a unique id
+   */
   private generateId(): string {
-    // Generate a unique ID for the message (e.g., using a UUID library or custom logic)
-    return 'unique-id-' + Math.random().toString(36).substr(2, 9);
+    return 'unique-id-' + Math.random().toString(36).substring(2, 9);
   }
 }

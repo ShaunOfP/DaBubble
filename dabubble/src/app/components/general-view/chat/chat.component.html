@@ -9,7 +9,7 @@
         <div appClickOutside (appClickOutside)="hideEmojiPicker()">
           <app-emoji-picker id="emojiChat" (emojiSelected)="onEmojiReceived($event)"
             class="d-none left-corner-0"></app-emoji-picker>
-          <div class="chat-icons change-image-on-hover" (click)="toggleEmojiPicker()">
+          <div class="chat-icons change-image-on-hover" (click)="showEmojiPicker()">
             <img src="/img/general-view/workspace-menu/smiley.svg">
             <img class="d-none" src="/img/general-view/workspace-menu/hover_smiley.svg">
           </div>

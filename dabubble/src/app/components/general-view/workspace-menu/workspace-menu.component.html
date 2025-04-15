@@ -40,7 +40,7 @@
           </mat-expansion-panel-header>
           <div class="channels">
             <div *ngFor="let channel of readableChannels" class="channel--primary"
-              (click)="modifyUrlWithChatString(channel.channelId)">
+              (click)="openPublicChatViaId(channel.channelId)">
               <b>#</b>
               <span>{{ channel.channelName }}</span>
             </div>

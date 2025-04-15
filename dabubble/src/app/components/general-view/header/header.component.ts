@@ -1,18 +1,14 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenu, MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
-import { Router, RouterModule, ActivatedRoute } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { NgForm, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { User } from '@angular/fire/auth';
-import { AuthService } from '../../../services/firebase-services/auth.service';
 import {
   UserDatasService,
   UserObserver,
 } from '../../../services/firebase-services/user-datas.service';
-import { UserDatas } from '../../../models/user.class';
-import { map, Observable, take } from 'rxjs';
-import { PublicChatComponent } from '../chat/public-chat/public-chat.component';
 import { FilterService } from '../../../services/component-services/filter.service';
 import { SearchResultsComponent } from './search-results/search-results.component';
 
@@ -31,6 +27,14 @@ import { SearchResultsComponent } from './search-results/search-results.componen
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  @ViewChild('menu') menu!: MatMenu;
+  @ViewChild('menuTrigger') menuTrigger!: MatMenuTrigger;
+  showProfileInfo: boolean = false;
+  showGreyScreen: boolean = false;
+  showProfileEdit: boolean = false;
+  newNameInput: string = ``;
+  inputSearch: string = '';
+  searchFocused: boolean = false;
   user: User | null = null;
   currentUserData!: UserObserver | null;
 
@@ -40,46 +44,23 @@ export class HeaderComponent implements OnInit {
     private filterService: FilterService
   ) { }
 
-  @ViewChild('menu') menu!: MatMenu;
-  @ViewChild('menuTrigger') menuTrigger!: MatMenuTrigger;
-  showProfileInfo: boolean = false;
-  showGreyScreen: boolean = false;
-  showProfileEdit: boolean = false;
-  newNameInput: string = ``;
-  inputSearch: string = '';
-  searchFocused: boolean = false;
 
   async ngOnInit(): Promise<void> {
     await this.userDatasService.getUserDataById();
     this.userDatasService.getCurrentUserId();
+    this.subscribeToCurrentUserData();
+  }
+
+
+  /**
+   * Subscribes to the current user data
+   */
+  subscribeToCurrentUserData() {
     this.userDatasService.currentUserData$.subscribe((userData) => {
       this.currentUserData = userData;
     });
-    // if(this.userData === undefined){
-    //   const user = setInterval(() => {
-    //     this.userData = this.userDatasService.currentUserData
-    //     if(this.userData !== undefined){
-    //       clearInterval(user)
-    //       console.log(this.userData);
-    //     }
-    //   }, 100);
-    // }
-
-    //  this.userDatasService.userIds$.pipe(
-    //   map((ids) => console.log(ids))
-    // )
-    // .subscribe();
   }
 
-  // async getUserDatas(): Promise<void> {
-  //   this.route.queryParams.pipe(take(1)).subscribe(async (params) => {
-  //     const userID = params['userID'];
-  //     if (userID) {
-  //       this.userData = await this.userDatasService.getUserDataById(userID);
-  //       console.log('User Data:', this.userData);
-  //     }
-  //   });
-  // }
 
   /**
    * Takes boolean as input to decide wether the menu should be open or not
@@ -94,6 +75,7 @@ export class HeaderComponent implements OnInit {
     }
   }
 
+
   /**
    * Navigating to a specific site via the router using a given route
    * @param route A string containing the chosen route
@@ -102,6 +84,7 @@ export class HeaderComponent implements OnInit {
     this.router.navigate([route]);
   }
 
+
   /**
    * Opens the Dropdown Menu
    */
@@ -109,12 +92,14 @@ export class HeaderComponent implements OnInit {
     this.menuTrigger.openMenu();
   }
 
+
   /**
    * Closes the Dropdown Menu and also closes the Profile Info Container if it is still open
    */
   closeDropdownMenu() {
     this.menuTrigger.closeMenu();
   }
+
 
   /**
    * Changes bool of variable to display/hide the Profile Edit
@@ -127,12 +112,14 @@ export class HeaderComponent implements OnInit {
     }
   }
 
+
   /**
    * Changes the bool of a variable to hide the Profile Edit
    */
   closeEditForm() {
     this.showProfileEdit = false;
   }
+
 
   /**
    * Changes bool of variable to hide/show GreyScreen; also hides all other elements when GreyScreen is hidden
@@ -149,8 +136,8 @@ export class HeaderComponent implements OnInit {
   }
 
   /**
-   *
-   * @param form
+   * If guest is not logged in and the form is valid it Updates the Username in the database
+   * @param form for form validation
    */
   submitForm(form: NgForm) {
     if (this.userDatasService.checkIfGuestIsLoggedIn()) {
@@ -167,16 +154,27 @@ export class HeaderComponent implements OnInit {
     }
   }
 
+
+  /**
+   * Resets the search results and updates the Filter with the current search input
+   */
   searchInDevspace() {
     this.filterService.resetSearchResults();
     this.filterService.updateFilter(this.inputSearch);
-    // this.publicChatComponent.updateFilter(this.inputSearch)
   }
 
+
+  /**
+   * Opens the search-results component
+   */
   searchFocus() {
     this.searchFocused = true;
   }
 
+
+  /**
+   * Hides the search-results component and clears the input field
+   */
   closeSearch() {
     this.searchFocused = false;
     this.inputSearch = '';
