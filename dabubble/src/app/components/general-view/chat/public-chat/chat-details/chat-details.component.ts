@@ -4,7 +4,7 @@ import { NgForm, FormsModule } from '@angular/forms';
 import { ChatService } from '../../../../../services/firebase-services/chat.service';
 import { PublicChatComponent } from '../public-chat.component';
 import { UserDatasService } from '../../../../../services/firebase-services/user-datas.service';
-import { ChannelMemberService, Member } from '../../../../../services/firebase-services/channel-member.service';
+import { ChannelMemberService } from '../../../../../services/firebase-services/channel-member.service';
 import { Router } from '@angular/router';
 import { ChannelMembersComponent } from "../channel-members/channel-members.component";
 
@@ -17,17 +17,13 @@ import { ChannelMembersComponent } from "../channel-members/channel-members.comp
 })
 export class ChatDetailsComponent {
   @Output() callParent: EventEmitter<void> = new EventEmitter();
-
   currentChannelId: string = '';
   currentChannelName: string = '';
   currentChannelOwner: string = '';
   currentChannelDescription: string = '';
-
   currentChannelData: any;
-
   newDescriptionInput: string = '';
   newChannelNameInput: string = '';
-
   showChannelName: boolean = true;
   showNewChannelNameForm: boolean = false;
   descriptionContainerVisible: boolean = true;
@@ -39,20 +35,7 @@ export class ChatDetailsComponent {
     public userDataService: UserDatasService,
     private channelMemberService: ChannelMemberService,
     private router: Router
-  ) {
-
-  }
-
-
-  /**
-   * Assigns the correct Values to the matching Variables when initialized
-   */
-  // async ngOnInit() {
-  // this.currentChannelId = this.chatService.currentChannelData['channelId'];
-  //   this.currentChannelName = this.publicChat.currentChannelData['channelName'];
-  //   this.currentChannelOwner = await this.getNameOfChannelOwner(this.publicChat.currentChannelData['owner']);
-  //   this.currentChannelDescription = this.publicChat.currentChannelData['description'];
-  // }
+  ) { }
 
 
   /**
@@ -70,11 +53,18 @@ export class ChatDetailsComponent {
   }
 
 
+  /**
+   * Closing the Chat Details
+   */
   closeChatDetails() {
     this.callParent.emit();
     this.channelMemberService.showChatGreyScreen = false;
   }
 
+
+  /**
+   * If Guest is not logged in it toggles Visibility of the Channel Name Input Field
+   */
   openNewChannelInput() {
     if (!this.userDataService.checkIfGuestIsLoggedIn()) {
       this.toggleNewChannelNameInputVisibility();
@@ -84,12 +74,20 @@ export class ChatDetailsComponent {
     }
   }
 
+
+  /**
+   * Toggles visibility of Channel Name and Channel Name Edit Field
+   */
   showChannelNameContainer() {
     this.toggleNewChannelNameInputVisibility();
     this.toggleChannelNameContainerVisibility();
   }
 
-  openDesciptionEdit() {
+
+  /**
+   * If Guest is not logged in it toggles Visibility of the Channel Description Input Field
+   */
+  openDescriptionEdit() {
     if (!this.userDataService.checkIfGuestIsLoggedIn()) {
       this.toggleChannelDescriptionVisibility();
       this.toggleNewChannelDescriptionVisibility();
@@ -98,27 +96,52 @@ export class ChatDetailsComponent {
     }
   }
 
+
+  /**
+   * Toggles visibility of Channel Name and Channel Description Edit Field
+   */
   showChannelDescriptionContainer() {
     this.toggleNewChannelDescriptionVisibility();
     this.toggleChannelDescriptionVisibility();
   }
 
+
+  /**
+   * Toggles Variable for Channel Name Visibility
+   */
   toggleChannelNameContainerVisibility() {
     this.showChannelName = !this.showChannelName;
   }
 
+
+  /**
+   * Toggles Variable for Channel Name Input Visibility
+   */
   toggleNewChannelNameInputVisibility() {
     this.showNewChannelNameForm = !this.showNewChannelNameForm;
   }
 
+
+  /**
+   * Toggles Variable for Channel Description Visibility
+   */
   toggleChannelDescriptionVisibility() {
     this.descriptionContainerVisible = !this.descriptionContainerVisible;
   }
 
+
+  /**
+   * Toggles Variable for Channel Description Input Visibility
+   */
   toggleNewChannelDescriptionVisibility() {
     this.newDescriptionContainerVisible = !this.newDescriptionContainerVisible;
   }
 
+
+  /**
+   * Updates the new Channel Name to the Database
+   * @param ngForm for Form Validation
+   */
   submitNewName(ngForm: NgForm) {
     if (ngForm.touched && ngForm.valid) {
       if (this.chatService.currentChannelData?.channelId) {
@@ -130,13 +153,18 @@ export class ChatDetailsComponent {
     }
   }
 
+
+  /**
+   * Updates the new Channel Description to the Database
+   * @param ngForm for Form Validation
+   */
   submitNewDescription(ngForm: NgForm) {
     if (ngForm.touched && ngForm.valid) {
       if (this.chatService.currentChannelData?.channelId) {
-      this.chatService.updateChatInformation(this.chatService.currentChannelData?.channelId, 'description', this.newDescriptionInput)
-        .then(() => {
-          this.showChannelDescriptionContainer();
-        });
+        this.chatService.updateChatInformation(this.chatService.currentChannelData?.channelId, 'description', this.newDescriptionInput)
+          .then(() => {
+            this.showChannelDescriptionContainer();
+          });
       }
     }
   }
