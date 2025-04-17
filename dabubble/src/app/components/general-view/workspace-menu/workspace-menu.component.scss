@@ -103,7 +103,7 @@ app-workspace-state-toggle-button {
       background-color: var(--color-blue-bg);
     }
 
-    >img {
+    > img {
       height: 24px;
       width: 24px;
     }
@@ -117,7 +117,7 @@ app-workspace-state-toggle-button {
 .workspace-menu-mobile-searchbar {
   @include arrangement($jc: normal);
 
-  >input {
+  > input {
     font-size: 17px;
     padding: 8px 24px;
     width: calc(100% - 50px);
@@ -132,7 +132,7 @@ app-workspace-state-toggle-button {
     }
   }
 
-  >img {
+  > img {
     height: 26px;
     width: 32px;
     margin-left: -50px;
@@ -183,6 +183,9 @@ h3 {
   min-height: 40px;
   min-width: 40px;
   width: 40px;
+  position: absolute;
+  right: 0;
+  margin-right: 16px;
   @include arrangement();
   border-radius: 30px;
   margin-top: 12px;
@@ -216,7 +219,7 @@ h3 {
 .header-middle {
   @include arrangement($jc: normal, $g: 10px);
 
-  >span {
+  > span {
     font-weight: 700;
     font-size: 20px;
   }
@@ -235,7 +238,7 @@ h3 {
 .add-channel {
   @include arrangement($jc: normal, $g: 10px);
 
-  >span {
+  > span {
     font-weight: 400px;
     font-size: 18px;
   }
@@ -261,17 +264,17 @@ h3 {
   border-radius: 30px;
   transition: all ease-in 100ms;
 
-  >div {
+  > div {
     position: relative;
 
-    >img {
+    > img {
       height: 50px;
       width: 50px;
       border-radius: 30px;
     }
   }
 
-  >span {
+  > span {
     font-weight: 400;
     font-size: 18px;
   }
@@ -288,12 +291,12 @@ h3 {
   border-radius: 20px;
   margin-left: 25px;
 
-  >b {
+  > b {
     font-size: 18px;
     font-weight: 700;
   }
 
-  >span {
+  > span {
     font-size: 18px;
     max-width: 200px;
     overflow: hidden;
@@ -327,7 +330,7 @@ h3 {
   @include arrangement();
   cursor: pointer;
 
-  >img {
+  > img {
     filter: invert(1);
   }
 
