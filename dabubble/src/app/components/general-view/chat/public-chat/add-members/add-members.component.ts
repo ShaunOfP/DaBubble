@@ -40,16 +40,26 @@ export class AddMembersComponent {
 
 
   ngOnInit() {
-    this.channelMemberService.selectedMembers$.subscribe((members) => {
-      this.selectedMembers = members;
-    });
-    this.channelMemberService.isComponentVisible$.subscribe((isVisible) => {
-      this.isComponentVisible = isVisible;
-    });
+    this.subscribeToSelectedMembers();
+    this.subscribeToVisibility();
     this.openAddMembers = true;
     if (window.innerWidth < 450) {
       this.isMobile = true;
     }
+  }
+
+
+  subscribeToSelectedMembers(){
+    this.channelMemberService.selectedMembers$.subscribe((members) => {
+      this.selectedMembers = members;
+    });
+  }
+
+
+  subscribeToVisibility(){
+    this.channelMemberService.isComponentVisible$.subscribe((isVisible) => {
+      this.isComponentVisible = isVisible;
+    });
   }
 
 
