@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit, HostListener, ElementRef } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenu, MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { Router, RouterModule } from '@angular/router';
@@ -29,6 +29,7 @@ import { SearchResultsComponent } from './search-results/search-results.componen
 export class HeaderComponent implements OnInit {
   @ViewChild('menu') menu!: MatMenu;
   @ViewChild('menuTrigger') menuTrigger!: MatMenuTrigger;
+  @ViewChild('searchContainer') searchContainerRef!: ElementRef;
   showProfileInfo: boolean = false;
   showGreyScreen: boolean = false;
   showProfileEdit: boolean = false;
@@ -43,6 +44,15 @@ export class HeaderComponent implements OnInit {
     public userDatasService: UserDatasService,
     private filterService: FilterService
   ) { }
+
+
+  @HostListener('document:click', ['$event'])
+  onClick(event: MouseEvent): void {
+    const searchContainer = this.searchContainerRef.nativeElement.contains(event.target);
+    if (!searchContainer) {
+      this.closeSearch();
+    }
+  }
 
 
   async ngOnInit(): Promise<void> {

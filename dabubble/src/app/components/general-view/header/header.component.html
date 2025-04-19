@@ -3,12 +3,12 @@
   <h3 class="cursor-no-change">DABubble</h3>
 </div>
 <div class="bar-info">
-  <div class="search-container">
+  <div class="search-container" #searchContainer>
     <div class="bar-info-searchbar input-field">
-      <input placeholder="Devspace durchsuchen" [(ngModel)]="inputSearch" (focus)="searchFocus()" />
-      <button (click)="searchInDevspace()">
+      <input placeholder="Devspace durchsuchen" [(ngModel)]="inputSearch" (focus)="searchFocus()" (input)="searchInDevspace()" />
+      <div>
         <img src="/img/general-view/workspace-menu/search.svg" />
-      </button>
+      </div>
     </div>
     <app-search-results *ngIf="searchFocused" [inputSearch]="inputSearch"
       (closeClicked)="closeSearch()"></app-search-results>
