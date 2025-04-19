@@ -20,7 +20,6 @@ import { Router } from '@angular/router';
 import { WorkspaceStateToggleButtonComponent } from './workspace-state-toggle-button/workspace-state-toggle-button.component';
 import { ChannelMemberService } from '../../../services/firebase-services/channel-member.service';
 import { ChatService } from '../../../services/firebase-services/chat.service';
-import { SearchResultsComponent } from "../header/search-results/search-results.component";
 import { FormsModule } from '@angular/forms';
 import { FilterService } from '../../../services/component-services/filter.service';
 import { SearchResultWorkspaceComponent } from "./search-result-workspace/search-result-workspace.component";
@@ -33,7 +32,6 @@ import { SearchResultWorkspaceComponent } from "./search-result-workspace/search
     MatSidenavModule,
     MatExpansionModule,
     WorkspaceStateToggleButtonComponent,
-    SearchResultsComponent,
     FormsModule,
     SearchResultWorkspaceComponent
 ],
