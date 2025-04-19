@@ -10,8 +10,10 @@
         <img class="d-none" src="/img/general-view/workspace-menu/hover_edit.svg" />
       </div>
     </div>
-    <div class="workspace-menu-mobile-searchbar">
-      <input class="input-field" placeholder="Gehe zu..." /><img src="/img/general-view/workspace-menu/search.svg" />
+    <div class="workspace-menu-mobile-searchbar" #searchResults>
+      <input class="input-field" [(ngModel)]="searchInput" (click)="blur = true" (input)="searchInWorkspace()" placeholder="Gehe zu..." /><img
+        src="/img/general-view/workspace-menu/search.svg" />
+      <app-search-result-workspace *ngIf="blur" [inputSearch]="searchInput" (closeClicked)="closeSearch()"></app-search-result-workspace>
     </div>
     <div class="channels-and-chat-container">
       <div class="channels-and-chat-container-upper">

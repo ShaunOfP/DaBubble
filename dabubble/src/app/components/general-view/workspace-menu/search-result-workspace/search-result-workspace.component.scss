@@ -1,0 +1,77 @@
+@import "./../../../../../styles.scss";
+@import "./../../workspace-menu/add-members-to-new-channel/add-members-to-new-channel.component.scss";
+
+:host {
+  position: absolute;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  margin-left: 32px;
+  top: 72px;
+  width: calc(100% - 50px);
+  height: 100vh;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 25px 20px 25px;
+  gap: 20px;
+  border: 1px solid var(--color-blue-border);
+  background-color: var(--color-white);
+  border-radius: 0 20px 20px 20px;
+  border-top: none;
+  max-height: 50%;
+  // overflow-y: auto;
+
+  &:hover {
+    border: 1px solid var(--color-purple-primary-disabled);
+    border-top: none;
+  }
+
+  span {
+    color: var(--color-grey-primary-disable);
+  }
+
+  .close-button {
+    min-width: 40px;
+  }
+
+  .search-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: start;
+  }
+
+  .search-results {
+    gap: 16px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    padding: 8px 0;
+  }
+
+  .no-results {
+    span {
+      padding: 4px 8px;
+    }
+  }
+
+  .results {
+    display: flex;
+    flex-direction: column;
+
+    span {
+      cursor: pointer;
+      border-radius: 20px;
+      width: max-content;
+      padding: 4px 8px;
+
+      &:hover {
+        background-color: var(--color-blue-bg);
+        color: var(--color-purple-secondary-hover);
+      }
+    }
+  }
+}

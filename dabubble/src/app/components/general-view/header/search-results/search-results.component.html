@@ -3,20 +3,14 @@
     <span>Suche mit &#64; nach Mitgliedern und mit # nach einem Channel</span>
     <div class="close-button" (click)="onCloseClick()">
       <img src="/img/general-view/workspace-menu/close.svg" />
-      <img
-        class="d-none"
-        src="/img/general-view/workspace-menu/hover_close.svg"
-      />
+      <img class="d-none" src="/img/general-view/workspace-menu/hover_close.svg" />
     </div>
   </div>
   <div class="search-results">
     <div>
       <p>Channel:</p>
       <div class="results" *ngIf="channelResults.length > 0">
-        <span
-          *ngFor="let channel of channelResults"
-          (click)="modifyUrlWithChatString(channel.channelId)"
-        >
+        <span *ngFor="let channel of channelResults" (click)="modifyUrlWithChatString(channel.channelId)">
           {{ channel.channelName }}
         </span>
       </div>
@@ -27,10 +21,7 @@
     <div>
       <p>Mitglieder:</p>
       <div class="results" *ngIf="memberResults.length > 0">
-        <span
-          *ngFor="let member of memberResults"
-          (click)="openDirectMessage(member.id)"
-        >
+        <span *ngFor="let member of memberResults" (click)="openDirectMessage(member.id)">
           {{ member.username }}
         </span>
       </div>

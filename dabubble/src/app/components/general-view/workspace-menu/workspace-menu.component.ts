@@ -4,6 +4,9 @@ import {
   EventEmitter,
   OnInit,
   ChangeDetectorRef,
+  ViewChild,
+  ElementRef,
+  HostListener,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -17,6 +20,10 @@ import { Router } from '@angular/router';
 import { WorkspaceStateToggleButtonComponent } from './workspace-state-toggle-button/workspace-state-toggle-button.component';
 import { ChannelMemberService } from '../../../services/firebase-services/channel-member.service';
 import { ChatService } from '../../../services/firebase-services/chat.service';
+import { SearchResultsComponent } from "../header/search-results/search-results.component";
+import { FormsModule } from '@angular/forms';
+import { FilterService } from '../../../services/component-services/filter.service';
+import { SearchResultWorkspaceComponent } from "./search-result-workspace/search-result-workspace.component";
 
 @Component({
   selector: 'app-workspace-menu',
@@ -26,7 +33,10 @@ import { ChatService } from '../../../services/firebase-services/chat.service';
     MatSidenavModule,
     MatExpansionModule,
     WorkspaceStateToggleButtonComponent,
-  ],
+    SearchResultsComponent,
+    FormsModule,
+    SearchResultWorkspaceComponent
+],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './workspace-menu.component.html',
   styleUrl: './workspace-menu.component.scss',
@@ -34,6 +44,7 @@ import { ChatService } from '../../../services/firebase-services/chat.service';
 export class WorkspaceMenuComponent implements OnInit {
   @Output() openCreateChannel: EventEmitter<void> = new EventEmitter();
   @Output() newMessage: EventEmitter<void> = new EventEmitter();
+  @ViewChild('searchResults') searchResultRef!: ElementRef;
   currentChannels: string[] = [];
   readableChannels: any[] = [];
   showCreateChannelOverlay: boolean = false;
@@ -41,17 +52,41 @@ export class WorkspaceMenuComponent implements OnInit {
   toggleMarginLeft: boolean = true;
   userDatas: any[] = [];
   allUsers: any[] = [];
+  blur: boolean = false;
+  searchInput: string = '';
 
   constructor(
     public userDatasService: UserDatasService,
     private channelMemberService: ChannelMemberService,
     private router: Router,
     private cd: ChangeDetectorRef,
-    private chatService: ChatService
+    private chatService: ChatService,
+    private filterService: FilterService
   ) { }
 
   ngOnInit() {
     this.getCurrentUserData();
+  }
+
+
+  @HostListener('document:click', ['$event'])
+  onClick(event: MouseEvent): void {
+    const searchRef = this.searchResultRef.nativeElement.contains(event.target);
+    if (!searchRef) {
+      this.closeSearch();
+    }
+  }
+
+
+  closeSearch() {
+    this.blur = false;
+    this.searchInput = '';
+  }
+
+
+  searchInWorkspace() {
+    this.filterService.resetSearchResults();
+    this.filterService.updateFilter(this.searchInput);
   }
 
 
