@@ -81,7 +81,6 @@ export class AddMembersComponent {
     } else {
       this.searchFocus = true;
     }
-    console.log('focus ist:', this.isFocused);
   }
 
   clearSearchField() {
@@ -141,6 +140,5 @@ export class AddMembersComponent {
    */
   handleFocus() {
     this.isFocused = true;
-    console.log('focus ist:', this.isFocused);
   }
 }
