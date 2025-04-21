@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
 import { FilterService } from '../../../../services/component-services/filter.service';
 import { Router } from '@angular/router';
 import { UserDatasService } from '../../../../services/firebase-services/user-datas.service';
@@ -20,7 +20,8 @@ export class SearchResultWorkspaceComponent {
   constructor(
     private filterService: FilterService,
     private router: Router,
-    private userDatasService: UserDatasService
+    private userDatasService: UserDatasService,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -35,6 +36,7 @@ export class SearchResultWorkspaceComponent {
   subscribeToCurrentChannels() {
     this.filterService.channelMatch$.subscribe((channels) => {
       this.channelResults = channels;
+      this.detectChangesManually();
     });
   }
 
@@ -45,7 +47,16 @@ export class SearchResultWorkspaceComponent {
   subscribeToCurrentMembers() {
     this.filterService.memberMatch$.subscribe((members) => {
       this.memberResults = members;
+      this.detectChangesManually();
     });
+  }
+
+
+  /**
+   * Tells Angular to check for changes/updated values
+   */
+  detectChangesManually() {
+    this.cdr.detectChanges();
   }
 
 

@@ -11,7 +11,7 @@
       </div>
     </div>
     <div class="workspace-menu-mobile-searchbar" #searchResults>
-      <input class="input-field" [(ngModel)]="searchInput" (click)="blur = true" (input)="searchInWorkspace()" placeholder="Gehe zu..." /><img
+      <input class="input-field" [(ngModel)]="searchInput" (focus)="blur = true" (input)="searchInWorkspace()" placeholder="Gehe zu..." /><img
         src="/img/general-view/workspace-menu/search.svg" />
       <app-search-result-workspace *ngIf="blur" [inputSearch]="searchInput" (closeClicked)="closeSearch()"></app-search-result-workspace>
     </div>

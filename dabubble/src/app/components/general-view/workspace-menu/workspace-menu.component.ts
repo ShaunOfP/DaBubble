@@ -34,7 +34,7 @@ import { SearchResultWorkspaceComponent } from "./search-result-workspace/search
     WorkspaceStateToggleButtonComponent,
     FormsModule,
     SearchResultWorkspaceComponent
-],
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './workspace-menu.component.html',
   styleUrl: './workspace-menu.component.scss',
