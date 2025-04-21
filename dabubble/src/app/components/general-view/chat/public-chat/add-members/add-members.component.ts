@@ -1,19 +1,27 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { PublicChatComponent } from '../public-chat.component';
-import { AllMembersComponent } from "../../../all-members/all-members.component";
+import { AllMembersComponent } from '../../../all-members/all-members.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ChannelMemberService, Member } from '../../../../../services/firebase-services/channel-member.service';
-import { AllSelectedMembersComponent } from "../../../workspace-menu/add-members-to-new-channel/all-selected-members/all-selected-members.component";
+import {
+  ChannelMemberService,
+  Member,
+} from '../../../../../services/firebase-services/channel-member.service';
+import { AllSelectedMembersComponent } from '../../../workspace-menu/add-members-to-new-channel/all-selected-members/all-selected-members.component';
 import { UserDatasService } from '../../../../../services/firebase-services/user-datas.service';
 import { ChatService } from '../../../../../services/firebase-services/chat.service';
 
 @Component({
   selector: 'app-add-members',
   standalone: true,
-  imports: [AllMembersComponent, CommonModule, FormsModule, AllSelectedMembersComponent],
+  imports: [
+    AllMembersComponent,
+    CommonModule,
+    FormsModule,
+    AllSelectedMembersComponent,
+  ],
   templateUrl: './add-members.component.html',
-  styleUrl: './add-members.component.scss'
+  styleUrl: './add-members.component.scss',
 })
 export class AddMembersComponent {
   @Output() closeMe: EventEmitter<void> = new EventEmitter();
@@ -34,10 +42,7 @@ export class AddMembersComponent {
     public channelMemberService: ChannelMemberService,
     public userDataService: UserDatasService,
     public chatSerivce: ChatService
-  ) {
-
-  }
-
+  ) {}
 
   ngOnInit() {
     this.subscribeToSelectedMembers();
@@ -48,30 +53,25 @@ export class AddMembersComponent {
     }
   }
 
-
-  subscribeToSelectedMembers(){
+  subscribeToSelectedMembers() {
     this.channelMemberService.selectedMembers$.subscribe((members) => {
       this.selectedMembers = members;
     });
   }
 
-
-  subscribeToVisibility(){
+  subscribeToVisibility() {
     this.channelMemberService.isComponentVisible$.subscribe((isVisible) => {
       this.isComponentVisible = isVisible;
     });
   }
 
-
   showSelectedMembersInSearchField(): boolean {
     return !this.isFocused && this.selectedMembers.length > 0;
   }
 
-
   removeMember(member: Member): void {
     this.channelMemberService.removeMember(member);
   }
-
 
   handleBlur() {
     this.isFocused = false;
@@ -81,14 +81,13 @@ export class AddMembersComponent {
     } else {
       this.searchFocus = true;
     }
+    console.log('focus ist:', this.isFocused);
   }
-
 
   clearSearchField() {
     this.searchInput = '';
     this.searchFocus = false;
   }
-
 
   showSelectedMembers() {
     this.openSelectedMembers = !this.openSelectedMembers;
@@ -101,7 +100,6 @@ export class AddMembersComponent {
     this.openSelectedMembers = false;
   }
 
-
   /**
    * Emits a signal to the parent component to close the Add Members Menu
    */
@@ -110,7 +108,6 @@ export class AddMembersComponent {
     this.chatSerivce.showChatDetailsMobileGreyLayer = false;
   }
 
-
   onSubmit() {
     if (!this.userDataService.checkIfGuestIsLoggedIn()) {
       this.addSelectedMembersToExistingChannel();
@@ -118,22 +115,32 @@ export class AddMembersComponent {
         this.closeAddMembersMenu();
       }, 2000);
     } else {
-      console.warn("Log in to add Members to a Public Channel");
+      console.warn('Log in to add Members to a Public Channel');
     }
   }
-
 
   getCurrentChatId(): string {
     return this.chatSerivce.currentChatId;
   }
 
-
   addSelectedMembersToExistingChannel() {
     const channelId = this.getCurrentChatId();
     if (this.selectedMembers.length > 0) {
-      this.selectedMembers.forEach(selectedMember => {
-        this.chatSerivce.updateChatInformation(channelId, 'users', selectedMember.id);
+      this.selectedMembers.forEach((selectedMember) => {
+        this.chatSerivce.updateChatInformation(
+          channelId,
+          'users',
+          selectedMember.id
+        );
       });
     }
+  }
+
+  /**
+   * Sets variable isFocused to 'true' when search field is clicked on
+   */
+  handleFocus() {
+    this.isFocused = true;
+    console.log('focus ist:', this.isFocused);
   }
 }
