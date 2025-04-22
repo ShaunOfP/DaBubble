@@ -4,6 +4,7 @@ import { ChannelService, Channel } from "../../../../services/firebase-services/
 import { CommonModule } from '@angular/common';
 import { AllMembersComponent } from "../../all-members/all-members.component";
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-message',
@@ -20,8 +21,12 @@ export class NewMessageComponent implements OnInit {
   searchFocus: boolean = false;
   selectedOption: boolean = true;
   channels: Channel[] = [];
+  showChannels: boolean = false;
 
-  constructor(private memberService: ChannelMemberService, private channelService: ChannelService) { }
+  constructor(private memberService: ChannelMemberService,
+    private channelService: ChannelService,
+    private router: Router
+  ) { }
 
 
   /**
@@ -29,14 +34,14 @@ export class NewMessageComponent implements OnInit {
    */
   ngOnInit(): void {
     this.fetchSelectedMembers();
-    this.fetchChannels();    
+    // this.fetchChannels();
   }
 
 
   /**
    * Fetches the selected Members from the Service
    */
-  fetchSelectedMembers(){
+  fetchSelectedMembers() {
     this.memberService.selectedMembers$.subscribe((members) => {
       this.selectedMembers = members;
     });
@@ -46,10 +51,10 @@ export class NewMessageComponent implements OnInit {
   /**
    * Fetches the current Channels
    */
-  fetchChannels(){
-    this.channelService.getChannels().subscribe((channels) => {
-      this.channels = channels;
-    });
+  fetchChannels() {
+    // this.channelService.getChannels().subscribe((channels) => {
+    //   this.channels = channels;
+    // });
   }
 
 
@@ -65,18 +70,31 @@ export class NewMessageComponent implements OnInit {
   /* This is not finished? */
   async onSearchInput(event: Event): Promise<void> {
     const input = (event.target as HTMLInputElement).value;
-    console.log(input);
     if (input.startsWith('#')) {
-      console.log('channels', this.channels);
       this.searchQuery = input;
+      this.showChannels = true;
       const channels = await this.channelService.searchChannels(input);
+      this.channels = channels;
     } else if (input.startsWith('@')) {
       this.selectedOption = false;
       this.searchQuery = input;
+      this.showChannels = false;
     } else {
-      console.log('search All');
       this.selectedOption = true;
+      this.showChannels = false;
     }
+  }
+
+
+  goToChannel(channelId: string): void {
+    this.clearSearchField();
+    this.isFocused = false;
+
+    this.router.navigate(['/general/public-chat'], {
+      queryParams: { chatId: channelId },
+      queryParamsHandling: 'merge',
+      replaceUrl: true,
+    });
   }
 
 

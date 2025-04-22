@@ -73,8 +73,6 @@ export class ChannelService {
 
   async searchChannels(queryString: string): Promise<Channel[]> {
     const normalizedQuery = queryString.startsWith('#') ? queryString.substring(1) : queryString;
-    /* const normalizedQuery = cleanedQuery.toLowerCase(); */
-    console.log('Normalized Query:', normalizedQuery);
     const channelQuery = query(
       this.channelDataRef(),
       where('channelName', '>=', normalizedQuery),
@@ -87,18 +85,16 @@ export class ChannelService {
       querySnapshot.forEach((doc) => {
         const channel = {...(doc.data() as Channel), channelId: doc.id};
         channels.push(channel);
-        console.log('found channel:', channel.channelName);
       });
-      console.log(channels);  
       this.channelSubject.next(channels);
       return channels;
     } catch (error) {
-      console.error('Fehler beim Suchen nach Nutzern:', error);
+      console.error('Fehler beim Suchen nach Channeln:', error);
       return [];
     }
   }
 
-  // Neue Methode zum Ausloggen der Channels
+
   async logChannels(): Promise<void> {
     const querySnapshot = await getDocs(this.channelsCollection);
     querySnapshot.forEach((doc) => {

@@ -8,7 +8,7 @@ section {
     flex-direction: column;
     width: auto !important;
 
-    @media (max-width: $mobile-breakpoint){
+    @media (max-width: $mobile-breakpoint) {
         background-color: white !important;
     }
 }
@@ -36,4 +36,35 @@ h3 {
 
 ::placeholder {
     font-size: 18px;
+}
+
+.search-channel_results {
+    position: absolute;
+    margin-left: 32px;
+    margin-top: -20px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 25px 20px 25px;
+    gap: 5px;
+    border: 1px solid var(--color-blue-border);
+    background-color: var(--color-white);
+    border-radius: 0px 20px 20px 20px;
+    max-height: 300px;
+    overflow: auto;
+
+    &::-webkit-scrollbar-track {
+        margin-top: 20px !important;
+        margin-bottom: 20px !important;
+    }
+
+    >div {
+        padding: 4px 20px;
+        border-radius: 20px;
+
+        &:hover {
+            cursor: pointer;
+            background-color: var(--color-blue-bg);
+            color: var(--color-purple-secondary-hover);
+        }
+    }
 }
