@@ -8,7 +8,12 @@
       [searchQuery]="searchQuery.startsWith('@') ? searchQuery.substring(1) : searchQuery"
       (memberClicked)="clearSearchField()"></app-all-members>
     <div *ngIf="showChannels" class="search-channel_results">
+      @if(channelsAvailable){
       <div *ngFor="let channel of channels" (click)="goToChannel(channel.channelId)">{{ channel.channelName }}</div>
+      }
+      @else {
+      <div>No Channels found.</div>
+      }
     </div>
     <div class="all-selected-member-container" [ngClass]="{ 'd-none': !showSelectedMembersInSearchField() }">
       <div class="member-container" *ngFor="let member of selectedMembers | slice : 0 : 2">

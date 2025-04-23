@@ -22,6 +22,7 @@ export class NewMessageComponent implements OnInit {
   selectedOption: boolean = true;
   channels: Channel[] = [];
   showChannels: boolean = false;
+  channelsAvailable: boolean = false;
 
   constructor(private memberService: ChannelMemberService,
     private channelService: ChannelService,
@@ -34,7 +35,6 @@ export class NewMessageComponent implements OnInit {
    */
   ngOnInit(): void {
     this.fetchSelectedMembers();
-    // this.fetchChannels();
   }
 
 
@@ -45,16 +45,6 @@ export class NewMessageComponent implements OnInit {
     this.memberService.selectedMembers$.subscribe((members) => {
       this.selectedMembers = members;
     });
-  }
-
-
-  /**
-   * Fetches the current Channels
-   */
-  fetchChannels() {
-    // this.channelService.getChannels().subscribe((channels) => {
-    //   this.channels = channels;
-    // });
   }
 
 
@@ -74,7 +64,14 @@ export class NewMessageComponent implements OnInit {
       this.searchQuery = input;
       this.showChannels = true;
       const channels = await this.channelService.searchChannels(input);
-      this.channels = channels;
+      if (channels.length > 0){
+        this.channels = channels;
+        this.channelsAvailable = true;
+        console.log("true");
+      } else {
+        this.channelsAvailable = false;
+        console.log("false");
+      }
     } else if (input.startsWith('@')) {
       this.selectedOption = false;
       this.searchQuery = input;
