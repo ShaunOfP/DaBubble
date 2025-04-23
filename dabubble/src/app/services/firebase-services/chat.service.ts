@@ -128,6 +128,9 @@ export class ChatService {
     if (currentRoute.includes('private-chat')) {
       return 'private';
     }
+    if (currentRoute.includes('new-message')){
+      return 'new-message';
+    }
     return 'undefined';
   }
 
