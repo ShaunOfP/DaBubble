@@ -146,6 +146,7 @@ export class UserDatasService {
    * @returns The Object with the userData from the Database
    */
   async getSingleUserData(userId: string) {
+    if (userId === 'Private Chat doesnt exist') return;
     const userDataSnapshot = await getDoc(doc(this.userDatasRef(), userId));
     if (userDataSnapshot.exists()) {
       return { id: userDataSnapshot.id, ...userDataSnapshot.data() } as any;

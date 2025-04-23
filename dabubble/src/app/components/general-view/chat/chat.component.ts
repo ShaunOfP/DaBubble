@@ -94,9 +94,11 @@ export class ChatComponent implements OnInit {
       if (this.chatService.getCurrentRoute() === 'public') {
         this.currentChannelName = await this.chatService.getChannelDocSnapshot(chatId);
       } else {
-        let otherUserInPrivateChatId = await this.chatService.getOtherUserNameFromPrivateChat(chatId, this.currentUserId);
-        this.privateChatOtherUserData = await this.userDatasService.getSingleUserData(otherUserInPrivateChatId);
-        this.currentChannelName = this.privateChatOtherUserData['username'];
+        if (chatId != "ER84UOYc0F2jptDjWxFo") {
+          let otherUserInPrivateChatId = await this.chatService.getOtherUserNameFromPrivateChat(chatId, this.currentUserId);
+          this.privateChatOtherUserData = await this.userDatasService.getSingleUserData(otherUserInPrivateChatId);
+          this.currentChannelName = this.privateChatOtherUserData['username'];
+        }
       }
     }
   }
