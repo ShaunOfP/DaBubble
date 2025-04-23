@@ -67,10 +67,8 @@ export class NewMessageComponent implements OnInit {
       if (channels.length > 0){
         this.channels = channels;
         this.channelsAvailable = true;
-        console.log("true");
       } else {
         this.channelsAvailable = false;
-        console.log("false");
       }
     } else if (input.startsWith('@')) {
       this.selectedOption = false;
