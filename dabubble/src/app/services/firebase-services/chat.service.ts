@@ -77,7 +77,6 @@ export class ChatService {
   loadChannelUserIcons() {
     this.userIcons = [];
     this.currentChannelData?.users.forEach(user => {
-      console.log(user);
       this.userDatasService.getSingleUserData(user).then(result => this.userIcons.push(result.avatar));
     });
   }

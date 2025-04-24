@@ -17,9 +17,6 @@
     <div class="header-user-container_members" (click)="openMembersInfo()">
       <div>
         <img *ngFor="let icon of chatService.userIcons.slice(0,3)" class="user-icon" [src]="icon">
-        <!-- <img class="user-icon" src="/img/general-view/create-avatar/avatar2.svg">
-        <img class="user-icon" src="/img/general-view/create-avatar/avatar5.svg">
-        <img class="user-icon" src="/img/general-view/create-avatar/avatar3.svg"> -->
       </div>
       <span class="count">{{ chatService.currentChannelData?.users?.length}}</span>
     </div>
