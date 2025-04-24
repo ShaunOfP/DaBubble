@@ -49,7 +49,7 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   hoveredMessageId: string | null = null;
   chatDetails: boolean = false;
   showMembersInfo: boolean = false;
-  showPicker: boolean = false
+  showPicker: boolean = false;
   // showPopoverReaction: number | null = null;
   // reactionUserNamesCache: { [key: number]: string[] } = {};
 

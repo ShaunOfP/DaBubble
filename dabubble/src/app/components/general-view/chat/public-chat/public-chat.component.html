@@ -11,13 +11,15 @@
   <app-chat-details id="chatDetailsOverlay" *ngIf="chatDetails" (callParent)="toggleChatDetails()"></app-chat-details>
   <app-channel-members *ngIf="showMembersInfo" id="channelMembersMenu" (closeMe)="closeMembersInfo()"
     (openAddMembers)="openAddMembersMenu()"></app-channel-members>
-  <app-add-members *ngIf="channelMembersService.showAddMembersMenu" id="addMembersMenu" (closeMe)="closeAddMembersMenu()"></app-add-members>
+  <app-add-members *ngIf="channelMembersService.showAddMembersMenu" id="addMembersMenu"
+    (closeMe)="closeAddMembersMenu()"></app-add-members>
   <div class="header-user-container">
     <div class="header-user-container_members" (click)="openMembersInfo()">
       <div>
-        <img class="user-icon" src="/img/general-view/create-avatar/avatar2.svg">
+        <img *ngFor="let icon of chatService.userIcons.slice(0,3)" class="user-icon" [src]="icon">
+        <!-- <img class="user-icon" src="/img/general-view/create-avatar/avatar2.svg">
         <img class="user-icon" src="/img/general-view/create-avatar/avatar5.svg">
-        <img class="user-icon" src="/img/general-view/create-avatar/avatar3.svg">
+        <img class="user-icon" src="/img/general-view/create-avatar/avatar3.svg"> -->
       </div>
       <span class="count">{{ chatService.currentChannelData?.users?.length}}</span>
     </div>
@@ -61,7 +63,8 @@
           </span>
         </div>
       </div>
-      <app-reactions class="message-reactions" [message]="message" [hoveredMessageId]="hoveredMessageId"></app-reactions>
+      <app-reactions class="message-reactions" [message]="message"
+        [hoveredMessageId]="hoveredMessageId"></app-reactions>
     </div>
   </div>
   <div class="new-message" *ngIf="newMessage">

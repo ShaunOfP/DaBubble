@@ -203,7 +203,7 @@ export class WorkspaceMenuComponent implements OnInit {
       queryParamsHandling: 'merge',
       replaceUrl: true,
     });
-
+    
     this.showResponsiveComponents();
   }
 

@@ -17,6 +17,7 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Message } from '../../models/interfaces';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Channel } from './channel.service';
+import { UserDatasService } from './user-datas.service';
 
 @Injectable({
   providedIn: 'root',
@@ -37,9 +38,11 @@ export class ChatService {
   showChatWhenResponsive: boolean = false;
   showAltHeader: boolean = false;
   showChatDetailsMobileGreyLayer: boolean = false;
+  userIcons: string[] = [];
 
   constructor(private route: ActivatedRoute,
     private router: Router,
+    private userDatasService: UserDatasService
   ) {
     this.getCurrentChatId();
   }
@@ -49,7 +52,6 @@ export class ChatService {
     this.route.queryParams.subscribe((params) => {
       if (params['chatId']) {
         this.currentChatId = params['chatId'];
-        console.log(this.currentChatId);
         this.loadChannelInfo();
       } else {
         console.error('No chatId found in query parameters');
@@ -57,17 +59,27 @@ export class ChatService {
     });
   }
 
+
   async loadChannelInfo() {
     try {
       const data = await getDoc(this.getChannelDocRef(this.currentChatId));
-
       if (data.exists()) {
         this.currentChannelData = data.data() as Channel;
+        this.loadChannelUserIcons();
       }
     }
     catch (error) {
       console.error('Fehler beim Laden der Kanal-Info:', error);
     }
+  }
+
+
+  loadChannelUserIcons() {
+    this.userIcons = [];
+    this.currentChannelData?.users.forEach(user => {
+      console.log(user);
+      this.userDatasService.getSingleUserData(user).then(result => this.userIcons.push(result.avatar));
+    });
   }
 
 
@@ -128,7 +140,7 @@ export class ChatService {
     if (currentRoute.includes('private-chat')) {
       return 'private';
     }
-    if (currentRoute.includes('new-message')){
+    if (currentRoute.includes('new-message')) {
       return 'new-message';
     }
     return 'undefined';
