@@ -18,7 +18,7 @@
       <div>
         <img *ngFor="let icon of chatService.userIcons.slice(0,3)" class="user-icon" [src]="icon">
       </div>
-      <span class="count">{{ chatService.currentChannelData?.users?.length}}</span>
+      <span class="count">{{ chatService.currentChannelData?.users?.length }}</span>
     </div>
     <div class="change-image-on-hover" (click)="openAddMembersMenu()">
       <img src="/img/general-view/workspace-menu/add_person.svg">

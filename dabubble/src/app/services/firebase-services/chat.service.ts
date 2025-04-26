@@ -48,6 +48,9 @@ export class ChatService {
   }
 
 
+  /**
+   * Pulls the ID of the currently opened Chat from the URL
+   */
   getCurrentChatId() {
     this.route.queryParams.subscribe((params) => {
       if (params['chatId']) {
@@ -60,6 +63,9 @@ export class ChatService {
   }
 
 
+  /**
+   * Fetches the Data of the current Chat
+   */
   async loadChannelInfo() {
     try {
       const data = await getDoc(this.getChannelDocRef(this.currentChatId));
@@ -74,6 +80,9 @@ export class ChatService {
   }
 
 
+  /**
+   * 
+   */
   loadChannelUserIcons() {
     this.userIcons = [];
     this.currentChannelData?.users.forEach(user => {

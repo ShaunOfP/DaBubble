@@ -131,7 +131,6 @@ export class LoginComponent implements OnInit {
         console.log('Gast schon vorhanden', guestSnap.data());
         this.router.navigate(['/general'], {
           queryParams: { chatId, userID: 'guest' },
-          // queryParams: { chatId, userID: guestUser?.uid },
         });
       } else {
         if (guestUser) {
@@ -143,7 +142,6 @@ export class LoginComponent implements OnInit {
           });
           this.userService.saveGuest(newGuest, guestUser.uid);
           this.router.navigate(['/general'], {
-            // queryParams: { chatId, userID: guestUser?.uid },
             queryParams: { chatId, userID: 'guest' },
           });
           console.log(newGuest);
