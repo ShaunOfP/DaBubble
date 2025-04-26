@@ -1,7 +1,7 @@
 <div *ngFor="let message of messages$ | async" class="chat-content" (mouseleave)="showPicker = false">
     <div class="chat-content--{{ checkStyle(message.userId) }}" (mouseenter)="hoveredMessageId = message.id" (mouseleave)="hoveredMessageId = null">
         <div class="row-reverse">
-        <img src="{{ message.avatar }}" alt="avatar" />
+        <img class="avatar" src="{{ message.avatar }}" alt="avatar" />
         <div class="chat-content_conversation">
         <div class="chat-content_header">
             <span>{{ message.sender }}</span>

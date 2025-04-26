@@ -1,196 +1,202 @@
 @import './../../../../../templates/mixins.scss';
 
 @mixin fontStyle($fs: 18px, $fw: 400) {
-    font-size: $fs;
-    font-weight: $fw;
+  font-size: $fs;
+  font-weight: $fw;
 }
 
 .chat-content_message {
-    padding: 15px;
-    @include fontStyle();
-    transition: background-color 0.1s ease;
-  
-    &--primary {
-      @extend.chat-content_message;
-      background-color: var(--color-blue-bg);
-      border-radius: 0px 20px 20px 20px;
-    }
-  
-    &--secondary {
-      @extend.chat-content_message;
-      background-color: var(--color-purple-primary-disabled);
-      color: white;
-      border-radius: 20px 0px 20px 20px;
-    }
-}  
+  padding: 15px;
+  @include fontStyle();
+  transition: background-color 0.1s ease;
+  max-width: fit-content;
+
+  &--primary {
+    @extend.chat-content_message;
+    background-color: var(--color-blue-bg);
+    border-radius: 0px 20px 20px 20px;
+  }
+
+  &--secondary {
+    @extend.chat-content_message;
+    background-color: var(--color-purple-primary-disabled);
+    color: white;
+    border-radius: 20px 0px 20px 20px;
+  }
+}
 
 .add-reaction-button {
-    height: 35px;
-    width: 35px;
-    @include arrangement();
-    border: none;
-    background-color: var(--color-white);
-    border-radius: 20px;
-    cursor: pointer;
+  height: 35px;
+  width: 35px;
+  @include arrangement();
+  border: none;
+  background-color: var(--color-white);
+  border-radius: 20px;
+  cursor: pointer;
 
-    :last-child {
-        display: none;
-    }
+  :last-child {
+    display: none;
+  }
 }
 
 .image-swap-on-hover {
-    &:hover {
-        :first-child {
-            display: none;
-        }
-
-        :last-child {
-            display: flex !important;
-        }
+  &:hover {
+    :first-child {
+      display: none;
     }
+
+    :last-child {
+      display: flex !important;
+    }
+  }
 }
 
 ::-webkit-scrollbar {
-    height: 7px;
+  height: 7px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--color-purple-secondary-hover);
-    border-radius: 30px;
+  background: var(--color-purple-secondary-hover);
+  border-radius: 30px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--color-purple-primary-disabled);
+  background: var(--color-purple-primary-disabled);
 }
 
 .reaction-container {
-    @include arrangement($jc: flex-start, $g: 20px);
+  @include arrangement($jc: flex-start, $g: 20px);
 }
 
 
 .add-reaction {
-    position: relative;
+  position: relative;
 }
 
 .reaction-container-info {
-    position: absolute;
-    @include arrangement($d: none, $fd: column, $g: 5px);
-    border-radius: 30px 30px 30px 0px;
-    background-color: var(--color-purple-primary-default);
-    padding: 15px 10px;
-    bottom: 35px;
-    left: 30px;
-    min-width: 110px;
+  position: absolute;
+  @include arrangement($d: none, $fd: column, $g: 5px);
+  border-radius: 30px 30px 30px 0px;
+  background-color: var(--color-purple-primary-default);
+  padding: 15px 10px;
+  bottom: 35px;
+  left: 30px;
+  min-width: 110px;
 
-    :first-child {
-        @include arrangement();
-        height: 30px;
-        width: 30px;
-    }
+  :first-child {
+    @include arrangement();
+    height: 30px;
+    width: 30px;
+  }
 
-    >span {
-        @include fontStyle($fw: 700);
-    }
+  >span {
+    @include fontStyle($fw: 700);
+  }
 
-    :last-child {
-        @include fontStyle($fs: 16px);
-    }
+  :last-child {
+    @include fontStyle($fs: 16px);
+  }
 }
 
 .chat-content {
-    transition: background-color 0.1s ease;
-    padding: 10px 0px;
-    box-sizing: border-box;
-    width: 100%;
-    position: relative;
+  transition: background-color 0.1s ease;
+  padding: 10px 0px;
+  box-sizing: border-box;
+  width: 100%;
+  position: relative;
+  display: flex;
+
+  &--primary {
+    @extend .chat-content;
+    @include arrangement($jc: normal, $g: 20px, $fd: column, $ai: start);
+    padding: 10px 40px;
+
+    >div {
+      @include arrangement($jc: flex-start, $g: 20px);
+    }
+
+    &:hover {
+      background-color: var(--color-blue-bg);
+
+      .chat-content_message {
+        background-color: var(--color-white);
+      }
+    }
+  }
+
+  &--secondary {
+    @extend .chat-content;
+    @include arrangement($jc: normal, $g: 20px, $fd: column, $ai: end);
+    padding: 10px 40px;
+
+    .row-reverse {
+      @include arrangement($jc: flex-start, $g: 20px, $fd: row-reverse);
+    }
+
+    &:hover {
+      background-color: var(--color-blue-bg);
+    }
+
+    .chat-content_header {
+      flex-direction: row-reverse;
+    }
+
+    .chat-content_reaction {
+      flex-direction: unset;
+      left: 10px;
+      right: unset
+    }
+  }
+}
+
+.chat-content_header {
+  @include arrangement($jc: flex-start, $g: 20px);
+
+  > :first-child {
+    @include fontStyle($fw: 700);
+  }
+
+  > :last-child {
+    color: var(--color-grey-primary-disable);
+    @include fontStyle($fs: 14px);
+  }
+}
+
+.chat-content_reaction {
+  position: absolute;
+  right: 10px;
+  display: flex;
+  border: 1px solid var(--color-purple-primary-disabled);
+  padding: 3px 15px;
+  border-radius: 25px 25px 0 25px;
+  background-color: white;
+
+  >button {
     display: flex;
-  
-    &--primary {
-      @extend .chat-content;
-      @include arrangement($jc: normal, $g: 20px, $fd: column, $ai: start);
-      padding: 10px 40px;
-  
-      >div {
-        @include arrangement($jc: flex-start, $g: 20px);
-      }
-  
-      &:hover {
-        background-color: var(--color-blue-bg);
-  
-        .chat-content_message {
-          background-color: var(--color-white);
-        }
-      }
-    }
-  
-    &--secondary {
-      @extend .chat-content;
-      @include arrangement($jc: normal, $g: 20px, $fd: column, $ai: end);
-      padding: 10px 40px;
-  
-      .row-reverse {
-        @include arrangement($jc: flex-start, $g: 20px, $fd: row-reverse);
-      }
-  
-      &:hover {
-        background-color: var(--color-blue-bg);
-      }
-  
-      .chat-content_header {
-        flex-direction: row-reverse;
-      }
-  
-      .chat-content_reaction {
-        flex-direction: unset;
-        left: 10px;
-        right: unset
-      }
-    }
-  }
+    align-items: center;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 12px;
+    font-size: 24px;
 
-  .chat-content_header {
-    @include arrangement($jc: flex-start, $g: 20px);
-  
-    > :first-child {
-      @include fontStyle($fw: 700);
-    }
-  
-    > :last-child {
-      color: var(--color-grey-primary-disable);
-      @include fontStyle($fs: 14px);
+    &:hover {
+      border-radius: 50%;
+      background-color: #ECEEFE;
+      box-sizing: border-box;
     }
   }
+}
 
-  .chat-content_reaction {
-    position: absolute;
-    right: 10px;
-    display: flex;
-    border: 1px solid var(--color-purple-primary-disabled);
-    padding: 3px 15px;
-    border-radius: 25px 25px 0 25px;
-    background-color: white;
-  
-    >button {
-      display: flex;
-      align-items: center;
-      background-color: transparent;
-      border: none;
-      cursor: pointer;
-      padding: 12px;
-      font-size: 24px;
-  
-      &:hover {
-        border-radius: 50%;
-        background-color: #ECEEFE;
-        box-sizing: border-box;
-      }
-    }
-  }
+.avatar {
+  height: 70px;
+  width: 70px;
+}
 
-  .chat-content_conversation {
-    @include arrangement($fd: column, $jc: flex-start, $g: 8px, $ai:end);
-  }
+.chat-content_conversation {
+  @include arrangement($fd: column, $jc: flex-start, $g: 8px, $ai: normal);
+}
 
 app-emoji-picker {
-    left: -270px;
+  left: -270px;
 }
