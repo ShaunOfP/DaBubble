@@ -38,14 +38,14 @@ export class FilterService {
     this.query = await firstValueFrom(this.filterText$);
     this.channelSearch = this.query.startsWith('#');
     this.memberSearch = this.query.startsWith('@');
-    if (this.channelSearch) {
+    if (this.channelSearch && this.query.length > 1) {
       const searchLower = this.query.substring(1).toLowerCase();
       this.channelMatch = this.allChannels.filter(
         (channels: { channelName: string }) =>
           channels.channelName?.toLowerCase().includes(searchLower)
       );
       this.channelMatchSource.next(this.channelMatch);
-    } else if (this.memberSearch) {
+    } else if (this.memberSearch && this.query.length > 1) {
       const searchLower = this.query.substring(1).toLowerCase();
       this.memberMatch = this.allMembers.filter(
         (member: { username: string }) =>
