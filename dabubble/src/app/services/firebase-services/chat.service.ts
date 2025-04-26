@@ -81,7 +81,7 @@ export class ChatService {
 
 
   /**
-   * 
+   * Fetches the Avatars from the Users of the current Channel
    */
   loadChannelUserIcons() {
     this.userIcons = [];

@@ -189,6 +189,11 @@ header {
   }
 }
 
+.avatar {
+  height: 70px;
+  width: 70px;
+}
+
 .chat-content_reaction {
   position: absolute;
   right: 10px;
@@ -232,6 +237,7 @@ header {
   padding: 15px;
   @include fontStyle();
   transition: background-color 0.1s ease;
+  width: fit-content;
 
   &--primary {
     @extend.chat-content_message;
@@ -248,7 +254,7 @@ header {
 }
 
 .chat-content_conversation {
-  @include arrangement($fd: column, $jc: flex-start, $g: 8px, $ai: end);
+  @include arrangement($fd: column, $jc: flex-start, $g: 8px, $ai: normal);
 }
 
 .chat-content_conversation_reacts {
