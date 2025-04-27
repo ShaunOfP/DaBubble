@@ -13,7 +13,9 @@ export class UserDatas {
     this.username = obj ? obj.username : '';
     this.mail = obj ? obj.mail : '';
     this.password = obj ? obj.password : '';
-    this.avatar = obj ? obj.avatar : 'default-avatar';
+    this.avatar = obj
+      ? obj.avatar
+      : '/img/general-view/create-avatar/avatar1.svg';
     this.channels = obj ? obj.channels : ['ER84UOYc0F2jptDjWxFo'];
     this.privateChats = obj ? obj.privateChats : [];
     this.online = obj ? obj.online : false;
