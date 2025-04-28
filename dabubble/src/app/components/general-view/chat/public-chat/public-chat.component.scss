@@ -41,6 +41,14 @@ header {
     }
   }
 
+  .channel-name {
+    @media (max-width: 380px) {
+      max-width: 160px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  }
+
   &:hover {
     cursor: pointer;
     background-color: #eceefe;
@@ -399,5 +407,11 @@ app-chat-details {
     justify-content: normal;
     padding: 0;
     overflow: scroll;
+  }
+}
+
+.emoji-picker {
+  &--primary {
+    left: auto;
   }
 }

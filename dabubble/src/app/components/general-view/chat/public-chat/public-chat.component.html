@@ -2,7 +2,7 @@
 <header>
   <div class="header-chat-info-container" (click)="toggleChatDetails()">
     <h3>#</h3>
-    <h3>{{ chatService.currentChannelData?.channelName }}</h3>
+    <h3 class="channel-name">{{ chatService.currentChannelData?.channelName }}</h3>
     <button>
       <img class="d-flex center" src="/img/general-view/workspace-menu/arrow_drop_down_thin.svg">
       <img class="d-none center" src="/img/general-view/workspace-menu/hover_arrow_drop_down_thin.svg">
@@ -41,7 +41,8 @@
             alt="clap"></button>
         <button (click)="showPicker = !showPicker"><img src="img/general-view/chat/add_reaction.svg"
             alt="check"></button>
-        <app-emoji-picker *ngIf="showPicker" (mouseleave)="showPicker = false" (click)="$event.preventDefault()"
+        <app-emoji-picker class="emoji-picker--{{ checkStyle(message.userId) }}" *ngIf="showPicker"
+          (mouseleave)="showPicker = false" (click)="$event.preventDefault()"
           (emojiSelected)="sendReaction($event, message.id)"></app-emoji-picker>
         <button (click)="openThread(message.id)"><img src="img/general-view/chat/add_comment.svg" alt="check"></button>
         <button *ngIf="checkStyle(message.userId) === 'secondary'">

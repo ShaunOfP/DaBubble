@@ -15,7 +15,7 @@ import { Message } from '../../../models/interfaces';
   templateUrl: './thread.component.html',
   styleUrl: './thread.component.scss'
 })
-export class ThreadComponent implements OnInit {
+export class ThreadComponent {
   @Output() callParent: EventEmitter<void> = new EventEmitter();
   @ViewChild('emojiTarget', { static: true }) emojiTarget!: ElementRef;
   selectedEmoji: string = '';
@@ -23,10 +23,6 @@ export class ThreadComponent implements OnInit {
 
   constructor(public chatService: ChatService,
     private userDatasService: UserDatasService) {
-
-  }
-
-  ngOnInit(): void {
 
   }
 
