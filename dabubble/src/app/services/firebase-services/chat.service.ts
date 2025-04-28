@@ -56,8 +56,6 @@ export class ChatService {
       if (params['chatId']) {
         this.currentChatId = params['chatId'];
         this.loadChannelInfo();
-      } else {
-        console.error('No chatId found in query parameters');
       }
     });
   }

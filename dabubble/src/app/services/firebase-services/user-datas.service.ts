@@ -37,7 +37,6 @@ export interface UserObserver {
 })
 export class UserDatasService {
   private firestore = inject(Firestore);
-  // userDatas$: Observable<UserObserver[]> = new Subject<UserObserver[]>();
   userIdsSubject = new BehaviorSubject<string[]>([]);
   userIds$ = this.userIdsSubject.asObservable();
   channelData: any = [];
@@ -87,7 +86,6 @@ export class UserDatasService {
         if (userID === 'guest') {
           this.currentUserId = 'guest';
         } else {
-          console.error('User not found');
           this.currentUserDataSubject.next(null);
         }
       }
@@ -125,7 +123,6 @@ export class UserDatasService {
   async saveGuest(accountData: GuestDatas, userId: string): Promise<void> {
     try {
       const guestDocRef = doc(this.guestDatasRef(), userId);
-
       const guestData = {
         username: accountData.username,
         avatar: accountData.avatar,
@@ -133,8 +130,6 @@ export class UserDatasService {
         privateChats: accountData.privateChats,
       };
       await setDoc(guestDocRef, guestData);
-
-      console.log('✅ Gast erfolgreich gespeichert:', guestData);
     } catch (error) {
       console.error('❌ Fehler beim Speichern des Gastes:', error);
     }
@@ -219,8 +214,6 @@ export class UserDatasService {
         } else {
           this.currentUserId = 'guest';
         }
-      } else {
-        console.error('No user ID provided');
       }
     });
   }
