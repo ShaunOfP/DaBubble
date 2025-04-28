@@ -51,7 +51,7 @@
       </div>
       <div class="row-reverse">
         <img class="avatar" src="{{ message.avatar }}" alt="avatar" />
-        <div class="chat-content_conversation">
+        <div class="chat-content_conversation--{{ checkStyle(message.userId) }}">
           <div class="chat-content_header">
             <span>{{ message.sender }}</span>
             <span>{{ formatTime(message.createdAt) }}</span>

@@ -1,4 +1,5 @@
 @import './../../../../../templates/mixins.scss';
+@import './../../../../../styles.scss';
 
 @mixin fontStyle($fs: 18px, $fw: 400) {
   font-size: $fs;
@@ -194,9 +195,36 @@
 }
 
 .chat-content_conversation {
-  @include arrangement($fd: column, $jc: flex-start, $g: 8px, $ai: normal);
+  &--primary {
+    @include arrangement($fd: column, $jc: flex-start, $g: 8px, $ai: normal);
+  }
+
+  &--secondary {
+    @include arrangement($fd: column, $jc: flex-start, $g: 8px, $ai: flex-end);
+  }
 }
 
-app-emoji-picker {
-  left: -270px;
+.emoji-picker-container {
+  position: relative;
+
+  &--primary {
+    @extend .emoji-picker-container;
+
+    >app-emoji-picker {
+      left: -280px;
+      top: 18px;
+    }
+  }
+
+  &--secondary {
+    @extend .emoji-picker-container;
+
+    >app-emoji-picker {
+      bottom: -33px;
+
+      @media (max-width: $mobile-breakpoint){
+        bottom: -51px;
+      }
+    }
+  }
 }
