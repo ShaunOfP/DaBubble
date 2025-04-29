@@ -87,7 +87,6 @@ export class LoginComponent implements OnInit {
 
       try {
         const result = await this.authService.signInWithEmail(email, password);
-        console.log(result);
         this.handleLogin(result);
       } catch (error) {
         console.error('Fehler beim log in:', error);
@@ -99,10 +98,8 @@ export class LoginComponent implements OnInit {
   }
 
   handleLogin(result: any) {
-    console.log(result.uid);
     if (result === 'auth/user-not-found') {
       this.loginErrorMail = 'Die E-Mail-Adresse ist nicht angemeldet!';
-      console.log(this.loginErrorMail);
     } else if (result === 'auth/wrong-password') {
       this.loginErrorPassword = 'Das Passwort ist ungültig!';
     } else {
@@ -128,7 +125,6 @@ export class LoginComponent implements OnInit {
       const chatId = 'ER84UOYc0F2jptDjWxFo';
 
       if (guestSnap.exists()) {
-        console.log('Gast schon vorhanden', guestSnap.data());
         this.router.navigate(['/general'], {
           queryParams: { chatId, userID: 'guest' },
         });
@@ -144,8 +140,6 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/general'], {
             queryParams: { chatId, userID: 'guest' },
           });
-          console.log(newGuest);
-          console.log(guestUser.uid);
         }
       }
     } catch (error) {
@@ -156,12 +150,9 @@ export class LoginComponent implements OnInit {
   async googleLogIn() {
     try {
       await this.authService.googleSignIn();
-      console.log('Erfolgreich mit Google eingelogt');
       const googleUser = this.authService.currentUser;
-      console.log('User is', googleUser?.displayName);
       const userDocRef = doc(this.userDatasRef(), googleUser?.uid);
       const userSnap = await getDoc(userDocRef);
-      console.log(this.user);
       this.router.navigate([`/general/public-chat`], {
         queryParams: { userID: googleUser?.uid },
       });
