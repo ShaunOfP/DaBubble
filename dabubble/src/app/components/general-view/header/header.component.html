@@ -5,7 +5,8 @@
 <div class="bar-info">
   <div class="search-container" #searchContainer>
     <div class="bar-info-searchbar input-field">
-      <input placeholder="Devspace durchsuchen" [(ngModel)]="inputSearch" (focus)="searchFocus()" (input)="searchInDevspace()" />
+      <input placeholder="Devspace durchsuchen" [(ngModel)]="inputSearch" (focus)="searchFocus()"
+        (input)="searchInDevspace()" />
       <div>
         <img src="/img/general-view/workspace-menu/search.svg" />
       </div>
@@ -15,9 +16,9 @@
   </div>
 
   <div class="bar-info-account-info" (click)="openDropdownMenu()">
-    <span>{{ this.currentUserData?.username }}</span>
+    <span>{{ currentUserData?.username }}</span>
     <div class="status-container">
-      <img class="avatar-small" [src]="this.currentUserData?.avatar" alt="User Image" />
+      <img class="avatar-small" [src]="currentUserData?.avatar" alt="User Image" />
       <div class="status-circle online"></div>
     </div>
     <div class="dropdown-btn-container">
@@ -46,11 +47,11 @@
     </div>
   </div>
   <div class="profile-info-image">
-    <img src="{{ this.currentUserData?.avatar }}" alt="User Image" />
+    <img src="{{ currentUserData?.avatar }}" alt="User Image" />
   </div>
   <div class="profile-info-name-status">
     <div class="profile-info-name-status-upper">
-      <span class="profile-info-name-status-upper--font-primary cursor-no-change">{{ this.currentUserData?.username
+      <span class="profile-info-name-status-upper--font-primary cursor-no-change">{{ currentUserData?.username
         }}</span>
       <span class="profile-info-name-status-upper--font-secondary color-purple-with-hover"
         (click)="toggleProfileEdit()">Bearbeiten</span>
@@ -68,7 +69,7 @@
       </div>
       <span class="cursor-no-change">E-Mail-Adresse</span>
     </div>
-    <a class="cursor-no-change">{{ this.currentUserData?.mail }}</a>
+    <a class="cursor-no-change">{{ currentUserData?.mail }}</a>
   </div>
 </div>
 <div *ngIf="showProfileEdit" class="profile-edit">
@@ -79,9 +80,17 @@
       <img class="d-none" src="/img/general-view/workspace-menu/hover_close.svg" />
     </div>
   </div>
-  <div class="profile-info-image">
-    <img src="{{ this.currentUserData?.avatar }}" alt="User Image" />
-  </div>
+  <mat-accordion class="profile-edit-image-container">
+    <mat-expansion-panel hideToggle #avatarSelector>
+      <mat-expansion-panel-header>
+        <img class="profile-edit-img" src="{{ currentAvatar }}" alt="User Image" />
+      </mat-expansion-panel-header>
+      <div class="avatar-selector">
+        <img *ngFor="let avatar of avatarList" src="/img/general-view/create-avatar/{{ avatar }}"
+          (click)="selectAvatar(avatar); avatarSelector.close()">
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
   <form (ngSubmit)="submitForm(form)" #form="ngForm">
     <div class="profile-edit-form">
       <div>
@@ -91,9 +100,16 @@
         <span class="font-size--20--700 cursor-no-change">Vollständiger Name</span>
       </div>
       <input class="input-field" [class.invalid]="name.touched && name.invalid" #name="ngModel"
-        placeholder="{{ this.currentUserData?.username }}" required [(ngModel)]="newNameInput"
-        name="newNameInputField" />
-      <span *ngIf="name.touched && name.invalid" class="error-message">This field is required</span>
+        placeholder="{{ currentUserData?.username }}" required [(ngModel)]="newNameInput" name="newNameInputField"
+        pattern="^[a-zA-Z0-9]*$" />
+      @if (checkForBlankFirst(name.value) && name.touched){
+      <label class="error-message">Der Name kann nicht mit einem Leerzeichen anfangen.</label>
+      } @else if (name.invalid && name.touched){
+      <label class="error-message">Dieses Feld muss ausgefüllt werden. Es sind nur Buchstaben und Zahlen
+        zulässig.</label>
+      } @else {
+      <label></label>
+      }
     </div>
     <div class="profile-edit-form-buttons">
       <button class="btn-secondary--default font-size--18--700" (click)="closeEditForm(); newNameInput = ''">

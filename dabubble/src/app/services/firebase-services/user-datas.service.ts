@@ -218,7 +218,13 @@ export class UserDatasService {
     });
   }
 
-  async updateUserData(userId: string, newUserName: string) {
+
+  /**
+   * Updates the Username in the database
+   * @param userId current UserId
+   * @param newUserName new Username
+   */
+  async updateUserName(userId: string, newUserName: string) {
     try {
       const userData = doc(this.firestore, `userDatas/${userId}`);
       await updateDoc(userData, {
@@ -227,6 +233,23 @@ export class UserDatasService {
       });
     } catch (err) {
       console.log('Error updating user Data:', err);
+    }
+  }
+
+
+  /**
+   * Updates the Avatar path in the database
+   * @param userId current UserId
+   * @param newUserAvatar Path of the avatar
+   */
+  async updateUserAvatar(userId: string, newUserAvatar: string){
+    try{
+      const userData = doc(this.firestore, `userDatas/${userId}`);
+      await updateDoc(userData, {
+        avatar: newUserAvatar
+      });
+    } catch (e){
+      console.error('Error setting new Avatar:', e);
     }
   }
 

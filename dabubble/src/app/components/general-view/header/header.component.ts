@@ -1,6 +1,7 @@
 import { Component, ViewChild, OnInit, HostListener, ElementRef } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenu, MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { Router, RouterModule } from '@angular/router';
 import { NgForm, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -22,6 +23,7 @@ import { SearchResultsComponent } from './search-results/search-results.componen
     FormsModule,
     CommonModule,
     SearchResultsComponent,
+    MatExpansionModule
   ],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
@@ -38,6 +40,8 @@ export class HeaderComponent implements OnInit {
   searchFocused: boolean = false;
   user: User | null = null;
   currentUserData!: UserObserver | null;
+  currentAvatar: string = '';
+  avatarList: string[] = ['avatar1.svg', 'avatar2.svg', 'avatar3.svg', 'avatar4.svg', 'avatar5.svg', 'avatar6.svg'];
 
   constructor(
     private router: Router,
@@ -68,6 +72,9 @@ export class HeaderComponent implements OnInit {
   subscribeToCurrentUserData() {
     this.userDatasService.currentUserData$.subscribe((userData) => {
       this.currentUserData = userData;
+      if (userData) {
+        this.currentAvatar = userData?.avatar;
+      }
     });
   }
 
@@ -83,6 +90,30 @@ export class HeaderComponent implements OnInit {
       this.showProfileInfo = false;
       this.openDropdownMenu();
     }
+  }
+
+
+  /**
+   * Checks if a string starts with a blankspace
+   * @param string name or password
+   * @returns Boolean, true or false
+   */
+  checkForBlankFirst(string: string) {
+    if (string != null) {
+      if (string.charAt(0) === " ") {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+
+
+  selectAvatar(path: string) {
+    this.currentAvatar = `/img/general-view/create-avatar/${path}`;
+    this.userDatasService.updateUserAvatar(this.userDatasService.currentUserId, this.currentAvatar);
   }
 
 
@@ -154,11 +185,9 @@ export class HeaderComponent implements OnInit {
       console.warn('Log in to change your Name');
     } else {
       if (form.touched && form.valid) {
-        this.userDatasService.updateUserData(this.userDatasService.currentUserId, this.newNameInput);
+        this.userDatasService.updateUserName(this.userDatasService.currentUserId, this.newNameInput);
         this.closeEditForm();
         this.showProfileInfo = true;
-      } else {
-
       }
     }
   }
