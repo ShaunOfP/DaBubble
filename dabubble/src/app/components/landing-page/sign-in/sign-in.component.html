@@ -52,15 +52,12 @@
                             placeholder="Passwort" (focus)="onFocus(true, 'password')"
                             (blur)="onFocus(false, 'password')" minlength="6" required>
                     </div>
-                    @if (!password.valid && password.touched && password.hasError('minlength')) {
-                    <label for="password" class="required-text">*Das Passwort muss mindestens 6 Zeichen lang
-                        sein.</label>
-                    } @else if (!password.valid && password.touched && isEmpty(password.value)){
-                    <label for="password" class="required-text">*Bitte geben Sie ein Passwort ein.</label>
-                    }
-                    @else if (checkForBlankFirst(password.value) && password.touched){
+                    @if (checkForBlankFirst(password.value) && password.touched) {
                     <label for="password" class="required-text">*Das Passwort darf nicht mit einem Leerzeichen
                         beginnen.</label>
+                    } @else if (!password.valid && password.touched && password.hasError('minlength')){
+                    <label for="password" class="required-text">*Das Passwort muss mindestens 6 Zeichen lang
+                        sein.</label>
                     }@else {
                     <label for="password" class="empty-field"></label>
                     }

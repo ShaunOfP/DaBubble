@@ -63,15 +63,7 @@ export class SignInComponent {
       return false;
     }
   }
-  
 
-  isEmpty(string: string){
-    if (string == null || string == ""){
-      return true;
-    } else {
-      return false;
-    }
-  }
 
   onSubmit(ngForm: NgForm) {
     if (ngForm.valid && ngForm.submitted) {
