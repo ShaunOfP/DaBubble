@@ -19,19 +19,18 @@ import { FooterComponent } from "../footer/footer.component";
     RouterModule,
     HeaderSectionComponent,
     FooterComponent
-],
+  ],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.scss',
 })
 export class SignInComponent {
   accountData: UserDatas = new UserDatas();
   acceptTerms: boolean = false;
-
-  constructor(private router: Router) {}
- 
   nameFocused: boolean = false;
   mailFocused: boolean = false;
   passwordFocused: boolean = false;
+
+  constructor(private router: Router) { }
 
   onFocus(currentState: boolean, field: string) {
     switch (field) {
@@ -47,9 +46,36 @@ export class SignInComponent {
     }
   }
 
+
+  /**
+   * Checks if a string starts with a blankspace
+   * @param string name or password
+   * @returns Boolean, true or false
+   */
+  checkForBlankFirst(string: string) {
+    if (string != null) {
+      if (string.charAt(0) === " ") {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+  
+
+  isEmpty(string: string){
+    if (string == null || string == ""){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   onSubmit(ngForm: NgForm) {
     if (ngForm.valid && ngForm.submitted) {
-       this.navigateTo('create-avatar');
+      this.navigateTo('create-avatar');
     }
   }
 
@@ -57,20 +83,5 @@ export class SignInComponent {
     this.router.navigate([route], {
       state: { accountData: this.accountData },
     });
-  } 
+  }
 }
-
-/*   navigateTo(route: string) {
-    this.router.navigate([route]);
-  } */
-
-    /*this.userService.saveUser(this.accountData); */
-
-/* interface InputField {
-  placeholder: string;
-  icon: string;
-  value: string;
-  focused: boolean;
-  type: string;
-  name: string;
-} */

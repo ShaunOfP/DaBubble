@@ -19,6 +19,7 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -99,10 +100,6 @@
   width: 100%;
   padding: 32px;
   box-sizing: border-box;
-  // position: absolute;
-  // top: 32px;
-  // left: 32px;
-  // right: 32px;
 
   .login-header-logo {
     @include arrangement($d: flex, $jc: center, $ai: center, $fd: row);
@@ -115,7 +112,6 @@
 
     .header-logo-overlay {
       position: absolute;
-      // z-index: 99;
       width: 300px;
       height: 100%;
       background-color: transparent;
@@ -127,11 +123,9 @@
     gap: 16px;
 
     a {
-      @include linkStyle(
-        var(--color-purple-primary-disabled),
+      @include linkStyle(var(--color-purple-primary-disabled),
         var(--color-blue-bg),
-        var(--color-purple-primary-default)
-      );
+        var(--color-purple-primary-default));
     }
 
     @media (max-width: 700px) {
@@ -248,11 +242,9 @@ form {
 
     .card-header {
       h2 {
-        @include centeredHeading(
-          var(--color-purple-primary-default),
+        @include centeredHeading(var(--color-purple-primary-default),
           0,
-          center
-        );
+          center);
       }
 
       span {
@@ -262,11 +254,9 @@ form {
 
     a {
       width: max-content;
-      @include linkStyle(
-        var(--color-purple-primary-disabled),
+      @include linkStyle(var(--color-purple-primary-disabled),
         var(--color-blue-bg),
-        var(--color-purple-primary-default)
-      );
+        var(--color-purple-primary-default));
     }
 
     .login-border {
@@ -299,6 +289,7 @@ form {
     min-height: 21.5px;
     margin-top: -23px;
     margin-bottom: -23px;
+
     span {
       font-size: 14px;
       padding-left: 24px;
@@ -341,8 +332,6 @@ form {
 .d-none {
   display: none;
 }
-
-// Media Querys
 
 @media (max-height: 720px) {
   .login-card {
@@ -424,5 +413,15 @@ form {
     span {
       font-size: 17px;
     }
+  }
+}
+
+@media(max-width: 450px), (max-height: 650px) {
+  .login-header {
+    padding: 0;
+  }
+
+  .app-wrapper {
+    gap: 0;
   }
 }

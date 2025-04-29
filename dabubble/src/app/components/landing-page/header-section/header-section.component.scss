@@ -2,30 +2,34 @@
 @import "../../../../templates/mixins.scss";
 
 .login-header {
-    @include arrangement($d: flex, $jc: space-between, $ai: center, $fd: row);
-    width: 100vw;
-    padding: 32px 0 0 64px;
-    box-sizing: border-box;
-    
-    @media (max-height: 725px) {
-        padding: 32px 0 0 32px;
+  @include arrangement($d: flex, $jc: space-between, $ai: center, $fd: row);
+  width: 100vw;
+  padding: 32px 0 0 64px;
+  box-sizing: border-box;
+
+  @media (max-height: 725px) {
+    padding: 32px 0 0 32px;
+  }
+
+  @media (max-height: 650px) {
+    padding: 16px 0 0 16px;
+  }
+
+  .login-header-logo {
+    @include arrangement($d: flex, $jc: center, $ai: center, $fd: row);
+    gap: 8px;
+    font-size: 28px;
+
+    @media (max-width: 450px) {
+      font-size: 20px;
     }
-  
-    .login-header-logo {
-      @include arrangement($d: flex, $jc: center, $ai: center, $fd: row);
-      gap: 8px;
-      font-size: 28px;
+
+    img {
+      height: 75px;
 
       @media (max-width: 450px) {
-        font-size: 20px;
-      }
-  
-      img {
-        height: 75px;
-
-        @media (max-width: 450px) {
-          height: 56px;
-        }
+        height: 56px;
       }
     }
+  }
 }

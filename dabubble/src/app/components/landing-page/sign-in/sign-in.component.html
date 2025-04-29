@@ -1,102 +1,81 @@
-
 <div class="app-wrapper">
     <app-header-section></app-header-section>
     <mat-card>
-
         <mat-card-content>
             <mat-card-header>
-
                 <div class="header-content">
-                    <a class="arrow-back" [routerLink]="['/']"
-                      ><img src="/img/public/arrow-back.svg" alt="back"
-                    /></a>
+                    <a class="arrow-back" [routerLink]="['/']"><img src="/img/public/arrow-back.svg" alt="back" /></a>
                     <h2>Konto erstellen</h2>
                 </div>
                 <span>Mit deinem Namen und deiner E-Mail-Adresse hast du dein neues DABubble-Konto.</span>
             </mat-card-header>
-
             <form (ngSubmit)="onSubmit(signInForm)" #signInForm="ngForm">
-
                 <div class="input-container">
-                    <div [ngClass]="{'input-field-focused': nameFocused, 'input-field-valid': name.valid}" class="input-field">
-                        <img [src]="(name.valid && name.touched) ? '/img/public/profile-black.svg' : '/img/public/profile.svg'" alt="name-icon"/>
-                        <input  
-                            [(ngModel)]="accountData.username" 
-                            type="text" 
-                            name="name"
-                            #name="ngModel"
-                            placeholder="Name und Nachname"
-                            (focus)="onFocus(true, 'name')"
-                            (blur)="onFocus(false, 'name')"
-                            minlength="1"
-                            required>
+                    <div [ngClass]="{'input-field-focused': nameFocused, 'input-field-valid': name.valid}"
+                        class="input-field">
+                        <img [src]="(name.valid && name.touched) ? '/img/public/profile-black.svg' : '/img/public/profile.svg'"
+                            alt="name-icon" />
+                        <input [(ngModel)]="accountData.username" type="text" name="name" #name="ngModel"
+                            placeholder="Name und Nachname" (focus)="onFocus(true, 'name')"
+                            (blur)="onFocus(false, 'name')" minlength="1" required>
                     </div>
-                    @if (!name.valid && name.touched && !name.hasError('minlength')) {
-                        <label for="name" class="required-text">*Bitte schreiben Sie einen Namen.</label>
+                    @if (!name.valid && name.touched) {
+                    <label for="name" class="required-text">*Bitte schreiben Sie einen Namen.</label>
+                    } @else if (checkForBlankFirst(name.value) && name.touched){
+                    <label for="name" class="required-text">*Der Name darf nicht mit einem Leerzeichen beginnen.</label>
                     } @else {
-                        <label for="name" class="empty-field"></label>
+                    <label for="name" class="empty-field"></label>
                     }
                 </div>
-
                 <div class="input-container">
-                    <div [ngClass]="{'input-field-focused': mailFocused, 'input-field-valid': email.valid}" class="input-field">
-                        <img [src]="(email.valid && email.touched) ? '/img/public/mail-black.svg' : '/img/public/mail.svg'" alt="email-icon"/>
-                        <input 
-                            [(ngModel)]="accountData.mail" 
-                            type="email" 
-                            name="email"
-                            #email="ngModel"
-                            placeholder="beispielname@email.com"
-                            (focus)="onFocus(true, 'mail')"
-                            (blur)="onFocus(false, 'mail')"
-                            pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
+                    <div [ngClass]="{'input-field-focused': mailFocused, 'input-field-valid': email.valid}"
+                        class="input-field">
+                        <img [src]="(email.valid && email.touched) ? '/img/public/mail-black.svg' : '/img/public/mail.svg'"
+                            alt="email-icon" />
+                        <input [(ngModel)]="accountData.mail" type="email" name="email" #email="ngModel"
+                            placeholder="beispielname@email.com" (focus)="onFocus(true, 'mail')"
+                            (blur)="onFocus(false, 'mail')" pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
                             required>
                     </div>
                     @if (!email.valid && email.touched) {
-                        <label for="email" class="required-text">*Diese E-Mail-Adresse ist leider ungültig.</label>
+                    <label for="email" class="required-text">*Diese E-Mail-Adresse ist leider ungültig.</label>
                     } @else {
-                        <label for="email" class="empty-field"></label>
+                    <label for="email" class="empty-field"></label>
                     }
                 </div>
-
                 <div class="input-container">
-                    <div [ngClass]="{'input-field-focused': passwordFocused, 'input-field-valid': password.valid}" class="input-field">
-                        <img [src]="(password.valid && password.touched) ? '/img/public/password-lock-black.svg' : '/img/public/password-lock.svg'" alt="password-icon"/>
-                        <input 
-                            [(ngModel)]="accountData.password" 
-                            type="text" 
-                            name="password"
-                            #password="ngModel"
-                            placeholder="Passwort"
-                            (focus)="onFocus(true, 'password')"
-                            (blur)="onFocus(false, 'password')"
-                            minlength="6"
-                            required>
+                    <div [ngClass]="{'input-field-focused': passwordFocused, 'input-field-valid': password.valid}"
+                        class="input-field">
+                        <img [src]="(password.valid && password.touched) ? '/img/public/password-lock-black.svg' : '/img/public/password-lock.svg'"
+                            alt="password-icon" />
+                        <input [(ngModel)]="accountData.password" type="password" name="password" #password="ngModel"
+                            placeholder="Passwort" (focus)="onFocus(true, 'password')"
+                            (blur)="onFocus(false, 'password')" minlength="6" required>
                     </div>
-                    @if (!password.valid && password.touched && !password.hasError('minlength')) {
-                        <label for="password" class="required-text">*Bitte geben Sie ein Passwort ein.</label>
-                    } @else {
-                        <label for="password" class="empty-field"></label>
+                    @if (!password.valid && password.touched && password.hasError('minlength')) {
+                    <label for="password" class="required-text">*Das Passwort muss mindestens 6 Zeichen lang
+                        sein.</label>
+                    } @else if (!password.valid && password.touched && isEmpty(password.value)){
+                    <label for="password" class="required-text">*Bitte geben Sie ein Passwort ein.</label>
+                    }
+                    @else if (checkForBlankFirst(password.value) && password.touched){
+                    <label for="password" class="required-text">*Das Passwort darf nicht mit einem Leerzeichen
+                        beginnen.</label>
+                    }@else {
+                    <label for="password" class="empty-field"></label>
                     }
                 </div>
-                
                 <div class="privacy-policy-container">
                     <mat-checkbox [(ngModel)]="acceptTerms" name="terms" required></mat-checkbox>
                     <span>Ich stimme der <a href="/privacy-policy" target="_blank">Datenschutzerklärung</a> zu.</span>
                 </div>
-
-                <div class="button-container" >
+                <div class="button-container">
                     <input type="submit" value="Weiter" [disabled]="!signInForm.valid" [ngClass]="{
                         'btn-primary--disable': !signInForm.valid,
-                        'btn-primary--default': signInForm.valid}"
-                        >
+                        'btn-primary--default': signInForm.valid}">
                 </div>
-  
             </form>
-
         </mat-card-content>
-
     </mat-card>
-
     <app-footer></app-footer>
 </div>

@@ -47,14 +47,6 @@ h2 {
   @include arrangement($d: flex, $jc: start, $ai: center, $fd: row);
   gap: 8px;
 
-  &:hover {
-    .mat-mdc-checkbox {
-      background-color: var(--color-blue-bg);
-      color: var(--color-purple-primary-default);
-      border-radius: 100px;
-    }
-  }
-
   a {
     text-decoration: none;
     color: var(--color-purple-primary-disabled);
@@ -83,7 +75,6 @@ h3 {
   margin-bottom: 36px;
 }
 
-/* Media Queries */
 @media (max-width: 700px) {
   h2 {
     font-size: 33px !important;
@@ -138,5 +129,11 @@ h3 {
 
   h3 {
     min-height: 24px;
+  }
+}
+
+@media (max-height: 650px){
+  .mat-mdc-card{
+    margin: 16px 16px 0 16px;
   }
 }
