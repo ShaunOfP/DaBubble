@@ -91,7 +91,7 @@
   }
 
   to {
-    transform: scale(0.5) translate(-85vh);
+    transform: scale(0.5) translate(-83vw ,-90vh);
   }
 }
 
@@ -206,12 +206,24 @@
     animation: slideAndShrinkSmall 0.2s forwards 4s, fadeOut 0.1s forwards 4.2s;
   }
 
+  @media (max-width: 600px) {
+    left: 50%;
+    transform: translateX(-50%);
+    width: fit-content;
+    animation: slideAndShrinkMobile 0.2s forwards 4s, fadeOut 0.1s forwards 4.2s;
+  }
+
   img {
     object-fit: cover;
     position: relative;
     right: -38%;
     animation: slideImage 0.5s forwards 1.5s;
     height: 150px;
+
+    @media (max-width: 600px) {
+      height: 50px;
+      right: -30%;
+    }
   }
 
   .animated-text {
@@ -222,6 +234,10 @@
     height: 100%;
     background: transparent;
 
+    @media (max-width: 600px) {
+      width: 250px;
+    }
+
     p {
       color: white;
       font-size: 68px;
@@ -229,6 +245,10 @@
       position: absolute;
       left: 100%;
       animation: slideText 0.7s forwards 2.5s, textColor 0.2s forwards 4s;
+
+      @media (max-width: 600px) {
+        font-size: 32px;
+      }
     }
   }
 }
@@ -364,18 +384,6 @@ form {
   }
 }
 
-@media (max-width: 1550px) {
-  .logo-wrapper {
-    animation: slideAndShrinkMid 0.2s forwards 4s, fadeOut 0.1s forwards 4.2s;
-  }
-}
-
-@media (max-width: 900px) {
-  .logo-wrapper {
-    animation: slideAndShrinkSmall 0.2s forwards 4s, fadeOut 0.1s forwards 4.2s;
-  }
-}
-
 @media (max-width: 700px) {
   .login-header-link {
     display: none;
@@ -426,7 +434,6 @@ form {
   }
 
   @media (max-width: 450px) {
-    // justify-content: center;
     gap: 16px;
   }
 
