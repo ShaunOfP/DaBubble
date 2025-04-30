@@ -6,6 +6,11 @@
 .mdc-card {
     align-items: start;
     padding: 48px 56px 48px 56px;
+
+    @media(max-width: 420px) {
+        padding: 24px 28px;
+        margin: 0;
+    }
 }
 
 .mat-mdc-card-content {
@@ -16,20 +21,30 @@
     padding: 0 !important;
 }
 
-
 .mat-mdc-card-header {
-  align-items: start;
+    align-items: start;
 }
 
-h2{
+h2 {
     text-align: left;
 }
 
-h3{
+h3 {
     margin-bottom: 0;
 }
 
-section{
-    @include arrangement($fd:column, $jc:space-around);
-    height: 100vh;
+.app-wrapper {
+    >div {
+        width: 100vw;
+        height: calc(100vh - 109px);
+        @include arrangement();
+
+        @media(max-width: 420px) {
+            height: 100%;
+            width: auto;
+            padding: 15px;
+            overflow: scroll;
+            align-items: flex-start;
+        }
+    }
 }
