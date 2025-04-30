@@ -1,15 +1,6 @@
 @import './../../../styles.scss';
 
-// section{
-//     @include arrangement($fd:column, $jc:space-around);
-//     height: 100vh;
-// }
-
-// .legal {
-//   @include arrangement($g: 16px);
-// }
-
-.arrow-back{
+.arrow-back {
   @include arrangement($d: flex, $ai: center);
   cursor: pointer;
   padding: 4px;
@@ -18,57 +9,67 @@
   &:hover {
     background-color: var(--color-blue-bg);
     transform: scale(1.1);
-    img{
+
+    img {
       filter: brightness(0) saturate(100%) invert(21%) sepia(89%) saturate(3486%) hue-rotate(237deg) brightness(101%) contrast(90%);
     }
   }
-
 }
 
-  .mat-mdc-card {
-    @include arrangement($d: flex, $jc: center, $ai: center, $fd: column);
-    padding: 24px;
-    max-width: 600px;
+.mat-mdc-card {
+  @include arrangement($d: flex, $jc: center, $ai: center, $fd: column);
+  padding: 24px;
+  max-width: 600px;
+
+  @media (max-height: 725px) {
+    padding: 16px;
+  }
+
+  @media (max-width: 700px) {
+    margin: 16px;
+    max-width: 450px;
+  }
+
+  @media (max-width: 450px) {
+    padding: 16px;
+  }
+}
+
+.mat-mdc-card-content {
+  padding: 0 !important;
+  width: 100% !important;
+}
+
+.mat-mdc-card-header {
+  @include arrangement($d: flex, $jc: center, $ai: center, $fd: column);
+  padding: 0;
+
+  span {
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 36px;
 
     @media (max-height: 725px) {
-      padding: 16px;
+      margin-bottom: 20px;
     }
 
     @media (max-width: 700px) {
-      margin: 16px;
-      max-width: 450px;
+      font-size: 18px;
     }
 
     @media (max-width: 450px) {
-      padding: 16px;
+      font-size: 15px;
+      margin-bottom: 20px;
     }
   }
-  
-  .mat-mdc-card-content {
-    padding: 0!important;
-    width: 100%!important;
+}
+
+@media (min-width: 1920px) and (min-height: 1080px) {
+  .app-wrapper {
+    max-height: 1080px;
+    max-width: 1920px;
+    position: absolute;
+    inset: 0;
+    margin: auto;
   }
-  
-  .mat-mdc-card-header {
-    @include arrangement($d: flex, $jc: center, $ai: center, $fd: column);
-    padding: 0;
-  
-    span {
-      text-align: center;
-      font-size: 20px;
-      margin-bottom: 36px;
-
-      @media (max-height: 725px) {
-        margin-bottom: 20px;
-      }
-
-      @media (max-width: 700px) {
-        font-size: 18px;
-      }
-
-      @media (max-width: 450px) {
-        font-size: 15px;
-        margin-bottom: 20px;
-      }
-    }
-  }
+}
