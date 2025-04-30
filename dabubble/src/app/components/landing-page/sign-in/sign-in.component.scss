@@ -15,6 +15,23 @@ h2 {
   a {
     text-decoration: none;
   }
+
+  @media (max-width: 450px) {
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 700px) {
+    margin-bottom: 30px;
+  }
+
+  @media (max-height: 725px) {
+    margin-bottom: 24px;
+  }
+
+  @media (max-width: 1280px),
+  (min-width: 1023px) and (max-height: 800px) {
+    margin-bottom: 18px;
+  }
 }
 
 .input-container {
@@ -79,19 +96,11 @@ h3 {
   h2 {
     font-size: 33px !important;
   }
-
-  .header-content {
-    margin-bottom: 30px;
-  }
 }
 
 @media (max-width: 450px) {
   h2 {
     font-size: 28px !important;
-  }
-
-  .header-content {
-    margin-bottom: 20px;
   }
 
   .required-text {
@@ -118,10 +127,6 @@ h3 {
 }
 
 @media (max-height: 725px) {
-  .header-content {
-    margin-bottom: 24px;
-  }
-
   .required-text,
   .empty-field {
     min-height: 24px;
@@ -132,8 +137,13 @@ h3 {
   }
 }
 
-@media (max-height: 650px) {
-  .mat-mdc-card {
+.mat-mdc-card {
+  @media (max-height: 570px) {
+    overflow: scroll;
+    justify-content: flex-start;
+  }
+
+  @media (max-height: 650px) {
     margin: 16px 16px 0 16px;
   }
 }

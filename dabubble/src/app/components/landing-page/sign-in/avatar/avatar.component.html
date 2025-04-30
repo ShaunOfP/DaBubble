@@ -1,7 +1,6 @@
 <div class="app-wrapper">
     <app-header-section></app-header-section>
     <mat-card>
-
         <mat-card-content>
             <mat-card-header>
                 <div class="header-content">
@@ -10,17 +9,13 @@
                     <h2>Wähle deinen Avatar</h2>
                 </div>
             </mat-card-header>
-
             <form (ngSubmit)="createUser(createAvatarForm)" #createAvatarForm="ngForm">
-
                 <div class="main-content">
-
                     <div class="avatar-container">
-                        <img [src]="accountData.avatar" alt="back"
+                        <img [src]="accountData.avatar"
                             onerror="this.src=`img/general-view/create-avatar/avatar1.svg`" />
                         <span>{{accountData.username}}</span>
                     </div>
-
                     <div class="avatar-list-container">
                         <span>Aus der Liste wählen</span>
                         <div>
@@ -32,27 +27,18 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="button-container">
                         <input type="submit" value="Weiter" [disabled]="!accountData.avatar" [ngClass]="{
                           'btn-primary--disable': !accountData.avatar,
                           'btn-primary--default': accountData.avatar
                         }">
                     </div>
-
                 </div>
-
             </form>
-
         </mat-card-content>
-
     </mat-card>
-
     <app-footer></app-footer>
-
 </div>
-
-
 <div class="overlay-container" [ngClass]="{'d-flex': this.avatarCreated}">
     <span class="side-sheet">
         Konto erfolgreich erstellt!
