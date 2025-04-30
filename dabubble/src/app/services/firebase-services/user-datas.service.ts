@@ -9,17 +9,13 @@ import {
   getDoc,
   query,
   where,
-  getDocs
+  getDocs,
+  docData
 } from '@angular/fire/firestore';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { UserDatas } from './../../models/user.class';
 import { GuestDatas } from '../../models/guest.class';
 import { ActivatedRoute } from '@angular/router';
-
-interface SingleUserData {
-  mail: string;
-  password: string;
-}
 
 export interface UserObserver {
   avatar: string;
@@ -42,13 +38,26 @@ export class UserDatasService {
   channelData: any = [];
   currentUserId: string = ``;
   showUserInfoCard: boolean = false;
-  private currentUserDataSubject = new BehaviorSubject<UserObserver | null>(
-    null
-  );
-  public currentUserData$: Observable<UserObserver | null> =
-    this.currentUserDataSubject.asObservable();
+  private currentUserDataSubject = new BehaviorSubject<UserObserver | null>(null);
+  public currentUserData$: Observable<UserObserver | null> = this.currentUserDataSubject.asObservable();
 
   constructor(private route: ActivatedRoute) { }
+
+
+  /**
+   * Extracts the current user id from the url
+   */
+  getCurrentUserId() {
+    this.route.queryParams.subscribe((params) => {
+      if (params['userID']) {
+        if (params['userID'] != 'guest') {
+          this.currentUserId = params['userID'];
+        } else {
+          this.currentUserId = 'guest';
+        }
+      }
+    });
+  }
 
 
   /**
@@ -58,50 +67,44 @@ export class UserDatasService {
     const usersRef = collection(this.firestore, 'users');
     const onlineUsersQuery = query(usersRef, where('isOnline', '==', true));
     const querySnapshot = await getDocs(onlineUsersQuery);
-
     querySnapshot.forEach((doc) => {
       console.log(`User ID: ${doc.id}, Data:`, doc.data());
     });
   }
 
 
-  async getUserDataById(): Promise<void> {
-    this.route.queryParams.pipe().subscribe(async (params) => {
-      const userID = params['userID'];
-      const userDocRef = doc(this.firestore, `userDatas/${userID}`);
-      const guestDocRef = doc(this.firestore, `guestDatas/${userID}`);
-      const [userDoc, guestDoc] = await Promise.all([
-        getDoc(userDocRef),
-        getDoc(guestDocRef),
-      ]);
-
-      if (userDoc.exists()) {
-        const userData = userDoc.data() as UserObserver;
-        this.currentUserDataSubject.next(userData);
-      } else if (guestDoc.exists()) {
-        const userData = guestDoc.data() as UserObserver;
-        this.currentUserDataSubject.next(userData);
-        this.currentUserId = 'guest';
-      } else {
-        if (userID === 'guest') {
-          this.currentUserId = 'guest';
-        } else {
-          this.currentUserDataSubject.next(null);
-        }
-      }
+  /**
+   * Opens a datastream with the newest data about the logged in user
+   */
+  async getCurrentUserDataViaId(): Promise<void> {
+    this.getCurrentUserId();
+    const userDocRef = doc(this.userDatasRef(), this.currentUserId);
+    docData(userDocRef, { idField: 'id' }).subscribe((userData) => {
+      this.currentUserDataSubject.next(userData as UserObserver);
     });
   }
+
+
+  /**
+   * When the guest is logged in this opens a datastream for the guest data
+   */
+  async getCurrentGuestViaId(): Promise<void>{
+    this.getCurrentUserId();
+    const userDocRef = doc(this.guestDatasRef(), this.currentUserId);
+    docData(userDocRef, { idField: 'id' }).subscribe((userData) => {
+      this.currentUserDataSubject.next(userData as UserObserver);
+    });
+  }
+
 
   async getUserName(id: string): Promise<string> {
     try {
       const docRef = doc(this.userDatasRef(), id);
       const guestDocRef = doc(this.guestDatasRef(), id);
-
       const [docSnap, guestSnap] = await Promise.all([
         getDoc(docRef),
         getDoc(guestDocRef),
       ]);
-
       if (docSnap.exists()) {
         return docSnap.data()['username'] as string;
       } else if (guestSnap.exists()) {
@@ -116,6 +119,11 @@ export class UserDatasService {
     }
   }
 
+
+  /**
+   * This is a shortcut to get the guestDatas collection reference
+   * @returns a reference for the guestDatas collection
+   */
   guestDatasRef() {
     return collection(this.firestore, 'guestDatas');
   }
@@ -197,25 +205,24 @@ export class UserDatasService {
     return generatedRandomId;
   }
 
+
+  /**
+   * This is a shortcut to get the userDatas collection reference
+   * @returns a reference for the userDatas collection
+   */
   userDatasRef() {
     return collection(this.firestore, 'userDatas');
   }
 
+
+  /**
+   * This checks if the Guest is logged in or not
+   * @returns true, if the Guest is logged in
+   * @returns false, if a User is logged in
+   */
   checkIfGuestIsLoggedIn(): boolean {
     this.getCurrentUserId();
     return this.currentUserId === 'guest' ? true : false;
-  }
-
-  getCurrentUserId() {
-    this.route.queryParams.subscribe((params) => {
-      if (params['userID']) {
-        if (params['userID'] != 'guest') {
-          this.currentUserId = params['userID'];
-        } else {
-          this.currentUserId = 'guest';
-        }
-      }
-    });
   }
 
 
@@ -242,13 +249,13 @@ export class UserDatasService {
    * @param userId current UserId
    * @param newUserAvatar Path of the avatar
    */
-  async updateUserAvatar(userId: string, newUserAvatar: string){
-    try{
+  async updateUserAvatar(userId: string, newUserAvatar: string) {
+    try {
       const userData = doc(this.firestore, `userDatas/${userId}`);
       await updateDoc(userData, {
         avatar: newUserAvatar
       });
-    } catch (e){
+    } catch (e) {
       console.error('Error setting new Avatar:', e);
     }
   }
@@ -335,58 +342,3 @@ export class UserDatasService {
     }
   }
 }
-
-
-// async getUserDatas(email: string, password: string) {
-//   const q = query(this.userDatasRef(), where('mail', '==', email));
-//   try {
-//     const querySnapshot = await getDocs(q);
-//     querySnapshot.forEach((doc) => {
-//       const userData = doc.data() as SingleUserData;
-//       if (userData.password === password) {
-//         console.log('ID:', doc.id);
-//         console.log('Data:', userData);
-//         this.found = true;
-//       }
-//     });
-//     this.found ? false : console.log('falsche Email oder falsches Passwort');
-//   } catch (error) {
-//     console.error('Error fetching documents:', error);
-//   }
-// }
-
-// async updateUserAvatar(userId: string, avatarUrl: string) {
-//   try {
-//     const userData = doc(this.firestore, `userDatas/${userId}`);
-//     await updateDoc(userData, {
-//       avatar: avatarUrl,
-//     });
-//   } catch (error) {
-//     console.error('Error updating avatar:', error);
-//   }
-// }
-
-/*   async updateUserPassword(userId: string, newPassword: string) {
-  try {
-    const UserUpdate = doc(this.userDatasRef(), userId);
-    await updateDoc(UserUpdate, {
-      password: newPassword,
-    });
-    console.log('succses', newPassword);
-  } catch (err) {
-    console.error('Error updation User!', err);
-  }
-}
-*/
-// saveLocalStorage(id: string, name: string) {
-//   const user = { id, name };
-//   localStorage.setItem('user', JSON.stringify(user));
-//   this.userSubject.next(user);
-// }
-
-// getUserFromStorage() {
-//   const user = localStorage.getItem('user');
-//   if (user) {
-//     this.userSubject.next(JSON.parse(user));
-//   }
-// }

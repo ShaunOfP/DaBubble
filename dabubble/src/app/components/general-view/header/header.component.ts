@@ -60,8 +60,11 @@ export class HeaderComponent implements OnInit {
 
 
   async ngOnInit(): Promise<void> {
-    await this.userDatasService.getUserDataById();
-    this.userDatasService.getCurrentUserId();
+    if (this.userDatasService.checkIfGuestIsLoggedIn()) {
+      await this.userDatasService.getCurrentGuestViaId();
+    } else {
+      await this.userDatasService.getCurrentUserDataViaId();
+    }
     this.subscribeToCurrentUserData();
   }
 
@@ -186,6 +189,7 @@ export class HeaderComponent implements OnInit {
     } else {
       if (form.touched && form.valid) {
         this.userDatasService.updateUserName(this.userDatasService.currentUserId, this.newNameInput);
+        this.newNameInput = '';
         this.closeEditForm();
         this.showProfileInfo = true;
       }
