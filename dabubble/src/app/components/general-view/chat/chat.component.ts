@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit, AfterViewInit, NgZone, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EmojiPickerComponent } from '../emoji-picker/emoji-picker.component';
 import { NewMessageComponent } from './new-message/new-message.component';
@@ -8,6 +8,7 @@ import { Message } from '../../../models/interfaces';
 import { UserDatasService } from '../../../services/firebase-services/user-datas.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { AltHeaderMobileComponent } from "../alt-header-mobile/alt-header-mobile.component";
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -24,17 +25,18 @@ import { AltHeaderMobileComponent } from "../alt-header-mobile/alt-header-mobile
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss',
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     public chatService: ChatService,
     private userDatasService: UserDatasService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private ngZone: NgZone
   ) { }
 
 
   @ViewChild('emojiTarget', { static: true }) emojiTarget!: ElementRef;
-  @ViewChild('messageInput', { static: false }) messageInput!: ElementRef;
+  @ViewChild('messageInput', { static: false }) messageInput!: ElementRef<HTMLTextAreaElement>;
   selectedEmoji: string = '';
   chatDetails: boolean = false;
   showNewMessageHeader: boolean = false;
@@ -46,10 +48,27 @@ export class ChatComponent implements OnInit {
   currentUserId: string = '';
   privateChatOtherUserData: any;
   currentChatId: string = '';
+  private zoneSub!: Subscription;
 
 
   ngOnInit() {
     this.fetchChannelDataForCurrentUser();
+  }
+
+
+  ngAfterViewInit() {
+    this.zoneSub = this.ngZone.onStable.subscribe(() => {
+      setTimeout(() => {
+        if (this.messageInput) {
+          this.messageInput.nativeElement.focus();
+        }
+      }, 50);
+    });
+  }
+
+
+  ngOnDestroy() {
+    this.zoneSub?.unsubscribe();
   }
 
 
@@ -197,11 +216,11 @@ export class ChatComponent implements OnInit {
     const avatarUrl = await this.userDatasService.getUserAvatar(this.userDatasService.currentUserId);
 
     const message: Message = {
-      id: this.generateId(), // Generate a unique ID for the message
-      sender: userName, // Replace with actual sender name
+      id: this.generateId(),
+      sender: userName,
       createdAt: new Date().getTime(),
       content: content,
-      userId: this.userDatasService.currentUserId, // Use the actual user ID
+      userId: this.userDatasService.currentUserId,
       reaction: {},
       avatar: avatarUrl
     };
@@ -214,7 +233,6 @@ export class ChatComponent implements OnInit {
     this.chatService
       .saveMessage(message)
       .then(() => {
-        // this.publicChatComponent.scrollToElement('auto');
         this.messageInput.nativeElement.value = '';
         console.log('Message saved successfully');
 
