@@ -39,12 +39,19 @@ export class ChatService {
   showAltHeader: boolean = false;
   showChatDetailsMobileGreyLayer: boolean = false;
   userIcons: string[] = [];
+  private toggleDrawer = new Subject<void>();
+  toggleDrawer$ = this.toggleDrawer.asObservable();
 
   constructor(private route: ActivatedRoute,
     private router: Router,
     private userDatasService: UserDatasService
   ) {
     this.getCurrentChatId();
+  }
+
+
+  toggleDrawerState(){
+    this.toggleDrawer.next();
   }
 
 
@@ -325,7 +332,5 @@ export class ChatService {
       this.currentThreadsSubject.next(messages);
     });
     this.currentMessageId = messageId;
-
   }
-
 }

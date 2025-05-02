@@ -2,11 +2,12 @@ import { Component, EventEmitter, Output, ViewChild, ElementRef, OnInit } from '
 import { EmojiPickerComponent } from '../emoji-picker/emoji-picker.component';
 import { SharedModule } from '../../../shared/shared.module';
 import { ThreadMessagesComponent } from "./thread-messages/thread-messages.component";
-import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
 import { AltHeaderMobileComponent } from "../alt-header-mobile/alt-header-mobile.component";
 import { ChatService } from '../../../services/firebase-services/chat.service';
 import { UserDatasService } from '../../../services/firebase-services/user-datas.service';
 import { Message } from '../../../models/interfaces';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-thread',
@@ -20,10 +21,28 @@ export class ThreadComponent {
   @ViewChild('emojiTarget', { static: true }) emojiTarget!: ElementRef;
   selectedEmoji: string = '';
   toggleMarginLeft: boolean = true;
+  @ViewChild('threadDrawer') drawer!: MatDrawer;
+  private subscription!: Subscription;
 
   constructor(public chatService: ChatService,
     private userDatasService: UserDatasService) {
 
+  }
+
+  ngOnInit() {
+    this.subscription = this.chatService.toggleDrawer$.subscribe(() => {
+      this.drawer.toggle();
+    });
+  }
+
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
+
+  toggleDrawer() {
+    this.drawer.toggle();
   }
 
   toggleMargin() {

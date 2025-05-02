@@ -50,8 +50,6 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   chatDetails: boolean = false;
   showMembersInfo: boolean = false;
   showPicker: boolean = false;
-  // showPopoverReaction: number | null = null;
-  // reactionUserNamesCache: { [key: number]: string[] } = {};
   showEditMessage: boolean = false;
   editMessageId: string | null = null;
   messageValue: string = '';
@@ -257,8 +255,9 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   openThread(messageId: string): void {
-    this.chatService.getMessageThread(messageId)
+    this.chatService.getMessageThread(messageId);
     this.chatService.setThreadVisible(true);
+    this.chatService.toggleDrawerState();
     this.chatService.chatMarginRight = false;
   }
 }

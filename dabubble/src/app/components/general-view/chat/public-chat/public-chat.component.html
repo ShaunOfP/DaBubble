@@ -32,8 +32,10 @@
       <div class="line"></div>
       <div class="chat-date_create">{{ message.formattedDate }}</div>
     </div>
-    <div class="chat-content--{{ checkStyle(message.userId) }}" (mouseover)="hoveredMessageId = message.id" (mouseout)="hoveredMessageId = null">
-      <div class="chat-content_reaction" *ngIf="hoveredMessageId === message.id" [class.d-none-important]="hideReactionMenu">
+    <div class="chat-content--{{ checkStyle(message.userId) }}" (mouseover)="hoveredMessageId = message.id"
+      (mouseout)="hoveredMessageId = null">
+      <div class="chat-content_reaction" *ngIf="hoveredMessageId === message.id"
+        [class.d-none-important]="hideReactionMenu">
         <button (click)="sendReaction('green_check', message.id)"><img src="img/general-view/chat/green_check.svg"
             alt="check"></button>
         <button (click)="sendReaction('🙌', message.id)"><img src="img/general-view/chat/clap_hands.svg"
@@ -44,10 +46,11 @@
           (mouseleave)="showPicker = false" (click)="$event.preventDefault()"
           (emojiSelected)="sendReaction($event, message.id)"></app-emoji-picker>
         <button (click)="openThread(message.id)"><img src="img/general-view/chat/add_comment.svg" alt="check"></button>
-        <button *ngIf="checkStyle(message.userId) === 'secondary'" (click)="showEditMessage = true" class="relative">
+        <button *ngIf="checkStyle(message.userId) === 'secondary'" (click)="showEditMessage = !showEditMessage"
+          class="relative">
           <img src="img/general-view/chat/menu_points.svg" alt="check">
-          <span *ngIf="showEditMessage" (mouseout)="showEditMessage = false"
-            (click)="editMessageId = message.id; initializeMessageValue(message.content)" class="edit-message">Nachricht
+          <span *ngIf="showEditMessage" (click)="editMessageId = message.id; initializeMessageValue(message.content)"
+            class="edit-message">Nachricht
             bearbeiten</span>
         </button>
       </div>
@@ -67,7 +70,8 @@
         (mouseenter)="hideReactionMenu = true" (mouseleave)="hideReactionMenu = false">
         <textarea [(ngModel)]="messageValue" name="newMessageValue">{{ message.content }}</textarea>
         <div class="edit-btn-container">
-          <button class="btn-secondary--default" (click)="editMessageId = null; hideReactionMenu = false">Abbrechen</button>
+          <button class="btn-secondary--default"
+            (click)="editMessageId = null; hideReactionMenu = false">Abbrechen</button>
           <button class="btn-primary--default" type="submit">Speichern</button>
         </div>
       </form>
