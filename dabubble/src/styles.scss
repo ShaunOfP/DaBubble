@@ -186,6 +186,10 @@ h3 {
   display: none;
 }
 
+.d-none-important {
+  display: none !important;
+}
+
 .cursor-no-change {
   &:hover {
     cursor: default;

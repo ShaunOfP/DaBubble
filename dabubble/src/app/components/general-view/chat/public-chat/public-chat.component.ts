@@ -39,7 +39,7 @@ import { ChannelMemberService } from '../../../../services/firebase-services/cha
   styleUrls: ['./public-chat.component.scss'],
 })
 export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
-  @Output() openCurrentThread= new EventEmitter<void>() 
+  @Output() openCurrentThread = new EventEmitter<void>()
   @ViewChild('chatContainer') chatContainer!: ElementRef;
 
   messages$!: Observable<Message[]>;
@@ -52,8 +52,10 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   showPicker: boolean = false;
   // showPopoverReaction: number | null = null;
   // reactionUserNamesCache: { [key: number]: string[] } = {};
-
-
+  showEditMessage: boolean = false;
+  editMessageId: string | null = null;
+  messageValue: string = '';
+  hideReactionMenu: boolean = false;
 
   private scrollListener!: () => void;
 
@@ -79,7 +81,7 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
       map(params => params['chatId']),
       distinctUntilChanged(),
       tap(chatId => {
-        if (!chatId) return 
+        if (!chatId) return
         else this.chatService.currentChatId = chatId;
       }),
       filter(chatId => !!chatId),
@@ -147,56 +149,16 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
-  // reactionEntries(message: Message): {
-  //   isImage: boolean;
-  //   value: string;
-  //   count: number;
-  //   users: string[];
-  // }[] {
-  //   return Object.entries(message.reaction || {}).map(([emoji, users]) => {
-  //     if (emoji === 'green_check') {
-  //       return {
-  //         isImage: true,
-  //         value: 'img/general-view/chat/green_check.svg',
-  //         count: (users as string[]).length,
-  //         users: users as string[],
-  //       };
-  //     } else {
-  //        return {
-  //         isImage: false,
-  //         value: emoji,
-  //         count: (users as string[]).length,
-  //         users: users as string[],
-  //       };
-  //     }
-  //   });
-  // }
+  initializeMessageValue(content: string) {
+    this.messageValue = content;
+  }
 
 
-  // async showPopover(index: number, users: string[]) {
-  //   if (!this.reactionUserNamesCache[index]) {
-  //     this.reactionUserNamesCache[index] = await this.formatUserNames(users);
-  //   }
-  //   this.showPopoverReaction = index;
-  // }
-
-  // hidePopover() {
-  //   this.showPopoverReaction = null;
-  // }
-
-  // async formatUserNames(users: string[]): Promise<string[]> {
-  //   let formattedNames = await Promise.all(
-  //     users.map(async (id) => id === this.userDataService.currentUserId ? "Du" : await this.userDataService.getUserName(id))
-  //   );
-  //   const yourself = formattedNames.includes("Du");
-  //   formattedNames = formattedNames.filter(name => name !== "Du");
-  //   let maxNames = yourself ? 1 : 2;
-  //   let result = formattedNames.slice(0, maxNames);
-  //   if (yourself) {
-  //     result.push("Du");
-  //   }
-  //   return result;
-  // }
+  updateChatMessage(messageId: string) {
+    this.chatService.updateChatMessage(messageId, this.messageValue);
+    this.editMessageId = null;
+    this.hideReactionMenu = false;
+  }
 
 
   toggleChatDetails() {

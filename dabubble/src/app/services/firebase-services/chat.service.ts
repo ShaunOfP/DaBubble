@@ -191,23 +191,6 @@ export class ChatService {
   }
 
 
-
-  // getMessages(channelId: string): Observable<Message[]> {
-  //   return new Observable((observer) => {
-  //     const messagesCollectionRef = collection(this.firestore, `channels/${channelId}/messages`);
-  //     const messagesQuery = query(messagesCollectionRef, orderBy('createdAt', 'asc'));
-
-  //     const unsubscribe = onSnapshot(messagesQuery, (snapshot) => {
-  //       const messages: Message[] = snapshot.docs.map((doc) => ({
-  //         id: doc.id,
-  //         ...doc.data(),
-  //       })) as Message[];
-  //       observer.next(messages);
-  //     });
-  //     return () => unsubscribe();
-  //   });
-  // }
-
   getThreadCollection(channelId: string, messageId: string): Observable<any[]> {
     return collectionData(
       collection(
@@ -291,7 +274,6 @@ export class ChatService {
         });
       } else {
         if (channelId === 'ER84UOYc0F2jptDjWxFo') {
-          //Soll nicht geändert werden
         } else {
           await updateDoc(this.getChannelDocRef(channelId), {
             [updatedField]: updateValue,
@@ -299,6 +281,37 @@ export class ChatService {
         }
       }
     }
+  }
+
+
+  getChatMessageRef(messageId: string){
+    return doc(this.firestore, `channels/${this.currentChatId}/messages/${messageId}`)
+  }
+
+
+  getThreadMessageRef(messageId: string, threadId: string){
+    return doc(this.firestore, `channels/${this.currentChatId}/messages/${messageId}/thread/${threadId}`);
+  }
+
+
+  async updateChatMessage(
+    messageId: string,
+    messageValue: string
+  ) {
+    await updateDoc(this.getChatMessageRef(messageId), {
+      content: messageValue
+    });
+  }
+
+
+  async updateThreadMessage(
+    messageId: string,
+    messageValue: string,
+    threadId: string
+  ){
+    await updateDoc(this.getThreadMessageRef(messageId, threadId), {
+      content: messageValue
+    });
   }
 
 
@@ -311,7 +324,7 @@ export class ChatService {
     threadObservable.subscribe(messages => {
       this.currentThreadsSubject.next(messages);
     });
-    this.currentMessageId = messageId
+    this.currentMessageId = messageId;
 
   }
 

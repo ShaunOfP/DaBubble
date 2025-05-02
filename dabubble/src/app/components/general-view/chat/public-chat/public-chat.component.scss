@@ -192,8 +192,60 @@ header {
     .chat-content_reaction {
       flex-direction: unset;
       left: 10px;
-      right: unset
+      right: unset;
     }
+
+    &:has(.edit-container) {
+      align-items: flex-start;
+      flex-direction: row-reverse;
+    }
+  }
+
+  .edit-container {
+    width: 100%;
+    position: relative;
+    @include arrangement($ai: normal);
+
+    textarea {
+      resize: none;
+      border-radius: 20px;
+      border: 1px solid #adb0d9;
+      padding: 20px;
+      font-size: 18px;
+      width: 100%;
+      height: 100px;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .edit-btn-container {
+      position: absolute;
+      bottom: 5px;
+      display: flex;
+      gap: 32px;
+
+      >button {
+        font-size: 18px;
+      }
+    }
+  }
+
+  .relative {
+    position: relative;
+  }
+
+  .edit-message {
+    @include fontStyle();
+    position: absolute;
+    padding: 10px 15px;
+    border-radius: 25px 25px 25px 0;
+    border: 1px solid var(--color-purple-primary-disabled);
+    background-color: white;
+    width: max-content;
+    bottom: 35px;
+    left: 20px;
   }
 }
 
@@ -262,11 +314,11 @@ header {
 }
 
 .chat-content_conversation {
-  &--primary{
+  &--primary {
     @include arrangement($fd: column, $jc: flex-start, $g: 8px, $ai: normal);
   }
 
-  &--secondary{
+  &--secondary {
     @include arrangement($fd: column, $jc: flex-start, $g: 8px, $ai: flex-end);
   }
 }
