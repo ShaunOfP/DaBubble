@@ -39,9 +39,7 @@ import { ChannelMemberService } from '../../../../services/firebase-services/cha
   styleUrls: ['./public-chat.component.scss'],
 })
 export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
-  @Output() openCurrentThread = new EventEmitter<void>()
   @ViewChild('chatContainer') chatContainer!: ElementRef;
-
   messages$!: Observable<Message[]>;
   filteredMessages$!: Observable<any[]>;
   reactions$!: Observable<any[]>;
@@ -256,8 +254,9 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
 
   openThread(messageId: string): void {
     this.chatService.getMessageThread(messageId);
-    this.chatService.setThreadVisible(true);
-    this.chatService.toggleDrawerState();
-    this.chatService.chatMarginRight = false;
+    if (this.chatService.threadClosed) {
+      this.chatService.toggleDrawerState();
+      this.chatService.threadClosed = false;
+    }
   }
 }

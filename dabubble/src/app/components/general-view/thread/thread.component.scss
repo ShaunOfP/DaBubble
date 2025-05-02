@@ -17,6 +17,10 @@ mat-drawer-container {
     }
 }
 
+.margin-right-20 {
+    margin-right: 20px;
+}
+
 mat-drawer {
     width: 485px;
     background-color: var(--color-white);
@@ -51,10 +55,6 @@ header {
 
 h3 {
     margin: 0;
-}
-
-.margin-right-20 {
-    margin-right: 20px;
 }
 
 .header-image-container {

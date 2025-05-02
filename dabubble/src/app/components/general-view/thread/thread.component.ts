@@ -17,12 +17,11 @@ import { Subscription } from 'rxjs';
   styleUrl: './thread.component.scss'
 })
 export class ThreadComponent {
-  @Output() callParent: EventEmitter<void> = new EventEmitter();
   @ViewChild('emojiTarget', { static: true }) emojiTarget!: ElementRef;
   selectedEmoji: string = '';
-  toggleMarginLeft: boolean = true;
   @ViewChild('threadDrawer') drawer!: MatDrawer;
   private subscription!: Subscription;
+  
 
   constructor(public chatService: ChatService,
     private userDatasService: UserDatasService) {
@@ -43,13 +42,9 @@ export class ThreadComponent {
 
   toggleDrawer() {
     this.drawer.toggle();
+    this.chatService.threadClosed = true;
   }
 
-  toggleMargin() {
-    this.toggleMarginLeft ? this.toggleMarginLeft = false : this.toggleMarginLeft = true;
-    this.chatService.chatMarginRight = true;
-    this.callParent.emit();
-  }
 
   onEmojiReceived(emoji: string) {
     this.selectedEmoji = emoji;

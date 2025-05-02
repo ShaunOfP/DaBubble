@@ -1,5 +1,5 @@
 <app-alt-header-mobile></app-alt-header-mobile>
-<mat-drawer-container [class.margin-right-20]="toggleMarginLeft">
+<mat-drawer-container [class.margin-right-20]="!chatService.threadClosed">
     <mat-drawer #threadDrawer opened mode="side" position="end">
         <header>
             <div>
@@ -11,7 +11,7 @@
                 </span>
             </div>
             <div class="header-image-container hover change-image-on-hover"
-                (click)="toggleDrawer(); toggleMargin()">
+                (click)="toggleDrawer()">
                 <img src="/img/general-view/workspace-menu/close.svg">
                 <img class="d-none" src="/img/general-view/workspace-menu/hover_close.svg">
             </div>

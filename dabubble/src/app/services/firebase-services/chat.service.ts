@@ -32,8 +32,6 @@ export class ChatService {
   currentChannelData?: Channel;
   private currentThreadsSubject = new BehaviorSubject<Message[]>([]);
   currentThreads$ = this.currentThreadsSubject.asObservable();
-  showCurrentThread = new BehaviorSubject(false);
-  chatMarginRight: boolean = true;
   currentMessageId: string = '';
   showChatWhenResponsive: boolean = false;
   showAltHeader: boolean = false;
@@ -41,6 +39,7 @@ export class ChatService {
   userIcons: string[] = [];
   private toggleDrawer = new Subject<void>();
   toggleDrawer$ = this.toggleDrawer.asObservable();
+  threadClosed: boolean = false;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -130,9 +129,6 @@ export class ChatService {
     }
   }
 
-  setThreadVisible(value: boolean) {
-    this.showCurrentThread.next(value);
-  }
 
   async generateThread(messageId: string, message: Message) {
     await addDoc(collection(this.firestore, `channels/${this.currentChatId}/messages/${messageId}/thread`),

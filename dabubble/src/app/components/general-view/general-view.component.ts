@@ -25,10 +25,8 @@ import { AuthService } from '../../services/firebase-services/auth.service';
   styleUrl: './general-view.component.scss'
 })
 export class GeneralViewComponent implements OnInit {
-  threadIsVisible?: boolean;
   showCreateChannelOverlay: boolean = false;
   @ViewChild(ChatComponent) chatComponent!: ChatComponent;
-  threadMenuState: 'opened' | 'closed' = 'opened';
   workspaceMenuState: boolean = false;
 
 
@@ -39,28 +37,6 @@ export class GeneralViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.trackUserPresence(); //Aktiviert das Tracking der User mit Status Online
-    this.subscribeToThreadVisibilityStatus();
-  }
-
-
-  /**
-   * Subscribes to the visibility status of the thread component
-   */
-  subscribeToThreadVisibilityStatus() {
-    this.chatService.showCurrentThread.subscribe(
-      status => { this.threadIsVisible = status }
-    );
-  }
-
-
-  /**
-   * Hides/Closes the Thread-Component
-   */
-  closeThread() {
-    this.threadMenuState = 'closed';
-    setTimeout(() => {
-      this.chatService.setThreadVisible(false);
-    }, 125);
   }
 
 
