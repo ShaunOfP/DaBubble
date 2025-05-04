@@ -40,6 +40,7 @@ export class ChatService {
   private toggleDrawer = new Subject<void>();
   toggleDrawer$ = this.toggleDrawer.asObservable();
   threadClosed: boolean = false;
+  showThreadWhenResponsive: boolean = false;
 
   constructor(private route: ActivatedRoute,
     private router: Router,

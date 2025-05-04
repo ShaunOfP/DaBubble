@@ -55,7 +55,7 @@ app-thread {
         z-index: 3;
     }
 
-    @media (max-width: 800px) {
+    @media (max-width: $mobile-breakpoint) {
         left: 0;
         bottom: 0;
         right: 0;
@@ -76,6 +76,12 @@ app-user-profile {
 }
 
 .d-none-chat {
+    @media(max-width: $mobile-breakpoint) {
+        display: none;
+    }
+}
+
+.d-none-thread {
     @media(max-width: $mobile-breakpoint) {
         display: none;
     }

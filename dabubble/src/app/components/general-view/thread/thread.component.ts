@@ -43,6 +43,7 @@ export class ThreadComponent {
   toggleDrawer() {
     this.drawer.toggle();
     this.chatService.threadClosed = true;
+    this.chatService.showThreadWhenResponsive = false;
   }
 
 

@@ -70,9 +70,13 @@
         (mouseenter)="hideReactionMenu = true" (mouseleave)="hideReactionMenu = false">
         <textarea [(ngModel)]="messageValue" name="newMessageValue">{{ message.content }}</textarea>
         <div class="edit-btn-container">
-          <button class="btn-secondary--default"
+          <button *ngIf="!isMobile" class="btn-secondary--default"
             (click)="editMessageId = null; hideReactionMenu = false">Abbrechen</button>
-          <button class="btn-primary--default" type="submit">Speichern</button>
+          <button *ngIf="!isMobile" class="btn-primary--default" type="submit">Speichern</button>
+          <button *ngIf="isMobile" (click)="editMessageId = null; hideReactionMenu = false"
+            class="btn-secondary--default"><img src="img/general-view/workspace-menu/close.svg"></button>
+          <button *ngIf="isMobile" class="btn-primary--default" type="submit"><img
+              src="img/general-view/header/mobile_save.svg"></button>
         </div>
       </form>
       <app-reactions class="message-reactions" [message]="message"

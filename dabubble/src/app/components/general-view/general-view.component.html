@@ -3,7 +3,7 @@
   <app-workspace-menu (openCreateChannel)="toggleCreateChannelOverlay()"
     (newMessage)="openNewMessage()"></app-workspace-menu>
   <app-chat [class.d-none-chat]="!chatService.showChatWhenResponsive"></app-chat>
-  <app-thread></app-thread>
+  <app-thread [class.d-none-thread]="!chatService.showThreadWhenResponsive"></app-thread>
 </div>
 <app-create-channel *ngIf="showCreateChannelOverlay"
   (callParentToClose)="toggleCreateChannelOverlay()"></app-create-channel>

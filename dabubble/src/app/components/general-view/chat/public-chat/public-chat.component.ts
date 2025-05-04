@@ -7,6 +7,7 @@ import {
   OnDestroy,
   Output,
   EventEmitter,
+  HostListener,
 } from '@angular/core';
 import { ChatService } from '../../../../services/firebase-services/chat.service';
 import { Observable, combineLatest, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs';
@@ -52,6 +53,7 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   editMessageId: string | null = null;
   messageValue: string = '';
   hideReactionMenu: boolean = false;
+  isMobile = false;
 
   private scrollListener!: () => void;
 
@@ -67,6 +69,7 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     this.loadMessages();
     this.loadFilter();
+    this.isWidth400OrLess();
   }
 
 
@@ -239,6 +242,7 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
+
   checkStyle(userId: string): string {
     let currentUser: string = '';
     this.route.queryParams.subscribe((params) => {
@@ -247,16 +251,30 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     return userId === currentUser ? 'secondary' : 'primary';
   }
 
+
   sendReaction(emoji: string, id: string) {
     console.log(emoji + id);
     this.chatService.updateMessage(emoji, id, this.userDataService.currentUserId, false)
   }
+
 
   openThread(messageId: string): void {
     this.chatService.getMessageThread(messageId);
     if (this.chatService.threadClosed) {
       this.chatService.toggleDrawerState();
       this.chatService.threadClosed = false;
+    }
+
+    this.chatService.showThreadWhenResponsive = true;
+  }
+
+
+  @HostListener('window:resize', [])
+  isWidth400OrLess() {
+    if (window.innerWidth <= 400) {
+      this.isMobile = true;
+    } else {
+      this.isMobile = false;
     }
   }
 }
