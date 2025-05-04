@@ -12,6 +12,8 @@ import {
   updateDoc,
   runTransaction,
   arrayUnion,
+  where,
+  getDocs,
 } from '@angular/fire/firestore';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Message } from '../../models/interfaces';
@@ -133,8 +135,7 @@ export class ChatService {
 
   async generateThread(messageId: string, message: Message) {
     await addDoc(collection(this.firestore, `channels/${this.currentChatId}/messages/${messageId}/thread`),
-      message)
-    console.log('thread erfolgreich in Message:' + messageId + ' erstellt');
+      message);
   }
 
 
@@ -298,13 +299,37 @@ export class ChatService {
   }
 
 
+  getThreadCollectionRef(messageId: string){
+    return collection(this.firestore, `channels/${this.currentChatId}/messages/${messageId}/thread`);
+  }
+
+
+  async updateThreadContentWhenChatMessageIsEdited(messageId: string, messageUniqueId: string, messageValue: string){
+    const q = query(this.getThreadCollectionRef(messageId), where('uniqueId', '==', messageUniqueId));
+    const snapshot = await getDocs(q);
+
+    if (snapshot.empty){
+      console.log("No document found");
+      return;
+    }
+
+    snapshot.forEach(async (docSnap) => {
+      await updateDoc(this.getThreadMessageRef(messageId, docSnap.id), {
+        content: messageValue
+      });
+    });
+  }
+
+
   async updateChatMessage(
     messageId: string,
-    messageValue: string
+    messageValue: string,
+    messageUniqueId: string
   ) {
     await updateDoc(this.getChatMessageRef(messageId), {
       content: messageValue
     });
+    this.updateThreadContentWhenChatMessageIsEdited(messageId, messageUniqueId, messageValue);
   }
 
 

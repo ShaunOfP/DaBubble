@@ -34,7 +34,6 @@ export class ThreadMessagesComponent {
   ) { }
 
   ngOnInit() {
-    // this.messages$ = this.chatService.getThreadCollection('dOCTHJxiNDhYvmqMokLv', 'buM6uSAhw8snf948FEIh');
     this.messages$ = this.chatService.currentThreads$.pipe(
       map((messages:Message[])=> this.returnNewObservable(messages, null)),
       tap(messages => console.log('Messages array:', messages))
@@ -87,7 +86,6 @@ export class ThreadMessagesComponent {
   }
 
   sendReaction(emoji: string, id: string) {
-    
     this.chatService.updateMessage(emoji, id, this.userDataService.currentUserId, true)
   }
 }

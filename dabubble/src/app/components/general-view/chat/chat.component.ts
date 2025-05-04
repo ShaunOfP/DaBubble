@@ -216,7 +216,7 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
     const avatarUrl = await this.userDatasService.getUserAvatar(this.userDatasService.currentUserId);
 
     const message: Message = {
-      id: this.generateId(),
+      uniqueId: this.generateId(),
       sender: userName,
       createdAt: new Date().getTime(),
       content: content,
@@ -234,8 +234,6 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
       .saveMessage(message)
       .then(() => {
         this.messageInput.nativeElement.value = '';
-        console.log('Message saved successfully');
-
       })
       .catch((error) => {
         console.error('Error saving message:', error);

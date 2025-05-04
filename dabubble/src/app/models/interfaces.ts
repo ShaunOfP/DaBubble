@@ -1,5 +1,5 @@
 export interface Message {
-  id: string,
+  uniqueId: string,
   sender: string,
   createdAt: number,
   content: string,

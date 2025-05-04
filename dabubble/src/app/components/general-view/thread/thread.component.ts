@@ -73,7 +73,7 @@ export class ThreadComponent {
     const userName = await this.userDatasService.getUserName(userId);
     const avatarUrl = await this.userDatasService.getUserAvatar(this.userDatasService.currentUserId);
     const message: Message = {
-      id: this.generateId(),
+      uniqueId: this.generateId(),
       sender: userName,
       createdAt: new Date().getTime(),
       content: content,

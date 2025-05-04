@@ -5,8 +5,6 @@ import {
   ViewChild,
   AfterViewInit,
   OnDestroy,
-  Output,
-  EventEmitter,
   HostListener,
 } from '@angular/core';
 import { ChatService } from '../../../../services/firebase-services/chat.service';
@@ -153,8 +151,8 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
-  updateChatMessage(messageId: string) {
-    this.chatService.updateChatMessage(messageId, this.messageValue);
+  updateChatMessage(messageId: string, messageUniqueId: string) {
+    this.chatService.updateChatMessage(messageId, this.messageValue, messageUniqueId);
     this.editMessageId = null;
     this.hideReactionMenu = false;
   }
@@ -253,7 +251,6 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   sendReaction(emoji: string, id: string) {
-    console.log(emoji + id);
     this.chatService.updateMessage(emoji, id, this.userDataService.currentUserId, false)
   }
 
