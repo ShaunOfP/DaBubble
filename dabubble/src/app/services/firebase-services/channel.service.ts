@@ -13,6 +13,7 @@ import {
   where,
   collectionGroup,
   DocumentData,
+  collectionSnapshots,
 } from '@angular/fire/firestore';
 import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -55,18 +56,22 @@ export class ChannelService {
 
   getMessagesCollection() {
     const messagesGroupRef = collectionGroup(this.firestore, 'messages');
-    return collectionData(messagesGroupRef, { idField: 'id' }).pipe(
+    return collectionSnapshots(messagesGroupRef).pipe(
       map((messages: any[]) => {
         return messages.map(msg => {
-          const fullPath = msg.__snapshot?.ref.path || '';
+          const fullPath = msg.ref.path || '';
           const channelIdMatch = fullPath.match(/channels\/([^\/]+)\/messages/);
           const channelId = channelIdMatch ? channelIdMatch[1] : '';
 
+          if (!channelId) return null;
+
+          const data = msg.data();
+
           return {
-            ...msg,
-            channelId
+            ...data,
+            channelId,
           } as Message;
-        });
+        }).filter(msg => msg !== null);
       })
     );
   }
