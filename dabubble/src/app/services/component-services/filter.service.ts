@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, firstValueFrom, Subject, takeUntil } from 'rxjs';
 import { ChannelService } from '../firebase-services/channel.service';
 import { ChannelMemberService } from '../firebase-services/channel-member.service';
@@ -7,7 +7,7 @@ import { Message } from '../../models/interfaces';
 @Injectable({
   providedIn: 'root',
 })
-export class FilterService {
+export class FilterService implements OnDestroy {
   allMembers: any;
   allChannels: any;
   allMessages: any;
@@ -106,6 +106,7 @@ export class FilterService {
   resetSearchResults() {
     this.channelMatchSource.next([]);
     this.memberMatchSource.next([]);
+    this.messageMatchSubject.next([]);
   }
 
 

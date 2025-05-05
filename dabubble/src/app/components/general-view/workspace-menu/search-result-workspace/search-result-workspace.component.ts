@@ -3,6 +3,7 @@ import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angu
 import { FilterService } from '../../../../services/component-services/filter.service';
 import { Router } from '@angular/router';
 import { UserDatasService } from '../../../../services/firebase-services/user-datas.service';
+import { ChatService } from '../../../../services/firebase-services/chat.service';
 
 @Component({
   selector: 'app-search-result-workspace',
@@ -22,7 +23,8 @@ export class SearchResultWorkspaceComponent {
     private filterService: FilterService,
     private router: Router,
     private userDatasService: UserDatasService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private chatService: ChatService
   ) { }
 
   ngOnInit(): void {
@@ -60,6 +62,7 @@ export class SearchResultWorkspaceComponent {
   subscribeToCurrentMessages() {
     this.filterService.messageMatch$.subscribe((message) => {
       this.messageResults = message;
+      this.detectChangesManually();
     });
   }
 
@@ -70,7 +73,17 @@ export class SearchResultWorkspaceComponent {
    */
   async goToMessage(id: string) {
     if (id) this.modifyUrlWithChatString(id);
-    this.filterService.resetSearchResults();
+    this.filterService.updateFilter('');
+    this.showResponsiveComponents();
+  }
+
+
+  /**
+   * Sets variables to true to make them visible for responsive needs
+   */
+  showResponsiveComponents() {
+    this.chatService.showChatWhenResponsive = true;
+    this.chatService.showAltHeader = true;
   }
 
 

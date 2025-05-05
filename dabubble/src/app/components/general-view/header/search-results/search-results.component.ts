@@ -67,7 +67,7 @@ export class SearchResultsComponent implements OnInit {
    */
   async goToMessage(id: string) {
     if (id) this.modifyUrlWithChatString(id);
-    this.filterService.resetSearchResults();
+    this.filterService.updateFilter('');
   }
 
 
