@@ -66,8 +66,9 @@
           </span>
         </div>
       </div>
-      <form *ngIf="message.id === editMessageId" class="edit-container" (ngSubmit)="updateChatMessage(message.id, message.uniqueId)"
-        (mouseenter)="hideReactionMenu = true" (mouseleave)="hideReactionMenu = false">
+      <form *ngIf="message.id === editMessageId" class="edit-container"
+        (ngSubmit)="updateChatMessage(message.id, message.uniqueId)" (mouseenter)="hideReactionMenu = true"
+        (mouseleave)="hideReactionMenu = false">
         <textarea [(ngModel)]="messageValue" name="newMessageValue">{{ message.content }}</textarea>
         <div class="edit-btn-container">
           <button *ngIf="!isMobile" class="btn-secondary--default"

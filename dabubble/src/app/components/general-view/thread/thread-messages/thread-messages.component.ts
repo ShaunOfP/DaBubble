@@ -1,17 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { map, Observable, tap } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { ChatService } from '../../../../services/firebase-services/chat.service';
 import { EmojiPickerComponent } from "../../emoji-picker/emoji-picker.component";
 import { Message } from '../../../../models/interfaces';
 import { ReactionsComponent } from '../../chat/public-chat/reactions/reactions.component';
 import { ActivatedRoute } from '@angular/router';
 import { UserDatasService } from '../../../../services/firebase-services/user-datas.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-thread-messages',
   standalone: true,
-  imports: [CommonModule, EmojiPickerComponent, ReactionsComponent],
+  imports: [CommonModule, EmojiPickerComponent, ReactionsComponent, FormsModule],
   templateUrl: './thread-messages.component.html',
   styleUrl: './thread-messages.component.scss'
 })
@@ -19,9 +20,14 @@ export class ThreadMessagesComponent {
   messages$!: Observable<any[]> | undefined;
   showReaction: boolean = true;
   showEmojiPicker: boolean = false;
-  hoveredMessageId: string| null = null
-  showPicker:boolean = false
-  
+  hoveredMessageId: string | null = null
+  showPicker: boolean = false
+  showEditMessage: boolean = false;
+  editMessageId: string | null = null;
+  messageValue: string = '';
+  hideReactionMenu: boolean = false;
+  isMobile = false;
+
   @ViewChild('emojiTarget', { static: true }) emojiTarget!: ElementRef;
   selectedEmoji: string = '';
   hoverIndex: number | null = null;
@@ -35,9 +41,20 @@ export class ThreadMessagesComponent {
 
   ngOnInit() {
     this.messages$ = this.chatService.currentThreads$.pipe(
-      map((messages:Message[])=> this.returnNewObservable(messages, null)),
-      tap(messages => console.log('Messages array:', messages))
-    )
+      map((messages: Message[]) => this.returnNewObservable(messages, null))
+    );
+  }
+
+
+  initializeMessageValue(content: string) {
+    this.messageValue = content;
+  }
+
+
+  updateThreadMessage(threadId: string) {
+    this.chatService.updateThreadMessage(this.messageValue, threadId);
+    this.editMessageId = null;
+    this.hideReactionMenu = false;
   }
 
 
@@ -60,8 +77,6 @@ export class ThreadMessagesComponent {
       };
     });
   }
-
-  //wenn reaktionen vorhanden dann showReactions auf true
 
   openEmojiPicker() {
     this.showEmojiPicker ? this.hideEmojiPicker() : this.showEmojiPicker = true;

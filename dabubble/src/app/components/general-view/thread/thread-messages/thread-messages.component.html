@@ -3,7 +3,8 @@
         (mouseleave)="hoveredMessageId = null">
         <div class="row-reverse">
             <img class="avatar" src="{{ message.avatar }}" alt="avatar" />
-            <div class="chat-content_conversation--{{ checkStyle(message.userId) }}">
+            <div class="chat-content_conversation--{{ checkStyle(message.userId) }}"
+                *ngIf="message.id !== editMessageId">
                 <div class="chat-content_header">
                     <span>{{ message.sender }}</span>
                     <span>{{ message.formattedDate }}</span>
@@ -13,14 +14,37 @@
                 </span>
             </div>
         </div>
-        <div class="chat-content_reaction" *ngIf="hoveredMessageId === message.id">
+        <div class="chat-content_reaction" *ngIf="hoveredMessageId === message.id"
+            [class.d-none-important]="hideReactionMenu">
             <button (click)="showPicker = !showPicker"><img src="img/general-view/chat/add_reaction.svg"
                     alt="check"></button>
+            <button *ngIf="checkStyle(message.userId) === 'secondary'" (click)="showEditMessage = !showEditMessage"
+                class="relative">
+                <img src="img/general-view/chat/menu_points.svg" alt="check">
+                <span *ngIf="showEditMessage"
+                    (click)="editMessageId = message.id; initializeMessageValue(message.content)"
+                    class="edit-message">Nachricht
+                    bearbeiten</span>
+            </button>
             <div class="emoji-picker-container--{{ checkStyle(message.userId) }}">
                 <app-emoji-picker *ngIf="showPicker" (mouseleave)="showPicker = false" (click)="$event.preventDefault()"
                     (emojiSelected)="sendReaction($event, message.id)"></app-emoji-picker>
             </div>
         </div>
+        <form *ngIf="message.id === editMessageId" class="edit-container"
+            (ngSubmit)="updateThreadMessage(message.id)" (mouseenter)="hideReactionMenu = true"
+            (mouseleave)="hideReactionMenu = false">
+            <textarea [(ngModel)]="messageValue" name="newMessageValue">{{ message.content }}</textarea>
+            <div class="edit-btn-container">
+                <button *ngIf="!isMobile" class="btn-secondary--default"
+                    (click)="editMessageId = null; hideReactionMenu = false">Abbrechen</button>
+                <button *ngIf="!isMobile" class="btn-primary--default" type="submit">Speichern</button>
+                <button *ngIf="isMobile" (click)="editMessageId = null; hideReactionMenu = false"
+                    class="btn-secondary--default"><img src="img/general-view/workspace-menu/close.svg"></button>
+                <button *ngIf="isMobile" class="btn-primary--default" type="submit"><img
+                        src="img/general-view/header/mobile_save.svg"></button>
+            </div>
+        </form>
         <app-reactions [message]="message" [hoveredMessageId]="hoveredMessageId"></app-reactions>
     </div>
 </div>

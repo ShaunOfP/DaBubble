@@ -43,6 +43,7 @@ export class ThreadComponent implements OnInit, OnDestroy {
     this.drawer.toggle();
     this.chatService.threadClosed = true;
     this.chatService.showThreadWhenResponsive = false;
+    this.chatService.messageID = '';
   }
 
 

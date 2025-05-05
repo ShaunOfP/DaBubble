@@ -26,6 +26,10 @@
   }
 }
 
+.relative {
+  position: relative;
+}
+
 .add-reaction-button {
   height: 35px;
   width: 35px;
@@ -148,6 +152,83 @@
       right: unset
     }
   }
+
+  .edit-container {
+    width: 100%;
+    position: relative;
+    @include arrangement($ai: normal);
+
+    textarea {
+      resize: none;
+      border-radius: 20px;
+      border: 1px solid #adb0d9;
+      padding: 20px;
+      font-size: 18px;
+      width: 100%;
+      height: 100px;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .edit-btn-container {
+      position: absolute;
+      bottom: 5px;
+      display: flex;
+      gap: 32px;
+
+      >button {
+        font-size: 18px;
+
+        @media(max-width: 520px) {
+          font-size: 14px;
+        }
+      }
+
+      @media (max-width: 470px) {
+        gap: 0px;
+      }
+
+      @media (max-width: 400px) {
+        .btn-secondary--default {
+          @include arrangement();
+          border: none;
+          padding: 0;
+        }
+
+        .btn-primary--default {
+          @include arrangement();
+          border: none;
+          background-color: white;
+          padding: 0;
+        }
+
+        width: 100%;
+        justify-content: space-evenly;
+      }
+    }
+  }
+
+  .edit-message {
+    @include fontStyle();
+    position: absolute;
+    padding: 10px 15px;
+    border-radius: 25px 25px 25px 0;
+    border: 1px solid var(--color-purple-primary-disabled);
+    background-color: white;
+    width: max-content;
+    bottom: 35px;
+    left: 20px;
+
+    @media (max-width: 440px) {
+      top: 35px;
+      right: 20px;
+      left: auto;
+      bottom: auto;
+      border-radius: 25px 0 25px 25px;
+    }
+  }
 }
 
 .chat-content_header {
@@ -222,7 +303,7 @@
     >app-emoji-picker {
       bottom: -33px;
 
-      @media (max-width: $mobile-breakpoint){
+      @media (max-width: $mobile-breakpoint) {
         bottom: -51px;
       }
     }

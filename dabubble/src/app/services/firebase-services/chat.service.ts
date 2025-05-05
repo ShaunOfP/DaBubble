@@ -44,6 +44,7 @@ export class ChatService {
   threadClosed: boolean = false;
   showThreadWhenResponsive: boolean = false;
   isAlreadyFocusedOncePerLoad: boolean = false;
+  messageID: string = '';
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -335,11 +336,10 @@ export class ChatService {
 
 
   async updateThreadMessage(
-    messageId: string,
     messageValue: string,
     threadId: string
   ){
-    await updateDoc(this.getThreadMessageRef(messageId, threadId), {
+    await updateDoc(this.getThreadMessageRef(this.messageID, threadId), {
       content: messageValue
     });
   }
