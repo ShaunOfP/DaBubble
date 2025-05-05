@@ -1,33 +1,45 @@
 <div class="main">
     <div class="search-info">
-        <span>Suche mit &#64; nach Mitgliedern und mit # nach einem Channel</span>
-        <div class="close-button" (click)="onCloseClick()">
-            <img src="/img/general-view/workspace-menu/close.svg" />
-            <img class="d-none" src="/img/general-view/workspace-menu/hover_close.svg" />
-        </div>
+      <span>Suche mit &#64; nach Mitgliedern und mit # nach einem Channel</span>
+      <div class="close-button" (click)="onCloseClick()">
+        <img src="/img/general-view/workspace-menu/close.svg" />
+        <img class="d-none" src="/img/general-view/workspace-menu/hover_close.svg" />
+      </div>
     </div>
     <div class="search-results">
-        <div>
-            <p>Channel:</p>
-            <div class="results" *ngIf="channelResults.length > 0">
-                <span *ngFor="let channel of channelResults" (click)="modifyUrlWithChatString(channel.channelId)">
-                    {{ channel.channelName }}
-                </span>
-            </div>
-            <div class="no-results" *ngIf="channelResults.length == 0">
-                <span>Keine Channels gefunden</span>
-            </div>
+      <div>
+        <p>Channel:</p>
+        <div class="results" *ngIf="channelResults.length > 0">
+          <span *ngFor="let channel of channelResults" (click)="modifyUrlWithChatString(channel.channelId)">
+            {{ channel.channelName }}
+          </span>
         </div>
-        <div>
-            <p>Mitglieder:</p>
-            <div class="results" *ngIf="memberResults.length > 0">
-                <span *ngFor="let member of memberResults" (click)="openDirectMessage(member.id)">
-                    {{ member.username }}
-                </span>
-            </div>
-            <div class="no-results" *ngIf="memberResults.length == 0">
-                <span>Keine Mitglieder gefunden</span>
-            </div>
+        <div class="no-results" *ngIf="channelResults.length == 0">
+          <span>Keine Channels gefunden</span>
         </div>
+      </div>
+      <div>
+        <p>Mitglieder:</p>
+        <div class="results" *ngIf="memberResults.length > 0">
+          <span *ngFor="let member of memberResults" (click)="openDirectMessage(member.id)">
+            {{ member.username }}
+          </span>
+        </div>
+        <div class="no-results" *ngIf="memberResults.length == 0">
+          <span>Keine Mitglieder gefunden</span>
+        </div>
+      </div>
+      <div>
+        <p>Nachrichten:</p>
+        <div class="results" *ngIf="messageResults.length > 0">
+          <span *ngFor="let message of messageResults" (click)="goToMessage(message.id)" class="message-result-layout">
+            <div>{{ message.content }}</div>
+            <div>{{ message.sender }}</div>
+          </span>
+        </div>
+        <div class="no-results" *ngIf="messageResults.length == 0">
+          <span>Keine Nachrichten gefunden</span>
+        </div>
+      </div>
     </div>
-</div>
+  </div>

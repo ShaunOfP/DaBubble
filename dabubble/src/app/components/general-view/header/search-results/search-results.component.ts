@@ -63,23 +63,14 @@ export class SearchResultsComponent implements OnInit {
   }
 
 
+  /**
+   * Searches for the channel which contains the selected message and opens the correct channel
+   * @param id Id of the selected message
+   */
   async goToMessage(id: string) {
     let channelId = await this.channelService.findChannelIdViaMessageId(id);
     if (channelId) this.modifyUrlWithChatString(channelId);
     this.filterService.resetSearchResults();
-  }
-
-
-  amIAllowedInPrivateChat(providedId: string) {
-    return this.userDatasService.currentUserData$.subscribe(result => {
-      result?.privateChats.map(privateChat => {
-        if (privateChat == providedId) {
-          return true;
-        } else {
-          return false;
-        }
-      })
-    });
   }
 
 

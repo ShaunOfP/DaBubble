@@ -3,6 +3,7 @@ import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angu
 import { FilterService } from '../../../../services/component-services/filter.service';
 import { Router } from '@angular/router';
 import { UserDatasService } from '../../../../services/firebase-services/user-datas.service';
+import { ChannelService } from '../../../../services/firebase-services/channel.service';
 
 @Component({
   selector: 'app-search-result-workspace',
@@ -16,17 +17,20 @@ export class SearchResultWorkspaceComponent {
   @Output() closeClicked = new EventEmitter<void>();
   channelResults: any[] = [];
   memberResults: any[] = [];
+  messageResults: any[] = [];
 
   constructor(
     private filterService: FilterService,
     private router: Router,
     private userDatasService: UserDatasService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private channelService: ChannelService
   ) { }
 
   ngOnInit(): void {
     this.subscribeToCurrentChannels();
     this.subscribeToCurrentMembers();
+    this.subscribeToCurrentMessages();
   }
 
 
@@ -49,6 +53,27 @@ export class SearchResultWorkspaceComponent {
       this.memberResults = members;
       this.detectChangesManually();
     });
+  }
+
+
+  /**
+   * Subscribes to the current Message which fir the search criteria
+   */
+  subscribeToCurrentMessages() {
+    this.filterService.messageMatch$.subscribe((message) => {
+      this.messageResults = message;
+    });
+  }
+
+
+  /**
+   * Searches for the channel which contains the selected message and opens the correct channel
+   * @param id Id of the selected message
+   */
+  async goToMessage(id: string) {
+    let channelId = await this.channelService.findChannelIdViaMessageId(id);
+    if (channelId) this.modifyUrlWithChatString(channelId);
+    this.filterService.resetSearchResults();
   }
 
 
