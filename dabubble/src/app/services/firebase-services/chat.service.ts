@@ -43,6 +43,7 @@ export class ChatService {
   toggleDrawer$ = this.toggleDrawer.asObservable();
   threadClosed: boolean = false;
   showThreadWhenResponsive: boolean = false;
+  isAlreadyFocusedOncePerLoad: boolean = false;
 
   constructor(private route: ActivatedRoute,
     private router: Router,

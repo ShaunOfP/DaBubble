@@ -59,8 +59,9 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     this.zoneSub = this.ngZone.onStable.subscribe(() => {
       setTimeout(() => {
-        if (this.messageInput) {
+        if (this.messageInput && !this.chatService.isAlreadyFocusedOncePerLoad) {
           this.messageInput.nativeElement.focus();
+          this.chatService.isAlreadyFocusedOncePerLoad = true;
         }
       }, 50);
     });
