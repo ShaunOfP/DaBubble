@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FilterService } from '../../../../services/component-services/filter.service';
 import { Router } from '@angular/router';
 import { UserDatasService } from '../../../../services/firebase-services/user-datas.service';
+import { ChannelService } from '../../../../services/firebase-services/channel.service';
 
 @Component({
   selector: 'app-search-results',
@@ -16,16 +17,19 @@ export class SearchResultsComponent implements OnInit {
   @Output() closeClicked = new EventEmitter<void>();
   channelResults: any[] = [];
   memberResults: any[] = [];
+  messageResults: any[] = [];
 
   constructor(
     private filterService: FilterService,
     private router: Router,
-    private userDatasService: UserDatasService
+    private userDatasService: UserDatasService,
+    private channelService: ChannelService
   ) { }
 
   ngOnInit(): void {
     this.subscribeToCurrentChannels();
     this.subscribeToCurrentMembers();
+    this.subscribeToCurrentMessages();
   }
 
 
@@ -45,6 +49,36 @@ export class SearchResultsComponent implements OnInit {
   subscribeToCurrentMembers() {
     this.filterService.memberMatch$.subscribe((members) => {
       this.memberResults = members;
+    });
+  }
+
+
+  /**
+   * Subscribes to the current Message which fir the search criteria
+   */
+  subscribeToCurrentMessages() {
+    this.filterService.messageMatch$.subscribe((message) => {
+      this.messageResults = message;
+    });
+  }
+
+
+  async goToMessage(id: string) {
+    let channelId = await this.channelService.findChannelIdViaMessageId(id);
+    if (channelId) this.modifyUrlWithChatString(channelId);
+    this.filterService.resetSearchResults();
+  }
+
+
+  amIAllowedInPrivateChat(providedId: string) {
+    return this.userDatasService.currentUserData$.subscribe(result => {
+      result?.privateChats.map(privateChat => {
+        if (privateChat == providedId) {
+          return true;
+        } else {
+          return false;
+        }
+      })
     });
   }
 

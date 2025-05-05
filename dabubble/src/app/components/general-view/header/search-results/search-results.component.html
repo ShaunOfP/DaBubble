@@ -29,5 +29,17 @@
         <span>Keine Mitglieder gefunden</span>
       </div>
     </div>
+    <div>
+      <p>Nachrichten:</p>
+      <div class="results" *ngIf="messageResults.length > 0">
+        <span *ngFor="let message of messageResults" (click)="goToMessage(message.id)" class="message-result-layout">
+          <div>{{ message.content }}</div>
+          <div>{{ message.sender }}</div>
+        </span>
+      </div>
+      <div class="no-results" *ngIf="messageResults.length == 0">
+        <span>Keine Nachrichten gefunden</span>
+      </div>
+    </div>
   </div>
 </div>

@@ -11,9 +11,12 @@ import {
   getDoc,
   query,
   where,
+  collectionGroup,
+  DocumentData,
 } from '@angular/fire/firestore';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Message } from '../../models/interfaces';
 
 export interface Channel {
   channelId: string;
@@ -28,18 +31,70 @@ export interface Channel {
   providedIn: 'root'
 })
 export class ChannelService {
-  channels$: Observable<Channel[]>;
   private channelsCollection: CollectionReference<Channel>;
   private channelSubject = new BehaviorSubject<Channel[]>([]);
+  messages$: Observable<Message[]>;
+  channels$: Observable<Channel[]>;
 
   constructor(private firestore: Firestore) {
     this.channelsCollection = collection(this.firestore, 'channels') as CollectionReference<Channel>;
-    this.channels$ = collectionData(this.channelsCollection, { idField: 'channelId' }).pipe(
+    this.channels$ = this.getChannelsCollection();
+    this.messages$ = this.getMessagesCollection();
+  }
+
+
+  getChannelsCollection() {
+    return collectionData(this.channelsCollection, { idField: 'channelId' }).pipe(
       map(actions => actions.map(a => {
         const { channelId, ...data } = a;
         return { channelId, ...data } as Channel;
       }))
     );
+  }
+
+
+  getMessagesCollection() {
+    const messagesGroupRef = collectionGroup(this.firestore, 'messages');
+    return collectionData(messagesGroupRef, { idField: 'id' }).pipe(
+      map((messages: any[]) => {
+        return messages.map(msg => {
+          const fullPath = msg.__snapshot?.ref.path || '';
+          const channelIdMatch = fullPath.match(/channels\/([^\/]+)\/messages/);
+          const channelId = channelIdMatch ? channelIdMatch[1] : '';
+
+          return {
+            ...msg,
+            channelId
+          } as Message;
+        });
+      })
+    );
+  }
+
+
+  async findChannelIdViaMessageId(messageId: string) {
+    const channels$ = collectionData(this.getChannelsRef(), { idField: 'id' });
+    const channels = await firstValueFrom(channels$) as { id: string }[];
+
+    for (const channel of channels) {
+      const messageRef = this.getChannelsMessagesRef(channel.id) as CollectionReference<DocumentData>;
+      const q = query(messageRef, where('__name__', '==', messageId));
+      const querySnapshot = await getDocs(q);
+      if (!querySnapshot.empty) {
+        return channel.id
+      };
+    }
+    return null;
+  }
+
+
+  getChannelsRef() {
+    return collection(this.firestore, 'channels');
+  }
+
+
+  getChannelsMessagesRef(channelId: string) {
+    return collection(this.firestore, `channels/${channelId}/messages`);
   }
 
   getChannels(): Observable<Channel[]> {
@@ -83,7 +138,7 @@ export class ChannelService {
       const querySnapshot = await getDocs(channelQuery);
       const channels: Channel[] = [];
       querySnapshot.forEach((doc) => {
-        const channel = {...(doc.data() as Channel), channelId: doc.id};
+        const channel = { ...(doc.data() as Channel), channelId: doc.id };
         channels.push(channel);
       });
       this.channelSubject.next(channels);
