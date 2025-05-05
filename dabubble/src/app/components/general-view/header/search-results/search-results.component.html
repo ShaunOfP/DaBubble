@@ -32,7 +32,7 @@
     <div>
       <p>Nachrichten:</p>
       <div class="results" *ngIf="messageResults.length > 0">
-        <span *ngFor="let message of messageResults" (click)="goToMessage(message.id)" class="message-result-layout">
+        <span *ngFor="let message of messageResults" (click)="goToMessage(message.channelId)" class="message-result-layout">
           <div>{{ message.content }}</div>
           <div>{{ message.sender }}</div>
         </span>

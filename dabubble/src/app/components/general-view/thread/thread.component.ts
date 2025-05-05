@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, ViewChild, ElementRef, OnInit } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild, ElementRef, OnInit, OnDestroy } from '@angular/core';
 import { EmojiPickerComponent } from '../emoji-picker/emoji-picker.component';
 import { SharedModule } from '../../../shared/shared.module';
 import { ThreadMessagesComponent } from "./thread-messages/thread-messages.component";
@@ -16,12 +16,11 @@ import { Subscription } from 'rxjs';
   templateUrl: './thread.component.html',
   styleUrl: './thread.component.scss'
 })
-export class ThreadComponent {
+export class ThreadComponent implements OnInit, OnDestroy {
   @ViewChild('emojiTarget', { static: true }) emojiTarget!: ElementRef;
   selectedEmoji: string = '';
   @ViewChild('threadDrawer') drawer!: MatDrawer;
   private subscription!: Subscription;
-  
 
   constructor(public chatService: ChatService,
     private userDatasService: UserDatasService) {

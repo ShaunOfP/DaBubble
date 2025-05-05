@@ -3,7 +3,6 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FilterService } from '../../../../services/component-services/filter.service';
 import { Router } from '@angular/router';
 import { UserDatasService } from '../../../../services/firebase-services/user-datas.service';
-import { ChannelService } from '../../../../services/firebase-services/channel.service';
 
 @Component({
   selector: 'app-search-results',
@@ -22,8 +21,7 @@ export class SearchResultsComponent implements OnInit {
   constructor(
     private filterService: FilterService,
     private router: Router,
-    private userDatasService: UserDatasService,
-    private channelService: ChannelService
+    private userDatasService: UserDatasService
   ) { }
 
   ngOnInit(): void {
@@ -68,8 +66,7 @@ export class SearchResultsComponent implements OnInit {
    * @param id Id of the selected message
    */
   async goToMessage(id: string) {
-    let channelId = await this.channelService.findChannelIdViaMessageId(id);
-    if (channelId) this.modifyUrlWithChatString(channelId);
+    if (id) this.modifyUrlWithChatString(id);
     this.filterService.resetSearchResults();
   }
 

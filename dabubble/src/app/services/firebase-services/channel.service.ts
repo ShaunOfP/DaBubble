@@ -75,32 +75,7 @@ export class ChannelService {
       })
     );
   }
-
-
-  async findChannelIdViaMessageId(messageId: string) {
-    const channels$ = collectionData(this.getChannelsRef(), { idField: 'id' });
-    const channels = await firstValueFrom(channels$) as { id: string }[];
-
-    for (const channel of channels) {
-      const messageRef = this.getChannelsMessagesRef(channel.id) as CollectionReference<DocumentData>;
-      const q = query(messageRef, where('__name__', '==', messageId));
-      const querySnapshot = await getDocs(q);
-      if (!querySnapshot.empty) {
-        return channel.id
-      };
-    }
-    return null;
-  }
-
-
-  getChannelsRef() {
-    return collection(this.firestore, 'channels');
-  }
-
-
-  getChannelsMessagesRef(channelId: string) {
-    return collection(this.firestore, `channels/${channelId}/messages`);
-  }
+  
 
   getChannels(): Observable<Channel[]> {
     return this.channels$;

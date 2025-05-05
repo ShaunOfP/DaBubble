@@ -3,7 +3,6 @@ import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angu
 import { FilterService } from '../../../../services/component-services/filter.service';
 import { Router } from '@angular/router';
 import { UserDatasService } from '../../../../services/firebase-services/user-datas.service';
-import { ChannelService } from '../../../../services/firebase-services/channel.service';
 
 @Component({
   selector: 'app-search-result-workspace',
@@ -23,8 +22,7 @@ export class SearchResultWorkspaceComponent {
     private filterService: FilterService,
     private router: Router,
     private userDatasService: UserDatasService,
-    private cdr: ChangeDetectorRef,
-    private channelService: ChannelService
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -71,8 +69,7 @@ export class SearchResultWorkspaceComponent {
    * @param id Id of the selected message
    */
   async goToMessage(id: string) {
-    let channelId = await this.channelService.findChannelIdViaMessageId(id);
-    if (channelId) this.modifyUrlWithChatString(channelId);
+    if (id) this.modifyUrlWithChatString(id);
     this.filterService.resetSearchResults();
   }
 

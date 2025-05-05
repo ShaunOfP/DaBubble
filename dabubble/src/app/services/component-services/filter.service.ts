@@ -51,6 +51,9 @@ export class FilterService {
       this.searchForMembers();
     } else if (this.query.length > 0) {
       this.searchForMessages();
+    } else {
+      this.query = '';
+      this.resetSearchResults();
     }
   }
 
