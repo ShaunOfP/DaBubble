@@ -227,7 +227,7 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
     };
 
     if (this.chatService.currentChatId == ``) {
-      console.log("No chat Id provided");
+      console.error("No chat Id provided");
       return;
     }
 

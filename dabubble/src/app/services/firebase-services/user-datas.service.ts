@@ -175,8 +175,6 @@ export class UserDatasService {
         privateChats: accountData.privateChats,
       };
       await setDoc(userDocRef, userData);
-
-      console.log('✅ Benutzer erfolgreich gespeichert:', userData);
     } catch (error) {
       console.error('❌ Fehler beim Speichern des Benutzers:', error);
     }
@@ -239,7 +237,7 @@ export class UserDatasService {
         username_lowercase: newUserName.toLowerCase(),
       });
     } catch (err) {
-      console.log('Error updating user Data:', err);
+      console.error('Error updating user Data:', err);
     }
   }
 
@@ -302,13 +300,11 @@ export class UserDatasService {
    * @param channelData Data from the current Channel
    */
   async removeChannelFromUserData(channelData: string[], channelId: string) {
-    console.log(channelData);
     this.getCurrentUserId();
     let channelArray = channelData;
     channelArray = channelArray.filter(
       (channel: string) => channel !== channelId
     );
-    console.log(channelArray);
     const docRef = doc(this.firestore, 'userDatas', this.currentUserId);
     await updateDoc(docRef, {
       channels: channelArray,

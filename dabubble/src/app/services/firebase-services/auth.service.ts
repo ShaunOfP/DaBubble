@@ -63,7 +63,6 @@ export class AuthService {
     await createUserWithEmailAndPassword(auth, accountData.mail, accountData.password)
       .then((userCredential) => {
         const user = userCredential.user;
-        console.log(user.uid);
         this.userDataService.saveUser(
           accountData,
           user.uid
@@ -83,12 +82,11 @@ export class AuthService {
     try {
       const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
       this.userSubject.next(userCredential.user);
-      console.log('User log in');
       return userCredential.user
     } catch (error: any) {
       const errorCode = error?.code;
       const errorMessage = error?.message;
-      console.log(errorCode, errorMessage);
+      console.error(errorCode, errorMessage);
       return errorCode;
     }
   }
@@ -97,9 +95,6 @@ export class AuthService {
     const provider = new GoogleAuthProvider();
     try {
       const result = await signInWithPopup(this.auth, provider);
-      console.log('Google Login erfolgreich:', result.user.uid);
-      console.log('Google Account Image URL:', result.user.photoURL); // Log the image path
-      // this.userSubject.next(result.user); // Push the user data to userSubject
       return result;
     } catch (error) {
       console.error('Fehler beim Google Login:', error);
@@ -107,14 +102,6 @@ export class AuthService {
     }
   }
 
-  async guestSignIn() {
-    try {
-      const result = await signInAnonymously(this.auth);
-      console.log(result.user.uid);
-    } catch (error) {
-      console.error('Gast login nicht verfügbar:', error);
-    }
-  }
 
   resetPasswordLink(
     email: string,

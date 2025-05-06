@@ -128,12 +128,4 @@ export class ChannelService {
       return [];
     }
   }
-
-
-  async logChannels(): Promise<void> {
-    const querySnapshot = await getDocs(this.channelsCollection);
-    querySnapshot.forEach((doc) => {
-      console.log(doc.id, ' => ', doc.data());
-    });
-  }
 }

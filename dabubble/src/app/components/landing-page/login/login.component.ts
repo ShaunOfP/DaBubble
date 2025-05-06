@@ -117,7 +117,6 @@ export class LoginComponent implements OnInit {
 
   async guestLogIn() {
     try {
-      await this.authService.guestSignIn();
       const guestUser = this.authService.currentUser;
       const guestDocRef = doc(this.guestDatasRef(), guestUser?.uid);
       const guestSnap = await getDoc(guestDocRef);
@@ -157,7 +156,7 @@ export class LoginComponent implements OnInit {
         queryParams: { userID: googleUser?.uid },
       });
       if (userSnap.exists()) {
-        console.log('Benutzer schon vorhanden', userSnap.data());
+        console.warn('Benutzer schon vorhanden', userSnap.data());
       } else {
         if (googleUser) {
           this.setNewUser(googleUser);

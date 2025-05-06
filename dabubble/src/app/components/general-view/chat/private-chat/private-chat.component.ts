@@ -67,15 +67,13 @@ export class PrivateChatComponent implements OnInit {
           console.error("Keine chatId in den Query-Parametern gefunden!");
         } else {
           this.chatService.currentChatId = chatId;
-          console.log("Aktuelle chatId:", this.chatService.currentChatId);
         }
       }),
       filter(chatId => !!chatId),
       switchMap(() => this.chatService.getMessages()),
       map((messages: Message[]) => this.returnNewObservable(messages, null)),
       tap((updatedMessages: Message[]) => {
-        console.log("Aktualisierte Nachrichten:", updatedMessages);
-        if (updatedMessages.length > 0){
+        if (updatedMessages.length > 0) {
           this.showFirstMessage = false;
         }
         this.newMessage = true;

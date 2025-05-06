@@ -208,9 +208,6 @@ export class ChannelMemberService {
       await updateDoc(ownerDocRef, {
         channels: arrayUnion(channelId),
       });
-      console.log(
-        `Channel ${channelId} successfully added to owner ${ownerId}`
-      );
     } catch (error) {
       console.error(
         `Error adding channel ${channelId} to owner ${ownerId}:`,
@@ -232,7 +229,6 @@ export class ChannelMemberService {
 
     try {
       await Promise.all(promises);
-      console.log('Channel added to all members successfully');
     } catch (error) {
       console.error('Error adding channel to members:', error);
     }

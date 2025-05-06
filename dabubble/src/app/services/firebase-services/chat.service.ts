@@ -311,7 +311,7 @@ export class ChatService {
     const snapshot = await getDocs(q);
 
     if (snapshot.empty){
-      console.log("No document found");
+      console.error("No document found");
       return;
     }
 
