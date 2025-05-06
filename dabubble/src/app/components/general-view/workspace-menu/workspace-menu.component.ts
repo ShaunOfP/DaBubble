@@ -203,7 +203,7 @@ export class WorkspaceMenuComponent implements OnInit {
       queryParamsHandling: 'merge',
       replaceUrl: true,
     });
-    
+    this.chatService.currentThreadsSubject.next([]);
     this.chatService.isAlreadyFocusedOncePerLoad = false;
     this.showResponsiveComponents();
   }
@@ -220,7 +220,11 @@ export class WorkspaceMenuComponent implements OnInit {
       queryParamsHandling: 'merge',
       replaceUrl: true,
     });
-
+    this.chatService.currentThreadsSubject.next([]);
+    if (!this.chatService.threadClosed) {
+      this.chatService.threadClosed = true;
+      this.chatService.toggleDrawerState();
+    }
     this.showResponsiveComponents();
   }
 

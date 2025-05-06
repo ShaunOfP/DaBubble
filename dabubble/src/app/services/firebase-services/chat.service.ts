@@ -32,7 +32,7 @@ export class ChatService {
   currentChannelOwner: string = '';
   currentChannelDescription: string = '';
   currentChannelData?: Channel;
-  private currentThreadsSubject = new BehaviorSubject<Message[]>([]);
+  public currentThreadsSubject = new BehaviorSubject<Message[]>([]);
   currentThreads$ = this.currentThreadsSubject.asObservable();
   currentMessageId: string = '';
   showChatWhenResponsive: boolean = false;
