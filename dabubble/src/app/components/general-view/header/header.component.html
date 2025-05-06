@@ -14,7 +14,6 @@
     <app-search-results *ngIf="searchFocused" [inputSearch]="inputSearch"
       (closeClicked)="closeSearch()"></app-search-results>
   </div>
-
   <div class="bar-info-account-info" (click)="openDropdownMenu()">
     <span>{{ currentUserData?.username }}</span>
     <div class="status-container">
@@ -101,7 +100,7 @@
       </div>
       <input class="input-field" [class.invalid]="name.touched && name.invalid" #name="ngModel"
         placeholder="{{ currentUserData?.username }}" required [(ngModel)]="newNameInput" name="newNameInputField"
-        pattern="^[a-zA-Z0-9]*$" />
+        pattern="^[a-zA-Z0-9 ]*$" />
       @if (checkForBlankFirst(name.value) && name.touched){
       <label class="error-message">Der Name kann nicht mit einem Leerzeichen anfangen.</label>
       } @else if (name.invalid && name.touched){
