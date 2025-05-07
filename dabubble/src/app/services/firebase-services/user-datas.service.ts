@@ -111,7 +111,7 @@ export class UserDatasService {
   async getCurrentGuestViaId(): Promise<void> {
     this.getCurrentUserId();
     const userDocRef = doc(this.guestDatasRef(), this.currentUserId);
-    this.subscription.add(docData(userDocRef, { idField: 'id' }).subscribe((userData) => {      
+    this.subscription.add(docData(userDocRef, { idField: 'id' }).subscribe((userData) => {
       this.currentUserDataSubject.next(userData as UserObserver);
     }));
   }
@@ -170,14 +170,37 @@ export class UserDatasService {
    */
   async getSingleUserData(userId: string) {
     if (userId === 'Private Chat doesnt exist') return;
-    const userDataSnapshot = await getDoc(doc(this.userDatasRef(), userId));
-    if (userDataSnapshot.exists()) {
-      return { id: userDataSnapshot.id, ...userDataSnapshot.data() } as any;
+    if (userId === 'guest') {
+      return this.getGuestData(userId);
     } else {
-      console.error('User doesnt exist in the database');
-      return;
+      return this.getUserData(userId);
     }
   }
+
+
+  async getGuestData(userId: string) {
+    return await getDoc(doc(this.guestDatasRef(), userId)).then(data => {
+      if (data.exists()) {
+        return { id: data.id, ...data.data() } as any;
+      } else {
+        console.error('Guest doesnt exist in the database');
+        return;
+      }
+    });
+  }
+
+
+  async getUserData(userId: string) {
+    return await getDoc(doc(this.userDatasRef(), userId)).then(data => {
+      if (data.exists()) {
+        return { id: data.id, ...data.data() } as any;
+      } else {
+        console.error('User doesnt exist in the database');
+        return;
+      }
+    });
+  }
+
 
   async saveUser(accountData: UserDatas, userId: string): Promise<void> {
     try {

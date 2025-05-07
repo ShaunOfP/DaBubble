@@ -85,16 +85,7 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
         console.error('No chatId found in query parameters');
       }
       if (params['userID']) {
-        if (params['userID'] === 'guest') {
-          this.currentUserId = 'guest';
-          this.router.navigate(['/general/public-chat'], {
-            queryParams: { chatId: 'ER84UOYc0F2jptDjWxFo' },
-            queryParamsHandling: 'merge',
-            replaceUrl: true,
-          });
-        } else {
-          this.currentUserId = params['userID'];
-        }
+        this.currentUserId = params['userID'];
       } else {
         console.error('No userID found in query parameters');
       }
@@ -108,20 +99,15 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
    * @param chatId a string containing the ID of the currently opened Chat
    */
   async getChannelNameViaId(chatId: string) {
-    if (this.userDatasService.checkIfGuestIsLoggedIn()) {
-      this.currentChannelName = `Entwicklerchannel`;
+    if (this.chatService.getCurrentRoute() === 'public') {
+      this.currentChannelName = await this.chatService.getChannelDocSnapshot(chatId);
+    } else if (this.chatService.getCurrentRoute() === 'new-message') {
     } else {
-      if (this.chatService.getCurrentRoute() === 'public') {
-        this.currentChannelName = await this.chatService.getChannelDocSnapshot(chatId);
-      } else if (this.chatService.getCurrentRoute() === 'new-message') {
-      } else {
-        let otherUserInPrivateChatId = await this.chatService.getOtherUserNameFromPrivateChat(chatId, this.currentUserId);
-        this.privateChatOtherUserData = await this.userDatasService.getSingleUserData(otherUserInPrivateChatId);
-        this.currentChannelName = this.privateChatOtherUserData['username'];
-      }
+      let otherUserInPrivateChatId = await this.chatService.getOtherUserNameFromPrivateChat(chatId, this.currentUserId);
+      this.privateChatOtherUserData = await this.userDatasService.getSingleUserData(otherUserInPrivateChatId);
+      this.currentChannelName = this.privateChatOtherUserData['username'];
     }
   }
-
 
 
   /**
