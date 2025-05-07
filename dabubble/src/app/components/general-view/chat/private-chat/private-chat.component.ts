@@ -52,9 +52,6 @@ export class PrivateChatComponent implements OnInit {
 
 
   loadMessages() {
-    // Umschreiben in den Service, sodass entweder das hier geladen wird, wenn url private enthält oder sonst das andere wenn url public enthält
-    // if private dann folgender code, besser anpassen durch url auslesung
-    // je nach public/private in den jeweiligen collections suchen
     if (this.chatService.getCurrentRoute() === 'public') {
       return;
     }

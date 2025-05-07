@@ -7,6 +7,7 @@ import {
   ViewChild,
   ElementRef,
   HostListener,
+  OnDestroy,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -23,6 +24,7 @@ import { ChatService } from '../../../services/firebase-services/chat.service';
 import { FormsModule } from '@angular/forms';
 import { FilterService } from '../../../services/component-services/filter.service';
 import { SearchResultWorkspaceComponent } from "./search-result-workspace/search-result-workspace.component";
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-workspace-menu',
@@ -39,7 +41,7 @@ import { SearchResultWorkspaceComponent } from "./search-result-workspace/search
   templateUrl: './workspace-menu.component.html',
   styleUrl: './workspace-menu.component.scss',
 })
-export class WorkspaceMenuComponent implements OnInit {
+export class WorkspaceMenuComponent implements OnInit, OnDestroy {
   @Output() openCreateChannel: EventEmitter<void> = new EventEmitter();
   @Output() newMessage: EventEmitter<void> = new EventEmitter();
   @ViewChild('searchResults') searchResultRef!: ElementRef;
@@ -52,6 +54,7 @@ export class WorkspaceMenuComponent implements OnInit {
   allUsers: any[] = [];
   blur: boolean = false;
   searchInput: string = '';
+  private subscription = new Subscription();
 
   constructor(
     public userDatasService: UserDatasService,
@@ -94,11 +97,14 @@ export class WorkspaceMenuComponent implements OnInit {
    * If the guest is logged in it only loads the main channel
    */
   getCurrentUserData() {
-    this.userDatasService.currentUserData$.subscribe((userDatas) => {
-      this.workspaceUserData = userDatas;
-      this.fetchChannelData();
-      this.subscribeAllMembers();
-    });
+    this.subscription.add(this.userDatasService.currentUserData$.subscribe((userDatas) => {
+      console.log(userDatas);
+      if (userDatas) {
+        this.workspaceUserData = userDatas;
+        this.fetchChannelData();
+        this.subscribeAllMembers();
+      }
+    }));
   }
 
 
@@ -107,12 +113,13 @@ export class WorkspaceMenuComponent implements OnInit {
    */
   async subscribeAllMembers() {
     await this.channelMemberService.selectAllMembers();
-    this.channelMemberService.allMembersSubject$.subscribe((allUsers) => {
+    this.subscription.add(this.channelMemberService.allMembersSubject$.subscribe((allUsers) => {
       this.allUsers = allUsers.filter(
         (user) => user.privateChats[0] !== this.workspaceUserData?.privateChats[0]
       );
-    });
+    }));
     this.userDatasService.getOnlineUsers();
+    this.cd.detectChanges();
   }
 
 
@@ -179,7 +186,6 @@ export class WorkspaceMenuComponent implements OnInit {
         queryParamsHandling: 'merge',
         replaceUrl: true,
       });
-
       this.showResponsiveComponents();
     } else {
       console.warn('Log in to send Private Messages');
@@ -232,5 +238,12 @@ export class WorkspaceMenuComponent implements OnInit {
   showResponsiveComponents() {
     this.chatService.showChatWhenResponsive = true;
     this.chatService.showAltHeader = true;
+  }
+
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+    this.subscription = new Subscription();
+    this.workspaceUserData = null;
   }
 }

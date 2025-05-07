@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit, HostListener, ElementRef } from '@angular/core';
+import { Component, ViewChild, OnInit, HostListener, ElementRef, OnDestroy } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenu, MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -12,6 +12,8 @@ import {
 } from '../../../services/firebase-services/user-datas.service';
 import { FilterService } from '../../../services/component-services/filter.service';
 import { SearchResultsComponent } from './search-results/search-results.component';
+import { Subscription } from 'rxjs';
+import { ChatService } from '../../../services/firebase-services/chat.service';
 
 @Component({
   selector: 'app-header',
@@ -28,7 +30,7 @@ import { SearchResultsComponent } from './search-results/search-results.componen
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   @ViewChild('menu') menu!: MatMenu;
   @ViewChild('menuTrigger') menuTrigger!: MatMenuTrigger;
   @ViewChild('searchContainer') searchContainerRef!: ElementRef;
@@ -42,11 +44,13 @@ export class HeaderComponent implements OnInit {
   currentUserData!: UserObserver | null;
   currentAvatar: string = '';
   avatarList: string[] = ['avatar1.svg', 'avatar2.svg', 'avatar3.svg', 'avatar4.svg', 'avatar5.svg', 'avatar6.svg'];
+  private subscription = new Subscription();
 
   constructor(
     private router: Router,
     public userDatasService: UserDatasService,
-    private filterService: FilterService
+    private filterService: FilterService,
+    private chatService: ChatService
   ) { }
 
 
@@ -73,12 +77,18 @@ export class HeaderComponent implements OnInit {
    * Subscribes to the current user data
    */
   subscribeToCurrentUserData() {
-    this.userDatasService.currentUserData$.subscribe((userData) => {
+    this.subscription.add(this.userDatasService.currentUserData$.subscribe((userData) => {
       this.currentUserData = userData;
       if (userData) {
         this.currentAvatar = userData?.avatar;
       }
-    });
+    }));
+  }
+
+
+  logOut() {
+    this.userDatasService.cleanCurrentUserDataSubject();
+    this.chatService.cleanAllSubscriptions();
   }
 
 
@@ -220,5 +230,10 @@ export class HeaderComponent implements OnInit {
   closeSearch() {
     this.searchFocused = false;
     this.inputSearch = '';
+  }
+
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

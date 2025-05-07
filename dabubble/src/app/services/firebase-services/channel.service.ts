@@ -15,7 +15,7 @@ import {
   DocumentData,
   collectionSnapshots,
 } from '@angular/fire/firestore';
-import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Message } from '../../models/interfaces';
 

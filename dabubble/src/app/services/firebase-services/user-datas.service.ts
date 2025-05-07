@@ -12,7 +12,7 @@ import {
   getDocs,
   docData
 } from '@angular/fire/firestore';
-import { Observable, BehaviorSubject, from, map } from 'rxjs';
+import { Observable, BehaviorSubject, from, map, Subscription } from 'rxjs';
 import { UserDatas } from './../../models/user.class';
 import { GuestDatas } from '../../models/guest.class';
 import { ActivatedRoute } from '@angular/router';
@@ -40,6 +40,7 @@ export class UserDatasService {
   showUserInfoCard: boolean = false;
   private currentUserDataSubject = new BehaviorSubject<UserObserver | null>(null);
   public currentUserData$: Observable<UserObserver | null> = this.currentUserDataSubject.asObservable();
+  private subscription = new Subscription();
 
   constructor(private route: ActivatedRoute) { }
 
@@ -48,7 +49,7 @@ export class UserDatasService {
    * Extracts the current user id from the url
    */
   getCurrentUserId() {
-    this.route.queryParams.subscribe((params) => {
+    this.subscription.add(this.route.queryParams.subscribe((params) => {
       if (params['userID']) {
         if (params['userID'] != 'guest') {
           this.currentUserId = params['userID'];
@@ -56,7 +57,7 @@ export class UserDatasService {
           this.currentUserId = 'guest';
         }
       }
-    });
+    }));
   }
 
 
@@ -69,6 +70,13 @@ export class UserDatasService {
     querySnapshot.forEach((doc) => {
       console.log(`User ID: ${doc.id}, Data:`, doc.data());
     });
+  }
+
+
+  cleanCurrentUserDataSubject() {
+    this.currentUserDataSubject.next(null);
+    this.subscription.unsubscribe();
+    this.subscription = new Subscription();
   }
 
 
@@ -91,9 +99,9 @@ export class UserDatasService {
   async getCurrentUserDataViaId(): Promise<void> {
     this.getCurrentUserId();
     const userDocRef = doc(this.userDatasRef(), this.currentUserId);
-    docData(userDocRef, { idField: 'id' }).subscribe((userData) => {
+    this.subscription.add(docData(userDocRef, { idField: 'id' }).subscribe((userData) => {
       this.currentUserDataSubject.next(userData as UserObserver);
-    });
+    }));
   }
 
 
@@ -103,9 +111,9 @@ export class UserDatasService {
   async getCurrentGuestViaId(): Promise<void> {
     this.getCurrentUserId();
     const userDocRef = doc(this.guestDatasRef(), this.currentUserId);
-    docData(userDocRef, { idField: 'id' }).subscribe((userData) => {
+    this.subscription.add(docData(userDocRef, { idField: 'id' }).subscribe((userData) => {      
       this.currentUserDataSubject.next(userData as UserObserver);
-    });
+    }));
   }
 
 
@@ -298,6 +306,11 @@ export class UserDatasService {
   }
 
 
+  /**
+   * Fetches and returns the private chat ids
+   * @param userId Id of the current user
+   * @returns an array of strings with the private chat ids
+   */
   async getPrivateChannel(userId: string) {
     const userDocRef = doc(this.firestore, `userDatas/${userId}`);
     const userDoc = await getDoc(userDocRef);

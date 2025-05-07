@@ -15,7 +15,7 @@ import {
   where,
   getDocs,
 } from '@angular/fire/firestore';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
 import { Message } from '../../models/interfaces';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Channel } from './channel.service';
@@ -45,6 +45,7 @@ export class ChatService {
   showThreadWhenResponsive: boolean = false;
   isAlreadyFocusedOncePerLoad: boolean = false;
   messageID: string = '';
+  private subscription = new Subscription();
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -54,7 +55,7 @@ export class ChatService {
   }
 
 
-  toggleDrawerState(){
+  toggleDrawerState() {
     this.toggleDrawer.next();
   }
 
@@ -63,12 +64,18 @@ export class ChatService {
    * Pulls the ID of the currently opened Chat from the URL
    */
   getCurrentChatId() {
-    this.route.queryParams.subscribe((params) => {
+    this.subscription.add(this.route.queryParams.subscribe((params) => {
       if (params['chatId']) {
         this.currentChatId = params['chatId'];
         this.loadChannelInfo();
       }
-    });
+    }));
+  }
+
+
+  cleanAllSubscriptions() {
+    this.subscription.unsubscribe();
+    this.subscription = new Subscription();
   }
 
 
@@ -291,26 +298,26 @@ export class ChatService {
   }
 
 
-  getChatMessageRef(messageId: string){
+  getChatMessageRef(messageId: string) {
     return doc(this.firestore, `channels/${this.currentChatId}/messages/${messageId}`)
   }
 
 
-  getThreadMessageRef(messageId: string, threadId: string){
+  getThreadMessageRef(messageId: string, threadId: string) {
     return doc(this.firestore, `channels/${this.currentChatId}/messages/${messageId}/thread/${threadId}`);
   }
 
 
-  getThreadCollectionRef(messageId: string){
+  getThreadCollectionRef(messageId: string) {
     return collection(this.firestore, `channels/${this.currentChatId}/messages/${messageId}/thread`);
   }
 
 
-  async updateThreadContentWhenChatMessageIsEdited(messageId: string, messageUniqueId: string, messageValue: string){
+  async updateThreadContentWhenChatMessageIsEdited(messageId: string, messageUniqueId: string, messageValue: string) {
     const q = query(this.getThreadCollectionRef(messageId), where('uniqueId', '==', messageUniqueId));
     const snapshot = await getDocs(q);
 
-    if (snapshot.empty){
+    if (snapshot.empty) {
       console.error("No document found");
       return;
     }
@@ -338,7 +345,7 @@ export class ChatService {
   async updateThreadMessage(
     messageValue: string,
     threadId: string
-  ){
+  ) {
     await updateDoc(this.getThreadMessageRef(this.messageID, threadId), {
       content: messageValue
     });
@@ -351,9 +358,9 @@ export class ChatService {
       orderBy('createdAt', 'asc')
     );
     const threadObservable = collectionData(thread, { idField: 'id' }) as Observable<Message[]>;
-    threadObservable.subscribe(messages => {
+    this.subscription.add(threadObservable.subscribe(messages => {
       this.currentThreadsSubject.next(messages);
-    });
+    }));
     this.currentMessageId = messageId;
   }
 }
