@@ -98,7 +98,6 @@ export class WorkspaceMenuComponent implements OnInit, OnDestroy {
    */
   getCurrentUserData() {
     this.subscription.add(this.userDatasService.currentUserData$.subscribe((userDatas) => {
-      console.log(userDatas);
       if (userDatas) {
         this.workspaceUserData = userDatas;
         this.fetchChannelData();
