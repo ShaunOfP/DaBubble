@@ -64,6 +64,7 @@ export class WorkspaceMenuComponent implements OnInit {
 
   ngOnInit() {
     this.getCurrentUserData();
+    this.chatService.threadClosed = false;
   }
 
 
@@ -95,12 +96,8 @@ export class WorkspaceMenuComponent implements OnInit {
   getCurrentUserData() {
     this.userDatasService.currentUserData$.subscribe((userDatas) => {
       this.workspaceUserData = userDatas;
-      if (!this.userDatasService.checkIfGuestIsLoggedIn()) {
-        this.fetchChannelData();
-        this.subscribeAllMembers();
-      } else {
-        this.fetchChannelNames(['ER84UOYc0F2jptDjWxFo']);
-      }
+      this.fetchChannelData();
+      this.subscribeAllMembers();
     });
   }
 

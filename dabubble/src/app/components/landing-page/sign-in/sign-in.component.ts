@@ -7,6 +7,7 @@ import { Router, RouterModule } from '@angular/router';
 import { UserDatas } from '../../../models/user.class';
 import { HeaderSectionComponent } from "../header-section/header-section.component";
 import { FooterComponent } from "../footer/footer.component";
+import { UserDatasService } from '../../../services/firebase-services/user-datas.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -29,8 +30,9 @@ export class SignInComponent {
   nameFocused: boolean = false;
   mailFocused: boolean = false;
   passwordFocused: boolean = false;
+  mailAlreadyInUse: boolean = false;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private userDatasService: UserDatasService) { }
 
   onFocus(currentState: boolean, field: string) {
     switch (field) {
@@ -67,13 +69,26 @@ export class SignInComponent {
 
   onSubmit(ngForm: NgForm) {
     if (ngForm.valid && ngForm.submitted) {
-      this.navigateTo('create-avatar');
+      this.checkEmail(this.accountData.mail);
+      if (!this.mailAlreadyInUse) {
+        this.navigateTo('create-avatar');
+      }
     }
   }
+
 
   navigateTo(route: string) {
     this.router.navigate([route], {
       state: { accountData: this.accountData },
+    });
+  }
+
+
+  checkEmail(mail: string) {
+    this.userDatasService.checkIfEmailAlreadyExists(mail).subscribe(exists => {
+      if (exists) {
+        this.mailAlreadyInUse = true;
+      }
     });
   }
 }

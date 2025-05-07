@@ -39,7 +39,10 @@
                     </div>
                     @if (!email.valid && email.touched) {
                     <label for="email" class="required-text">*Diese E-Mail-Adresse ist leider ungültig.</label>
-                    } @else {
+                    } @else if (mailAlreadyInUse){
+                    <label for="email" class="required-text">*Diese E-Mail-Adresse ist bereits registriert.</label>
+                    }
+                    @else {
                     <label for="email" class="empty-field"></label>
                     }
                 </div>

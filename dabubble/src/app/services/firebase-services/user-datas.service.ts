@@ -12,7 +12,7 @@ import {
   getDocs,
   docData
 } from '@angular/fire/firestore';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, from, map } from 'rxjs';
 import { UserDatas } from './../../models/user.class';
 import { GuestDatas } from '../../models/guest.class';
 import { ActivatedRoute } from '@angular/router';
@@ -64,12 +64,24 @@ export class UserDatasService {
    * Console Logs the Users that are online
    */
   async getOnlineUsers() {
-    const usersRef = collection(this.firestore, 'users');
-    const onlineUsersQuery = query(usersRef, where('isOnline', '==', true));
+    const onlineUsersQuery = query(this.getUserRef(), where('isOnline', '==', true));
     const querySnapshot = await getDocs(onlineUsersQuery);
     querySnapshot.forEach((doc) => {
       console.log(`User ID: ${doc.id}, Data:`, doc.data());
     });
+  }
+
+
+  getUserRef() {
+    return collection(this.firestore, 'userDatas');
+  }
+
+
+  checkIfEmailAlreadyExists(email: string) {
+    const q = query(this.getUserRef(), where('mail', '==', email));
+    return from(getDocs(q)).pipe(
+      map(snapshot => !snapshot.empty)
+    );
   }
 
 
@@ -88,7 +100,7 @@ export class UserDatasService {
   /**
    * When the guest is logged in this opens a datastream for the guest data
    */
-  async getCurrentGuestViaId(): Promise<void>{
+  async getCurrentGuestViaId(): Promise<void> {
     this.getCurrentUserId();
     const userDocRef = doc(this.guestDatasRef(), this.currentUserId);
     docData(userDocRef, { idField: 'id' }).subscribe((userData) => {

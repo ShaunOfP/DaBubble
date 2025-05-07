@@ -36,27 +36,23 @@ export class AuthService {
     this.auth.onAuthStateChanged(user => {
       if (user) {
         const userStatusRef = ref(this.db, `status/${user.uid}`);
-
-        // Set user online in Realtime DB
         set(userStatusRef, { state: 'online', lastChanged: serverTimestamp() });
-
-        // Mark user as offline on disconnect
         onDisconnect(userStatusRef).set({ state: 'offline', lastChanged: serverTimestamp() });
       }
     });
   }
 
 
-  // Logout
   async logout(): Promise<void> {
     await signOut(this.auth);
     this.userSubject.next(null);
   }
 
-  // Get current user
+
   get currentUser(): User | null {
     return this.auth.currentUser;
   }
+
 
   async createUserWithEmail(accountData: UserDatas) {
     const auth = getAuth();
@@ -70,13 +66,10 @@ export class AuthService {
       })
       .catch((error) => {
         const errorCode = error.code;
-        const errorMessage = error.message;
         console.error('error Code' + errorCode);
-        console.error('error Message' + errorMessage);
-
-
       });
   }
+
 
   async signInWithEmail(email: string, password: string): Promise<any> {
     try {
@@ -90,6 +83,7 @@ export class AuthService {
       return errorCode;
     }
   }
+
 
   async googleSignIn(): Promise<UserCredential | null> {
     const provider = new GoogleAuthProvider();
@@ -122,8 +116,9 @@ export class AuthService {
 
 
   verifyCode(oobCode: string): Promise<string> {
-    return verifyPasswordResetCode(this.auth, oobCode); // Gibt die E-Mail zurück
+    return verifyPasswordResetCode(this.auth, oobCode);
   }
+
 
   resetPassword(oobCode: string, newPassword: string): Promise<void> {
     return confirmPasswordReset(this.auth, oobCode, newPassword);

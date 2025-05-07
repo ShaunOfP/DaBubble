@@ -1,11 +1,15 @@
 @import './../landing-page.component.scss';
 
-section{
-    @include arrangement($fd:column, $jc:space-around);
-    height: 100vh;
+section {
+  @include arrangement($fd: column, $jc: space-around);
+  height: 100vh;
 }
 
 .legal {
   @include arrangement($g: 16px);
   margin: 8px;
+
+  @media(max-height: 700px) {
+    margin-top: 0;
+  }
 }
