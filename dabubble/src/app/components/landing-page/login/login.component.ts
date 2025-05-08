@@ -57,7 +57,6 @@ export class LoginComponent implements OnInit {
     >;
     const animation = sessionStorage.getItem('animation');
     this.animationPlayed = animation === 'true';
-
     this.loginForm = this.form.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -74,17 +73,14 @@ export class LoginComponent implements OnInit {
 
   async logIn(): Promise<void> {
     this.resetLoginError();
-
     if (this.loginForm.valid) {
       this.loginForm.markAllAsTouched();
       const { email, password } = this.loginForm.value;
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
       if (!emailRegex.test(email)) {
         this.loginErrorMail =
           'Bitte geben Sie eine gültige E-Mail-Adresse ein.';
       }
-
       try {
         const result = await this.authService.signInWithEmail(email, password);
         this.handleLogin(result);
@@ -120,11 +116,9 @@ export class LoginComponent implements OnInit {
       const guestUser = this.authService.currentUser;
       const guestDocRef = doc(this.guestDatasRef(), guestUser?.uid);
       const guestSnap = await getDoc(guestDocRef);
-
       const chatId = 'ER84UOYc0F2jptDjWxFo';
-
       if (guestSnap.exists()) {
-        this.router.navigate(['/general'], {
+        this.router.navigate(['/general/public-chat'], {
           queryParams: { chatId, userID: 'guest' },
         });
       } else {
@@ -136,7 +130,7 @@ export class LoginComponent implements OnInit {
             privateChats: ['pCER84UOYc0F2jptDjWxFo'],
           });
           this.userService.saveGuest(newGuest, guestUser.uid);
-          this.router.navigate(['/general'], {
+          this.router.navigate(['/general/public-chat'], {
             queryParams: { chatId, userID: 'guest' },
           });
         }
