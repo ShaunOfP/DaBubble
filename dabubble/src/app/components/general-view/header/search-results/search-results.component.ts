@@ -90,6 +90,7 @@ export class SearchResultsComponent implements OnInit {
       queryParamsHandling: 'merge',
       replaceUrl: true,
     });
+    this.filterService.updateFilter('');
     this.onCloseClick();
   }
 
@@ -105,6 +106,7 @@ export class SearchResultsComponent implements OnInit {
       queryParamsHandling: 'merge',
       replaceUrl: true,
     });
+    this.filterService.updateFilter('');
     this.onCloseClick();
   }
 }
