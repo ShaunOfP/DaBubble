@@ -26,14 +26,6 @@ import { Subscription } from 'rxjs';
   styleUrl: './chat.component.scss',
 })
 export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
-  constructor(
-    public chatService: ChatService,
-    private userDatasService: UserDatasService,
-    private route: ActivatedRoute,
-    private ngZone: NgZone
-  ) { }
-
-
   @ViewChild('emojiTarget', { static: true }) emojiTarget!: ElementRef;
   @ViewChild('messageInput', { static: false }) messageInput!: ElementRef<HTMLTextAreaElement>;
   selectedEmoji: string = '';
@@ -48,6 +40,13 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
   privateChatOtherUserData: any;
   currentChatId: string = '';
   private zoneSub!: Subscription;
+  
+  constructor(
+    public chatService: ChatService,
+    private userDatasService: UserDatasService,
+    private route: ActivatedRoute,
+    private ngZone: NgZone
+  ) { }
 
 
   ngOnInit() {

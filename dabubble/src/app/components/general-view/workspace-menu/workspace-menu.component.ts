@@ -227,6 +227,7 @@ export class WorkspaceMenuComponent implements OnInit, OnDestroy {
       this.chatService.threadClosed = true;
       this.chatService.toggleDrawerState();
     }
+    this.chatService.isAlreadyFocusedOncePerLoad = false;
     this.showResponsiveComponents();
   }
 
