@@ -20,7 +20,7 @@
         <img class="avatar" src="{{ member?.avatar }}" alt="Member Avatar" />
         <span>{{ member.username }}</span>
         <div class="arrow-back" (click)="removeMember(member)">
-          <img src="/img/general-view/workspace-menu/close.svg" />
+          <img src="assets/img/close.svg" />
         </div>
       </div>
       <div (click)="showSelectedMembers()" class="further-members-container" *ngIf="selectedMembers.length > 2">

@@ -2,17 +2,17 @@
   <mat-drawer #drawer mode="side" opened id="workspace-menu-drawer">
     <div class="workspace-menu-header">
       <div class="workspace-menu-header--primary">
-        <img class="devspace-logo" src="/img/general-view/workspace-menu/logo_devspace.svg" />
+        <img class="devspace-logo" src="assets/img/logo_devspace.svg" />
         <h3 class="cursor-no-change">Devspace</h3>
       </div>
       <div class="workspace-menu-header--secondary img-switch" (click)="openNewMessage()">
-        <img src="/img/general-view/workspace-menu/edit.svg" />
-        <img class="d-none" src="/img/general-view/workspace-menu/hover_edit.svg" />
+        <img src="assets/img/edit.svg" />
+        <img class="d-none" src="assets/img/hover_edit.svg" />
       </div>
     </div>
     <div class="workspace-menu-mobile-searchbar" #searchResults>
       <input class="input-field" [(ngModel)]="searchInput" (focus)="blur = true" (input)="searchInWorkspace()" placeholder="Gehe zu..." /><img
-        src="/img/general-view/workspace-menu/search.svg" />
+        src="assets/img/search.svg" />
       <app-search-result-workspace *ngIf="blur" [inputSearch]="searchInput" (closeClicked)="closeSearch()"></app-search-result-workspace>
     </div>
     <div class="channels-and-chat-container">
@@ -25,15 +25,15 @@
                 <div class="flex">
                   <img [src]="
                       channelOpenState()
-                        ? '/img/general-view/workspace-menu/arrow_drop_down.svg'
-                        : '/img/general-view/workspace-menu/arrow_drop_up.svg'
+                        ? 'assets/img/arrow_drop_down.svg'
+                        : 'assets/img/arrow_drop_up.svg'
                     " />
                 </div>
                 <div class="header-middle">
                   <div class="flex">
-                    <img class="height-width-24" src="/img/general-view/workspace-menu/dots_channels.svg" />
+                    <img class="height-width-24" src="assets/img/dots_channels.svg" />
                     <img class="height-width-24 d-none"
-                      src="/img/general-view/workspace-menu/hover_dots_channels.svg" />
+                      src="assets/img/hover_dots_channels.svg" />
                   </div>
                   <span>Channels</span>
                 </div>
@@ -49,14 +49,14 @@
           </div>
           <div class="channels--start hover-text-color grow-img">
             <div class="add-channel" (click)="openCreateChannelOverlay()">
-              <img class="height-width-24 grow-img" src="/img/general-view/workspace-menu/add_circle.svg" />
+              <img class="height-width-24 grow-img" src="assets/img/add_circle.svg" />
               <span>Channel hinzufügen</span>
             </div>
           </div>
         </mat-expansion-panel>
         <div class="hover img-switch channels-header-new-channel" (click)="openCreateChannelOverlay()">
-          <img class="height-width-24" src="/img/general-view/workspace-menu/add.svg" />
-          <img class="height-width-24 d-none" src="/img/general-view/workspace-menu/hover_add.svg" />
+          <img class="height-width-24" src="assets/img/add.svg" />
+          <img class="height-width-24 d-none" src="assets/img/hover_add.svg" />
         </div>
       </div>
       <div class="channels-and-chat-container-lower">
@@ -67,11 +67,11 @@
               <div class="header hover-text-color">
                 <img [src]="
                     messagesOpenState()
-                      ? '/img/general-view/workspace-menu/arrow_drop_down.svg'
-                      : '/img/general-view/workspace-menu/arrow_drop_up.svg'
+                      ? 'assets/img/arrow_drop_down.svg'
+                      : 'assets/img/arrow_drop_up.svg'
                   " />
                 <div class="header-middle">
-                  <img class="height-width-24" src="/img/general-view/workspace-menu/person_circle.svg" />
+                  <img class="height-width-24" src="assets/img/person_circle.svg" />
                   <span>Direktnachrichten</span>
                 </div>
               </div>
@@ -99,6 +99,6 @@
   </mat-drawer>
   <app-workspace-state-toggle-button (menu)="drawer.toggle(); toggleMargin()"></app-workspace-state-toggle-button>
   <div class="mobile-new-message-bubble" (click)="openNewMessage()">
-    <img src="/img/general-view/workspace-menu/edit.svg" />
+    <img src="assets/img/edit.svg" />
   </div>
 </mat-drawer-container>

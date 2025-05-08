@@ -41,7 +41,7 @@ export class AvatarComponent {
 
   selectAvatar(avatar: string, event: Event): void {
     event.preventDefault();
-    this.accountData.avatar = '/img/general-view/create-avatar/' + avatar + '.svg';
+    this.accountData.avatar = 'assets/img/' + avatar + '.svg';
   }
 
   createUser(ngForm: NgForm) {

@@ -131,7 +131,7 @@ export class LoginComponent implements OnInit {
         if (guestUser) {
           const newGuest: GuestDatas = new GuestDatas({
             username: 'Gast',
-            avatar: '/img/general-view/create-avatar/default-avatar.svg',
+            avatar: 'assets/img/default-avatar.svg',
             channels: ['ER84UOYc0F2jptDjWxFo'],
             privateChats: ['pCER84UOYc0F2jptDjWxFo'],
           });
@@ -174,7 +174,7 @@ export class LoginComponent implements OnInit {
       mail: user.email ?? '',
       password: '',
       avatar:
-        user.photoURL ?? '/img/general-view/create-avatar/default-avatar.svg',
+        user.photoURL ?? 'assets/img/default-avatar.svg',
       channels: ['ER84UOYc0F2jptDjWxFo'],
       privateChats: [],
       online: false,

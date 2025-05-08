@@ -6,7 +6,7 @@ import { SharedModule } from '../../../shared/shared.module';
 import { ChatService } from '../../../services/firebase-services/chat.service';
 import { Message } from '../../../models/interfaces';
 import { UserDatasService } from '../../../services/firebase-services/user-datas.service';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { AltHeaderMobileComponent } from "../alt-header-mobile/alt-header-mobile.component";
 import { Subscription } from 'rxjs';
 
@@ -30,7 +30,6 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
     public chatService: ChatService,
     private userDatasService: UserDatasService,
     private route: ActivatedRoute,
-    private router: Router,
     private ngZone: NgZone
   ) { }
 

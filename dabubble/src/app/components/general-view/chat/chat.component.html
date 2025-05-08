@@ -10,17 +10,17 @@
           <app-emoji-picker id="emojiChat" (emojiSelected)="onEmojiReceived($event)"
             class="d-none left-corner-0"></app-emoji-picker>
           <div class="chat-icons change-image-on-hover" (click)="showEmojiPicker()">
-            <img src="/img/general-view/workspace-menu/smiley.svg">
-            <img class="d-none" src="/img/general-view/workspace-menu/hover_smiley.svg">
+            <img src="assets/img/smiley.svg">
+            <img class="d-none" src="assets/img/hover_smiley.svg">
           </div>
           <div class="chat-icons change-image-on-hover">
-            <img src="/img/general-view/workspace-menu/aet.svg">
-            <img class="d-none" src="/img/general-view/workspace-menu/hover_aet.svg">
+            <img src="assets/img/aet.svg">
+            <img class="d-none" src="assets/img/hover_aet.svg">
           </div>
         </div>
         <div (click)="sendMessage(messageInput.value)" class="change-image-on-hover">
-          <img class="height-width-40" src="/img/general-view/workspace-menu/send.svg">
-          <img class="d-none height-width-40" src="/img/general-view/workspace-menu/hover_send.svg">
+          <img class="height-width-40" src="assets/img/send.svg">
+          <img class="d-none height-width-40" src="assets/img/hover_send.svg">
         </div>
       </div>
     </div>

@@ -5,8 +5,8 @@
     <h3>{{ chatService.currentChannelData?.channelName }}</h3>
   </div>
   <div class="img-container change-image-on-hover" (click)="closeChatDetails()">
-    <img src="/img/general-view/workspace-menu/close.svg" />
-    <img class="d-none" src="/img/general-view/workspace-menu/hover_close.svg" />
+    <img src="assets/img/close.svg" />
+    <img class="d-none" src="assets/img/hover_close.svg" />
   </div>
 </header>
 <div id="input-form" class="channel-name-info">
@@ -16,8 +16,8 @@
         <h5>Channel-Name</h5>
         <button class="channel-name_btn" (click)="openNewChannelInput()">Bearbeiten</button>
         <div class="img-container--mobile change-image-on-hover" (click)="openNewChannelInput()">
-          <img src="/img/general-view/header/mobile_edit.svg">
-          <img src="/img/general-view/header/mobile_edit_hover.svg">
+          <img src="assets/img/mobile_edit.svg">
+          <img src="assets/img/mobile_edit_hover.svg">
         </div>
       </div>
       <div>
@@ -34,8 +34,8 @@
         Speichern
       </button>
       <button class="img-container--mobile no-btn-style change-image-on-hover" type="submit">
-        <img src="/img/general-view/header/mobile_save.svg">
-        <img src="/img/general-view/header/mobile_save_hover.svg">
+        <img src="assets/img/mobile_save.svg">
+        <img src="assets/img/mobile_save_hover.svg">
       </button>
     </div>
     <div class="overlap-children">
@@ -50,8 +50,8 @@
         <h5>Beschreibung</h5>
         <button class="channel-name_btn" (click)="openDescriptionEdit()">Bearbeiten</button>
         <div class="img-container--mobile change-image-on-hover" (click)="openDescriptionEdit()">
-          <img src="/img/general-view/header/mobile_edit.svg">
-          <img src="/img/general-view/header/mobile_edit_hover.svg">
+          <img src="assets/img/mobile_edit.svg">
+          <img src="assets/img/mobile_edit_hover.svg">
         </div>
       </div>
       <p>{{ chatService.currentChannelData?.description }}</p>
@@ -70,8 +70,8 @@
           Speichern
         </button>
         <button class="img-container--mobile no-btn-style change-image-on-hover" type="submit">
-          <img src="/img/general-view/header/mobile_save.svg">
-          <img src="/img/general-view/header/mobile_save_hover.svg">
+          <img src="assets/img/mobile_save.svg">
+          <img src="assets/img/mobile_save_hover.svg">
         </button>
       </div>
       <input class="input-field" placeholder="Dein Text hier" [(ngModel)]="newDescriptionInput"

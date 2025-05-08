@@ -8,8 +8,7 @@ import {
   doc,
   setDoc,
   updateDoc,
-  arrayUnion,
-  getDoc,
+  arrayUnion
 } from '@angular/fire/firestore';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { Channel } from './channel.service';
@@ -47,7 +46,7 @@ export class ChannelMemberService {
   showAddMembersMenu: boolean = false;
   showChatGreyScreen: boolean = false;
 
-  constructor(private userDatasService: UserDatasService) {}
+  constructor(private userDatasService: UserDatasService) { }
 
   updateComponentStatus(isVisible: boolean) {
     this.isComponentVisibleSource.next(isVisible);

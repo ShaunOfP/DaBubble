@@ -207,7 +207,6 @@ export class UserDatasService {
       const userDocRef = doc(this.userDatasRef(), userId);
       const chatsId = await this.createPrivateChat(userId);
       accountData.privateChats.push(chatsId);
-
       const userData = {
         username_lowercase: accountData.username.toLowerCase(),
         username: accountData.username,
@@ -323,7 +322,7 @@ export class UserDatasService {
       if (result && result.avatar) {
         return result.avatar;
       } else {
-        return "/img/general-view/create-avatar/default-avatar.svg";
+        return "assets/img/default-avatar.svg";
       }
     });
   }
@@ -377,7 +376,6 @@ export class UserDatasService {
   async refreshCurrentUserData(userId: string) {
     const userDocRef = doc(this.firestore, `userDatas/${userId}`);
     const userDoc = await getDoc(userDocRef);
-
     if (userDoc.exists()) {
       const userData = userDoc.data() as UserObserver;
       this.currentUserDataSubject.next(userData);

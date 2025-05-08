@@ -42,7 +42,7 @@ export class AddMembersComponent {
     public channelMemberService: ChannelMemberService,
     public userDataService: UserDatasService,
     public chatSerivce: ChatService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.subscribeToSelectedMembers();
@@ -75,7 +75,6 @@ export class AddMembersComponent {
 
   handleBlur() {
     this.isFocused = false;
-
     if (this.selectedMembers.length > 0 && this.searchInput === '') {
       this.searchFocus = false;
     } else {

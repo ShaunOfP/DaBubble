@@ -1,5 +1,5 @@
 <div class="header-logo">
-  <img src="/img/general-view/workspace-menu/Logo.svg" />
+  <img src="assets/img/Logo.svg" />
   <h3 class="cursor-no-change">DABubble</h3>
 </div>
 <div class="bar-info">
@@ -8,7 +8,7 @@
       <input placeholder="Devspace durchsuchen" [(ngModel)]="inputSearch" (focus)="searchFocus()"
         (input)="searchInDevspace()" />
       <div>
-        <img src="/img/general-view/workspace-menu/search.svg" />
+        <img src="assets/img/search.svg" />
       </div>
     </div>
     <app-search-results *ngIf="searchFocused" [inputSearch]="inputSearch"
@@ -22,15 +22,15 @@
     </div>
     <div class="dropdown-btn-container">
       <button mat-button [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger">
-        <img src="/img/general-view/workspace-menu/arrow_drop_down_thin.svg" />
-        <img class="d-none" src="/img/general-view/workspace-menu/hover_arrow_drop_down_thin.svg" />
+        <img src="assets/img/arrow_drop_down_thin.svg" />
+        <img class="d-none" src="assets/img/hover_arrow_drop_down_thin.svg" />
       </button>
       <mat-menu #menu="matMenu" class="drop-down-menu">
         <button mat-menu-item (click)="toggleGreyScreen(); toggleProfileInfo(true)">
-          <img class="mat-menu-button-img" src="/img/general-view/header/account_circle.svg" />Profil
+          <img class="mat-menu-button-img" src="assets/img/account_circle.svg" />Profil
         </button>
         <button mat-menu-item (click)="logOut(); navigateTo('')">
-          <img class="mat-menu-button-img" src="/img/general-view/header/logout.svg" />Log out
+          <img class="mat-menu-button-img" src="assets/img/logout.svg" />Log out
         </button>
       </mat-menu>
     </div>
@@ -41,8 +41,8 @@
   <div class="profile-info-header">
     <h3 class="cursor-no-change">Profil</h3>
     <div class="change-image-on-hover" (click)="toggleGreyScreen(); toggleProfileInfo(false)">
-      <img src="/img/general-view/workspace-menu/close.svg" />
-      <img class="d-none" src="/img/general-view/workspace-menu/hover_close.svg" />
+      <img src="assets/img/close.svg" />
+      <img class="d-none" src="assets/img/hover_close.svg" />
     </div>
   </div>
   <div class="profile-info-image">
@@ -54,7 +54,7 @@
         }}</span>
       <span class="profile-info-name-status-upper--font-secondary color-purple-with-hover"
         (click)="toggleProfileEdit()">Bearbeiten</span>
-      <img src="/img/general-view/header/edit_icon.svg" (click)="toggleProfileEdit()" />
+      <img src="assets/img/edit_icon.svg" (click)="toggleProfileEdit()" />
     </div>
     <div class="profile-info-name-status-lower">
       <img class="active-circle" />
@@ -64,7 +64,7 @@
   <div class="profile-info-mail">
     <div class="profile-info-mail-title">
       <div class="profile-info-mail-title--image">
-        <img src="/img/public/mail-black.svg" />
+        <img src="assets/img/mail-black.svg" />
       </div>
       <span class="cursor-no-change">E-Mail-Adresse</span>
     </div>
@@ -75,8 +75,8 @@
   <div class="profile-info-header">
     <h3>Dein Profil bearbeiten</h3>
     <div class="change-image-on-hover" (click)="closeEditForm(); newNameInput = ''">
-      <img src="/img/general-view/workspace-menu/close.svg" />
-      <img class="d-none" src="/img/general-view/workspace-menu/hover_close.svg" />
+      <img src="assets/img/close.svg" />
+      <img class="d-none" src="assets/img/hover_close.svg" />
     </div>
   </div>
   <mat-accordion class="profile-edit-image-container">
@@ -85,7 +85,7 @@
         <img class="profile-edit-img" src="{{ currentAvatar }}" alt="User Image" />
       </mat-expansion-panel-header>
       <div class="avatar-selector">
-        <img *ngFor="let avatar of avatarList" src="/img/general-view/create-avatar/{{ avatar }}"
+        <img *ngFor="let avatar of avatarList" src="assets/img/{{ avatar }}"
           (click)="selectAvatar(avatar); avatarSelector.close()">
       </div>
     </mat-expansion-panel>
@@ -94,7 +94,7 @@
     <div class="profile-edit-form">
       <div>
         <div class="profile-edit-form-image">
-          <img class="profile-edit-form-image--primary" src="/img/general-view/workspace-menu/person_circle.svg" />
+          <img class="profile-edit-form-image--primary" src="assets/img/person_circle.svg" />
         </div>
         <span class="font-size--20--700 cursor-no-change">Vollständiger Name</span>
       </div>

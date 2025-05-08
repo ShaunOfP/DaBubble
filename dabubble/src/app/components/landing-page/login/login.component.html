@@ -1,7 +1,7 @@
 <div class="app-wrapper">
   <div class="login-header">
     <div [ngClass]="{ 'header-animation': !animationPlayed }" class="login-header-logo">
-      <img src="/img/general-view/workspace-menu/Logo.svg" alt="Logo" />
+      <img src="assets/img/Logo.svg" alt="Logo" />
       <h1>DABubble</h1>
       <div class="header-logo-overlay"></div>
     </div>
@@ -22,7 +22,7 @@
   </div>
   <div [ngClass]="{ 'd-none': animationPlayed }" class="overlay"></div>
   <div [ngClass]="{ 'd-none': animationPlayed }" class="overlay" class="logo-wrapper">
-    <img src="/img/general-view/workspace-menu/Logo.svg" alt="Logo" />
+    <img src="assets/img/Logo.svg" alt="Logo" />
     <div class="animated-text">
       <p>DABubble</p>
     </div>
@@ -37,7 +37,7 @@
         </div>
         <div class="login-input">
           <div class="input-field">
-            <img src="/img/public/mail.svg" alt="" />
+            <img src="assets/img/mail.svg" alt="" />
             <input type="email" placeholder="beispielname@email.com" formControlName="email"
               pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}" required />
           </div>
@@ -45,7 +45,7 @@
             <span>{{ loginErrorMail }}</span>
           </div>
           <div class="input-field">
-            <img src="/img/public/password-lock.svg" alt="" />
+            <img src="assets/img/password-lock.svg" alt="" />
             <input type="password" placeholder="Passwort" formControlName="password" minlength="6" req />
           </div>
           <div class="error-message">
@@ -60,7 +60,7 @@
         </div>
         <div class="google-login">
           <button class="input-field" type="button" (click)="googleLogIn()">
-            <img src="/img/general-view/log-in/google-logo.svg" alt="" />
+            <img src="assets/img/google-logo.svg" alt="" />
             <span>Anmelden mit Google</span>
           </button>
         </div>

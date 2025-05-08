@@ -16,11 +16,10 @@
         </div>
         <div class="chat-content_reaction" *ngIf="hoveredMessageId === message.id"
             [class.d-none-important]="hideReactionMenu">
-            <button (click)="showPicker = !showPicker"><img src="img/general-view/chat/add_reaction.svg"
-                    alt="check"></button>
+            <button (click)="showPicker = !showPicker"><img src="assets/img/add_reaction.svg" alt="check"></button>
             <button *ngIf="checkStyle(message.userId) === 'secondary'" (click)="showEditMessage = !showEditMessage"
                 class="relative">
-                <img src="img/general-view/chat/menu_points.svg" alt="check">
+                <img src="assets/img/menu_points.svg" alt="check">
                 <span *ngIf="showEditMessage"
                     (click)="editMessageId = message.id; initializeMessageValue(message.content)"
                     class="edit-message">Nachricht
@@ -31,18 +30,17 @@
                     (emojiSelected)="sendReaction($event, message.id)"></app-emoji-picker>
             </div>
         </div>
-        <form *ngIf="message.id === editMessageId" class="edit-container"
-            (ngSubmit)="updateThreadMessage(message.id)" (mouseenter)="hideReactionMenu = true"
-            (mouseleave)="hideReactionMenu = false">
+        <form *ngIf="message.id === editMessageId" class="edit-container" (ngSubmit)="updateThreadMessage(message.id)"
+            (mouseenter)="hideReactionMenu = true" (mouseleave)="hideReactionMenu = false">
             <textarea [(ngModel)]="messageValue" name="newMessageValue">{{ message.content }}</textarea>
             <div class="edit-btn-container">
                 <button *ngIf="!isMobile" class="btn-secondary--default"
                     (click)="editMessageId = null; hideReactionMenu = false">Abbrechen</button>
                 <button *ngIf="!isMobile" class="btn-primary--default" type="submit">Speichern</button>
                 <button *ngIf="isMobile" (click)="editMessageId = null; hideReactionMenu = false"
-                    class="btn-secondary--default"><img src="img/general-view/workspace-menu/close.svg"></button>
+                    class="btn-secondary--default"><img src="assets/img/close.svg"></button>
                 <button *ngIf="isMobile" class="btn-primary--default" type="submit"><img
-                        src="img/general-view/header/mobile_save.svg"></button>
+                        src="assets/img/mobile_save.svg"></button>
             </div>
         </form>
         <app-reactions [message]="message" [hoveredMessageId]="hoveredMessageId"></app-reactions>

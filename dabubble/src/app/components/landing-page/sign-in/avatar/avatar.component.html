@@ -4,7 +4,7 @@
         <mat-card-content>
             <mat-card-header>
                 <div class="header-content">
-                    <a class="arrow-back" (click)="navigateTo('sign-in')"><img src="/img/public/arrow-back.svg"
+                    <a class="arrow-back" (click)="navigateTo('sign-in')"><img src="assets/img/arrow-back.svg"
                             alt="back" /></a>
                     <h2>Wähle deinen Avatar</h2>
                 </div>
@@ -13,14 +13,14 @@
                 <div class="main-content">
                     <div class="avatar-container">
                         <img [src]="accountData.avatar"
-                            onerror="this.src=`img/general-view/create-avatar/avatar1.svg`" />
+                            onerror="this.src=`assets/img/avatar1.svg`" />
                         <span>{{accountData.username}}</span>
                     </div>
                     <div class="avatar-list-container">
                         <span>Aus der Liste wählen</span>
                         <div>
                             <div *ngFor="let avatar of avatarList; let index = index">
-                                <input type="image" [src]="'/img/general-view/create-avatar/' + avatar + '.svg'"
+                                <input type="image" [src]="'assets/img/create-avatar/' + avatar + '.svg'"
                                     [alt]="avatar" name="avatarSelection" [value]="avatar"
                                     [ngClass]="{'selected': accountData.avatar === avatar}"
                                     (click)="selectAvatar(avatar, $event)">

@@ -8,7 +8,6 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  signInAnonymously,
   sendPasswordResetEmail,
   UserCredential,
   confirmPasswordReset,

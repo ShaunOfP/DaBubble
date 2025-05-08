@@ -15,7 +15,7 @@ export class UserDatas {
     this.password = obj ? obj.password : '';
     this.avatar = obj
       ? obj.avatar
-      : '/img/general-view/create-avatar/avatar1.svg';
+      : 'assets/img/avatar1.svg';
     this.channels = obj ? obj.channels : ['ER84UOYc0F2jptDjWxFo'];
     this.privateChats = obj ? obj.privateChats : [];
     this.online = obj ? obj.online : false;

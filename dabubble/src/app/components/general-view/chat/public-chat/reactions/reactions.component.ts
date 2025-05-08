@@ -39,7 +39,7 @@ export class ReactionsComponent {
       if (emoji === 'green_check') {
         return {
           isImage: true,
-          value: 'img/general-view/chat/green_check.svg',
+          value: 'assets/img/green_check.svg',
           count: (users as string[]).length,
           users: users as string[],
         };

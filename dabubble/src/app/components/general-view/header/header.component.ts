@@ -125,7 +125,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
 
   selectAvatar(path: string) {
-    this.currentAvatar = `/img/general-view/create-avatar/${path}`;
+    this.currentAvatar = `assets/img/${path}`;
     this.userDatasService.updateUserAvatar(this.userDatasService.currentUserId, this.currentAvatar);
   }
 

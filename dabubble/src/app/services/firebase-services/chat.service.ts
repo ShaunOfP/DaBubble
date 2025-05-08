@@ -198,6 +198,7 @@ export class ChatService {
     }
   }
 
+
   private getMessagePath(messageId: string, isThread: boolean): string {
     return isThread
       ? `channels/${this.currentChatId}/messages/${this.currentMessageId}/thread/${messageId}`
@@ -316,12 +317,10 @@ export class ChatService {
   async updateThreadContentWhenChatMessageIsEdited(messageId: string, messageUniqueId: string, messageValue: string) {
     const q = query(this.getThreadCollectionRef(messageId), where('uniqueId', '==', messageUniqueId));
     const snapshot = await getDocs(q);
-
     if (snapshot.empty) {
       console.error("No document found");
       return;
     }
-
     snapshot.forEach(async (docSnap) => {
       await updateDoc(this.getThreadMessageRef(messageId, docSnap.id), {
         content: messageValue

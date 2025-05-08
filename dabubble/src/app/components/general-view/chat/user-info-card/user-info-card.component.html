@@ -2,8 +2,8 @@
     <mat-card-header>
         <mat-card-title class="cursor-no-change">Profile</mat-card-title>
         <div (click)="closeUserInfoCard()" class="card-header-image">
-            <img src="/img/general-view/workspace-menu/close.svg">
-            <img class="d-none" src="/img/general-view/workspace-menu/hover_close.svg">
+            <img src="assets/img/close.svg">
+            <img class="d-none" src="assets/img/hover_close.svg">
         </div>
     </mat-card-header>
     <mat-card-content>
@@ -13,12 +13,12 @@
         <div class="middle-container-upper">
             <span class="cursor-no-change">{{ currentChannelName }}</span>
             <div>
-                <div class="active-circle"></div><!--Placeholder Image-->
-                <span class="active-font cursor-no-change">Aktiv</span><!--Placeholder Status und Color-->
+                <div class="active-circle"></div>
+                <span class="active-font cursor-no-change">Aktiv</span>
             </div>
         </div>
         <div class="middle-container-lower">
-            <img src="/img/public/mail-black.svg">
+            <img src="assets/img/mail-black.svg">
             <div>
                 <span class="cursor-no-change">E-Mail-Adresse</span>
                 <a class="cursor-no-change">{{ chatComponent.privateChatOtherUserData?.mail }}</a>
@@ -27,7 +27,7 @@
     </mat-card-content>
     <mat-card-footer>
         <button class="btn-primary--default" (click)="openMessageToUser()">
-            <img src="/img/general-view/chat/message_user.svg">
+            <img src="assets/img/message_user.svg">
             <span>Nachricht</span>
         </button>
     </mat-card-footer>

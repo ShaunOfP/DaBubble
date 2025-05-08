@@ -12,7 +12,6 @@ import {
   query,
   where,
   collectionGroup,
-  DocumentData,
   collectionSnapshots,
 } from '@angular/fire/firestore';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -62,11 +61,8 @@ export class ChannelService {
           const fullPath = msg.ref.path || '';
           const channelIdMatch = fullPath.match(/channels\/([^\/]+)\/messages/);
           const channelId = channelIdMatch ? channelIdMatch[1] : '';
-
           if (!channelId) return null;
-
           const data = msg.data();
-
           return {
             ...data,
             channelId,
@@ -75,15 +71,17 @@ export class ChannelService {
       })
     );
   }
-  
+
 
   getChannels(): Observable<Channel[]> {
     return this.channels$;
   }
 
+
   channelDataRef(): CollectionReference<Channel> {
     return collection(this.firestore, 'channels') as CollectionReference<Channel>;
   }
+
 
   async getChannelById(id: string): Promise<Channel | undefined> {
     const docRef = doc(this.channelsCollection, id);
@@ -96,15 +94,18 @@ export class ChannelService {
     }
   }
 
+
   async addChannel(channel: Channel): Promise<void> {
     const docRef = doc(this.channelsCollection, channel.channelId);
     await setDoc(docRef, channel);
   }
 
+
   async updateChannel(id: string, data: Partial<Channel>): Promise<void> {
     const docRef = doc(this.channelsCollection, id);
     await updateDoc(docRef, data);
   }
+
 
   async searchChannels(queryString: string): Promise<Channel[]> {
     const normalizedQuery = queryString.startsWith('#') ? queryString.substring(1) : queryString;
@@ -113,7 +114,6 @@ export class ChannelService {
       where('channelName', '>=', normalizedQuery),
       where('channelName', '<', normalizedQuery + '\uf8ff')
     );
-
     try {
       const querySnapshot = await getDocs(channelQuery);
       const channels: Channel[] = [];

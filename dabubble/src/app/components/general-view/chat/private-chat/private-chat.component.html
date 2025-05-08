@@ -13,7 +13,8 @@
             <img src="{{ chatComponent.privateChatOtherUserData?.avatar }}">
             <span>{{ chatComponent.currentChannelName }}</span>
         </div>
-        <span>Diese Unterhaltung findet nur zwischen <a (click)="showMemberInfo()">&#64;{{ chatComponent.currentChannelName }}</a> und dir statt.</span>
+        <span>Diese Unterhaltung findet nur zwischen <a (click)="showMemberInfo()">&#64;{{
+                chatComponent.currentChannelName }}</a> und dir statt.</span>
     </div>
     <div *ngFor="let message of filteredMessages$ | async" class="chat-content" (mouseleave)="showPicker = false">
         <div class="chat-date" *ngIf="message.showDate">
@@ -23,19 +24,18 @@
         <div class="chat-content--{{ checkStyle(message.userId) }}" (mouseover)="hoveredMessageId = message.id"
             (mouseout)="hoveredMessageId = null">
             <div class="chat-content_reaction" *ngIf="hoveredMessageId === message.id">
-                <button><img src="img/general-view/chat/green_check.svg" alt="check"></button>
-                <button><img src="img/general-view/chat/clap_hands.svg" alt="check"></button>
-                <button (click)="showPicker = !showPicker"><img src="img/general-view/chat/add_reaction.svg"
-                        alt="check"></button>
+                <button><img src="assets/img/green_check.svg" alt="check"></button>
+                <button><img src="assets/img/clap_hands.svg" alt="check"></button>
+                <button (click)="showPicker = !showPicker"><img src="assets/img/add_reaction.svg" alt="check"></button>
                 <app-emoji-picker *ngIf="showPicker" (mouseleave)="showPicker = false"
                     (click)="$event.preventDefault()"></app-emoji-picker>
-                <button><img src="img/general-view/chat/add_comment.svg" alt="check"></button>
+                <button><img src="assets/img/add_comment.svg" alt="check"></button>
                 <button *ngIf="checkStyle(message.userId) === 'secondary'">
-                    <img src="img/general-view/chat/menu_points.svg" alt="check">
+                    <img src="assets/img/menu_points.svg" alt="check">
                 </button>
             </div>
             <div class="row-reverse">
-                <img src="img/general-view/create-avatar/avatar1.svg" alt="avatar" />
+                <img src="assets/img/avatar1.svg" alt="avatar" />
                 <div class="chat-content_conversation">
                     <div class="chat-content_header">
                         <span>{{ message.sender }}</span>

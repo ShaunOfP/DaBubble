@@ -1,7 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { UserDatasService } from '../../../../../services/firebase-services/user-datas.service';
 import { CommonModule } from '@angular/common';
-import { PublicChatComponent } from '../public-chat.component';
 import { UserInfoCardComponent } from "../../user-info-card/user-info-card.component";
 import { ChatComponent } from '../../chat.component';
 import { ChatService } from '../../../../../services/firebase-services/chat.service';

@@ -57,7 +57,6 @@ export class NewMessageComponent implements OnInit {
   }
 
 
-  /* This is not finished? */
   async onSearchInput(event: Event): Promise<void> {
     const input = (event.target as HTMLInputElement).value;
     if (input.startsWith('#')) {
@@ -84,7 +83,6 @@ export class NewMessageComponent implements OnInit {
   goToChannel(channelId: string): void {
     this.clearSearchField();
     this.isFocused = false;
-
     this.router.navigate(['/general/public-chat'], {
       queryParams: { chatId: channelId },
       queryParamsHandling: 'merge',
@@ -141,7 +139,6 @@ export class NewMessageComponent implements OnInit {
    */
   handleBlur() {
     this.isFocused = false;
-
     if (this.selectedMembers.length > 0 && this.searchQuery === '') {
       this.searchFocus = false;
     } else {
