@@ -2,7 +2,6 @@
 
 mat-drawer-container {
   height: calc(100vh - 130px);
-  @include arrangement($ai: normal, $jc: normal);
   background-color: transparent;
 
   @media (max-width: $mobile-breakpoint) {
@@ -161,22 +160,19 @@ h3 {
 }
 
 .channels-and-chat-container {
-  height: calc(100vh - 255px);
+  flex: 1 1 auto;
+  overflow: hidden;
   @include arrangement($jc: normal, $ai: normal, $fd: column);
 }
 
 .channels-and-chat-container-upper {
   @include arrangement($jc: space-between, $ai: normal, $g: 25px);
-  // max-height: 30%;
   width: 100%;
 }
 
 .channels-and-chat-container-lower {
-  @include arrangement($fd: column, $jc: normal, $ai: normal, $g: 25px);
-
-  @media (max-height: 1000px) {
-    max-height: 70%;
-  }
+  min-height: 0;
+  display: flex;
 }
 
 .channels-header {
@@ -260,8 +256,6 @@ h3 {
 
 .contacts-container {
   @include arrangement($fd: column, $ai: flex-start, $g: 13px, $jc: normal);
-  height: 100%;
-  overflow-y: scroll;
 }
 
 .contact {

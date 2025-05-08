@@ -268,12 +268,7 @@ app-emoji-picker {
 }
 
 .mat-expansion-panel-body {
-  height: calc(100vh - 500px);
   padding: 0 !important;
-
-  @media (max-height: 1000px) {
-    height: 100%;
-  }
 }
 
 #expansion-panel-1 {
@@ -285,17 +280,19 @@ app-emoji-picker {
 }
 
 #expansion-panel-2 {
-  >div {
-    height: 393px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 0 !important;
 
-    @media (max-width: $mobile-breakpoint) {
-      height: 100%;
-    }
+  >div {
+    flex: 1 1 auto;
+    overflow: auto;
   }
 }
 
 .mat-drawer-inner-container {
-  overflow: visible !important;
+  @include arrangement($fd: column, $ai: normal, $jc: normal);
 
   @media (max-width: $mobile-breakpoint) {
     @include arrangement($fd: column, $g: 25px, $ai: normal, $jc: normal);
