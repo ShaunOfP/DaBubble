@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, ViewChild, ElementRef, OnInit, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild, ElementRef, OnInit, OnDestroy, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { EmojiPickerComponent } from '../emoji-picker/emoji-picker.component';
 import { SharedModule } from '../../../shared/shared.module';
 import { ThreadMessagesComponent } from "./thread-messages/thread-messages.component";
@@ -16,14 +16,16 @@ import { Subscription } from 'rxjs';
   templateUrl: './thread.component.html',
   styleUrl: './thread.component.scss'
 })
-export class ThreadComponent implements OnInit, OnDestroy {
+export class ThreadComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('emojiTarget', { static: true }) emojiTarget!: ElementRef;
   selectedEmoji: string = '';
   @ViewChild('threadDrawer') drawer!: MatDrawer;
   private subscription!: Subscription;
 
   constructor(public chatService: ChatService,
-    private userDatasService: UserDatasService) {
+    private userDatasService: UserDatasService,
+    private cdr: ChangeDetectorRef
+  ) {
 
   }
 
@@ -31,6 +33,13 @@ export class ThreadComponent implements OnInit, OnDestroy {
     this.subscription = this.chatService.toggleDrawer$.subscribe(() => {
       this.drawer.toggle();
     });
+  }
+
+
+  ngAfterViewInit() {
+    this.chatService.threadClosed = true;
+    this.drawer.close();
+    this.cdr.detectChanges();
   }
 
 

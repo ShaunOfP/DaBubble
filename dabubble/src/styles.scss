@@ -8,27 +8,25 @@
 
   --color-white: white;
 
-  --color-blue-bg: #eceefe; //background color
+  --color-blue-bg: #eceefe;
   --color-blue-border: #adb0d9;
-  --color-purple-primary-default: #444df2; //Purple color for header
-  --color-purple-primary-disabled: #797ef3; //Purple color if text is disabled/grayed out
-  --color-purple-secondary-hover: #535af1; //Hover over black text
+  --color-purple-primary-default: #444df2;
+  --color-purple-primary-disabled: #797ef3;
+  --color-purple-secondary-hover: #535af1;
   --filter-purple-secondary-hover: brightness(0) saturate(100%) invert(35%) sepia(91%) saturate(3601%) hue-rotate(229deg) brightness(97%) contrast(95%);
   --color-transparent: #ffffff00;
   --color-grey-bar: #d9d9d9;
   --color-grey-hover: #e6e6e6;
   --color-grey-primary-disable: #686868;
   --color-grey-primary-overlay: #68686880;
-
-  --color-green: #92c83e; //Green color for online status
-  --color-purple-error: #ed1e79; //Purple color for offline status
-
-  --mdc-elevated-card-container-shape: 30px; //Material Design Card Shape
-  --mdc-elevated-card-container-color: white; //Material Design Card Color
-  --mdc-elevated-card-container-elevation: 0 2px 10px #00000014; //Material Design Card Elevation
+  --color-green: #92c83e;
+  --color-purple-error: #ed1e79;
+  --mdc-elevated-card-container-shape: 30px;
+  --mdc-elevated-card-container-color: white;
+  --mdc-elevated-card-container-elevation: 0 2px 10px #00000014;
 }
 
-$mobile-breakpoint: 800px;
+$mobile-breakpoint: 970px;
 
 /* nunito-regular - latin */
 @font-face {
@@ -221,7 +219,6 @@ app-emoji-picker {
   right: 0;
   z-index: 100;
   width: 300px;
-  // border-radius: 30px 30px 30px 0px;
 }
 
 .right-corner-0 {
@@ -331,24 +328,18 @@ app-public-chat {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  // padding: 0 35px;
-  // box-sizing: border-box;
   @include arrangement($jc: normal,
     $fd: column,
-    $g: 0px); //gap geändert von 20 auf 0, falls doof aussieht dann eben wieder ändern
-  // overflow-y: auto; //verhindert, dass chat-details richtig angezeigt werden kann
+    $g: 0px);
 }
 
 app-private-chat {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  // padding: 0 35px;
-  // box-sizing: border-box;
   @include arrangement($jc: normal,
     $fd: column,
-    $g: 0px); //gap geändert von 20 auf 0, falls doof aussieht dann eben wieder ändern
-  // overflow-y: auto; //verhindert, dass chat-details richtig angezeigt werden kann
+    $g: 0px);
 }
 
 app-reactions {

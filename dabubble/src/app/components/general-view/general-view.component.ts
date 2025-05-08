@@ -31,7 +31,6 @@ export class GeneralViewComponent implements OnInit {
 
 
   constructor(public chatService: ChatService, private authService: AuthService) {
-
   }
 
 
