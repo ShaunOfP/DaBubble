@@ -31,6 +31,7 @@ export class SignInComponent {
   mailFocused: boolean = false;
   passwordFocused: boolean = false;
   mailAlreadyInUse: boolean = false;
+  readyToSubmit: boolean = false;
 
   constructor(private router: Router, private userDatasService: UserDatasService) { }
 
@@ -70,9 +71,11 @@ export class SignInComponent {
   onSubmit(ngForm: NgForm) {
     if (ngForm.valid && ngForm.submitted) {
       this.checkEmail(this.accountData.mail);
-      if (!this.mailAlreadyInUse) {
-        this.navigateTo('create-avatar');
-      }
+      setTimeout(() => {
+        if (!this.mailAlreadyInUse && this.readyToSubmit) {
+            this.navigateTo('create-avatar');
+        }
+      }, 500);
     }
   }
 
@@ -88,6 +91,9 @@ export class SignInComponent {
     this.userDatasService.checkIfEmailAlreadyExists(mail).subscribe(exists => {
       if (exists) {
         this.mailAlreadyInUse = true;
+      } else {
+        this.mailAlreadyInUse = false;
+        this.readyToSubmit = true;
       }
     });
   }

@@ -32,7 +32,7 @@
                         class="input-field">
                         <img [src]="(email.valid && email.touched) ? 'assets/img/mail-black.svg' : 'assets/img/mail.svg'"
                             alt="email-icon" />
-                        <input [(ngModel)]="accountData.mail" type="email" name="email" #email="ngModel"
+                        <input [(ngModel)]="accountData.mail" (ngModelChange)="checkEmail(accountData.mail)" type="email" name="email" #email="ngModel"
                             placeholder="beispielname@email.com" (focus)="onFocus(true, 'mail')"
                             (blur)="onFocus(false, 'mail')" pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
                             required>
@@ -70,8 +70,8 @@
                     <span>Ich stimme der <a href="/privacy-policy" target="_blank">Datenschutzerklärung</a> zu.</span>
                 </div>
                 <div class="button-container">
-                    <input type="submit" value="Weiter" [disabled]="!signInForm.valid" [ngClass]="{
-                        'btn-primary--disable': !signInForm.valid,
+                    <input type="submit" value="Weiter" [disabled]="!signInForm.valid || mailAlreadyInUse" [ngClass]="{
+                        'btn-primary--disable': !signInForm.valid || mailAlreadyInUse,
                         'btn-primary--default': signInForm.valid}">
                 </div>
             </form>
