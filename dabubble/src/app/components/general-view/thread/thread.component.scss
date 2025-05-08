@@ -8,8 +8,9 @@
 }
 
 mat-drawer-container {
-    background-color: transparent;
+    background-color: var(--color-white);
     height: calc(100vh - 130px);
+    border-radius: 30px;
 
     @media (max-width: $mobile-breakpoint) {
         height: calc(100vh - 100px);
@@ -24,12 +25,10 @@ mat-drawer-container {
 mat-drawer {
     width: 485px;
     background-color: var(--color-white);
-    border-radius: 30px !important;
     border: none;
 
     @media (max-width: $mobile-breakpoint) {
         width: 100%;
-        border-radius: 0 !important;
     }
 }
 
@@ -70,23 +69,30 @@ h3 {
 }
 
 .chat-container {
-    @include arrangement($ai: normal, $jc: normal, $fd: column, $g: 25px);
-    height: calc(100% - 104px);
+    position: relative;
+    @include arrangement($fd: column, $ai: normal, $jc: flex-end);
+    height: calc(100% - 100px);
 
-    @media (max-width: $mobile-breakpoint) {
-        height: 100%;
+    @media (max-height: 700px){
+        height: calc(100% - 60px);
     }
 }
 
 .chat {
     height: 100%;
+    overflow-y: auto;
     padding-top: 20px;
     @include arrangement($fd: column, $jc: flex-start);
+
+    @media (max-height: 700px) {
+        padding-top: 0;
+    }
 }
 
 .input-container {
     position: relative;
-    padding: 0 20px 40px 20px;
+    padding: 0 50px 40px 50px;
+    margin-top: 25px;
     @include arrangement($ai: normal, $jc: normal, $fd: column);
 
     @media (max-width: $mobile-breakpoint) {

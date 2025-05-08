@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { ChatService } from '../../../../services/firebase-services/chat.service';
 import { EmojiPickerComponent } from "../../emoji-picker/emoji-picker.component";
@@ -43,6 +43,17 @@ export class ThreadMessagesComponent {
     this.messages$ = this.chatService.currentThreads$.pipe(
       map((messages: Message[]) => this.returnNewObservable(messages, null))
     );
+    this.isWidth400OrLess();
+  }
+
+
+  @HostListener('window:resize', [])
+  isWidth400OrLess() {
+    if (window.innerWidth <= 400) {
+      this.isMobile = true;
+    } else {
+      this.isMobile = false;
+    }
   }
 
 

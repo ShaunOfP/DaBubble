@@ -300,6 +300,10 @@ app-emoji-picker {
   @media (max-width: $mobile-breakpoint) {
     @include arrangement($fd: column, $g: 25px, $ai: normal, $jc: normal);
   }
+
+  @media (max-height: 700px) {
+    gap: 0;
+  }
 }
 
 .ng-tns-c857250080-4 {
@@ -340,6 +344,15 @@ app-private-chat {
   @include arrangement($jc: normal,
     $fd: column,
     $g: 0px);
+}
+
+app-thread-messages {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  @include arrangement($jc: normal,
+    $fd: column,
+    $g: 0);
 }
 
 app-reactions {
