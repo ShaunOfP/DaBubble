@@ -20,7 +20,7 @@
                         <span>Aus der Liste wählen</span>
                         <div>
                             <div *ngFor="let avatar of avatarList; let index = index">
-                                <input type="image" [src]="'assets/img/create-avatar/' + avatar + '.svg'"
+                                <input type="image" [src]="'assets/img/' + avatar + '.svg'"
                                     [alt]="avatar" name="avatarSelection" [value]="avatar"
                                     [ngClass]="{'selected': accountData.avatar === avatar}"
                                     (click)="selectAvatar(avatar, $event)">
