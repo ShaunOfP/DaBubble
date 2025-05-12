@@ -25,10 +25,11 @@ mat-drawer-container {
 mat-drawer {
     width: 485px;
     background-color: var(--color-white);
-    border: none;
+    border-radius: 30px !important;
 
     @media (max-width: $mobile-breakpoint) {
         width: 100%;
+        border-radius: 0px !important;
     }
 }
 
@@ -71,9 +72,9 @@ h3 {
 .chat-container {
     position: relative;
     @include arrangement($fd: column, $ai: normal, $jc: flex-end);
-    height: calc(100% - 100px);
+    height: calc(100% - 104px);
 
-    @media (max-height: 700px){
+    @media (max-height: 700px) {
         height: calc(100% - 60px);
     }
 }
@@ -119,7 +120,6 @@ textarea {
     position: absolute;
     bottom: 60px;
     width: 380px;
-    left: 40px;
 
     >div {
         @include arrangement();

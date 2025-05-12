@@ -88,11 +88,13 @@ export class ThreadComponent implements OnInit, AfterViewInit, OnDestroy {
       content: content,
       userId: this.userDatasService.currentUserId,
       reaction: {},
-      avatar: avatarUrl
+      avatar: avatarUrl,
+      threadAnswers: 0
     };
     const messageId = this.chatService.currentMessageId;
     this.chatService.generateThread(messageId, message);
     this.emojiTarget.nativeElement.value = ``;
+    this.chatService.updateThreadAnswersInCurrentMessage(messageId);
   }
 
   private generateId(): string {

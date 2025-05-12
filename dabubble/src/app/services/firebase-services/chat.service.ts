@@ -108,6 +108,22 @@ export class ChatService {
   }
 
 
+  /**
+   * Updates a variable in the message
+   * @param messageId string with the id of a message
+   */
+  async updateThreadAnswersInCurrentMessage(messageId: string) {
+    const snapshot = await getDoc(this.getChatMessageRef(messageId));
+    if (snapshot.exists()) {
+      let count = snapshot.data()['threadAnswers'];
+      count += 1;
+      await updateDoc(this.getChatMessageRef(messageId), {
+        threadAnswers: count
+      });
+    }
+  }
+
+
   getMessages(): Observable<Message[]> {
     let currentRoute: string = '';
     if (this.getCurrentRoute() === 'public') {

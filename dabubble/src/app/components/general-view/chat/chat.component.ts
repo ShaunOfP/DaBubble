@@ -272,7 +272,8 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
       content: content,
       userId: this.userDatasService.currentUserId,
       reaction: {},
-      avatar: avatarUrl
+      avatar: avatarUrl,
+      threadAnswers: 0
     };
 
     if (this.chatService.currentChatId == ``) {

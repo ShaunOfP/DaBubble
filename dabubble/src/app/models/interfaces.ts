@@ -5,5 +5,6 @@ export interface Message {
   content: string,
   userId: string,
   reaction?: Record<string, string[]>,
-  avatar: string
+  avatar: string,
+  threadAnswers: number
 }

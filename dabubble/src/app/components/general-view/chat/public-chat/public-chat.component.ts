@@ -52,7 +52,6 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   messageValue: string = '';
   hideReactionMenu: boolean = false;
   isMobile = false;
-  threadsForThisMessage: number = 0;
 
   private scrollListener!: () => void;
 

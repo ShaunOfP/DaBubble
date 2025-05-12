@@ -64,7 +64,8 @@
           </span>
         </div>
       </div>
-      <div>{{ threadsForThisMessage }} Antworten</div>
+      <div class="thread-answers-count" (click)="openThread(message.id)">{{ message.threadAnswers }} Antworten
+      </div>
       <form *ngIf="message.id === editMessageId" class="edit-container"
         (ngSubmit)="updateChatMessage(message.id, message.uniqueId)" (mouseenter)="hideReactionMenu = true"
         (mouseleave)="hideReactionMenu = false">

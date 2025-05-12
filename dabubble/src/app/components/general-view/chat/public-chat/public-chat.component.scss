@@ -201,6 +201,12 @@ header {
     }
   }
 
+  .thread-answers-count {
+    color: var(--color-purple-secondary-hover);
+    @include fontStyle();
+    cursor: pointer;
+  }
+
   .edit-container {
     width: 100%;
     position: relative;
