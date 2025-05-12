@@ -6,9 +6,10 @@ import { SharedModule } from '../../../shared/shared.module';
 import { ChatService } from '../../../services/firebase-services/chat.service';
 import { Message } from '../../../models/interfaces';
 import { UserDatasService } from '../../../services/firebase-services/user-datas.service';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { AltHeaderMobileComponent } from "../alt-header-mobile/alt-header-mobile.component";
 import { Subscription } from 'rxjs';
+import { FilterService } from '../../../services/component-services/filter.service';
 
 
 @Component({
@@ -40,17 +41,24 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
   privateChatOtherUserData: any;
   currentChatId: string = '';
   private zoneSub!: Subscription;
-  
+  showMemberSearchResults: boolean = false;
+  channelResults: any[] = [];
+  memberResults: any[] = [];
+
   constructor(
     public chatService: ChatService,
     private userDatasService: UserDatasService,
     private route: ActivatedRoute,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private filterService: FilterService,
+    private router: Router
   ) { }
 
 
   ngOnInit() {
     this.fetchChannelDataForCurrentUser();
+    this.subscribeToCurrentChannels();
+    this.subscribeToCurrentMembers();
   }
 
 
@@ -72,6 +80,26 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   /**
+ * Subscribes to the current Channels which fit the search criteria
+ */
+  subscribeToCurrentChannels() {
+    this.filterService.channelMatch$.subscribe((channels) => {
+      this.channelResults = channels;
+    });
+  }
+
+
+  /**
+   * Subscribes to the current Members which fit the search criteria
+   */
+  subscribeToCurrentMembers() {
+    this.filterService.memberMatch$.subscribe((members) => {
+      this.memberResults = members;
+    });
+  }
+
+
+  /**
   * Subscribes to the current URL to get the newest Chat-ID and the User-Id from the logged in User
   */
   fetchChannelDataForCurrentUser() {
@@ -88,6 +116,28 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
         console.error('No userID found in query parameters');
       }
     });
+  }
+
+
+  openChat(channelId: string) {
+    this.router.navigate(['/general/public-chat'], {
+      queryParams: { chatId: channelId },
+      queryParamsHandling: 'merge',
+      replaceUrl: true,
+    });
+    this.filterService.updateFilter('');
+    this.messageInput.nativeElement.value = ``;
+  }
+
+
+  openPrivateChat(privateChatId: string) {
+    this.router.navigate(['/general/private-chat'], {
+      queryParams: { chatId: privateChatId },
+      queryParamsHandling: 'merge',
+      replaceUrl: true,
+    });
+    this.filterService.updateFilter('');
+    this.messageInput.nativeElement.value = ``;
   }
 
 
@@ -169,6 +219,21 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
     document
       .getElementById('chat-container')
       ?.classList.add('height-new-message');
+  }
+
+
+  chat() {
+    let messageValue = this.messageInput.nativeElement.value;
+    if (messageValue.charAt(0) === '@') {
+      this.filterService.resetSearchResults();
+      this.filterService.updateFilter(messageValue);
+    } else if (messageValue.charAt(0) === '#') {
+      this.filterService.resetSearchResults();
+      this.filterService.updateFilter(messageValue);
+    } else {
+      this.filterService.resetSearchResults();
+      this.filterService.updateFilter('');
+    }
   }
 
 

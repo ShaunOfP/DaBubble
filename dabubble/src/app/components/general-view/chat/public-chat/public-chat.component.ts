@@ -52,6 +52,7 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   messageValue: string = '';
   hideReactionMenu: boolean = false;
   isMobile = false;
+  threadsForThisMessage: number = 0;
 
   private scrollListener!: () => void;
 
@@ -132,7 +133,6 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     ]).pipe(
       map(([messages, filterText]) => {
         if (!filterText) return messages;
-
         const searchLower = filterText.toLowerCase();
         return messages.filter(message => {
           const contentMatch = message.content?.toLowerCase().startsWith(searchLower);
@@ -201,6 +201,7 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+
   ngOnDestroy(): void {
     if (this.chatContainer && this.scrollListener) {
       this.chatContainer.nativeElement.removeEventListener(
@@ -209,6 +210,7 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
       );
     }
   }
+
 
   scrollToElement(behavior: string): void {
     if (this.chatContainer) {

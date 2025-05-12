@@ -50,38 +50,77 @@ h3 {
   @media (max-width: $mobile-breakpoint) {
     padding: 0 16px 30px 16px;
   }
-}
 
-textarea {
-  height: 145px;
-  border-radius: 20px;
-  border: 1px #adb0d9 solid;
-  padding: 20px;
-  resize: none;
-  font-size: 18px;
+  .popup-results {
+    position: absolute;
+    border-radius: 20px 20px 20px 0;
+    border: 1px solid var(--color-blue-border);
+    @include arrangement($g: 15px, $fd: column, $ai: flex-start);
+    max-height: 350px;
+    max-width: 500px;
+    overflow-y: scroll;
+    bottom: 205px;
+    left: 70px;
+    padding: 20px 21px;
+    background-color: var(--color-white);
 
-  &:focus {
-    outline: none;
-    border: 1px solid var(--color-purple-primary-default);
+    .search-result {
+      padding: 4px 20px;
+      @include arrangement($g: 15px, $jc: flex-start);
+      border-radius: 35px;
+
+      &:hover {
+        cursor: pointer;
+        background-color: var(--color-blue-bg)
+      }
+
+      >img {
+        height: 50px;
+        width: 50px;
+      }
+
+      >span {
+        font-size: 18px;
+      }
+    }
+  }
+
+  textarea {
+    height: 145px;
+    border-radius: 20px;
+    border: 1px #adb0d9 solid;
+    padding: 20px;
+    resize: none;
+    font-size: 18px;
+
+    &:focus {
+      outline: none;
+      border: 1px solid var(--color-purple-primary-default);
+    }
+  }
+
+  .textarea-icon-bar {
+    @include arrangement($jc: space-between);
+    position: absolute;
+    bottom: 60px;
+    left: 70px;
+    right: 70px;
+
+    >div {
+      @include arrangement();
+    }
+
+    @media (max-width: $mobile-breakpoint) {
+      left: 40px;
+      right: 40px;
+      bottom: 40px;
+    }
   }
 }
 
-.textarea-icon-bar {
-  @include arrangement($jc: space-between);
-  position: absolute;
-  bottom: 60px;
-  left: 70px;
-  right: 70px;
-
-  >div {
-    @include arrangement();
-  }
-
-  @media (max-width: $mobile-breakpoint) {
-    left: 40px;
-    right: 40px;
-    bottom: 40px;
-  }
+::-webkit-scrollbar-track {
+  margin-bottom: 15px;
+  margin-top: 15px;
 }
 
 .height-width-40 {
