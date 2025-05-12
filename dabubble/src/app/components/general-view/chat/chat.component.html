@@ -17,7 +17,7 @@
         </div>
       </div>
       <textarea #messageInput #emojiTarget [placeholder]="'Nachricht an #' + currentChannelName "
-        (input)="chat()"></textarea>
+        (input)="evaluateChatInput()"></textarea>
       <div class="textarea-icon-bar">
         <div appClickOutside (appClickOutside)="hideEmojiPicker()">
           <app-emoji-picker id="emojiChat" (emojiSelected)="onEmojiReceived($event)"

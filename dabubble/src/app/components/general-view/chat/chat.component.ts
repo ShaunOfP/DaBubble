@@ -222,7 +222,7 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
-  chat() {
+  evaluateChatInput() {
     let messageValue = this.messageInput.nativeElement.value;
     if (messageValue.charAt(0) === '@') {
       this.filterService.resetSearchResults();
