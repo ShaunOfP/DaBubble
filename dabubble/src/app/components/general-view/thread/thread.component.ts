@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, ViewChild, ElementRef, OnInit, OnDestroy, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit, OnDestroy, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { EmojiPickerComponent } from '../emoji-picker/emoji-picker.component';
 import { SharedModule } from '../../../shared/shared.module';
 import { ThreadMessagesComponent } from "./thread-messages/thread-messages.component";
