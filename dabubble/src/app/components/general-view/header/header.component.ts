@@ -200,6 +200,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
       if (form.touched && form.valid) {
         this.userDatasService.updateUserName(this.userDatasService.currentUserId, this.newNameInput);
         this.newNameInput = '';
+        this.chatService.threadClosed = true;
+        this.chatService.toggleDrawerState();
+        this.chatService.reloadChatMessages();
         this.closeEditForm();
         this.showProfileInfo = true;
       }

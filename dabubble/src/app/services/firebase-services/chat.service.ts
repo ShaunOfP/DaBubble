@@ -47,6 +47,7 @@ export class ChatService {
   isAlreadyFocusedOncePerLoad: boolean = false;
   messageID: string = '';
   private subscription = new Subscription();
+  private reloadChat$ = new Subject<void>;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -94,6 +95,16 @@ export class ChatService {
     catch (error) {
       console.error('Fehler beim Laden der Kanal-Info:', error);
     }
+  }
+
+
+  reloadChatMessages(){
+    this.reloadChat$.next();
+  }
+
+
+  triggerChatReload(){
+    return this.reloadChat$.asObservable();
   }
 
 

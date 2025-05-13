@@ -90,10 +90,11 @@ export class PrivateChatComponent implements OnInit {
         const searchLower = filterText.toLowerCase();
         return messages.filter(message => {
           const contentMatch = message.content?.toLowerCase().startsWith(searchLower);
-          const senderMatch = message.sender?.toLowerCase().startsWith(searchLower);
+          // const senderMatch = message.sender?.toLowerCase().startsWith(searchLower);
           const dateStr = new Date(message.createdAt).toLocaleDateString('de-DE');
           const dateMatch = dateStr.toLowerCase().includes(searchLower);
-          return contentMatch || senderMatch || dateMatch;
+          // return contentMatch || senderMatch || dateMatch;
+          return contentMatch || dateMatch;
         });
       })
     );

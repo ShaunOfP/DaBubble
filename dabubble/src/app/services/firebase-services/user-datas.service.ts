@@ -12,7 +12,7 @@ import {
   getDocs,
   docData
 } from '@angular/fire/firestore';
-import { Observable, BehaviorSubject, from, map, Subscription } from 'rxjs';
+import { Observable, BehaviorSubject, from, map, Subscription, take } from 'rxjs';
 import { UserDatas } from './../../models/user.class';
 import { GuestDatas } from '../../models/guest.class';
 import { ActivatedRoute } from '@angular/router';
@@ -222,6 +222,7 @@ export class UserDatasService {
     }
   }
 
+
   async createPrivateChat(userId: string) {
     const generatedId = this.generateRandomId();
     const userDocRef = doc(this.firestore, 'privateChats', generatedId);
@@ -232,6 +233,7 @@ export class UserDatasService {
     await setDoc(userDocRef, chatData);
     return generatedId;
   }
+
 
   generateRandomId() {
     const array = new Uint8Array(22);
@@ -358,6 +360,7 @@ export class UserDatasService {
     });
   }
 
+
   /**
    * Alternative way of getting the current User Data
    * @returns Data of the currently logged in User
@@ -373,6 +376,7 @@ export class UserDatasService {
     }
   }
 
+
   async refreshCurrentUserData(userId: string) {
     const userDocRef = doc(this.firestore, `userDatas/${userId}`);
     const userDoc = await getDoc(userDocRef);
@@ -382,5 +386,11 @@ export class UserDatasService {
     } else {
       console.error('User not found');
     }
+  }
+
+
+  getUserDataObservable(userId: string){
+    const docRef = doc(this.firestore, `userDatas/${userId}`);
+    return docData(docRef);
   }
 }

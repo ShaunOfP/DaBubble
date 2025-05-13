@@ -262,17 +262,12 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
       console.error('User data is not available');
       return;
     }
-
-    const avatarUrl = await this.userDatasService.getUserAvatar(this.userDatasService.currentUserId);
-
     const message: Message = {
       uniqueId: this.generateId(),
-      sender: userName,
       createdAt: new Date().getTime(),
       content: content,
       userId: this.userDatasService.currentUserId,
       reaction: {},
-      avatar: avatarUrl,
       threadAnswers: 0
     };
 

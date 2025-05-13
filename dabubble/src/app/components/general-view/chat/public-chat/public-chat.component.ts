@@ -8,7 +8,7 @@ import {
   HostListener,
 } from '@angular/core';
 import { ChatService } from '../../../../services/firebase-services/chat.service';
-import { Observable, combineLatest, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs';
+import { Observable, Subscription, combineLatest, distinctUntilChanged, filter, map, switchMap, take, tap } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { Message } from '../../../../models/interfaces';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -52,6 +52,8 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   messageValue: string = '';
   hideReactionMenu: boolean = false;
   isMobile = false;
+  messageDetailsMap: { [id: string]: any } = {};
+  private subscription!: Subscription;
 
   private scrollListener!: () => void;
 
@@ -68,6 +70,9 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     this.loadMessages();
     this.loadFilter();
     this.isWidth400OrLess();
+    this.subscription = this.chatService.triggerChatReload().subscribe(() => {
+      this.loadFilter();
+    });
   }
 
 
@@ -125,23 +130,36 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
+
   loadFilter() {
     this.filteredMessages$ = combineLatest([
       this.messages$,
       this.filterService.filterText$.pipe(distinctUntilChanged())
     ]).pipe(
       map(([messages, filterText]) => {
+        this.loadMessageUserIdIntoObject(messages);
         if (!filterText) return messages;
         const searchLower = filterText.toLowerCase();
         return messages.filter(message => {
           const contentMatch = message.content?.toLowerCase().startsWith(searchLower);
-          const senderMatch = message.sender?.toLowerCase().startsWith(searchLower);
           const dateStr = new Date(message.createdAt).toLocaleDateString('de-DE');
           const dateMatch = dateStr.toLowerCase().includes(searchLower);
-          return contentMatch || senderMatch || dateMatch;
+          return contentMatch || dateMatch;
         });
       })
     );
+  }
+
+
+  loadMessageUserIdIntoObject(messages: Array<Message>) {
+    messages.forEach(message => {
+      this.userDataService.getUserDataObservable(message.userId)
+        .pipe(take(1))
+        .subscribe(userData => {
+          this.messageDetailsMap[message.uniqueId] = userData;
+        }
+        );
+    });
   }
 
 
@@ -208,6 +226,7 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
         this.scrollListener
       );
     }
+    this.subscription.unsubscribe();
   }
 
 

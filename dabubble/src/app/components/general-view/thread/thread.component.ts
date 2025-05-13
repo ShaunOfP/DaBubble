@@ -78,17 +78,12 @@ export class ThreadComponent implements OnInit, AfterViewInit, OnDestroy {
 
   async sendMessage(content: string) {
     if (!content) return
-    const userId = this.userDatasService.currentUserId;
-    const userName = await this.userDatasService.getUserName(userId);
-    const avatarUrl = await this.userDatasService.getUserAvatar(this.userDatasService.currentUserId);
     const message: Message = {
       uniqueId: this.generateId(),
-      sender: userName,
       createdAt: new Date().getTime(),
       content: content,
       userId: this.userDatasService.currentUserId,
       reaction: {},
-      avatar: avatarUrl,
       threadAnswers: 0
     };
     const messageId = this.chatService.currentMessageId;

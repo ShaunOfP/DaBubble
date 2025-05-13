@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { map, Observable, take } from 'rxjs';
 import { ChatService } from '../../../../services/firebase-services/chat.service';
 import { EmojiPickerComponent } from "../../emoji-picker/emoji-picker.component";
 import { Message } from '../../../../models/interfaces';
@@ -27,6 +27,7 @@ export class ThreadMessagesComponent {
   messageValue: string = '';
   hideReactionMenu: boolean = false;
   isMobile = false;
+  messageDetailsMap: { [id: string]: any } = {};
 
   @ViewChild('emojiTarget', { static: true }) emojiTarget!: ElementRef;
   selectedEmoji: string = '';
@@ -44,6 +45,18 @@ export class ThreadMessagesComponent {
       map((messages: Message[]) => this.returnNewObservable(messages, null))
     );
     this.isWidth400OrLess();
+  }
+
+
+  loadMessageUserIdIntoObject(messages: Array<Message>) {
+    messages.forEach(message => {
+      this.userDataService.getUserDataObservable(message.userId)
+        .pipe(take(1))
+        .subscribe(userData => {
+          this.messageDetailsMap[message.uniqueId] = userData;
+        }
+        );
+    });
   }
 
 
@@ -70,6 +83,7 @@ export class ThreadMessagesComponent {
 
 
   returnNewObservable(messages: Message[], lastDate: string | null) {
+    this.loadMessageUserIdIntoObject(messages);
     return messages.map((message) => {
       const currentDate = new Date(message.createdAt).toLocaleDateString(
         'de-DE',

@@ -52,11 +52,11 @@
             bearbeiten</span>
         </button>
       </div>
-      <div class="row-reverse">
-        <img class="avatar" src="{{ message.avatar }}" alt="avatar" />
+      <div class="row-reverse" *ngIf="messageDetailsMap[message.uniqueId] as userData">
+        <img class="avatar" src="{{ userData.avatar }}" alt="avatar" />
         <div *ngIf="message.id !== editMessageId" class="chat-content_conversation--{{ checkStyle(message.userId) }}">
           <div class="chat-content_header">
-            <span>{{ message.sender }}</span>
+            <span>{{ userData.username }}</span>
             <span>{{ formatTime(message.createdAt) }}</span>
           </div>
           <span class="chat-content_message--{{ checkStyle(message.userId) }}">
