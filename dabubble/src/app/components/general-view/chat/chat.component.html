@@ -16,7 +16,7 @@
           <span>{{ member.username }}</span>
         </div>
       </div>
-      <textarea #messageInput #emojiTarget [placeholder]="'Nachricht an #' + currentChannelName "
+      <textarea #messageInput #emojiTarget [placeholder]="'Nachricht an #' + currentChannelName"
         (input)="evaluateChatInput()"></textarea>
       <div class="textarea-icon-bar">
         <div appClickOutside (appClickOutside)="hideEmojiPicker()">
@@ -26,7 +26,7 @@
             <img src="assets/img/smiley.svg">
             <img class="d-none" src="assets/img/hover_smiley.svg">
           </div>
-          <div class="chat-icons change-image-on-hover">
+          <div class="chat-icons change-image-on-hover" (click)="openChatSearch()">
             <img src="assets/img/aet.svg">
             <img class="d-none" src="assets/img/hover_aet.svg">
           </div>

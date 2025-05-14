@@ -44,6 +44,7 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
   showMemberSearchResults: boolean = false;
   channelResults: any[] = [];
   memberResults: any[] = [];
+  counter: number = 1;
 
   constructor(
     public chatService: ChatService,
@@ -76,6 +77,27 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy() {
     this.zoneSub?.unsubscribe();
+  }
+
+
+  openChatSearch() {
+    switch (this.counter) {
+      case 1:
+        this.messageInput.nativeElement.value = "@";
+        this.counter++;
+        this.evaluateChatInput();
+        break;
+      case 2:
+        this.messageInput.nativeElement.value = "#";
+        this.counter++;
+        this.evaluateChatInput();
+        break;
+      case 3:
+        this.messageInput.nativeElement.value = "";
+        this.counter = 1;
+        this.evaluateChatInput();
+        break;
+    }
   }
 
 
