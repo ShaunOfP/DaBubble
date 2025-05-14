@@ -191,6 +191,10 @@ export class ChatDetailsComponent {
         });
         this.closeChatDetails();
         this.goBackToMainChannel();
+        this.chatService.showAltHeader = false;
+        this.chatService.showChatDetailsMobileGreyLayer = false;
+        this.chatService.showChatWhenResponsive = false;
+        this.chatService.showThreadWhenResponsive = false;
       } else {
         console.warn("Entwicklerchannel kann nicht verlassen werden");
       }

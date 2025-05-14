@@ -100,7 +100,7 @@
       </div>
       <input class="input-field" [class.invalid]="name.touched && name.invalid" #name="ngModel"
         placeholder="{{ currentUserData?.username }}" required [(ngModel)]="newNameInput" name="newNameInputField"
-        pattern="^[a-zA-Z0-9 ]*$" />
+        pattern="^[a-zA-Z0-9 ÄäÖöÜüß]*$" />
       @if (checkForBlankFirst(name.value) && name.touched){
       <label class="error-message">Der Name kann nicht mit einem Leerzeichen anfangen.</label>
       } @else if (name.invalid && name.touched){
