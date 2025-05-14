@@ -91,7 +91,7 @@
   }
 
   to {
-    transform: scale(0.5) translate(-83vw ,-90vh);
+    transform: scale(0.5) translate(-83vw, -90vh);
   }
 }
 
@@ -442,13 +442,13 @@ form {
     gap: 0;
   }
 
-  // @media (max-width: 700px) {
-  //   app-footer {
-  //     display: none;
-  //   }
-  // }
-
   @media (min-height: 800px) and (max-width: 415px) {
     justify-content: space-between;
+  }
+}
+
+@media (max-height: 700px) {
+  .btn-glass--default {
+    padding: 0;
   }
 }

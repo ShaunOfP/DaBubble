@@ -38,6 +38,15 @@ export class ChatDetailsComponent {
   ) { }
 
 
+  ngOnInit() {
+    if (this.chatService.currentChannelData?.owner) {
+      this.getNameOfChannelOwner(this.chatService.currentChannelData?.owner).then(name => {
+        this.currentChannelOwner = name;
+      });
+    }
+  }
+
+
   /**
    * Converts the Owner-Id to the Owner-Name aka readable Name (also removes the double quotes from the Owners name)
    * @param ownerId A string from the Database field "owner" containing the User-Id of the Channel-Owner
@@ -46,7 +55,7 @@ export class ChatDetailsComponent {
   async getNameOfChannelOwner(ownerId: string) {
     if (ownerId != "DABubble385-Team") {
       const ownerName = await this.userDataService.getUserName(ownerId);
-      return JSON.stringify(ownerName).replace(/^"|"$/g, '');
+      return ownerName;
     } else {
       return ownerId;
     }
