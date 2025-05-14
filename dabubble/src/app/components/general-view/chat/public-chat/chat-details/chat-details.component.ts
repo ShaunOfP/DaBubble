@@ -17,10 +17,7 @@ import { ChannelMembersComponent } from "../channel-members/channel-members.comp
 })
 export class ChatDetailsComponent {
   @Output() callParent: EventEmitter<void> = new EventEmitter();
-  currentChannelId: string = '';
-  currentChannelName: string = '';
   currentChannelOwner: string = '';
-  currentChannelDescription: string = '';
   currentChannelData: any;
   newDescriptionInput: string = '';
   newChannelNameInput: string = '';
@@ -190,7 +187,7 @@ export class ChatDetailsComponent {
       if (currentChannelData?.channelName != "Entwicklerchannel" && currentChannelData != undefined) {
         this.channelMemberService.removeCurrentUserFromChannel(currentUserId, currentChannelData);
         this.userDataService.getCurrentUserData().then((result: any) => {
-          this.userDataService.removeChannelFromUserData(result['channels'], this.currentChannelId);
+          this.userDataService.removeChannelFromUserData(result['channels'], currentChannelData.channelId);
         });
         this.closeChatDetails();
         this.goBackToMainChannel();
