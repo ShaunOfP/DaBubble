@@ -25,6 +25,15 @@ header {
     @media(max-width: $mobile-breakpoint) {
         gap: 5px;
     }
+
+    >:last-child {
+        @media (max-width: 380px) {
+            white-space: nowrap;
+            max-width: 200px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+    }
 }
 
 h3 {
