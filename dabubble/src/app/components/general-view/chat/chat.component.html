@@ -4,13 +4,13 @@
   <div class="chat-container" id="chat-container">
     <router-outlet></router-outlet>
     <div class="input-container">
-      <div class="popup-results" *ngIf="channelResults.length > 0">
+      <div class="popup-results" *ngIf="channelResults.length > 0 && messageInput.value.length > 0">
         <div class="search-result" *ngFor="let channel of channelResults" (click)="openChat(channel.channelId)">
           <span>#</span>
           <span>{{ channel.channelName }}</span>
         </div>
       </div>
-      <div class="popup-results" *ngIf="memberResults.length > 0">
+      <div class="popup-results" *ngIf="memberResults.length > 0 && messageInput.value.length > 0">
         <div class="search-result" *ngFor="let member of memberResults" (click)="openPrivateChat(member.privateChats)">
           <img src="{{ member.avatar }}">
           <span>{{ member.username }}</span>
