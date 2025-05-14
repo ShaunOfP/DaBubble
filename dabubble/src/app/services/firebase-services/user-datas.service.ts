@@ -10,7 +10,8 @@ import {
   query,
   where,
   getDocs,
-  docData
+  docData,
+  DocumentReference
 } from '@angular/fire/firestore';
 import { Observable, BehaviorSubject, from, map, Subscription, take } from 'rxjs';
 import { UserDatas } from './../../models/user.class';
@@ -217,8 +218,24 @@ export class UserDatasService {
         privateChats: accountData.privateChats,
       };
       await setDoc(userDocRef, userData);
+      this.addUserToMainChannel(userId);
     } catch (error) {
       console.error('❌ Fehler beim Speichern des Benutzers:', error);
+    }
+  }
+
+
+  async addUserToMainChannel(userId: string) {
+    const mainChannelRef = doc(this.firestore, `channels/ER84UOYc0F2jptDjWxFo`);
+    const mainDoc = await getDoc(mainChannelRef);
+    if (mainDoc.exists()) {
+      const userArray = mainDoc.data()['users'];
+      userArray.push(userId);
+      await updateDoc(mainChannelRef, {
+        users: userArray
+      });
+    } else {
+      console.warn("Error adding user to main channel");
     }
   }
 
@@ -344,6 +361,7 @@ export class UserDatasService {
     }
   }
 
+
   /**
    * Removes a channel from the Userdata of the currently logged in User
    * @param channelData Data from the current Channel
@@ -389,7 +407,7 @@ export class UserDatasService {
   }
 
 
-  getUserDataObservable(userId: string){
+  getUserDataObservable(userId: string) {
     const docRef = doc(this.firestore, `userDatas/${userId}`);
     return docData(docRef);
   }
