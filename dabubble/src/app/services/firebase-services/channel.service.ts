@@ -35,6 +35,7 @@ export class ChannelService {
   private channelSubject = new BehaviorSubject<Channel[]>([]);
   messages$: Observable<Message[]>;
   channels$: Observable<Channel[]>;
+  channelNames: string[] = [];
 
   constructor(private firestore: Firestore) {
     this.channelsCollection = collection(this.firestore, 'channels') as CollectionReference<Channel>;
@@ -70,6 +71,23 @@ export class ChannelService {
         }).filter(msg => msg !== null);
       })
     );
+  }
+
+
+  async getChannelNames() {
+    const snapshot = await getDocs(this.channelDataRef());
+    snapshot.forEach((doc) => {
+      this.channelNames.push(doc.data()['channelName']);
+    });
+  }
+
+
+  checkIfChannelAlreadyExists(inputString: string): Boolean {
+    if (this.channelNames.includes(inputString)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
 

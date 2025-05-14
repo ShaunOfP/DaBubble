@@ -8,6 +8,7 @@ import {
 import { FormsModule, NgForm } from '@angular/forms';
 import { ChannelMemberService } from '../../../services/firebase-services/channel-member.service';
 import { AddMembersToNewChannelComponent } from '../workspace-menu/add-members-to-new-channel/add-members-to-new-channel.component';
+import { ChannelService } from '../../../services/firebase-services/channel.service';
 
 @Component({
   selector: 'app-create-channel',
@@ -24,7 +25,9 @@ export class CreateChannelComponent implements OnInit {
   isComponentVisible: boolean = false;
   isMobile: boolean = false;
 
-  constructor(private memberService: ChannelMemberService) { }
+  constructor(private memberService: ChannelMemberService,
+    public channelService: ChannelService
+  ) { }
 
 
   /**
@@ -43,6 +46,7 @@ export class CreateChannelComponent implements OnInit {
     this.memberService.isComponentVisible$.subscribe((isVisible) => {
       this.isComponentVisible = isVisible;
     });
+    this.channelService.getChannelNames();
   }
 
 

@@ -18,6 +18,8 @@
           <span>Channel-Name</span>
           @if (!name.valid && name.touched) {
           <label for="name" class="error-message">Der Channel-Name wird benötigt</label>
+          } @else if (channelService.checkIfChannelAlreadyExists(newChannelName)){
+          <label for="name" class="error-message">Der Channel-Name existiert bereits</label>
           } @else {
           <label for="name" class="empty-field"></label>
           }
@@ -35,8 +37,10 @@
           name="newChannelDescription" />
       </div>
       <div class="form-submit-button-container">
-        <button [class.btn-primary--disable]="form.invalid" [class.btn-primary--default]="form.valid" type="submit"
-          [disabled]="name.invalid" id="submit-btn">
+        <button
+          [class.btn-primary--disable]="form.invalid || channelService.checkIfChannelAlreadyExists(newChannelName)"
+          [class.btn-primary--default]="form.valid" type="submit"
+          [disabled]="name.invalid || channelService.checkIfChannelAlreadyExists(newChannelName)" id="submit-btn">
           Erstellen
         </button>
       </div>
