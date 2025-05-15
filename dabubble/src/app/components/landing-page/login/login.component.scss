@@ -207,7 +207,7 @@
   }
 
   @media (max-width: 600px) {
-    left: 50%;
+    left: 65%;
     transform: translateX(-50%);
     width: fit-content;
     animation: slideAndShrinkMobile 0.2s forwards 4s, fadeOut 0.1s forwards 4.2s;
