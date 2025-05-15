@@ -17,6 +17,7 @@ import {
 import { AllSelectedMembersComponent } from './all-selected-members/all-selected-members.component';
 import { UserDatasService } from '../../../../services/firebase-services/user-datas.service';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { ChannelService } from '../../../../services/firebase-services/channel.service';
 
 @Component({
   selector: 'app-add-members-to-new-channel',
@@ -44,14 +45,13 @@ export class AddMembersToNewChannelComponent implements OnInit {
   searchFocus: boolean = false;
   isFocused: boolean = false;
   isMobile: boolean = false;
-  openAddMembers: boolean = true;
-  isComponentVisible: boolean = false;
   isAnimating: boolean = false;
 
   constructor(
     private memberService: ChannelMemberService,
     private userDataService: UserDatasService,
-    private eRef: ElementRef
+    private eRef: ElementRef,
+    public channelService: ChannelService
   ) { }
 
 
@@ -62,7 +62,7 @@ export class AddMembersToNewChannelComponent implements OnInit {
   @HostListener('document:click', ['$event'])
   onClickOutside(event: Event) {
     if (
-      this.openAddMembers &&
+      this.channelService.isAddMembersToNewChannelVisible &&
       !this.eRef.nativeElement
         .querySelector('.main-content')
         .contains(event.target as Node) &&
@@ -76,8 +76,6 @@ export class AddMembersToNewChannelComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscribeToSelectedMembers();
-    this.subscribeToVisibilityOfComponent();
-    this.openAddMembers = true;
     if (window.innerWidth < 450) {
       this.isMobile = true;
     }
@@ -90,16 +88,6 @@ export class AddMembersToNewChannelComponent implements OnInit {
   subscribeToSelectedMembers() {
     this.memberService.selectedMembers$.subscribe((members) => {
       this.selectedMembers = members;
-    });
-  }
-
-
-  /**
-   * Subscribes to the current state of the visibility of the component
-   */
-  subscribeToVisibilityOfComponent() {
-    this.memberService.isComponentVisible$.subscribe((isVisible) => {
-      this.isComponentVisible = isVisible;
     });
   }
 
@@ -122,6 +110,7 @@ export class AddMembersToNewChannelComponent implements OnInit {
     this.channelCreated = true;
     setTimeout(() => {
       this.close();
+      this.channelService.isCreateChannelClosed = true;
     }, 2000);
   }
 
@@ -174,7 +163,7 @@ export class AddMembersToNewChannelComponent implements OnInit {
       this.searchFocus = false;
       this.selectedOption = true;
       this.channelCreated = false;
-      this.openAddMembers = false;
+      this.channelService.isAddMembersToNewChannelVisible = false;
       this.memberService.updateComponentStatus(false);
     }, 200);
   }

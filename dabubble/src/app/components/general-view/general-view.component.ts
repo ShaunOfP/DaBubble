@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { CreateChannelComponent } from './create-channel/create-channel.component';
 import { ChatService } from '../../services/firebase-services/chat.service';
 import { AuthService } from '../../services/firebase-services/auth.service';
+import { ChannelService } from '../../services/firebase-services/channel.service';
 
 @Component({
   selector: 'app-general-view',
@@ -25,25 +26,16 @@ import { AuthService } from '../../services/firebase-services/auth.service';
   styleUrl: './general-view.component.scss'
 })
 export class GeneralViewComponent implements OnInit {
-  showCreateChannelOverlay: boolean = false;
   @ViewChild(ChatComponent) chatComponent!: ChatComponent;
   workspaceMenuState: boolean = false;
 
 
-  constructor(public chatService: ChatService, private authService: AuthService) {
+  constructor(public chatService: ChatService, private authService: AuthService, public channelService: ChannelService) {
   }
 
 
   ngOnInit(): void {
     this.authService.trackUserPresence(); //Aktiviert das Tracking der User mit Status Online
-  }
-
-
-  /**
-   * Toggles visibility for the Create Channel Component
-   */
-  toggleCreateChannelOverlay() {
-    this.showCreateChannelOverlay = !this.showCreateChannelOverlay;
   }
 
 

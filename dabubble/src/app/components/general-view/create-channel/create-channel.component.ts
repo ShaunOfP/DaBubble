@@ -1,9 +1,7 @@
 import { CommonModule } from '@angular/common';
 import {
   Component,
-  EventEmitter,
   OnInit,
-  Output,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ChannelMemberService } from '../../../services/firebase-services/channel-member.service';
@@ -18,7 +16,6 @@ import { ChannelService } from '../../../services/firebase-services/channel.serv
   styleUrl: './create-channel.component.scss',
 })
 export class CreateChannelComponent implements OnInit {
-  @Output() callParentToClose: EventEmitter<void> = new EventEmitter();
   newChannelName: string = '';
   newChannelDescription: string = '';
   createChannelContainerVisible: boolean = true;
@@ -54,7 +51,7 @@ export class CreateChannelComponent implements OnInit {
    * Sends a call to the parent component to close the Component
    */
   closeCreateChannel() {
-    this.callParentToClose.emit();
+    this.channelService.isCreateChannelClosed = true;
   }
 
 
@@ -71,7 +68,7 @@ export class CreateChannelComponent implements OnInit {
    * Removes a class to make the AddMembersToNewChannel Component visible
    */
   openAddMembersToNewChannelMenu() {
-    this.memberService.updateComponentStatus(true);
+    this.channelService.isAddMembersToNewChannelVisible = true;
   }
 
 
@@ -79,9 +76,7 @@ export class CreateChannelComponent implements OnInit {
    * Adds a class to hide the Create-Channel-Container
    */
   closeCreateChannelContainer() {
-    if (window.innerWidth > 500) {
-      this.createChannelContainerVisible = false;
-    }
+    this.channelService.isCreateChannelClosed = true;
   }
 
 
@@ -89,7 +84,7 @@ export class CreateChannelComponent implements OnInit {
    * Removes a class to make the Create-Channel-Container visible
    */
   openCreateChannelContainer() {
-    this.createChannelContainerVisible = true;
+    this.channelService.isCreateChannelClosed = false;
   }
 
 
@@ -104,7 +99,9 @@ export class CreateChannelComponent implements OnInit {
         this.newChannelName,
         this.newChannelDescription
       );
-      this.closeCreateChannelContainer();
+      if (window.innerWidth > 500) {
+        this.closeCreateChannelContainer();
+      }
     }
   }
 }

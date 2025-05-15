@@ -25,6 +25,7 @@ import { FormsModule } from '@angular/forms';
 import { FilterService } from '../../../services/component-services/filter.service';
 import { SearchResultWorkspaceComponent } from "./search-result-workspace/search-result-workspace.component";
 import { Subscription } from 'rxjs';
+import { ChannelService } from '../../../services/firebase-services/channel.service';
 
 @Component({
   selector: 'app-workspace-menu',
@@ -42,7 +43,6 @@ import { Subscription } from 'rxjs';
   styleUrl: './workspace-menu.component.scss',
 })
 export class WorkspaceMenuComponent implements OnInit, OnDestroy {
-  @Output() openCreateChannel: EventEmitter<void> = new EventEmitter();
   @Output() newMessage: EventEmitter<void> = new EventEmitter();
   @ViewChild('searchResults') searchResultRef!: ElementRef;
   currentChannels: string[] = [];
@@ -62,7 +62,8 @@ export class WorkspaceMenuComponent implements OnInit, OnDestroy {
     private router: Router,
     private cd: ChangeDetectorRef,
     private chatService: ChatService,
-    private filterService: FilterService
+    private filterService: FilterService,
+    private channelService: ChannelService
   ) { }
 
   ngOnInit() {
@@ -169,7 +170,7 @@ export class WorkspaceMenuComponent implements OnInit, OnDestroy {
    */
   openCreateChannelOverlay() {
     if (!this.userDatasService.checkIfGuestIsLoggedIn()) {
-      this.openCreateChannel.emit();
+      this.channelService.isCreateChannelClosed = false;
     } else {
       console.warn('Log in to create Channels');
     }

@@ -36,6 +36,8 @@ export class ChannelService {
   messages$: Observable<Message[]>;
   channels$: Observable<Channel[]>;
   channelNames: string[] = [];
+  isCreateChannelClosed: boolean = true;
+  isAddMembersToNewChannelVisible: boolean = false;
 
   constructor(private firestore: Firestore) {
     this.channelsCollection = collection(this.firestore, 'channels') as CollectionReference<Channel>;

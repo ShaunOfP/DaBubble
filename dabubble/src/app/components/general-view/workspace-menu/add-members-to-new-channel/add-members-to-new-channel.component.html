@@ -1,4 +1,4 @@
-<section *ngIf="openAddMembers">
+<section>
   <div class="main-content" [class.fade-out]="isAnimating">
     <div class="mobile-button-div">
       <button (click)="close()"></button>
@@ -10,7 +10,6 @@
         <img class="d-none" src="assets/img/hover_close.svg" />
       </div>
     </header>
-
     <form (ngSubmit)="onSubmit()">
       <div class="user-input-container">
         <div class="user-input">
