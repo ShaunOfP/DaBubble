@@ -24,9 +24,8 @@ import { ChatService } from '../../../services/firebase-services/chat.service';
 import { FormsModule } from '@angular/forms';
 import { FilterService } from '../../../services/component-services/filter.service';
 import { SearchResultWorkspaceComponent } from "./search-result-workspace/search-result-workspace.component";
-import { map, Observable, of, Subscription } from 'rxjs';
-import { ChannelService } from '../../../services/firebase-services/channel.service';
-import { Channel } from '../../../models/interfaces';
+import { Observable, Subscription } from 'rxjs';
+import { Channel, ChannelService } from '../../../services/firebase-services/channel.service';
 
 @Component({
   selector: 'app-workspace-menu',

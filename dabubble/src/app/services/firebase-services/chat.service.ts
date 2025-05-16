@@ -14,6 +14,7 @@ import {
   arrayUnion,
   where,
   getDocs,
+  docData,
 } from '@angular/fire/firestore';
 import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
 import { Message } from '../../models/interfaces';
@@ -83,26 +84,19 @@ export class ChatService {
   /**
    * Fetches the Data of the current Chat
    */
-  async loadChannelInfo() {
-    try {
-      const data = await getDoc(this.getChannelDocRef(this.currentChatId));
-      if (data.exists()) {
-        this.currentChannelData = data.data() as Channel;
-        this.loadChannelUserIcons();
-      }
-    }
-    catch (error) {
-      console.error('Fehler beim Laden der Kanal-Info:', error);
-    }
+  loadChannelInfo() {
+    docData(this.getChannelDocRef(this.currentChatId)).subscribe((data) => {
+      this.currentChannelData = data as Channel;
+    });
   }
 
 
-  reloadChatMessages(){
+  reloadChatMessages() {
     this.reloadChat$.next();
   }
 
 
-  triggerChatReload(){
+  triggerChatReload() {
     return this.reloadChat$.asObservable();
   }
 
