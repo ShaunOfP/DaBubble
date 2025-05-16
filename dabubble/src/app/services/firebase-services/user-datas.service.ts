@@ -13,7 +13,7 @@ import {
   docData,
   DocumentReference
 } from '@angular/fire/firestore';
-import { Observable, BehaviorSubject, from, map, Subscription, take } from 'rxjs';
+import { Observable, BehaviorSubject, from, map, Subscription, take, combineLatest } from 'rxjs';
 import { UserDatas } from './../../models/user.class';
 import { GuestDatas } from '../../models/guest.class';
 import { ActivatedRoute } from '@angular/router';
@@ -319,15 +319,15 @@ export class UserDatasService {
     }
   }
 
-  async getChannelNames(channelId: string) {
-    const docRef = doc(this.firestore, `channels/${channelId}`);
-    const docSnapshot = await getDoc(docRef);
-    if (docSnapshot.exists()) {
-      this.channelData.push(docSnapshot.data());
-      return docSnapshot.data();
-    } else {
-      return undefined;
-    }
+  getChannelNames(channelId: string) {
+    const channelDoc = doc(this.firestore, `channels/${channelId}`);
+    return docData(channelDoc, { idField: 'id' });
+  }
+
+
+  getChannelsData(channelIds: string[]): Observable<any[]> {
+    const observables = channelIds.map(id => this.getChannelNames(id));
+    return combineLatest(observables);
   }
 
 

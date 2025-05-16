@@ -6,3 +6,12 @@ export interface Message {
   reaction?: Record<string, string[]>,
   threadAnswers: number
 }
+
+export interface Channel {
+  channelId: string,
+  channelName: string,
+  createdAt: number,
+  description: string,
+  owner: string,
+  users: string[]
+}

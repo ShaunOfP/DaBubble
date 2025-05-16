@@ -24,8 +24,9 @@ import { ChatService } from '../../../services/firebase-services/chat.service';
 import { FormsModule } from '@angular/forms';
 import { FilterService } from '../../../services/component-services/filter.service';
 import { SearchResultWorkspaceComponent } from "./search-result-workspace/search-result-workspace.component";
-import { Subscription } from 'rxjs';
+import { map, Observable, of, Subscription } from 'rxjs';
 import { ChannelService } from '../../../services/firebase-services/channel.service';
+import { Channel } from '../../../models/interfaces';
 
 @Component({
   selector: 'app-workspace-menu',
@@ -46,7 +47,6 @@ export class WorkspaceMenuComponent implements OnInit, OnDestroy {
   @Output() newMessage: EventEmitter<void> = new EventEmitter();
   @ViewChild('searchResults') searchResultRef!: ElementRef;
   currentChannels: string[] = [];
-  readableChannels: any[] = [];
   showCreateChannelOverlay: boolean = false;
   workspaceUserData!: UserObserver | null;
   toggleMarginLeft: boolean = true;
@@ -55,6 +55,7 @@ export class WorkspaceMenuComponent implements OnInit, OnDestroy {
   blur: boolean = false;
   searchInput: string = '';
   private subscription = new Subscription();
+  readableChannelNames$!: Observable<Channel[]>;
 
   constructor(
     public userDatasService: UserDatasService,
@@ -134,13 +135,12 @@ export class WorkspaceMenuComponent implements OnInit, OnDestroy {
 
 
   /**
-   * Fetches the current channels for the logged in user
+   * Translates ids to readable channel names
    */
   fetchChannelData(): void {
     try {
       if (this.workspaceUserData) {
         this.fetchChannelNames(this.workspaceUserData.channels);
-        console.log(this.workspaceUserData.channels);
       }
     } catch (error) {
       console.error('Error fetching user data:', error);
@@ -152,17 +152,8 @@ export class WorkspaceMenuComponent implements OnInit, OnDestroy {
    * Fetches the current channel ids and converts them to readable names
    * @param channelIdArray array with channel ids
    */
-  async fetchChannelNames(channelIdArray: string[]): Promise<void> {
-    let array: any[] = [];
-    for (const channelId of channelIdArray) {
-      await this.userDatasService.getChannelNames(channelId).then((result) => {
-        if (result) {
-          array.push(result);
-        }
-      });
-    }
-    this.readableChannels = array;
-    this.cd.detectChanges();
+  fetchChannelNames(channelIdArray: string[]) {
+    this.readableChannelNames$ = this.userDatasService.getChannelsData(channelIdArray);
   }
 
 

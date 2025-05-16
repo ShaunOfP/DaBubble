@@ -40,7 +40,7 @@
               </div>
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <div class="channels">
+          <div class="channels" *ngIf="readableChannelNames$ | async as readableChannels">
             <div *ngFor="let channel of readableChannels" class="channel--primary"
               (click)="openPublicChatViaId(channel.channelId)">
               <b>#</b>
