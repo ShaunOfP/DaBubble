@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit {
       UserDatas[]
     >;
     const animation = sessionStorage.getItem('animation');
-    // this.animationPlayed = animation === 'true';
+    this.animationPlayed = animation === 'true';
     this.loginForm = this.form.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],

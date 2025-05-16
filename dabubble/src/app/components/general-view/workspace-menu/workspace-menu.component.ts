@@ -140,6 +140,7 @@ export class WorkspaceMenuComponent implements OnInit, OnDestroy {
     try {
       if (this.workspaceUserData) {
         this.fetchChannelNames(this.workspaceUserData.channels);
+        console.log(this.workspaceUserData.channels);
       }
     } catch (error) {
       console.error('Error fetching user data:', error);
@@ -171,6 +172,7 @@ export class WorkspaceMenuComponent implements OnInit, OnDestroy {
   openCreateChannelOverlay() {
     if (!this.userDatasService.checkIfGuestIsLoggedIn()) {
       this.channelService.isCreateChannelClosed = false;
+      this.channelService.isCreateChannelOverlayVisible = true;
     } else {
       console.warn('Log in to create Channels');
     }

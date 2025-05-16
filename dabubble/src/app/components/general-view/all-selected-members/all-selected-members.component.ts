@@ -1,9 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import {
-  ChannelMemberService,
-  Member,
-} from '../../../../../services/firebase-services/channel-member.service';
 import { CommonModule } from '@angular/common';
+import { ChannelMemberService, Member } from '../../../services/firebase-services/channel-member.service';
 
 @Component({
   selector: 'app-all-selected-members',

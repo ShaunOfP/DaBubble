@@ -38,6 +38,7 @@ export class ChannelService {
   channelNames: string[] = [];
   isCreateChannelClosed: boolean = true;
   isAddMembersToNewChannelVisible: boolean = false;
+  isCreateChannelOverlayVisible: boolean = false;
 
   constructor(private firestore: Firestore) {
     this.channelsCollection = collection(this.firestore, 'channels') as CollectionReference<Channel>;

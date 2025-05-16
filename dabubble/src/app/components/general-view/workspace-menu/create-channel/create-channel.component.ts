@@ -4,9 +4,9 @@ import {
   OnInit,
 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { ChannelMemberService } from '../../../services/firebase-services/channel-member.service';
-import { AddMembersToNewChannelComponent } from '../workspace-menu/add-members-to-new-channel/add-members-to-new-channel.component';
-import { ChannelService } from '../../../services/firebase-services/channel.service';
+import { ChannelMemberService } from '../../../../services/firebase-services/channel-member.service';
+import { ChannelService } from '../../../../services/firebase-services/channel.service';
+import { AddMembersToNewChannelComponent } from './add-members-to-new-channel/add-members-to-new-channel.component';
 
 @Component({
   selector: 'app-create-channel',
@@ -21,9 +21,10 @@ export class CreateChannelComponent implements OnInit {
   createChannelContainerVisible: boolean = true;
   isComponentVisible: boolean = false;
   isMobile: boolean = false;
+  showMe: boolean = false;
 
   constructor(private memberService: ChannelMemberService,
-    public channelService: ChannelService
+    public channelService: ChannelService,
   ) { }
 
 
@@ -52,6 +53,8 @@ export class CreateChannelComponent implements OnInit {
    */
   closeCreateChannel() {
     this.channelService.isCreateChannelClosed = true;
+    this.channelService.isAddMembersToNewChannelVisible = false;
+    this.channelService.isCreateChannelOverlayVisible = false;
   }
 
 
@@ -65,7 +68,7 @@ export class CreateChannelComponent implements OnInit {
 
 
   /**
-   * Removes a class to make the AddMembersToNewChannel Component visible
+   * Changes variable to make the AddMembersToNewChannel Component visible
    */
   openAddMembersToNewChannelMenu() {
     this.channelService.isAddMembersToNewChannelVisible = true;
@@ -73,15 +76,15 @@ export class CreateChannelComponent implements OnInit {
 
 
   /**
-   * Adds a class to hide the Create-Channel-Container
+   * Hides the CreateChannel-Overlay to make room for the AddMembersToNewChannel-Component
    */
-  closeCreateChannelContainer() {
-    this.channelService.isCreateChannelClosed = true;
+  hideCreateChannelOverlay() {
+    this.channelService.isCreateChannelOverlayVisible = false;
   }
 
 
   /**
-   * Removes a class to make the Create-Channel-Container visible
+   * Changes variable to make the Create-Channel-Container visible
    */
   openCreateChannelContainer() {
     this.channelService.isCreateChannelClosed = false;
@@ -93,15 +96,15 @@ export class CreateChannelComponent implements OnInit {
    * @param ngForm for Validation
    */
   formSubmit(ngForm: NgForm) {
-    this.openAddMembersToNewChannelMenu();
     if (ngForm.submitted && ngForm.form.valid) {
       this.memberService.setChannelData(
         this.newChannelName,
         this.newChannelDescription
       );
       if (window.innerWidth > 500) {
-        this.closeCreateChannelContainer();
+        this.hideCreateChannelOverlay();
       }
+      this.openAddMembersToNewChannelMenu();
     }
   }
 }

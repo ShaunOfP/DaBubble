@@ -1,0 +1,269 @@
+@import "./../../../../../../styles.scss";
+
+section {
+    width: 100vw;
+}
+
+.main-content {
+    background-color: var(--color-white);
+    border-radius: 30px;
+    padding: 40px;
+    width: 710px;
+    margin: auto;
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    >h3 {
+        margin: 0;
+    }
+}
+
+.close-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 40px;
+
+    &:hover {
+        cursor: pointer;
+        border-radius: 30px;
+        background-color: var(--color-blue-bg);
+
+        :first-child {
+            display: none;
+        }
+
+        :last-child {
+            display: flex;
+        }
+    }
+}
+
+span {
+    font-size: 18px;
+}
+
+.btn-container {
+    display: flex;
+    justify-content: end;
+}
+
+button {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.user-input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.user-input {
+    @include arrangement($d: flex, $jc: start, $ai: start, $fd: column);
+    gap: 20px;
+
+    label {
+        @include arrangement($d: flex, $jc: start, $ai: center, $fd: row);
+    }
+
+    :first-child {
+        justify-content: space-around;
+    }
+}
+
+.input-field {
+    background-color: var(--color-white);
+    font-size: 18px;
+    border: 1px solid var(--color-blue-border);
+
+    &:hover {
+        outline: none;
+        border: 1px solid var(--color-purple-primary-default);
+    }
+
+    &:focus {
+        outline: none;
+        border: 1px solid var(--color-purple-primary-default);
+    }
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+}
+
+.all-selected-member-container {
+    position: absolute;
+    display: flex;
+    align-items: center;
+}
+
+.further-members-container {
+    background-color: var(--color-blue-bg);
+    border-radius: 30px;
+    height: fit-content;
+    width: fit-content;
+    padding: 8px 10px;
+    border: none;
+
+    &:hover {
+        cursor: pointer;
+        color: var(--color-purple-secondary-hover);
+        zoom: 1.05;
+    }
+}
+
+.member-container {
+    margin: 8px;
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    gap: 15px;
+    padding: 3px 20px 3px 20px;
+    border-radius: 35px;
+    background-color: var(--color-blue-bg);
+
+    .avatar {
+        width: 34px;
+        border-radius: 50%;
+    }
+
+    img {
+        width: 10px;
+        cursor: pointer;
+    }
+}
+
+::placeholder {
+    font-size: 18px;
+}
+
+.d-none {
+    display: none;
+}
+
+label {
+    cursor: pointer;
+
+    span {
+        margin-left: 18px;
+    }
+
+    input {
+        cursor: pointer;
+    }
+}
+
+.purple {
+    color: var(--color-purple-primary-default);
+}
+
+.overlay-container {
+    @include arrangement($d: flex, $jc: end, $ai: end, $fd: column);
+}
+
+.members-container-mobile {
+    display: none;
+    background-color: var(--color-blue-bg);
+    border-radius: 30px;
+    height: fit-content;
+    width: fit-content;
+    padding: 8px 10px;
+    border: none;
+    margin: 10px;
+
+    &:hover {
+        cursor: pointer;
+        color: var(--color-purple-secondary-hover);
+        zoom: 1.05;
+    }
+}
+
+.mobile-button-div {
+    button {
+        display: none;
+    }
+}
+
+@media (max-width: $mobile-breakpoint) {
+    .main-content {
+        padding: 32px;
+        max-width: 80%;
+    }
+}
+
+@media (max-width: 500px) {
+    :host {
+        position: absolute;
+        background-color: rgba(128, 128, 128, 0.382);
+    }
+
+    .mobile-button-div {
+        display: flex;
+        justify-content: center;
+
+        button {
+            display: block;
+            border: none;
+            width: 50px;
+            height: 5px;
+            border-radius: 10px;
+            color: var(--color-blue-border);
+            cursor: pointer;
+        }
+    }
+
+    section {
+        height: 100vh;
+    }
+
+    .main-content {
+        position: absolute;
+        bottom: 0;
+        width: calc(100% - 64px);
+        border-radius: 30px 30px 0 0;
+        max-width: none;
+        animation: fadeIn 0.3s forwards;
+
+        @keyframes fadeIn {
+            from {
+                transform: translateY(250px);
+            }
+
+            to {
+                transform: translateY(0);
+            }
+        }
+    }
+
+    .fade-out {
+        animation: fadeOut 0.3s forwards;
+    }
+
+    @keyframes fadeOut {
+        from {
+            transform: translateY(0);
+        }
+
+        to {
+            transform: translateY(350px);
+        }
+    }
+
+    .member-container {
+        span {
+            font-size: 12px;
+        }
+    }
+}

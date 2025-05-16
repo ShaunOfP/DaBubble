@@ -1,4 +1,4 @@
-@import "./../../../../../../styles.scss";
+@import "./../../../../styles.scss";
 
 section {
   @include arrangement($d: flex, $jc: center, $ai: center, $fd: column);
@@ -48,9 +48,6 @@ header {
     border-radius: 100px;
   }
 }
-
-/* Media Queries */
-// @media (max-width: $mobile-breakpoint) {}
 
 @media (max-width: 450px) {
   header {

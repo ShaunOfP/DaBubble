@@ -1,5 +1,5 @@
 <section>
-  <div *ngIf="!channelService.isCreateChannelClosed">
+  <div *ngIf="channelService.isCreateChannelOverlayVisible">
     <header>
       <h3>Channel erstellen</h3>
       <div class="close-button" (click)="closeCreateChannel()">
@@ -46,7 +46,7 @@
       </div>
     </form>
   </div>
-  <app-add-members-to-new-channel *ngIf="channelService.isAddMembersToNewChannelVisible" id="addMembersToNewChannel"
+  <app-add-members-to-new-channel *ngIf="channelService.isAddMembersToNewChannelVisible"
     (closeAll)="closeCreateChannelAndChangeClasses()">
   </app-add-members-to-new-channel>
 </section>

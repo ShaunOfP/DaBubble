@@ -8,30 +8,20 @@ import {
   HostListener,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AllMembersComponent } from '../../all-members/all-members.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {
-  ChannelMemberService,
-  Member,
-} from '../../../../services/firebase-services/channel-member.service';
-import { AllSelectedMembersComponent } from './all-selected-members/all-selected-members.component';
-import { UserDatasService } from '../../../../services/firebase-services/user-datas.service';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
-import { ChannelService } from '../../../../services/firebase-services/channel.service';
+import { ChannelMemberService, Member } from '../../../../../services/firebase-services/channel-member.service';
+import { UserDatasService } from '../../../../../services/firebase-services/user-datas.service';
+import { ChannelService } from '../../../../../services/firebase-services/channel.service';
+import { AllMembersComponent } from "../../../all-members/all-members.component";
+import { AllSelectedMembersComponent } from '../../../all-selected-members/all-selected-members.component';
 
 @Component({
   selector: 'app-add-members-to-new-channel',
   standalone: true,
-  imports: [
-    CommonModule,
-    AllMembersComponent,
-    ReactiveFormsModule,
-    AllSelectedMembersComponent,
-    FormsModule,
-    MatBottomSheetModule,
-  ],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, MatBottomSheetModule, AllSelectedMembersComponent, AllMembersComponent],
   templateUrl: './add-members-to-new-channel.component.html',
-  styleUrl: './add-members-to-new-channel.component.scss',
+  styleUrl: './add-members-to-new-channel.component.scss'
 })
 export class AddMembersToNewChannelComponent implements OnInit {
   @ViewChild('nameInput') nameInputField!: ElementRef;
@@ -51,7 +41,7 @@ export class AddMembersToNewChannelComponent implements OnInit {
     private memberService: ChannelMemberService,
     private userDataService: UserDatasService,
     private eRef: ElementRef,
-    public channelService: ChannelService
+    public channelService: ChannelService,
   ) { }
 
 
@@ -164,6 +154,7 @@ export class AddMembersToNewChannelComponent implements OnInit {
       this.selectedOption = true;
       this.channelCreated = false;
       this.channelService.isAddMembersToNewChannelVisible = false;
+      this.channelService.isCreateChannelOverlayVisible = false;
       this.memberService.updateComponentStatus(false);
     }, 200);
   }

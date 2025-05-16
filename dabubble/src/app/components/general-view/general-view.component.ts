@@ -5,7 +5,7 @@ import { HeaderComponent } from './header/header.component';
 import { ThreadComponent } from './thread/thread.component';
 import { ChatComponent } from './chat/chat.component';
 import { CommonModule } from '@angular/common';
-import { CreateChannelComponent } from './create-channel/create-channel.component';
+import { CreateChannelComponent } from './workspace-menu/create-channel/create-channel.component';
 import { ChatService } from '../../services/firebase-services/chat.service';
 import { AuthService } from '../../services/firebase-services/auth.service';
 import { ChannelService } from '../../services/firebase-services/channel.service';

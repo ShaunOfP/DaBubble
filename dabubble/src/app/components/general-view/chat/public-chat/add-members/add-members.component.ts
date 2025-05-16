@@ -7,9 +7,9 @@ import {
   ChannelMemberService,
   Member,
 } from '../../../../../services/firebase-services/channel-member.service';
-import { AllSelectedMembersComponent } from '../../../workspace-menu/add-members-to-new-channel/all-selected-members/all-selected-members.component';
 import { UserDatasService } from '../../../../../services/firebase-services/user-datas.service';
 import { ChatService } from '../../../../../services/firebase-services/chat.service';
+import { AllSelectedMembersComponent } from '../../../all-selected-members/all-selected-members.component';
 
 @Component({
   selector: 'app-add-members',

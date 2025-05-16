@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [CommonModule, AllMembersComponent, FormsModule],
   templateUrl: './new-message.component.html',
-  styleUrls: ['./new-message.component.scss', '../../workspace-menu/add-members-to-new-channel/add-members-to-new-channel.component.scss']
+  styleUrls: ['./new-message.component.scss']
 })
 export class NewMessageComponent implements OnInit {
   selectedMembers: Member[] = [];
