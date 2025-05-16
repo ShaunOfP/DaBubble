@@ -24,7 +24,7 @@ export class CreateChannelComponent implements OnInit {
   showMe: boolean = false;
 
   constructor(private memberService: ChannelMemberService,
-    public channelService: ChannelService,
+    public channelService: ChannelService
   ) { }
 
 
@@ -99,7 +99,7 @@ export class CreateChannelComponent implements OnInit {
     if (ngForm.submitted && ngForm.form.valid) {
       this.memberService.setChannelData(
         this.newChannelName,
-        this.newChannelDescription
+        this.newChannelDescription,
       );
       if (window.innerWidth > 500) {
         this.hideCreateChannelOverlay();

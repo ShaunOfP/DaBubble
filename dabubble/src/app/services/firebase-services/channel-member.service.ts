@@ -175,7 +175,7 @@ export class ChannelMemberService {
       createdAt: new Date().getTime(),
       description: this.channelDescription.value,
       owner: ownerId,
-      users: members.map((member) => member.id),
+      users: [ownerId, ...members.map((member) => member.id)],
     };
     await setDoc(channelDocRef, channelData);
     await this.addNewChannelToMembers(members, generatedId);
