@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { combineLatest, distinctUntilChanged, filter, map, Observable, switchMap, tap } from 'rxjs';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { combineLatest, distinctUntilChanged, filter, map, Observable, switchMap, take, tap } from 'rxjs';
 import { Message } from '../../../../models/interfaces';
 import { ChatService } from '../../../../services/firebase-services/chat.service';
 import { ActivatedRoute } from '@angular/router';
@@ -11,11 +11,12 @@ import { ChatComponent } from '../chat.component';
 import { UserInfoCardComponent } from "../user-info-card/user-info-card.component";
 import { UserDatasService } from '../../../../services/firebase-services/user-datas.service';
 import { DmReactionsComponent } from "./dm-reactions/dm-reactions.component";
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-private-chat',
   standalone: true,
-  imports: [CommonModule, EmojiPickerComponent, MatCardModule, UserInfoCardComponent, DmReactionsComponent],
+  imports: [CommonModule, EmojiPickerComponent, MatCardModule, UserInfoCardComponent, DmReactionsComponent, FormsModule],
   templateUrl: './private-chat.component.html',
   styleUrl: './private-chat.component.scss'
 })
@@ -29,6 +30,12 @@ export class PrivateChatComponent implements OnInit {
   hoveredMessageId: string | null = null;
   showPicker: boolean = false;
   showFirstMessage: boolean = true;
+  showEditMessage: boolean = false;
+  editMessageId: string | null = null;
+  messageDetailsMap: { [id: string]: any } = {};
+  hideReactionMenu: boolean = false;
+  messageValue: string = '';
+  isMobile: boolean = false;
 
   private scrollListener!: () => void;
 
@@ -48,6 +55,29 @@ export class PrivateChatComponent implements OnInit {
 
   showMemberInfo() {
     this.userDatasService.showUserInfoCard = true;
+  }
+
+
+  openThread(messageId: string): void {
+    this.chatService.messageID = messageId;
+    this.chatService.getMessageThread(messageId);
+    if (this.chatService.threadClosed) {
+      this.chatService.toggleDrawerState();
+      this.chatService.threadClosed = false;
+    }
+    this.chatService.showThreadWhenResponsive = true;
+  }
+
+
+  updateChatMessage(messageId: string, messageUniqueId: string) {
+    this.chatService.updateChatMessage(messageId, this.messageValue, messageUniqueId);
+    this.editMessageId = null;
+    this.hideReactionMenu = false;
+  }
+
+
+  initializeMessageValue(content: string) {
+    this.messageValue = content;
   }
 
 
@@ -80,6 +110,18 @@ export class PrivateChatComponent implements OnInit {
   }
 
 
+  loadMessageUserIdIntoObject(messages: Array<Message>) {
+    messages.forEach(message => {
+      this.userDatasService.getUserDataObservable(message.userId)
+        .pipe(take(1))
+        .subscribe(userData => {
+          this.messageDetailsMap[message.uniqueId] = userData;
+        }
+        );
+    });
+  }
+
+
   sendReaction(emoji: string, id: string) {
     this.chatService.updateMessage(emoji, id, this.userDatasService.currentUserId, false)
   }
@@ -91,8 +133,8 @@ export class PrivateChatComponent implements OnInit {
       this.filterService.filterText$.pipe(distinctUntilChanged())
     ]).pipe(
       map(([messages, filterText]) => {
+        this.loadMessageUserIdIntoObject(messages);
         if (!filterText) return messages;
-
         const searchLower = filterText.toLowerCase();
         return messages.filter(message => {
           const contentMatch = message.content?.toLowerCase().startsWith(searchLower);
@@ -208,4 +250,14 @@ export class PrivateChatComponent implements OnInit {
     });
     return userId === currentUser ? 'secondary' : 'primary';
   }
+
+
+  @HostListener('window:resize', [])
+    isWidth400OrLess() {
+      if (window.innerWidth <= 400) {
+        this.isMobile = true;
+      } else {
+        this.isMobile = false;
+      }
+    }
 }

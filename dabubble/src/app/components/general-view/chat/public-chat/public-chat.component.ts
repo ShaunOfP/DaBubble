@@ -51,7 +51,7 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   editMessageId: string | null = null;
   messageValue: string = '';
   hideReactionMenu: boolean = false;
-  isMobile = false;
+  isMobile: boolean = false;
   messageDetailsMap: { [id: string]: any } = {};
   private subscription!: Subscription;
 

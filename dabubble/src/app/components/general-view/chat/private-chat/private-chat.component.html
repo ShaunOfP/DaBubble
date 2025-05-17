@@ -26,20 +26,27 @@
             <div class="chat-content_reaction" *ngIf="hoveredMessageId === message.id">
                 <button (click)="sendReaction('green_check', message.id)"><img src="assets/img/green_check.svg"
                         alt="check"></button>
-                <button><img src="assets/img/clap_hands.svg" alt="check"></button>
+                <button (click)="sendReaction('🙌', message.id)"><img src="assets/img/clap_hands.svg"
+                        alt="check"></button>
                 <button (click)="showPicker = !showPicker"><img src="assets/img/add_reaction.svg" alt="check"></button>
                 <app-emoji-picker *ngIf="showPicker" (mouseleave)="showPicker = false"
                     (click)="$event.preventDefault()"></app-emoji-picker>
-                <button><img src="assets/img/add_comment.svg" alt="check"></button>
-                <button *ngIf="checkStyle(message.userId) === 'secondary'">
+                <button (click)="openThread(message.id)"><img src="assets/img/add_comment.svg" alt="check"></button>
+                <button *ngIf="checkStyle(message.userId) === 'secondary'" (click)="showEditMessage = !showEditMessage"
+                    class="relative">
                     <img src="assets/img/menu_points.svg" alt="check">
+                    <span *ngIf="showEditMessage"
+                        (click)="editMessageId = message.id; initializeMessageValue(message.content)"
+                        class="edit-message">Nachricht
+                        bearbeiten</span>
                 </button>
             </div>
-            <div class="row-reverse">
-                <img src="assets/img/avatar1.svg" alt="avatar" />
-                <div class="chat-content_conversation">
+            <div class="row-reverse" *ngIf="messageDetailsMap[message.uniqueId] as userData">
+                <img class="avatar" src="{{ userData.avatar }}" alt="avatar" />
+                <div *ngIf="message.id !== editMessageId"
+                    class="chat-content_conversation--{{ checkStyle(message.userId) }}">
                     <div class="chat-content_header">
-                        <span>{{ message.sender }}</span>
+                        <span>{{ userData.username }}</span>
                         <span>{{ formatTime(message.createdAt) }}</span>
                     </div>
                     <span class="chat-content_message--{{ checkStyle(message.userId) }}">
@@ -47,6 +54,23 @@
                     </span>
                 </div>
             </div>
+            <div class="thread-answers-count" (click)="openThread(message.id)" *ngIf="message.threadAnswers > 0">{{
+                message.threadAnswers }} Antworten
+            </div>
+            <form *ngIf="message.id === editMessageId" class="edit-container"
+                (ngSubmit)="updateChatMessage(message.id, message.uniqueId)" (mouseenter)="hideReactionMenu = true"
+                (mouseleave)="hideReactionMenu = false">
+                <textarea [(ngModel)]="messageValue" name="newMessageValue">{{ message.content }}</textarea>
+                <div class="edit-btn-container">
+                    <button *ngIf="!isMobile" class="btn-secondary--default"
+                        (click)="editMessageId = null; hideReactionMenu = false">Abbrechen</button>
+                    <button *ngIf="!isMobile" class="btn-primary--default" type="submit">Speichern</button>
+                    <button *ngIf="isMobile" (click)="editMessageId = null; hideReactionMenu = false"
+                        class="btn-secondary--default"><img src="assets/img/close.svg"></button>
+                    <button *ngIf="isMobile" class="btn-primary--default" type="submit"><img
+                            src="assets/img/mobile_save.svg"></button>
+                </div>
+            </form>
             <app-dm-reactions class="message-reactions" [message]="message"
                 [hoveredMessageId]="hoveredMessageId"></app-dm-reactions>
         </div>
