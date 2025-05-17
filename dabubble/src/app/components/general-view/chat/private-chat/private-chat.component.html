@@ -36,7 +36,7 @@
                 <button (click)="showPicker = !showPicker; setMobilePicker(true)"><img src="assets/img/add_reaction.svg" alt="check"></button>
                 <app-emoji-picker *ngIf="showPicker && !isWindowBelow500()" (mouseleave)="showPicker = false"
                     (click)="$event.preventDefault()"></app-emoji-picker>
-                <button (click)="openThread(message.id)"><img src="assets/img/add_comment.svg" alt="check"></button>
+                <!-- <button (click)="openThread(message.id)"><img src="assets/img/add_comment.svg" alt="check"></button> -->
                 <button *ngIf="checkStyle(message.userId) === 'secondary'" (click)="showEditMessage = !showEditMessage"
                     class="relative">
                     <img src="assets/img/menu_points.svg" alt="check">
@@ -59,10 +59,10 @@
                     </span>
                 </div>
             </div>
-            <div class="thread-answers-count" (click)="openThread(message.id)"
+            <!-- <div class="thread-answers-count" (click)="openThread(message.id)"
                 *ngIf="message.threadAnswers > 0 && editMessageId !== message.id">{{
                 message.threadAnswers }} Antworten
-            </div>
+            </div> -->
             <form *ngIf="message.id === editMessageId" class="edit-container"
                 (ngSubmit)="updateChatMessage(message.id, message.uniqueId)">
                 <textarea [(ngModel)]="messageValue" name="newMessageValue">{{ message.content }}</textarea>
