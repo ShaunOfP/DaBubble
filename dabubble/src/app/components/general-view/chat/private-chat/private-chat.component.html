@@ -23,7 +23,7 @@
         </div>
         <div class="chat-content--{{ checkStyle(message.userId) }}" (mouseover)="hoveredMessageId = message.id"
             (mouseout)="hoveredMessageId = null">
-            <div class="chat-content_reaction" *ngIf="hoveredMessageId === message.id">
+            <div class="chat-content_reaction" *ngIf="hoveredMessageId === message.id && editMessageId !== message.id">
                 <button (click)="sendReaction('green_check', message.id)"><img src="assets/img/green_check.svg"
                         alt="check"></button>
                 <button (click)="sendReaction('🙌', message.id)"><img src="assets/img/clap_hands.svg"
@@ -36,7 +36,7 @@
                     class="relative">
                     <img src="assets/img/menu_points.svg" alt="check">
                     <span *ngIf="showEditMessage"
-                        (click)="editMessageId = message.id; initializeMessageValue(message.content)"
+                        (click)="setEditId(message.id); initializeMessageValue(message.content)"
                         class="edit-message">Nachricht
                         bearbeiten</span>
                 </button>
@@ -54,25 +54,24 @@
                     </span>
                 </div>
             </div>
-            <div class="thread-answers-count" (click)="openThread(message.id)" *ngIf="message.threadAnswers > 0">{{
+            <div class="thread-answers-count" (click)="openThread(message.id)" *ngIf="message.threadAnswers > 0 && editMessageId !== message.id">{{
                 message.threadAnswers }} Antworten
             </div>
             <form *ngIf="message.id === editMessageId" class="edit-container"
-                (ngSubmit)="updateChatMessage(message.id, message.uniqueId)" (mouseenter)="hideReactionMenu = true"
-                (mouseleave)="hideReactionMenu = false">
+                (ngSubmit)="updateChatMessage(message.id, message.uniqueId)">
                 <textarea [(ngModel)]="messageValue" name="newMessageValue">{{ message.content }}</textarea>
                 <div class="edit-btn-container">
                     <button *ngIf="!isMobile" class="btn-secondary--default"
-                        (click)="editMessageId = null; hideReactionMenu = false">Abbrechen</button>
+                        (click)="editMessageId = null">Abbrechen</button>
                     <button *ngIf="!isMobile" class="btn-primary--default" type="submit">Speichern</button>
-                    <button *ngIf="isMobile" (click)="editMessageId = null; hideReactionMenu = false"
+                    <button *ngIf="isMobile" (click)="editMessageId = null"
                         class="btn-secondary--default"><img src="assets/img/close.svg"></button>
                     <button *ngIf="isMobile" class="btn-primary--default" type="submit"><img
                             src="assets/img/mobile_save.svg"></button>
                 </div>
             </form>
             <app-dm-reactions class="message-reactions" [message]="message"
-                [hoveredMessageId]="hoveredMessageId"></app-dm-reactions>
+                [hoveredMessageId]="hoveredMessageId" *ngIf="editMessageId !== message.id"></app-dm-reactions>
         </div>
     </div>
     <div class="new-message" *ngIf="newMessage">

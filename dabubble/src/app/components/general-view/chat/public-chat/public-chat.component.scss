@@ -279,6 +279,7 @@ header {
     width: max-content;
     bottom: 35px;
     left: 20px;
+    z-index: 3;
 
     @media (max-width: 440px) {
       top: 35px;

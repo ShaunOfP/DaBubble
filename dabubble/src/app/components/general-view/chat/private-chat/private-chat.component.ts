@@ -33,7 +33,6 @@ export class PrivateChatComponent implements OnInit {
   showEditMessage: boolean = false;
   editMessageId: string | null = null;
   messageDetailsMap: { [id: string]: any } = {};
-  hideReactionMenu: boolean = false;
   messageValue: string = '';
   isMobile: boolean = false;
 
@@ -50,6 +49,11 @@ export class PrivateChatComponent implements OnInit {
   ngOnInit(): void {
     this.loadMessages();
     this.loadFilter();
+  }
+
+
+  setEditId(messageId: string){
+    this.editMessageId = messageId;
   }
 
 
@@ -72,7 +76,6 @@ export class PrivateChatComponent implements OnInit {
   updateChatMessage(messageId: string, messageUniqueId: string) {
     this.chatService.updateChatMessage(messageId, this.messageValue, messageUniqueId);
     this.editMessageId = null;
-    this.hideReactionMenu = false;
   }
 
 
