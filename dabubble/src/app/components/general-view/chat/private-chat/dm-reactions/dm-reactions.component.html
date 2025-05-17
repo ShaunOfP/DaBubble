@@ -1,0 +1,30 @@
+<div *ngFor="let reaction of reactionEntriesList; let i = index" (mouseenter)="showPopover(i, reaction.users)"
+    (mouseleave)="hidePopover()" class="message-reactions">
+    <div class="message-reactions_btn" (click)="updateReaction(reaction.value)">
+        <ng-container *ngIf="reaction.isImage; else textEmoji">
+            <img [src]="reaction.value" alt="Reaction" />
+        </ng-container>
+        <ng-template #textEmoji>
+            {{ reaction.value }}
+        </ng-template>
+        {{ reaction.count }}
+    </div>
+    <div class="message-reactions_popover--{{ checkStyle(message.userId) }}"
+        *ngIf="showPopoverReaction === i && hoveredMessageId ===  message.id">
+        <ng-container *ngIf="reaction.isImage; else textEmojiPopover">
+            <img [src]="reaction.value" alt="Reaction" />
+        </ng-container>
+        <ng-template #textEmojiPopover>{{ reaction.value }}</ng-template>
+        <br>
+        <div *ngIf="reactionUserNamesCache[i]">
+            <b *ngFor="let name of reactionUserNamesCache[i]">
+                {{ name }} <br>
+            </b>
+            <span *ngIf="reaction.users.length > 2">
+                und {{ reaction.users.length - 2 }} weitere
+            </span>
+        </div>
+        <br>
+        hat reagiert
+    </div>
+</div>

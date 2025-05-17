@@ -10,11 +10,12 @@ import { MatCardModule } from '@angular/material/card';
 import { ChatComponent } from '../chat.component';
 import { UserInfoCardComponent } from "../user-info-card/user-info-card.component";
 import { UserDatasService } from '../../../../services/firebase-services/user-datas.service';
+import { DmReactionsComponent } from "./dm-reactions/dm-reactions.component";
 
 @Component({
   selector: 'app-private-chat',
   standalone: true,
-  imports: [CommonModule, EmojiPickerComponent, MatCardModule, UserInfoCardComponent],
+  imports: [CommonModule, EmojiPickerComponent, MatCardModule, UserInfoCardComponent, DmReactionsComponent],
   templateUrl: './private-chat.component.html',
   styleUrl: './private-chat.component.scss'
 })
@@ -27,7 +28,6 @@ export class PrivateChatComponent implements OnInit {
   newMessage: boolean = false;
   hoveredMessageId: string | null = null;
   showPicker: boolean = false;
-  showPopoverReaction: number | null = null;
   showFirstMessage: boolean = true;
 
   private scrollListener!: () => void;

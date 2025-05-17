@@ -1,22 +1,22 @@
-import { Component, Input, OnChanges } from '@angular/core';
-import { Message } from '../../../../../models/interfaces';
-import { UserDatasService } from '../../../../../services/firebase-services/user-datas.service';
 import { CommonModule } from '@angular/common';
+import { Component, Input, OnChanges } from '@angular/core';
+import { UserDatasService } from '../../../../../services/firebase-services/user-datas.service';
 import { ActivatedRoute } from '@angular/router';
+import { Message } from '../../../../../models/interfaces';
 
 @Component({
-  selector: 'app-reactions',
+  selector: 'app-dm-reactions',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './reactions.component.html',
-  styleUrl: './reactions.component.scss'
+  templateUrl: './dm-reactions.component.html',
+  styleUrl: './dm-reactions.component.scss'
 })
-export class ReactionsComponent implements OnChanges{
+export class DmReactionsComponent implements OnChanges{
   @Input() message!: any;
   @Input() hoveredMessageId!: string | null
   showPopoverReaction: number | null = null;
   reactionUserNamesCache: { [key: number]: string[] } = {};
-  reactionEntriesList: { isImage: boolean; value: string; count: number; users: string[] }[]  = [];
+  reactionEntriesList: { isImage: boolean; value: string; count: number; users: string[] }[] = [];
 
   constructor(
     private userDataService: UserDatasService,
@@ -24,7 +24,7 @@ export class ReactionsComponent implements OnChanges{
   ) { }
 
 
-  ngOnChanges(){
+  ngOnChanges() {
     this.reactionEntriesList = this.createReactionEntries(this.message);
   }
 

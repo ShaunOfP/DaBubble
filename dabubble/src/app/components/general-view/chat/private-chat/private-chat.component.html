@@ -24,7 +24,8 @@
         <div class="chat-content--{{ checkStyle(message.userId) }}" (mouseover)="hoveredMessageId = message.id"
             (mouseout)="hoveredMessageId = null">
             <div class="chat-content_reaction" *ngIf="hoveredMessageId === message.id">
-                <button (click)="sendReaction('green_check', message.id)"><img src="assets/img/green_check.svg" alt="check"></button>
+                <button (click)="sendReaction('green_check', message.id)"><img src="assets/img/green_check.svg"
+                        alt="check"></button>
                 <button><img src="assets/img/clap_hands.svg" alt="check"></button>
                 <button (click)="showPicker = !showPicker"><img src="assets/img/add_reaction.svg" alt="check"></button>
                 <app-emoji-picker *ngIf="showPicker" (mouseleave)="showPicker = false"
@@ -46,19 +47,8 @@
                     </span>
                 </div>
             </div>
-            <div class="message-reactions">
-                <div *ngFor="let reaction of  reactionEntries(message) let i=index">
-                    <div (mouseover)="showPopoverReaction = i" (mouseout)="showPopoverReaction = null"
-                        class="message-reactions_btn">
-                        {{reaction.emoji}} {{reaction.count}}
-                    </div>
-                    <div class="message-reactions_popover" *ngIf="showPopoverReaction === i">
-                        {{reaction.emoji}} <br>
-                        <b>Alladin</b> und <b>Du</b> <br>
-                        hat reagiert
-                    </div>
-                </div>
-            </div>
+            <app-dm-reactions class="message-reactions" [message]="message"
+                [hoveredMessageId]="hoveredMessageId"></app-dm-reactions>
         </div>
     </div>
     <div class="new-message" *ngIf="newMessage">
