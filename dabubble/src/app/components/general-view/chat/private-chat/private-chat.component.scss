@@ -202,6 +202,99 @@ header {
       left: 10px;
       right: unset;
     }
+
+    &:has(.edit-container) {
+      align-items: flex-start;
+      flex-direction: row-reverse;
+    }
+  }
+
+  .thread-answers-count {
+    color: var(--color-purple-secondary-hover);
+    @include fontStyle();
+    cursor: pointer;
+  }
+
+  .edit-message {
+    @include fontStyle();
+    position: absolute;
+    padding: 10px 15px;
+    border-radius: 25px 25px 25px 0;
+    border: 1px solid var(--color-purple-primary-disabled);
+    background-color: white;
+    width: max-content;
+    bottom: 35px;
+    left: 20px;
+    z-index: 3;
+
+    @media (max-width: 440px) {
+      top: 35px;
+      right: 20px;
+      left: auto;
+      bottom: auto;
+      border-radius: 25px 0 25px 25px;
+    }
+  }
+
+  .relative {
+    position: relative;
+  }
+
+  .edit-container {
+    width: 100%;
+    position: relative;
+    @include arrangement($ai: normal);
+
+    textarea {
+      resize: none;
+      border-radius: 20px;
+      border: 1px solid #adb0d9;
+      padding: 20px;
+      font-size: 18px;
+      width: 100%;
+      height: 100px;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .edit-btn-container {
+      position: absolute;
+      bottom: 5px;
+      display: flex;
+      gap: 32px;
+
+      >button {
+        font-size: 18px;
+
+        @media(max-width: 520px) {
+          font-size: 14px;
+        }
+      }
+
+      @media (max-width: 470px) {
+        gap: 0px;
+      }
+
+      @media (max-width: 400px) {
+        .btn-secondary--default {
+          @include arrangement();
+          border: none;
+          padding: 0;
+        }
+
+        .btn-primary--default {
+          @include arrangement();
+          border: none;
+          background-color: white;
+          padding: 0;
+        }
+
+        width: 100%;
+        justify-content: space-evenly;
+      }
+    }
   }
 }
 
@@ -247,6 +340,7 @@ header {
   padding: 15px;
   @include fontStyle();
   transition: background-color 0.1s ease;
+  width: fit-content;
 
   &--primary {
     @extend.chat-content_message;
@@ -263,7 +357,13 @@ header {
 }
 
 .chat-content_conversation {
-  @include arrangement($fd: column, $jc: flex-start, $g: 8px);
+  &--primary {
+    @include arrangement($fd: column, $jc: flex-start, $g: 8px, $ai: normal);
+  }
+
+  &--secondary {
+    @include arrangement($fd: column, $jc: flex-start, $g: 8px, $ai: flex-end);
+  }
 }
 
 .chat-content_conversation_reacts {
@@ -279,7 +379,7 @@ header {
 .all-chat-container {
   width: 100%;
   overflow-y: auto;
-  max-height: 100%; // Adjust this value as needed
+  max-height: 100%;
   position: relative;
 }
 

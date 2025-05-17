@@ -50,8 +50,7 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   showEditMessage: boolean = false;
   editMessageId: string | null = null;
   messageValue: string = '';
-  hideReactionMenu: boolean = false;
-  isMobile = false;
+  isMobile: boolean = false;
   messageDetailsMap: { [id: string]: any } = {};
   private subscription!: Subscription;
 
@@ -73,6 +72,11 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     this.subscription = this.chatService.triggerChatReload().subscribe(() => {
       this.loadFilter();
     });
+  }
+
+
+  setEditId(messageId: string){
+    this.editMessageId = messageId;
   }
 
 
@@ -171,7 +175,6 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   updateChatMessage(messageId: string, messageUniqueId: string) {
     this.chatService.updateChatMessage(messageId, this.messageValue, messageUniqueId);
     this.editMessageId = null;
-    this.hideReactionMenu = false;
   }
 
 
