@@ -524,3 +524,20 @@ app-chat-details {
     }
   }
 }
+
+app-emoji-picker{
+  bottom: -128px !important;
+  left: 150px !important;
+}
+
+.mobile-emoji-picker {
+  inset: 0;
+  position: fixed;
+  @include arrangement();
+  background-color: var(--color-grey-primary-overlay);
+  z-index: 4;
+
+  >app-emoji-picker {
+    position: static;
+  }
+}

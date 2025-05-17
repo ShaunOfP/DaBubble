@@ -53,6 +53,7 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   isMobile: boolean = false;
   messageDetailsMap: { [id: string]: any } = {};
   private subscription!: Subscription;
+  showMobilePicker: boolean = false;
 
   private scrollListener!: () => void;
 
@@ -75,7 +76,13 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
-  setEditId(messageId: string){
+  setMobilePicker(boolean: boolean){
+    this.showMobilePicker = boolean;
+    console.log(this.showMobilePicker);
+  }
+
+
+  setEditId(messageId: string) {
     this.editMessageId = messageId;
   }
 
@@ -295,6 +302,17 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
       this.isMobile = true;
     } else {
       this.isMobile = false;
+    }
+  }
+
+
+  @HostListener('window:resize', [])
+  isWindowBelow500() {
+    if (window.innerWidth <= 500) {
+      return true;
+    } else {
+      this.showMobilePicker = false;
+      return false;
     }
   }
 }

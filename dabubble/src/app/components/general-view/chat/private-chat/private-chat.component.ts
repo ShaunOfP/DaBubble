@@ -35,6 +35,7 @@ export class PrivateChatComponent implements OnInit {
   messageDetailsMap: { [id: string]: any } = {};
   messageValue: string = '';
   isMobile: boolean = false;
+  showMobilePicker: boolean = false;
 
   private scrollListener!: () => void;
 
@@ -52,7 +53,13 @@ export class PrivateChatComponent implements OnInit {
   }
 
 
-  setEditId(messageId: string){
+  setMobilePicker(boolean: boolean) {
+    this.showMobilePicker = boolean;
+    console.log(this.showMobilePicker);
+  }
+
+
+  setEditId(messageId: string) {
     this.editMessageId = messageId;
   }
 
@@ -256,11 +263,22 @@ export class PrivateChatComponent implements OnInit {
 
 
   @HostListener('window:resize', [])
-    isWidth400OrLess() {
-      if (window.innerWidth <= 400) {
-        this.isMobile = true;
-      } else {
-        this.isMobile = false;
-      }
+  isWidth400OrLess() {
+    if (window.innerWidth <= 400) {
+      this.isMobile = true;
+    } else {
+      this.isMobile = false;
     }
+  }
+
+
+  @HostListener('window:resize', [])
+  isWindowBelow500() {
+    if (window.innerWidth <= 500) {
+      return true;
+    } else {
+      this.showMobilePicker = false;
+      return false;
+    }
+  }
 }

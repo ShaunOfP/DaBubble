@@ -17,6 +17,11 @@
                 chatComponent.currentChannelName }}</a> und dir statt.</span>
     </div>
     <div *ngFor="let message of filteredMessages$ | async" class="chat-content" (mouseleave)="showPicker = false">
+        <div class="mobile-emoji-picker" *ngIf="showMobilePicker && isWindowBelow500()"
+            (click)="setMobilePicker(false)">
+            <app-emoji-picker (emojiSelected)="sendReaction($event, message.id)"
+                (click)="$event.preventDefault(); setMobilePicker(false)"></app-emoji-picker>
+        </div>
         <div class="chat-date" *ngIf="message.showDate">
             <div class="line"></div>
             <div class="chat-date_create">{{ message.formattedDate }}</div>
@@ -28,8 +33,8 @@
                         alt="check"></button>
                 <button (click)="sendReaction('🙌', message.id)"><img src="assets/img/clap_hands.svg"
                         alt="check"></button>
-                <button (click)="showPicker = !showPicker"><img src="assets/img/add_reaction.svg" alt="check"></button>
-                <app-emoji-picker *ngIf="showPicker" (mouseleave)="showPicker = false"
+                <button (click)="showPicker = !showPicker; setMobilePicker(true)"><img src="assets/img/add_reaction.svg" alt="check"></button>
+                <app-emoji-picker *ngIf="showPicker && !isWindowBelow500()" (mouseleave)="showPicker = false"
                     (click)="$event.preventDefault()"></app-emoji-picker>
                 <button (click)="openThread(message.id)"><img src="assets/img/add_comment.svg" alt="check"></button>
                 <button *ngIf="checkStyle(message.userId) === 'secondary'" (click)="showEditMessage = !showEditMessage"
@@ -54,7 +59,8 @@
                     </span>
                 </div>
             </div>
-            <div class="thread-answers-count" (click)="openThread(message.id)" *ngIf="message.threadAnswers > 0 && editMessageId !== message.id">{{
+            <div class="thread-answers-count" (click)="openThread(message.id)"
+                *ngIf="message.threadAnswers > 0 && editMessageId !== message.id">{{
                 message.threadAnswers }} Antworten
             </div>
             <form *ngIf="message.id === editMessageId" class="edit-container"
@@ -64,14 +70,14 @@
                     <button *ngIf="!isMobile" class="btn-secondary--default"
                         (click)="editMessageId = null">Abbrechen</button>
                     <button *ngIf="!isMobile" class="btn-primary--default" type="submit">Speichern</button>
-                    <button *ngIf="isMobile" (click)="editMessageId = null"
-                        class="btn-secondary--default"><img src="assets/img/close.svg"></button>
+                    <button *ngIf="isMobile" (click)="editMessageId = null" class="btn-secondary--default"><img
+                            src="assets/img/close.svg"></button>
                     <button *ngIf="isMobile" class="btn-primary--default" type="submit"><img
                             src="assets/img/mobile_save.svg"></button>
                 </div>
             </form>
-            <app-dm-reactions class="message-reactions" [message]="message"
-                [hoveredMessageId]="hoveredMessageId" *ngIf="editMessageId !== message.id"></app-dm-reactions>
+            <app-dm-reactions class="message-reactions" [message]="message" [hoveredMessageId]="hoveredMessageId"
+                *ngIf="editMessageId !== message.id"></app-dm-reactions>
         </div>
     </div>
     <div class="new-message" *ngIf="newMessage">
