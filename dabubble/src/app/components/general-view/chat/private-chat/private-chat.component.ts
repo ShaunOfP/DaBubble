@@ -208,4 +208,15 @@ export class PrivateChatComponent implements OnInit {
     });
     return userId === currentUser ? 'secondary' : 'primary';
   }
+
+
+openThread(messageId: string): void {
+    this.chatService.messageID = messageId;
+    this.chatService.getMessageThread(messageId);
+    if (this.chatService.threadClosed) {
+      this.chatService.toggleDrawerState();
+      this.chatService.threadClosed = false;
+    }
+    this.chatService.showThreadWhenResponsive = true;
+  }
 }
