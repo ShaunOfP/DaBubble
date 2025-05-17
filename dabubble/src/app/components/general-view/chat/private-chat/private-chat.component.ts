@@ -79,6 +79,12 @@ export class PrivateChatComponent implements OnInit {
     );
   }
 
+
+  sendReaction(emoji: string, id: string) {
+    this.chatService.updateMessage(emoji, id, this.userDatasService.currentUserId, false)
+  }
+
+
   loadFilter() {
     this.filteredMessages$ = combineLatest([
       this.messages$,
@@ -90,15 +96,14 @@ export class PrivateChatComponent implements OnInit {
         const searchLower = filterText.toLowerCase();
         return messages.filter(message => {
           const contentMatch = message.content?.toLowerCase().startsWith(searchLower);
-          // const senderMatch = message.sender?.toLowerCase().startsWith(searchLower);
           const dateStr = new Date(message.createdAt).toLocaleDateString('de-DE');
           const dateMatch = dateStr.toLowerCase().includes(searchLower);
-          // return contentMatch || senderMatch || dateMatch;
           return contentMatch || dateMatch;
         });
       })
     );
   }
+
 
   reactionEntries(message: Message): { emoji: string, count: number }[] {
     return Object.entries(message.reaction || {}).map(([emoji, users]) => ({
@@ -107,10 +112,6 @@ export class PrivateChatComponent implements OnInit {
     }));
   }
 
-
-  togglePopover(i: number) {
-
-  }
 
   ngAfterViewInit(): void {
     if (this.chatContainer) {
@@ -122,6 +123,7 @@ export class PrivateChatComponent implements OnInit {
     }
   }
 
+
   ngOnDestroy(): void {
     if (this.chatContainer && this.scrollListener) {
       this.chatContainer.nativeElement.removeEventListener(
@@ -130,6 +132,7 @@ export class PrivateChatComponent implements OnInit {
       );
     }
   }
+
 
   scrollToElement(behavior: string): void {
     if (this.chatContainer) {
@@ -142,6 +145,7 @@ export class PrivateChatComponent implements OnInit {
     }
   }
 
+
   onScroll(): void {
     if (this.chatContainer) {
       const element = this.chatContainer.nativeElement;
@@ -152,6 +156,7 @@ export class PrivateChatComponent implements OnInit {
       }
     }
   }
+
 
   /**
    * Transforms an array of messages to include display-related metadata for dates.
@@ -186,6 +191,7 @@ export class PrivateChatComponent implements OnInit {
     });
   }
 
+
   formatTime(timestamp: number): string {
     const date = new Date(timestamp);
     return date.toLocaleTimeString('de-DE', {
@@ -193,6 +199,7 @@ export class PrivateChatComponent implements OnInit {
       minute: '2-digit',
     });
   }
+
 
   checkStyle(userId: string): string {
     let currentUser: string = '';

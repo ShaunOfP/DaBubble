@@ -24,7 +24,7 @@
         <div class="chat-content--{{ checkStyle(message.userId) }}" (mouseover)="hoveredMessageId = message.id"
             (mouseout)="hoveredMessageId = null">
             <div class="chat-content_reaction" *ngIf="hoveredMessageId === message.id">
-                <button><img src="assets/img/green_check.svg" alt="check"></button>
+                <button (click)="sendReaction('green_check', message.id)"><img src="assets/img/green_check.svg" alt="check"></button>
                 <button><img src="assets/img/clap_hands.svg" alt="check"></button>
                 <button (click)="showPicker = !showPicker"><img src="assets/img/add_reaction.svg" alt="check"></button>
                 <app-emoji-picker *ngIf="showPicker" (mouseleave)="showPicker = false"

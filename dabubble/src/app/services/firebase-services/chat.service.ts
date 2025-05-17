@@ -189,7 +189,12 @@ export class ChatService {
 
 
   async updateMessage(emoji: string, messageId: string, userId: string, isThread: boolean) {
-    const messagePath = this.getMessagePath(messageId, isThread);
+    let messagePath;
+    if (this.getCurrentRoute() === 'private'){
+      messagePath = `privateChats/${this.currentChatId}/messages/${messageId}`
+    } else {
+      messagePath = this.getMessagePath(messageId, isThread);
+    }
     const messageRef = doc(this.firestore, messagePath);
     try {
       await runTransaction(this.firestore, async (transaction) => {
