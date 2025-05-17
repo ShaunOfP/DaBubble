@@ -75,7 +75,6 @@ export class LoginComponent implements OnInit {
 
   runStartupAnimation() {
     const width = window.innerWidth;
-
     if (width <= 1550) {
       this.startupAnimationClass = 'middleScreen';
     } else if (width <= 900) {
@@ -91,6 +90,7 @@ export class LoginComponent implements OnInit {
   navigateTo(route: string) {
     this.router.navigate([route]);
   }
+
 
   async logIn(): Promise<void> {
     this.resetLoginError();
@@ -131,6 +131,18 @@ export class LoginComponent implements OnInit {
     this.loginErrorMail = '';
     this.loginErrorPassword = '';
   }
+
+
+  signInGuest() {
+    this.authService.signInAsGuest().then(user => {
+      if (user) {
+        this.guestLogIn();
+      } else {
+        console.error('Error with Guest Login');
+      }
+    });
+  }
+
 
   async guestLogIn() {
     try {

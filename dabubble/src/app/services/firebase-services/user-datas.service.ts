@@ -10,10 +10,9 @@ import {
   query,
   where,
   getDocs,
-  docData,
-  DocumentReference
+  docData
 } from '@angular/fire/firestore';
-import { Observable, BehaviorSubject, from, map, Subscription, take, combineLatest } from 'rxjs';
+import { Observable, BehaviorSubject, from, map, Subscription, combineLatest } from 'rxjs';
 import { UserDatas } from './../../models/user.class';
 import { GuestDatas } from '../../models/guest.class';
 import { ActivatedRoute } from '@angular/router';
