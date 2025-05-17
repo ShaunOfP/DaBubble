@@ -196,21 +196,27 @@
   height: 200px;
   overflow: hidden;
   gap: 16px;
-  animation: slideAndShrinkFull 0.2s forwards 4s, fadeOut 0.1s forwards 4.2s;
 
-  @media (max-width: 1550px) {
+  &.fullScreen {
+    animation: slideAndShrinkFull 0.2s forwards 4s, fadeOut 0.1s forwards 4.2s;
+  }
+
+  &.middleScreen {
     animation: slideAndShrinkMid 0.2s forwards 4s, fadeOut 0.1s forwards 4.2s;
   }
 
-  @media (max-width: 900px) {
+  &.smallScreen {
     animation: slideAndShrinkSmall 0.2s forwards 4s, fadeOut 0.1s forwards 4.2s;
+  }
+
+  &.mobileScreen {
+    animation: slideAndShrinkMobile 0.2s forwards 4s, fadeOut 0.1s forwards 4.2s;
   }
 
   @media (max-width: 600px) {
     left: 65%;
     transform: translateX(-50%);
     width: fit-content;
-    animation: slideAndShrinkMobile 0.2s forwards 4s, fadeOut 0.1s forwards 4.2s;
   }
 
   img {
