@@ -70,13 +70,13 @@ export class PrivateChatComponent implements OnInit {
 
 
   openThread(messageId: string): void {
-    // this.chatService.messageID = messageId;
-    // this.chatService.getMessageThread(messageId);
-    // if (this.chatService.threadClosed) {
-    //   this.chatService.toggleDrawerState();
-    //   this.chatService.threadClosed = false;
-    // }
-    // this.chatService.showThreadWhenResponsive = true;
+    //   this.chatService.messageID = messageId;
+    //   this.chatService.getMessageThread(messageId);
+    //   if (this.chatService.threadClosed) {
+    //     this.chatService.toggleDrawerState();
+    //     this.chatService.threadClosed = false;
+    //   }
+    //   this.chatService.showThreadWhenResponsive = true;
   }
 
 
@@ -270,7 +270,6 @@ export class PrivateChatComponent implements OnInit {
       this.isMobile = false;
     }
   }
-
 
   @HostListener('window:resize', [])
   isWindowBelow500() {
