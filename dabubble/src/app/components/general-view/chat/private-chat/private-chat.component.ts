@@ -35,6 +35,7 @@ export class PrivateChatComponent implements OnInit {
   messageDetailsMap: { [id: string]: any } = {};
   messageValue: string = '';
   isMobile: boolean = false;
+  showMobilePicker: boolean = false;
 
   private scrollListener!: () => void;
 
@@ -52,7 +53,13 @@ export class PrivateChatComponent implements OnInit {
   }
 
 
-  setEditId(messageId: string){
+  setMobilePicker(boolean: boolean) {
+    this.showMobilePicker = boolean;
+    console.log(this.showMobilePicker);
+  }
+
+
+  setEditId(messageId: string) {
     this.editMessageId = messageId;
   }
 
@@ -62,15 +69,15 @@ export class PrivateChatComponent implements OnInit {
   }
 
 
-  openThread(messageId: string): void {
-    this.chatService.messageID = messageId;
-    this.chatService.getMessageThread(messageId);
-    if (this.chatService.threadClosed) {
-      this.chatService.toggleDrawerState();
-      this.chatService.threadClosed = false;
-    }
-    this.chatService.showThreadWhenResponsive = true;
-  }
+  // openThread(messageId: string): void {
+  //   this.chatService.messageID = messageId;
+  //   this.chatService.getMessageThread(messageId);
+  //   if (this.chatService.threadClosed) {
+  //     this.chatService.toggleDrawerState();
+  //     this.chatService.threadClosed = false;
+  //   }
+  //   this.chatService.showThreadWhenResponsive = true;
+  // }
 
 
   updateChatMessage(messageId: string, messageUniqueId: string) {
@@ -254,4 +261,13 @@ export class PrivateChatComponent implements OnInit {
     return userId === currentUser ? 'secondary' : 'primary';
   }
 
+
+  @HostListener('window:resize', [])
+    isWidth400OrLess() {
+      if (window.innerWidth <= 400) {
+        this.isMobile = true;
+      } else {
+        this.isMobile = false;
+      }
+    }
 }

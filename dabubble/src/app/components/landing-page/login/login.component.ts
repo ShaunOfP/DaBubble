@@ -44,6 +44,7 @@ export class LoginComponent implements OnInit {
   guest: GuestDatas = new GuestDatas();
   loginErrorMail: string | null = null;
   loginErrorPassword: string | null = null;
+  startupAnimationClass: string = '';
 
   constructor(
     private router: Router,
@@ -63,13 +64,33 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  async ngOnInit(): Promise<void> {
-    sessionStorage.setItem('animation', 'true');
+  ngOnInit() {
+    const hasAnimated = sessionStorage.getItem('animation');
+    if (!hasAnimated) {
+      this.runStartupAnimation();
+      sessionStorage.setItem('animation', 'true');
+    }
   }
+
+
+  runStartupAnimation() {
+    const width = window.innerWidth;
+    if (width <= 1550) {
+      this.startupAnimationClass = 'middleScreen';
+    } else if (width <= 900) {
+      this.startupAnimationClass = 'smallScreen';
+    } else if (width <= 600) {
+      this.startupAnimationClass = 'mobileScreen';
+    } else {
+      this.startupAnimationClass = 'fullScreen';
+    }
+  }
+
 
   navigateTo(route: string) {
     this.router.navigate([route]);
   }
+
 
   async logIn(): Promise<void> {
     this.resetLoginError();
@@ -110,6 +131,18 @@ export class LoginComponent implements OnInit {
     this.loginErrorMail = '';
     this.loginErrorPassword = '';
   }
+
+
+  signInGuest() {
+    this.authService.signInAsGuest().then(user => {
+      if (user) {
+        this.guestLogIn();
+      } else {
+        console.error('Error with Guest Login');
+      }
+    });
+  }
+
 
   async guestLogIn() {
     try {

@@ -21,7 +21,7 @@
     </div>
   </div>
   <div [ngClass]="{ 'd-none': animationPlayed }" class="overlay"></div>
-  <div [ngClass]="{ 'd-none': animationPlayed }" class="overlay" class="logo-wrapper">
+  <div [ngClass]="[animationPlayed ? 'd-none' : startupAnimationClass]" class="overlay" class="logo-wrapper">
     <img src="assets/img/Logo.svg" alt="Logo" />
     <div class="animated-text">
       <p>DABubble</p>
@@ -66,7 +66,7 @@
         </div>
         <div class="login-button">
           <button class="btn-primary--default" type="submit">Anmelden</button>
-          <button class="btn-secondary--default" type="button" (click)="guestLogIn()">
+          <button class="btn-secondary--default" type="button" (click)="signInGuest()">
             Gäste-Login
           </button>
         </div>

@@ -54,13 +54,9 @@ export class ChannelMembersComponent implements OnInit {
    * Emits a signal to the parent component to open the Add Members Menu
    */
   openAddMembersMenu() {
-    if (!this.userDataService.checkIfGuestIsLoggedIn()) {
-      this.channelMemberService.showAddMembersMenu = true;
-      this.openAddMembers.emit();
-      this.chatService.showChatDetailsMobileGreyLayer = true;
-    } else {
-      console.warn("Log in to add Members to a Public Channel");
-    }
+    this.channelMemberService.showAddMembersMenu = true;
+    this.openAddMembers.emit();
+    this.chatService.showChatDetailsMobileGreyLayer = true;
   }
 
 

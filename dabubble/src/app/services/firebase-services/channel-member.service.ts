@@ -203,10 +203,17 @@ export class ChannelMemberService {
    */
   async addNewChannelToOwner(ownerId: string, channelId: string) {
     try {
-      const ownerDocRef = doc(this.firestore, 'userDatas', ownerId);
-      await updateDoc(ownerDocRef, {
-        channels: arrayUnion(channelId),
-      });
+      if (this.userDatasService.checkIfGuestIsLoggedIn()) {
+        const ownerDocRef = doc(this.firestore, 'guestDatas', ownerId);
+        await updateDoc(ownerDocRef, {
+          channels: arrayUnion(channelId),
+        });
+      } else {
+        const ownerDocRef = doc(this.firestore, 'userDatas', ownerId);
+        await updateDoc(ownerDocRef, {
+          channels: arrayUnion(channelId),
+        });
+      }
     } catch (error) {
       console.error(
         `Error adding channel ${channelId} to owner ${ownerId}:`,

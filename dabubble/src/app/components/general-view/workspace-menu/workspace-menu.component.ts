@@ -160,12 +160,8 @@ export class WorkspaceMenuComponent implements OnInit, OnDestroy {
    * If guest is not logged in opens the create channel component
    */
   openCreateChannelOverlay() {
-    if (!this.userDatasService.checkIfGuestIsLoggedIn()) {
-      this.channelService.isCreateChannelClosed = false;
-      this.channelService.isCreateChannelOverlayVisible = true;
-    } else {
-      console.warn('Log in to create Channels');
-    }
+    this.channelService.isCreateChannelClosed = false;
+    this.channelService.isCreateChannelOverlayVisible = true;
   }
 
 
@@ -173,15 +169,11 @@ export class WorkspaceMenuComponent implements OnInit, OnDestroy {
    * If guest is not logged in opens the new message component
    */
   openNewMessage() {
-    if (!this.userDatasService.checkIfGuestIsLoggedIn()) {
-      this.router.navigate(['/general/new-message'], {
-        queryParamsHandling: 'merge',
-        replaceUrl: true,
-      });
-      this.showResponsiveComponents();
-    } else {
-      console.warn('Log in to send Private Messages');
-    }
+    this.router.navigate(['/general/new-message'], {
+      queryParamsHandling: 'merge',
+      replaceUrl: true,
+    });
+    this.showResponsiveComponents();
   }
 
   readonly channelOpenState = signal(false);

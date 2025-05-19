@@ -87,6 +87,7 @@ export class ChatService {
   loadChannelInfo() {
     docData(this.getChannelDocRef(this.currentChatId)).subscribe((data) => {
       this.currentChannelData = data as Channel;
+      this.loadChannelUserIcons();
     });
   }
 

@@ -107,14 +107,10 @@ export class AddMembersComponent {
   }
 
   onSubmit() {
-    if (!this.userDataService.checkIfGuestIsLoggedIn()) {
-      this.addSelectedMembersToExistingChannel();
-      setTimeout(() => {
-        this.closeAddMembersMenu();
-      }, 2000);
-    } else {
-      console.warn('Log in to add Members to a Public Channel');
-    }
+    this.addSelectedMembersToExistingChannel();
+    setTimeout(() => {
+      this.closeAddMembersMenu();
+    }, 2000);
   }
 
   getCurrentChatId(): string {

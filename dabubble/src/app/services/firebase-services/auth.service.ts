@@ -12,6 +12,7 @@ import {
   UserCredential,
   confirmPasswordReset,
   verifyPasswordResetCode,
+  signInAnonymously,
 } from '@angular/fire/auth';
 import { BehaviorSubject } from 'rxjs';
 import { UserDatas } from '../../models/user.class';
@@ -25,7 +26,9 @@ export class AuthService {
   private userSubject = new BehaviorSubject<User | null>(null);
   user$ = this.userSubject.asObservable();
 
-  constructor(private auth: Auth, private userDataService: UserDatasService, private db: Database) { }
+  constructor(private auth: Auth, private userDataService: UserDatasService, private db: Database) {
+
+  }
 
 
   /**
@@ -67,6 +70,17 @@ export class AuthService {
         const errorCode = error.code;
         console.error('error Code' + errorCode);
       });
+  }
+
+
+  async signInAsGuest(): Promise<User | null> {
+    try {
+      const userCredential = await signInAnonymously(this.auth);
+      return userCredential.user;
+    } catch (error) {
+      console.error('Guest sign-in error', error);
+      return null;
+    }
   }
 
 

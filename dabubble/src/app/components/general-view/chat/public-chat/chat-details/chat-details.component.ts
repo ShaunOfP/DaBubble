@@ -72,12 +72,8 @@ export class ChatDetailsComponent {
    * If Guest is not logged in it toggles Visibility of the Channel Name Input Field
    */
   openNewChannelInput() {
-    if (!this.userDataService.checkIfGuestIsLoggedIn()) {
-      this.toggleNewChannelNameInputVisibility();
-      this.toggleChannelNameContainerVisibility();
-    } else {
-      console.warn("Log in to Edit the Channel Name");
-    }
+    this.toggleNewChannelNameInputVisibility();
+    this.toggleChannelNameContainerVisibility();
   }
 
 
@@ -94,12 +90,8 @@ export class ChatDetailsComponent {
    * If Guest is not logged in it toggles Visibility of the Channel Description Input Field
    */
   openDescriptionEdit() {
-    if (!this.userDataService.checkIfGuestIsLoggedIn()) {
-      this.toggleChannelDescriptionVisibility();
-      this.toggleNewChannelDescriptionVisibility();
-    } else {
-      console.warn("Log in to Edit the Channel Description");
-    }
+    this.toggleChannelDescriptionVisibility();
+    this.toggleNewChannelDescriptionVisibility();
   }
 
 
@@ -180,26 +172,22 @@ export class ChatDetailsComponent {
    * Lets the user leave the current Channel
    */
   leaveChannel() {
-    if (!this.userDataService.checkIfGuestIsLoggedIn()) {
-      let currentChannelData = this.chatService.currentChannelData;
-      this.userDataService.getCurrentUserId();
-      let currentUserId = this.userDataService.currentUserId;
-      if (currentChannelData?.channelName != "Entwicklerchannel" && currentChannelData != undefined) {
-        this.channelMemberService.removeCurrentUserFromChannel(currentUserId, currentChannelData);
-        this.userDataService.getCurrentUserData().then((result: any) => {
-          this.userDataService.removeChannelFromUserData(result['channels'], currentChannelData.channelId);
-        });
-        this.closeChatDetails();
-        this.goBackToMainChannel();
-        this.chatService.showAltHeader = false;
-        this.chatService.showChatDetailsMobileGreyLayer = false;
-        this.chatService.showChatWhenResponsive = false;
-        this.chatService.showThreadWhenResponsive = false;
-      } else {
-        console.warn("Entwicklerchannel kann nicht verlassen werden");
-      }
+    let currentChannelData = this.chatService.currentChannelData;
+    this.userDataService.getCurrentUserId();
+    let currentUserId = this.userDataService.currentUserId;
+    if (currentChannelData?.channelName != "Entwicklerchannel" && currentChannelData != undefined) {
+      this.channelMemberService.removeCurrentUserFromChannel(currentUserId, currentChannelData);
+      this.userDataService.getCurrentUserData().then((result: any) => {
+        this.userDataService.removeChannelFromUserData(result['channels'], currentChannelData.channelId);
+      });
+      this.closeChatDetails();
+      this.goBackToMainChannel();
+      this.chatService.showAltHeader = false;
+      this.chatService.showChatDetailsMobileGreyLayer = false;
+      this.chatService.showChatWhenResponsive = false;
+      this.chatService.showThreadWhenResponsive = false;
     } else {
-      console.warn("Log in to Leave the Channel");
+      // console.warn("Entwicklerchannel kann nicht verlassen werden");
     }
   }
 

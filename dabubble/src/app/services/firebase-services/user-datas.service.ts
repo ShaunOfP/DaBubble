@@ -10,10 +10,9 @@ import {
   query,
   where,
   getDocs,
-  docData,
-  DocumentReference
+  docData
 } from '@angular/fire/firestore';
-import { Observable, BehaviorSubject, from, map, Subscription, take, combineLatest } from 'rxjs';
+import { Observable, BehaviorSubject, from, map, Subscription, combineLatest } from 'rxjs';
 import { UserDatas } from './../../models/user.class';
 import { GuestDatas } from '../../models/guest.class';
 import { ActivatedRoute } from '@angular/router';
@@ -292,11 +291,18 @@ export class UserDatasService {
    */
   async updateUserName(userId: string, newUserName: string) {
     try {
-      const userData = doc(this.firestore, `userDatas/${userId}`);
-      await updateDoc(userData, {
-        username: newUserName,
-        username_lowercase: newUserName.toLowerCase(),
-      });
+      if (this.checkIfGuestIsLoggedIn()) {
+        const guestData = doc(this.firestore, `guestDatas/${userId}`);
+        await updateDoc(guestData, {
+          username: newUserName,
+        });
+      } else {
+        const userData = doc(this.firestore, `userDatas/${userId}`);
+        await updateDoc(userData, {
+          username: newUserName,
+          username_lowercase: newUserName.toLowerCase(),
+        });
+      }
     } catch (err) {
       console.error('Error updating user Data:', err);
     }
@@ -402,7 +408,7 @@ export class UserDatasService {
       const userData = userDoc.data() as UserObserver;
       this.currentUserDataSubject.next(userData);
     } else {
-      console.error('User not found');
+      //guest info doesnt need update
     }
   }
 
