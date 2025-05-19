@@ -54,6 +54,7 @@
         }}</span>
       <span class="profile-info-name-status-upper--font-secondary color-purple-with-hover"
         (click)="toggleProfileEdit()">Bearbeiten</span>
+      <span class="error-message--guest" *ngIf="showGuestError">Als Gast kann das Profil nicht bearbeitet werden</span>
       <img src="assets/img/edit_icon.svg" (click)="toggleProfileEdit()" />
     </div>
     <div class="profile-info-name-status-lower">

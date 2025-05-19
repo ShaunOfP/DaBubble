@@ -45,6 +45,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   currentAvatar: string = '';
   avatarList: string[] = ['avatar1.svg', 'avatar2.svg', 'avatar3.svg', 'avatar4.svg', 'avatar5.svg', 'avatar6.svg'];
   private subscription = new Subscription();
+  showGuestError: boolean = false;
 
   constructor(
     private router: Router,
@@ -159,10 +160,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
    * Changes bool of variable to display/hide the Profile Edit
    */
   toggleProfileEdit() {
-    if (this.showProfileEdit) {
-      this.showProfileEdit = false;
+    if (!this.userDatasService.checkIfGuestIsLoggedIn()) {
+      if (this.showProfileEdit) {
+        this.showProfileEdit = false;
+      } else {
+        this.showProfileEdit = true;
+      }
     } else {
-      this.showProfileEdit = true;
+      this.showGuestError = true;
+      setTimeout(() => {
+        this.showGuestError = false;
+      }, 1000);
     }
   }
 

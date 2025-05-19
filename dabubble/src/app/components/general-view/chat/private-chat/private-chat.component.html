@@ -33,10 +33,10 @@
                         alt="check"></button>
                 <button (click)="sendReaction('🙌', message.id)"><img src="assets/img/clap_hands.svg"
                         alt="check"></button>
-                <button (click)="showPicker = !showPicker; setMobilePicker(true)"><img src="assets/img/add_reaction.svg" alt="check"></button>
-                <app-emoji-picker *ngIf="showPicker && !isWindowBelow500()" (mouseleave)="showPicker = false"
+                <button (click)="showPicker = !showPicker"><img src="assets/img/add_reaction.svg" alt="check"></button>
+                <app-emoji-picker *ngIf="showPicker" (mouseleave)="showPicker = false"
                     (click)="$event.preventDefault()"></app-emoji-picker>
-                <!-- <button (click)="openThread(message.id)"><img src="assets/img/add_comment.svg" alt="check"></button> -->
+                <button (click)="openThread(message.id)"><img src="assets/img/add_comment.svg" alt="check"></button>
                 <button *ngIf="checkStyle(message.userId) === 'secondary'" (click)="showEditMessage = !showEditMessage"
                     class="relative">
                     <img src="assets/img/menu_points.svg" alt="check">

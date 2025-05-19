@@ -427,6 +427,13 @@ form {
 .error-message {
   @include fontStyle($fs: 18px, $fw: 400);
   color: var(--color-purple-error);
+
+  &--guest {
+    @extend .error-message;
+    position: absolute;
+    right: 10px;
+    bottom: 135px;
+  }
 }
 
 .search-container {

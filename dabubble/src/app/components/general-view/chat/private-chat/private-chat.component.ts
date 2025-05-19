@@ -69,15 +69,15 @@ export class PrivateChatComponent implements OnInit {
   }
 
 
-  // openThread(messageId: string): void {
-  //   this.chatService.messageID = messageId;
-  //   this.chatService.getMessageThread(messageId);
-  //   if (this.chatService.threadClosed) {
-  //     this.chatService.toggleDrawerState();
-  //     this.chatService.threadClosed = false;
-  //   }
-  //   this.chatService.showThreadWhenResponsive = true;
-  // }
+  openThread(messageId: string): void {
+    // this.chatService.messageID = messageId;
+    // this.chatService.getMessageThread(messageId);
+    // if (this.chatService.threadClosed) {
+    //   this.chatService.toggleDrawerState();
+    //   this.chatService.threadClosed = false;
+    // }
+    // this.chatService.showThreadWhenResponsive = true;
+  }
 
 
   updateChatMessage(messageId: string, messageUniqueId: string) {
@@ -281,5 +281,4 @@ export class PrivateChatComponent implements OnInit {
       return false;
     }
   }
-  
 }
