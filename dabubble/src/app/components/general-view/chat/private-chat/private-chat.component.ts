@@ -281,4 +281,5 @@ export class PrivateChatComponent implements OnInit {
       return false;
     }
   }
+  
 }
