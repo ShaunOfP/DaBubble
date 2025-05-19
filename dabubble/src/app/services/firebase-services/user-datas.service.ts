@@ -291,11 +291,18 @@ export class UserDatasService {
    */
   async updateUserName(userId: string, newUserName: string) {
     try {
-      const userData = doc(this.firestore, `userDatas/${userId}`);
-      await updateDoc(userData, {
-        username: newUserName,
-        username_lowercase: newUserName.toLowerCase(),
-      });
+      if (this.checkIfGuestIsLoggedIn()) {
+        const guestData = doc(this.firestore, `guestDatas/${userId}`);
+        await updateDoc(guestData, {
+          username: newUserName,
+        });
+      } else {
+        const userData = doc(this.firestore, `userDatas/${userId}`);
+        await updateDoc(userData, {
+          username: newUserName,
+          username_lowercase: newUserName.toLowerCase(),
+        });
+      }
     } catch (err) {
       console.error('Error updating user Data:', err);
     }
@@ -401,7 +408,7 @@ export class UserDatasService {
       const userData = userDoc.data() as UserObserver;
       this.currentUserDataSubject.next(userData);
     } else {
-      console.error('User not found');
+      //guest info doesnt need update
     }
   }
 
