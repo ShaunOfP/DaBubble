@@ -1,102 +1,102 @@
-@import './../../../../../../styles.scss';
+@import "./../../../../../../styles.scss";
 
 app-user-info-card {
-    height: 100vh;
-    width: 100vw;
-    position: fixed;
-    inset: 0;
-    @include arrangement();
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  inset: 0;
+  @include arrangement();
 }
 
 header {
-    @include arrangement($jc: space-between);
+  @include arrangement($jc: space-between);
 
-    >h3 {
-        margin: 0;
-    }
+  > h3 {
+    margin: 0;
+  }
 }
 
 .close-button {
-    @include arrangement();
-    height: 40px;
-    width: 40px;
+  @include arrangement();
+  height: 40px;
+  width: 40px;
 
-    &:hover {
-        cursor: pointer;
-        border-radius: 30px;
-        background-color: var(--color-blue-bg);
+  &:hover {
+    cursor: pointer;
+    border-radius: 30px;
+    background-color: var(--color-blue-bg);
 
-        :first-child {
-            display: none;
-        }
-
-        :last-child {
-            display: flex;
-        }
+    :first-child {
+      display: none;
     }
 
-    @media(max-width: $mobile-breakpoint) {
-        display: none;
+    :last-child {
+      display: flex;
     }
+  }
+
+  @media (max-width: $mobile-breakpoint) {
+    display: none;
+  }
 }
 
 .members-list-container {
-    @include arrangement($fd: column, $ai: flex-start, $jc: normal, $g: 15px);
-    max-height: 300px;
-    overflow-y: scroll;
+  @include arrangement($fd: column, $ai: flex-start, $jc: normal, $g: 15px);
+  max-height: 300px;
+  overflow-y: auto;
 }
 
 .members-list {
-    @include arrangement($fd: column, $ai: flex-start, $jc: normal);
+  @include arrangement($fd: column, $ai: flex-start, $jc: normal);
 }
 
 .member {
-    @include arrangement($jc: normal, $g: 15px);
-    height: 58px;
-    padding: 4px 20px;
-    border-radius: 35px;
+  @include arrangement($jc: normal, $g: 15px);
+  height: 58px;
+  padding: 4px 20px;
+  border-radius: 35px;
 
-    >img {
-        height: 50px;
-        width: 50px;
-        border-radius: 30px;
-    }
+  > img {
+    height: 50px;
+    width: 50px;
+    border-radius: 30px;
+  }
 
-    >span {
-        font-size: 18px;
-    }
+  > span {
+    font-size: 18px;
+  }
 
-    &:hover {
-        cursor: pointer;
-        background-color: var(--color-blue-bg);
-    }
+  &:hover {
+    cursor: pointer;
+    background-color: var(--color-blue-bg);
+  }
 }
 
 button {
-    @include arrangement($jc: normal, $g: 15px);
-    padding: 12px 29px;
-    background-color: transparent;
-    border-radius: 30px;
-    border: none;
+  @include arrangement($jc: normal, $g: 15px);
+  padding: 12px 29px;
+  background-color: transparent;
+  border-radius: 30px;
+  border: none;
 
-    >img {
-        height: 32px;
-        width: 32px;
-        border-radius: 20px;
-        background-color: var(--color-blue-bg);
-        object-fit: none;
-    }
+  > img {
+    height: 32px;
+    width: 32px;
+    border-radius: 20px;
+    background-color: var(--color-blue-bg);
+    object-fit: none;
+  }
 
-    >span {
-        font-size: 18px;
-    }
+  > span {
+    font-size: 18px;
+  }
 
-    &:hover {
-        cursor: pointer;
-        background-color: var(--color-blue-bg);
-    }
+  &:hover {
+    cursor: pointer;
+    background-color: var(--color-blue-bg);
+  }
 }
 
 .d-none {
-    display: none;
+  display: none;
 }
