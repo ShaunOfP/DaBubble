@@ -10,18 +10,28 @@ import {
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
-import { ChannelMemberService, Member } from '../../../../../services/firebase-services/channel-member.service';
+import {
+  ChannelMemberService,
+  Member,
+} from '../../../../../services/firebase-services/channel-member.service';
 import { UserDatasService } from '../../../../../services/firebase-services/user-datas.service';
 import { ChannelService } from '../../../../../services/firebase-services/channel.service';
-import { AllMembersComponent } from "../../../all-members/all-members.component";
+import { AllMembersComponent } from '../../../all-members/all-members.component';
 import { AllSelectedMembersComponent } from '../../../all-selected-members/all-selected-members.component';
 
 @Component({
   selector: 'app-add-members-to-new-channel',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, MatBottomSheetModule, AllSelectedMembersComponent, AllMembersComponent],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatBottomSheetModule,
+    AllSelectedMembersComponent,
+    AllMembersComponent,
+  ],
   templateUrl: './add-members-to-new-channel.component.html',
-  styleUrl: './add-members-to-new-channel.component.scss'
+  styleUrl: './add-members-to-new-channel.component.scss',
 })
 export class AddMembersToNewChannelComponent implements OnInit {
   @ViewChild('nameInput') nameInputField!: ElementRef;
@@ -36,14 +46,14 @@ export class AddMembersToNewChannelComponent implements OnInit {
   isFocused: boolean = false;
   isMobile: boolean = false;
   isAnimating: boolean = false;
+  currentUserId: string = '';
 
   constructor(
     private memberService: ChannelMemberService,
     private userDataService: UserDatasService,
     private eRef: ElementRef,
-    public channelService: ChannelService,
-  ) { }
-
+    public channelService: ChannelService
+  ) {}
 
   /**
    * Listens to all events of the document. When the click event is fired the function is called
@@ -66,11 +76,15 @@ export class AddMembersToNewChannelComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscribeToSelectedMembers();
+    this.getCurrentUserId();
     if (window.innerWidth < 450) {
       this.isMobile = true;
     }
   }
 
+  getCurrentUserId() {
+    this.currentUserId = this.userDataService.currentUserId;
+  }
 
   /**
    * Subscribes to the currently selected members
@@ -80,7 +94,6 @@ export class AddMembersToNewChannelComponent implements OnInit {
       this.selectedMembers = members;
     });
   }
-
 
   /**
    * Handles the submission process to create a new channel after member selection.

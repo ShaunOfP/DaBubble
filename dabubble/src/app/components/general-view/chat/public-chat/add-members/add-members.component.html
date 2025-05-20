@@ -16,20 +16,41 @@
 </div>
 <form (ngSubmit)="onSubmit()">
   <div class="wrapper">
-    <input class="input-field" name="searchInput" placeholder="Name eingeben" [(ngModel)]="searchInput"
-      (focus)="handleFocus()" (blur)="handleBlur()" autocomplete="off" />
-    <div class="all-selected-member-container" [ngClass]="{ 'd-none': !showSelectedMembersInSearchField() }">
-      <div class="member-container" *ngFor="let member of selectedMembers | slice : 0 : 1">
+    <input
+      class="input-field"
+      name="searchInput"
+      placeholder="Name eingeben"
+      [(ngModel)]="searchInput"
+      (focus)="handleFocus()"
+      (blur)="handleBlur()"
+      autocomplete="off"
+    />
+    <div
+      class="all-selected-member-container"
+      [ngClass]="{ 'd-none': !showSelectedMembersInSearchField() }"
+    >
+      <div
+        class="member-container"
+        *ngFor="let member of selectedMembers | slice : 0 : 1"
+      >
         <img class="avatar" src="{{ member?.avatar }}" alt="Member Avatar" />
         <span>{{ member.username }}</span>
         <div class="arrow-back" (click)="removeMember(member)">
           <img src="assets/img/close.svg" />
         </div>
       </div>
-      <div (click)="showSelectedMembers()" class="further-members-container" *ngIf="selectedMembers.length > 1">
+      <div
+        (click)="showSelectedMembers()"
+        class="further-members-container"
+        *ngIf="selectedMembers.length > 1"
+      >
         +{{ selectedMembers.length - 1 }}
       </div>
-      <div (click)="showSelectedMembers()" class="members-container-mobile" *ngIf="selectedMembers.length > 0">
+      <div
+        (click)="showSelectedMembers()"
+        class="members-container-mobile"
+        *ngIf="selectedMembers.length > 0"
+      >
         Mitglieder: {{ selectedMembers.length }}
       </div>
     </div>
@@ -37,10 +58,17 @@
   <div class="button-container">
     <button class="btn-primary--default" type="submit">Hinzufügen</button>
   </div>
-  <app-all-members [ngClass]="{ 'd-none': searchInput === '' }" [searchQuery]="searchInput"
-    (memberClicked)="clearSearchField()">
+  <app-all-members
+    [ngClass]="{ 'd-none': searchInput === '' }"
+    [searchQuery]="searchInput"
+    [currentUserId]="this.currentUserId"
+    (memberClicked)="clearSearchField()"
+  >
   </app-all-members>
 </form>
-<app-all-selected-members *ngIf="openSelectedMembers" [members]="selectedMembers"
-  (closeWindow)="closeSelectedMembersWindow()">
+<app-all-selected-members
+  *ngIf="openSelectedMembers"
+  [members]="selectedMembers"
+  (closeWindow)="closeSelectedMembersWindow()"
+>
 </app-all-selected-members>

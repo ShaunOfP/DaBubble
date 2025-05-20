@@ -22,12 +22,13 @@ import {
 })
 export class AllMembersComponent implements OnChanges, OnInit {
   @Input() searchQuery: string = '';
+  @Input() currentUserId: string = '';
   @Output() memberClicked = new EventEmitter<void>();
   memberList: Member[] = [];
   selectedMembers: Member[] = [];
   lowerCaseQuery!: string;
 
-  constructor(private memberService: ChannelMemberService) { }
+  constructor(private memberService: ChannelMemberService) {}
 
   ngOnInit(): void {
     this.memberService.selectedMembers$.subscribe((members) => {
@@ -52,7 +53,10 @@ export class AllMembersComponent implements OnChanges, OnInit {
    */
   private async updateMembersList(query: string): Promise<void> {
     if (query.trim() !== '') {
-      this.memberList = await this.memberService.searchUsers(query);
+      this.memberList = await this.memberService.searchUsers(
+        query,
+        this.currentUserId
+      );
       const selectedMembersSet = new Set(this.selectedMembers.map((m) => m.id));
       const updatedMembersList = this.memberList.map((m) => {
         return {

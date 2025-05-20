@@ -8,7 +8,7 @@ import {
   doc,
   setDoc,
   updateDoc,
-  arrayUnion
+  arrayUnion,
 } from '@angular/fire/firestore';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { Channel } from './channel.service';
@@ -46,7 +46,7 @@ export class ChannelMemberService {
   showAddMembersMenu: boolean = false;
   showChatGreyScreen: boolean = false;
 
-  constructor(private userDatasService: UserDatasService) { }
+  constructor(private userDatasService: UserDatasService) {}
 
   updateComponentStatus(isVisible: boolean) {
     this.isComponentVisibleSource.next(isVisible);
@@ -74,7 +74,10 @@ export class ChannelMemberService {
    * - Updates the `membersSubject` observable with the resulting users.
    * - Returns an array of matching `Member` objects.
    */
-  async searchUsers(queryString: string): Promise<Member[]> {
+  async searchUsers(
+    queryString: string,
+    currentUserId: string
+  ): Promise<Member[]> {
     const normalizedQuery = queryString.toLowerCase();
     const userQuery = query(
       this.userDatasRef(),
@@ -85,10 +88,17 @@ export class ChannelMemberService {
     try {
       const querySnapshot = await getDocs(userQuery);
       const users: Member[] = [];
+
       querySnapshot.forEach((doc) => {
-        users.push({ ...(doc.data() as Member), id: doc.id });
+        const userData = doc.data() as Member;
+        const id = doc.id;
+
+        if (id !== currentUserId) {
+          users.push({ ...userData, id });
+        }
       });
       this.membersSubject.next(users);
+
       return users;
     } catch (error) {
       console.error('Fehler beim Suchen nach Nutzern:', error);

@@ -36,21 +36,28 @@ export class AddMembersComponent {
   openAddMembers: boolean = true;
   isMobile: boolean = false;
   openSelectedMembers: boolean = false;
+  currentUserId: string = '';
 
   constructor(
     public publicChatComponent: PublicChatComponent,
     public channelMemberService: ChannelMemberService,
     public userDataService: UserDatasService,
     public chatSerivce: ChatService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.subscribeToSelectedMembers();
     this.subscribeToVisibility();
+    this.getCurrentUser();
     this.openAddMembers = true;
     if (window.innerWidth < 450) {
       this.isMobile = true;
     }
+  }
+
+  getCurrentUser() {
+    this.currentUserId = this.userDataService.currentUserId;
+    console.log(this.currentUserId);
   }
 
   subscribeToSelectedMembers() {
