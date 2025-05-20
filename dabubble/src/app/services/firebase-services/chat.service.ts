@@ -171,6 +171,18 @@ export class ChatService {
   }
 
 
+  async sendMessageToCustomId(message: Message, customId: string, path: string) {
+    if (path === `public`) {
+      const newMessage = await addDoc(collection(this.firestore, `channels/${customId}/messages`), message);
+      this.generateThread(newMessage.id, message);
+    } else if (path === `private`) {
+      await addDoc(collection(this.firestore, `privateChats/${customId}/messages`), message);
+    } else {
+      console.error('Path for Message is wrong');
+    }
+  }
+
+
   async generateThread(messageId: string, message: Message) {
     await addDoc(collection(this.firestore, `channels/${this.currentChatId}/messages/${messageId}/thread`),
       message);

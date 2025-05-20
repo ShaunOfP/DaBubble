@@ -55,7 +55,6 @@ export class PrivateChatComponent implements OnInit {
 
   setMobilePicker(boolean: boolean) {
     this.showMobilePicker = boolean;
-    console.log(this.showMobilePicker);
   }
 
 

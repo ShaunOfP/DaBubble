@@ -5,19 +5,28 @@
     <router-outlet></router-outlet>
     <div class="input-container">
       <div class="popup-results" *ngIf="channelResults.length > 0 && messageInput.value.length > 0">
-        <div class="search-result" *ngFor="let channel of channelResults" (click)="openChat(channel.channelId)">
+        <div class="search-result" *ngFor="let channel of channelResults"
+          (click)="selectDataToSendMessageToPublicChat(channel)">
           <span>#</span>
           <span>{{ channel.channelName }}</span>
         </div>
       </div>
       <div class="popup-results" *ngIf="memberResults.length > 0 && messageInput.value.length > 0">
-        <div class="search-result" *ngFor="let member of memberResults" (click)="openPrivateChat(member.privateChats)">
+        <div class="search-result" *ngFor="let member of memberResults"
+          (click)="selectDataToSendMessageToMember(member)">
           <img src="{{ member.avatar }}">
           <span>{{ member.username }}</span>
         </div>
       </div>
-      <textarea #messageInput #emojiTarget [placeholder]="'Nachricht an #' + currentChannelName"
-        (input)="evaluateChatInput()"></textarea>
+      <div class="textarea-container">
+        <textarea #messageInput #emojiTarget
+          [placeholder]="showPlaceholder ? 'Nachricht an #' + currentChannelName : ''" (input)="evaluateChatInput()"
+          [class.padding-left-125]="customChannelName !== '' || customMemberName !== ''"></textarea>
+        <div class="textarea-selected-name" (click)="resetValuesForCustomMessageSending()"
+          *ngIf="customChannelName !== ''"># {{ customChannelName }}</div>
+        <div class="textarea-selected-name" (click)="resetValuesForCustomMessageSending()"
+          *ngIf="customMemberName !== ''">&#64; {{ customMemberName }}</div>
+      </div>
       <div class="textarea-icon-bar">
         <div appClickOutside (appClickOutside)="hideEmojiPicker()">
           <app-emoji-picker id="emojiChat" (emojiSelected)="onEmojiReceived($event)"

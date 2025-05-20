@@ -6,10 +6,12 @@ import { SharedModule } from '../../../shared/shared.module';
 import { ChatService } from '../../../services/firebase-services/chat.service';
 import { Message } from '../../../models/interfaces';
 import { UserDatasService } from '../../../services/firebase-services/user-datas.service';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { AltHeaderMobileComponent } from "../alt-header-mobile/alt-header-mobile.component";
 import { Subscription } from 'rxjs';
 import { FilterService } from '../../../services/component-services/filter.service';
+import { Channel } from '../../../services/firebase-services/channel.service';
+import { Member } from '../../../services/firebase-services/channel-member.service';
 
 
 @Component({
@@ -45,14 +47,18 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
   channelResults: any[] = [];
   memberResults: any[] = [];
   counter: number = 1;
+  idOfChannelOrMember: string = ``;
+  privateOrPublic: string = ``;
+  customChannelName: string = ``;
+  customMemberName: string = ``;
+  showPlaceholder: boolean = true;
 
   constructor(
     public chatService: ChatService,
     private userDatasService: UserDatasService,
     private route: ActivatedRoute,
     private ngZone: NgZone,
-    private filterService: FilterService,
-    private router: Router
+    private filterService: FilterService
   ) { }
 
 
@@ -81,6 +87,7 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   openChatSearch() {
+    this.resetValuesForCustomMessageSending();
     switch (this.counter) {
       case 1:
         this.messageInput.nativeElement.value = "@";
@@ -141,25 +148,23 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
-  openChat(channelId: string) {
-    this.router.navigate(['/general/public-chat'], {
-      queryParams: { chatId: channelId },
-      queryParamsHandling: 'merge',
-      replaceUrl: true,
-    });
-    this.filterService.updateFilter('');
+  selectDataToSendMessageToPublicChat(channelData: Channel) {
     this.messageInput.nativeElement.value = ``;
+    this.showPlaceholder = false;
+    this.filterService.updateFilter('');
+    this.idOfChannelOrMember = channelData.channelId;
+    this.customChannelName = channelData.channelName;
+    this.privateOrPublic = `public`;
   }
 
 
-  openPrivateChat(privateChatId: string) {
-    this.router.navigate(['/general/private-chat'], {
-      queryParams: { chatId: privateChatId },
-      queryParamsHandling: 'merge',
-      replaceUrl: true,
-    });
-    this.filterService.updateFilter('');
+  selectDataToSendMessageToMember(memberData: Member) {
     this.messageInput.nativeElement.value = ``;
+    this.showPlaceholder = false;
+    this.filterService.updateFilter('');
+    this.idOfChannelOrMember = memberData.privateChats;
+    this.customMemberName = memberData.username;
+    this.privateOrPublic = `private`;
   }
 
 
@@ -246,6 +251,7 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
 
   evaluateChatInput() {
     let messageValue = this.messageInput.nativeElement.value;
+    if (this.idOfChannelOrMember !== ``) return;
     if (messageValue.charAt(0) === '@') {
       this.filterService.resetSearchResults();
       this.filterService.updateFilter(messageValue);
@@ -253,6 +259,7 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
       this.filterService.resetSearchResults();
       this.filterService.updateFilter(messageValue);
     } else {
+      this.resetValuesForCustomMessageSending();
       this.filterService.resetSearchResults();
       this.filterService.updateFilter('');
     }
@@ -267,7 +274,6 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
   async sendMessage(content: string): Promise<void> {
     if (!this.userDatasService.currentUserId || !content) {
       this.userDatasService.getCurrentUserId();
-
       if (!this.userDatasService.currentUserId) {
         console.error('User ID is not available');
         return;
@@ -298,14 +304,36 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
       return;
     }
 
-    this.chatService
-      .saveMessage(message)
+    if (this.idOfChannelOrMember !== ``) {
+      this.chatService
+      .sendMessageToCustomId(message, this.idOfChannelOrMember, this.privateOrPublic)
       .then(() => {
-        this.messageInput.nativeElement.value = '';
+        this.messageInput.nativeElement.value = ``;
+        this.resetValuesForCustomMessageSending();
       })
       .catch((error) => {
-        console.error('Error saving message:', error);
+        console.error("Error sending custom message:", error);
       });
+    } else {
+      this.chatService
+        .saveMessage(message)
+        .then(() => {
+          this.messageInput.nativeElement.value = '';
+        })
+        .catch((error) => {
+          console.error('Error saving message:', error);
+        });
+    }
+  }
+
+
+  resetValuesForCustomMessageSending() {
+    this.idOfChannelOrMember = ``;
+    this.privateOrPublic = ``;
+    this.customChannelName = ``;
+    this.customMemberName = ``;
+    this.showPlaceholder = true;
+    this.counter = 1;
   }
 
 
