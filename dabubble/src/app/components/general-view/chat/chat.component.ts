@@ -6,7 +6,7 @@ import { SharedModule } from '../../../shared/shared.module';
 import { ChatService } from '../../../services/firebase-services/chat.service';
 import { Message } from '../../../models/interfaces';
 import { UserDatasService } from '../../../services/firebase-services/user-datas.service';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { AltHeaderMobileComponent } from "../alt-header-mobile/alt-header-mobile.component";
 import { Subscription } from 'rxjs';
 import { FilterService } from '../../../services/component-services/filter.service';
@@ -58,14 +58,25 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
     private userDatasService: UserDatasService,
     private route: ActivatedRoute,
     private ngZone: NgZone,
-    private filterService: FilterService
+    private filterService: FilterService,
+    private router: Router
   ) { }
 
 
   ngOnInit() {
+    this.goToMainChannel();
     this.fetchChannelDataForCurrentUser();
     this.subscribeToCurrentChannels();
     this.subscribeToCurrentMembers();
+  }
+
+
+  goToMainChannel() {
+    this.router.navigate(['/general/public-chat'], {
+      queryParams: { chatId: 'ER84UOYc0F2jptDjWxFo' },
+      queryParamsHandling: 'merge',
+      replaceUrl: true,
+    });
   }
 
 
@@ -306,14 +317,14 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
 
     if (this.idOfChannelOrMember !== ``) {
       this.chatService
-      .sendMessageToCustomId(message, this.idOfChannelOrMember, this.privateOrPublic)
-      .then(() => {
-        this.messageInput.nativeElement.value = ``;
-        this.resetValuesForCustomMessageSending();
-      })
-      .catch((error) => {
-        console.error("Error sending custom message:", error);
-      });
+        .sendMessageToCustomId(message, this.idOfChannelOrMember, this.privateOrPublic)
+        .then(() => {
+          this.messageInput.nativeElement.value = ``;
+          this.resetValuesForCustomMessageSending();
+        })
+        .catch((error) => {
+          console.error("Error sending custom message:", error);
+        });
     } else {
       this.chatService
         .saveMessage(message)
