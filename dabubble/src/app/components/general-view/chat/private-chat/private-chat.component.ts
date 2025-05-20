@@ -94,7 +94,6 @@ export class PrivateChatComponent implements OnInit {
     if (this.chatService.getCurrentRoute() === 'public') {
       return;
     }
-
     this.messages$ = this.route.queryParams.pipe(
       map(params => params['chatId']),
       distinctUntilChanged(),
@@ -138,19 +137,12 @@ export class PrivateChatComponent implements OnInit {
 
   loadFilter() {
     this.filteredMessages$ = combineLatest([
-      this.messages$,
-      this.filterService.filterText$.pipe(distinctUntilChanged())
+      this.messages$
     ]).pipe(
-      map(([messages, filterText]) => {
+      map(([messages]) => {
         this.loadMessageUserIdIntoObject(messages);
-        if (!filterText) return messages;
-        const searchLower = filterText.toLowerCase();
-        return messages.filter(message => {
-          const contentMatch = message.content?.toLowerCase().startsWith(searchLower);
-          const dateStr = new Date(message.createdAt).toLocaleDateString('de-DE');
-          const dateMatch = dateStr.toLowerCase().includes(searchLower);
-          return contentMatch || dateMatch;
-        });
+        return messages.filter(message => message.userId === this.userDatasService.currentUserId ||
+          message.userId === this.chatService.privateChatOtherUserId);
       })
     );
   }

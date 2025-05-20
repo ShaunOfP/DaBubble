@@ -49,6 +49,7 @@ export class ChatService {
   private subscription = new Subscription();
   private channelSubscription = new Subscription();
   private reloadChat$ = new Subject<void>;
+  privateChatOtherUserId: string = ``;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
