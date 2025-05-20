@@ -17,6 +17,7 @@ import {
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Message } from '../../models/interfaces';
+import { UserDatasService } from './user-datas.service';
 
 export interface Channel {
   channelId: string;
@@ -40,7 +41,7 @@ export class ChannelService {
   isAddMembersToNewChannelVisible: boolean = false;
   isCreateChannelOverlayVisible: boolean = false;
 
-  constructor(private firestore: Firestore) {
+  constructor(private firestore: Firestore, private userDatasService: UserDatasService) {
     this.channelsCollection = collection(this.firestore, 'channels') as CollectionReference<Channel>;
     this.channels$ = this.getChannelsCollection();
     this.messages$ = this.getMessagesCollection();
@@ -80,7 +81,9 @@ export class ChannelService {
   async getChannelNames() {
     const snapshot = await getDocs(this.channelDataRef());
     snapshot.forEach((doc) => {
-      this.channelNames.push(doc.data()['channelName']);
+      if (doc.data()['users'].includes(this.userDatasService.currentUserId)){
+        this.channelNames.push(doc.data()['channelName']);
+      }
     });
   }
 
