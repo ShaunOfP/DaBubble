@@ -181,7 +181,9 @@ export class ChatDetailsComponent {
         this.userDataService.removeChannelFromUserData(result['channels'], currentChannelData.channelId);
       });
       this.closeChatDetails();
+      this.chatService.cleanChannelSubscription();
       this.goBackToMainChannel();
+      this.closeThread();
       this.chatService.showAltHeader = false;
       this.chatService.showChatDetailsMobileGreyLayer = false;
       this.chatService.showChatWhenResponsive = false;
@@ -189,6 +191,12 @@ export class ChatDetailsComponent {
     } else {
       // console.warn("Entwicklerchannel kann nicht verlassen werden");
     }
+  }
+
+
+  closeThread() {
+    this.chatService.threadClosed = true;
+    this.chatService.currentThreadsSubject.next([]);
   }
 
 

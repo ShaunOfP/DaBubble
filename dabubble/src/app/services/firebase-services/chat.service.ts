@@ -47,6 +47,7 @@ export class ChatService {
   isAlreadyFocusedOncePerLoad: boolean = false;
   messageID: string = '';
   private subscription = new Subscription();
+  private channelSubscription = new Subscription();
   private reloadChat$ = new Subject<void>;
 
   constructor(private route: ActivatedRoute,
@@ -77,6 +78,13 @@ export class ChatService {
   cleanAllSubscriptions() {
     this.subscription.unsubscribe();
     this.subscription = new Subscription();
+    this.cleanChannelSubscription();
+  }
+
+
+  cleanChannelSubscription() {
+    this.channelSubscription.unsubscribe();
+    this.channelSubscription = new Subscription();
   }
 
 
@@ -84,7 +92,7 @@ export class ChatService {
    * Fetches the Data of the current Chat
    */
   loadChannelInfo() {
-    this.subscription.add(docData(this.getChannelDocRef(this.currentChatId)).subscribe((data) => {
+    this.channelSubscription.add(docData(this.getChannelDocRef(this.currentChatId)).subscribe((data) => {
       this.currentChannelData = data as Channel;
       this.loadChannelUserIcons();
     }));

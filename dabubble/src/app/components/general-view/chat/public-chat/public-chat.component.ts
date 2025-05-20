@@ -67,6 +67,8 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.chatService.cleanChannelSubscription();
+    this.chatService.getCurrentChatId();
     this.loadMessages();
     this.loadFilter();
     this.isWidth400OrLess();
