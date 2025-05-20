@@ -53,7 +53,6 @@ export class ChatService {
     private router: Router,
     private userDatasService: UserDatasService
   ) {
-    this.getCurrentChatId();
   }
 
 
@@ -85,10 +84,10 @@ export class ChatService {
    * Fetches the Data of the current Chat
    */
   loadChannelInfo() {
-    docData(this.getChannelDocRef(this.currentChatId)).subscribe((data) => {
+    this.subscription.add(docData(this.getChannelDocRef(this.currentChatId)).subscribe((data) => {
       this.currentChannelData = data as Channel;
       this.loadChannelUserIcons();
-    });
+    }));
   }
 
 
@@ -191,7 +190,7 @@ export class ChatService {
 
   async updateMessage(emoji: string, messageId: string, userId: string, isThread: boolean) {
     let messagePath;
-    if (this.getCurrentRoute() === 'private'){
+    if (this.getCurrentRoute() === 'private') {
       messagePath = `privateChats/${this.currentChatId}/messages/${messageId}`
     } else {
       messagePath = this.getMessagePath(messageId, isThread);

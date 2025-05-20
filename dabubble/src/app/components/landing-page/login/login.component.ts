@@ -22,6 +22,7 @@ import {
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { User } from '@angular/fire/auth';
+import { ChatService } from '../../../services/firebase-services/chat.service';
 
 @Component({
   selector: 'app-login',
@@ -51,7 +52,8 @@ export class LoginComponent implements OnInit {
     private firestore: Firestore,
     private authService: AuthService,
     private userService: UserDatasService,
-    private form: FormBuilder
+    private form: FormBuilder,
+    private chatService: ChatService
   ) {
     this.userDatas$ = collectionData(this.userDatasRef()) as Observable<
       UserDatas[]
@@ -124,6 +126,7 @@ export class LoginComponent implements OnInit {
       this.router.navigate([`/general/public-chat`], {
         queryParams: { chatId: chatId, userID: result?.uid },
       });
+      this.chatService.getCurrentChatId();
     }
   }
 
@@ -137,6 +140,7 @@ export class LoginComponent implements OnInit {
     this.authService.signInAsGuest().then(user => {
       if (user) {
         this.guestLogIn();
+        this.chatService.getCurrentChatId();
       } else {
         console.error('Error with Guest Login');
       }
@@ -192,6 +196,7 @@ export class LoginComponent implements OnInit {
     } catch (error) {
       console.error('Google Log In fehlgeschlagen.', error);
     }
+    this.chatService.getCurrentChatId();
   }
 
   async setNewUser(user: User) {
