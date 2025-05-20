@@ -1,10 +1,292 @@
-import { CommonModule } from '@angular/common';
-import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
-import { combineLatest, distinctUntilChanged, filter, map, Observable, switchMap, take, tap } from 'rxjs';
-import { Message } from '../../../../models/interfaces';
+// import { CommonModule } from '@angular/common';
+// import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+// import { combineLatest, distinctUntilChanged, filter, map, Observable, switchMap, take, tap } from 'rxjs';
+// import { Message } from '../../../../models/interfaces';
+// import { ChatService } from '../../../../services/firebase-services/chat.service';
+// import { ActivatedRoute } from '@angular/router';
+// import { FilterService } from '../../../../services/component-services/filter.service';
+// import { EmojiPickerComponent } from '../../emoji-picker/emoji-picker.component';
+// import { MatCardModule } from '@angular/material/card';
+// import { ChatComponent } from '../chat.component';
+// import { UserInfoCardComponent } from "../user-info-card/user-info-card.component";
+// import { UserDatasService } from '../../../../services/firebase-services/user-datas.service';
+// import { DmReactionsComponent } from "./dm-reactions/dm-reactions.component";
+// import { FormsModule } from '@angular/forms';
+
+// @Component({
+//   selector: 'app-private-chat',
+//   standalone: true,
+//   imports: [CommonModule, EmojiPickerComponent, MatCardModule, UserInfoCardComponent, DmReactionsComponent, FormsModule],
+//   templateUrl: './private-chat.component.html',
+//   styleUrl: './private-chat.component.scss'
+// })
+// export class PrivateChatComponent implements OnInit {
+//   @ViewChild('chatContainer') chatContainer!: ElementRef;
+//   messages$!: Observable<Message[]>;
+//   filteredMessages$!: Observable<any[]>;
+//   reactions$!: Observable<any[]>;
+//   channelId: string = '';
+//   newMessage: boolean = false;
+//   hoveredMessageId: string | null = null;
+//   showPicker: boolean = false;
+//   showFirstMessage: boolean = true;
+//   showEditMessage: boolean = false;
+//   editMessageId: string | null = null;
+//   messageDetailsMap: { [id: string]: any } = {};
+//   messageValue: string = '';
+//   isMobile: boolean = false;
+//   showMobilePicker: boolean = false;
+
+//   private scrollListener!: () => void;
+
+//   constructor(
+//     private chatService: ChatService,
+//     private route: ActivatedRoute,
+//     private filterService: FilterService,
+//     public chatComponent: ChatComponent,
+//     public userDatasService: UserDatasService
+//   ) { }
+
+//   ngOnInit(): void {
+//     this.loadMessages();
+//     this.loadFilter();
+//   }
+
+
+//   setMobilePicker(boolean: boolean) {
+//     this.showMobilePicker = boolean;
+//   }
+
+
+//   setEditId(messageId: string) {
+//     this.editMessageId = messageId;
+//   }
+
+
+//   showMemberInfo() {
+//     this.userDatasService.showUserInfoCard = true;
+//   }
+
+
+//   openThread(messageId: string): void {
+//       this.chatService.messageID = messageId;
+//       this.chatService.getMessageThreadForPrivateChats(messageId);
+//       if (this.chatService.threadClosed) {
+//         this.chatService.toggleDrawerState();
+//         this.chatService.threadClosed = false;
+//       }
+//       this.chatService.showThreadWhenResponsive = true;
+//   }
+
+
+//   updateChatMessage(messageId: string, messageUniqueId: string) {
+//     this.chatService.updateChatMessage(messageId, this.messageValue, messageUniqueId);
+//     this.editMessageId = null;
+//   }
+
+
+//   initializeMessageValue(content: string) {
+//     this.messageValue = content;
+//   }
+
+
+//   loadMessages() {
+//     if (this.chatService.getCurrentRoute() === 'public') {
+//       return;
+//     }
+//     this.messages$ = this.route.queryParams.pipe(
+//       map(params => params['chatId']),
+//       distinctUntilChanged(),
+//       tap(chatId => {
+//         if (!chatId) {
+//           console.error("Keine chatId in den Query-Parametern gefunden!");
+//         } else {
+//           this.chatService.currentChatId = chatId;
+//         }
+//       }),
+//       filter(chatId => !!chatId),
+//       switchMap(() => this.chatService.getMessages()),
+//       map((messages: Message[]) => this.returnNewObservable(messages, null)),
+//       tap((updatedMessages: Message[]) => {
+//         if (updatedMessages.length > 0) {
+//           this.showFirstMessage = false;
+//         }
+//         this.newMessage = true;
+//         setTimeout(() => this.scrollToElement('auto'), 1000);
+//       })
+//     );
+//   }
+
+
+//   loadMessageUserIdIntoObject(messages: Array<Message>) {
+//     messages.forEach(message => {
+//       this.userDatasService.getUserDataObservable(message.userId)
+//         .pipe(take(1))
+//         .subscribe(userData => {
+//           this.messageDetailsMap[message.uniqueId] = userData;
+//         }
+//         );
+//     });
+//   }
+
+
+//   sendReaction(emoji: string, id: string) {
+//     this.chatService.updateMessage(emoji, id, this.userDatasService.currentUserId, false)
+//   }
+
+
+//   loadFilter() {
+//     this.filteredMessages$ = combineLatest([
+//       this.messages$
+//     ]).pipe(
+//       map(([messages]) => {
+//         this.loadMessageUserIdIntoObject(messages);
+//         return messages.filter(message => message.userId === this.userDatasService.currentUserId ||
+//           message.userId === this.chatService.privateChatOtherUserId);
+//       })
+//     );
+//   }
+
+
+//   reactionEntries(message: Message): { emoji: string, count: number }[] {
+//     return Object.entries(message.reaction || {}).map(([emoji, users]) => ({
+//       emoji,
+//       count: (users as string[]).length
+//     }));
+//   }
+
+
+//   ngAfterViewInit(): void {
+//     if (this.chatContainer) {
+//       this.scrollListener = this.onScroll.bind(this);
+//       this.chatContainer.nativeElement.addEventListener(
+//         'scroll',
+//         this.scrollListener
+//       );
+//     }
+//   }
+
+
+//   ngOnDestroy(): void {
+//     if (this.chatContainer && this.scrollListener) {
+//       this.chatContainer.nativeElement.removeEventListener(
+//         'scroll',
+//         this.scrollListener
+//       );
+//     }
+//   }
+
+
+//   scrollToElement(behavior: string): void {
+//     if (this.chatContainer) {
+//       this.chatContainer.nativeElement.scroll({
+//         top: this.chatContainer.nativeElement.scrollHeight,
+//         left: 0,
+//         behavior: behavior,
+//       });
+//       this.newMessage = false;
+//     }
+//   }
+
+
+//   onScroll(): void {
+//     if (this.chatContainer) {
+//       const element = this.chatContainer.nativeElement;
+//       const isAtBottom =
+//         element.scrollTop + element.clientHeight >= element.scrollHeight - 10;
+//       if (isAtBottom) {
+//         this.newMessage = false;
+//       }
+//     }
+//   }
+
+
+//   /**
+//    * Transforms an array of messages to include display-related metadata for dates.
+//    *
+//    * This method maps over a list of messages and determines whether the date
+//    * of each message should be displayed. It compares the current message's date
+//    * with the last seen date to decide if a new date separator is needed.
+//    *
+//    * @param {Message[]} messages - An array of messages to process.
+//    * @param {string | null} lastDate - The last displayed date in 'dd.mm.yy' format or null if none.
+//    * @returns {Array} - A new array of messages, each with added properties:
+//    *   - `showDate` (boolean): Whether to display the date for this message.
+//    *   - `formattedDate` (string | null): The formatted date to display if `showDate` is true.
+//    */
+//   returnNewObservable(messages: Message[], lastDate: string | null) {
+//     return messages.map((message) => {
+//       const currentDate = new Date(message.createdAt).toLocaleDateString(
+//         'de-DE',
+//         {
+//           day: '2-digit',
+//           month: '2-digit',
+//           year: '2-digit',
+//         }
+//       );
+//       const showDate = currentDate !== lastDate;
+//       lastDate = currentDate;
+//       return {
+//         ...message,
+//         showDate,
+//         formattedDate: showDate ? currentDate : null,
+//       };
+//     });
+//   }
+
+
+//   formatTime(timestamp: number): string {
+//     const date = new Date(timestamp);
+//     return date.toLocaleTimeString('de-DE', {
+//       hour: '2-digit',
+//       minute: '2-digit',
+//     });
+//   }
+
+
+//   checkStyle(userId: string): string {
+//     let currentUser: string = '';
+//     this.route.queryParams.subscribe((params) => {
+//       currentUser = params['userID'];
+//     });
+//     return userId === currentUser ? 'secondary' : 'primary';
+//   }
+
+
+//   @HostListener('window:resize', [])
+//   isWidth400OrLess() {
+//     if (window.innerWidth <= 400) {
+//       this.isMobile = true;
+//     } else {
+//       this.isMobile = false;
+//     }
+//   }
+
+//   @HostListener('window:resize', [])
+//   isWindowBelow500() {
+//     if (window.innerWidth <= 500) {
+//       return true;
+//     } else {
+//       this.showMobilePicker = false;
+//       return false;
+//     }
+//   }
+// }
+
+import {
+  Component,
+  OnInit,
+  ElementRef,
+  ViewChild,
+  AfterViewInit,
+  OnDestroy,
+  HostListener,
+} from '@angular/core';
 import { ChatService } from '../../../../services/firebase-services/chat.service';
+import { Observable, distinctUntilChanged, filter, map, switchMap, take, tap } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { Message } from '../../../../models/interfaces';
 import { ActivatedRoute } from '@angular/router';
-import { FilterService } from '../../../../services/component-services/filter.service';
 import { EmojiPickerComponent } from '../../emoji-picker/emoji-picker.component';
 import { MatCardModule } from '@angular/material/card';
 import { ChatComponent } from '../chat.component';
@@ -20,77 +302,113 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './private-chat.component.html',
   styleUrl: './private-chat.component.scss'
 })
-export class PrivateChatComponent implements OnInit {
+export class PrivateChatComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('chatContainer') chatContainer!: ElementRef;
-  messages$!: Observable<Message[]>;
-  filteredMessages$!: Observable<any[]>;
-  reactions$!: Observable<any[]>;
-  channelId: string = '';
-  newMessage: boolean = false;
-  hoveredMessageId: string | null = null;
-  showPicker: boolean = false;
-  showFirstMessage: boolean = true;
-  showEditMessage: boolean = false;
-  editMessageId: string | null = null;
-  messageDetailsMap: { [id: string]: any } = {};
-  messageValue: string = '';
-  isMobile: boolean = false;
-  showMobilePicker: boolean = false;
+
+  public messages$!: Observable<any[]>;
+  public reactions$!: Observable<any[]>; 
+  public channelId: string = '';
+  public newMessage: boolean = false;
+  public hoveredMessageId: string | null = null;
+  public showPicker: boolean = false;
+  public showFirstMessage: boolean = true;
+  public showEditMessage: boolean = false;
+  public editMessageId: string | null = null;
+  public messageDetailsMap: { [id: string]: any } = {};
+  public messageValue: string = '';
+  public isMobile: boolean = false;
+  public showMobilePicker: boolean = false;
 
   private scrollListener!: () => void;
+  private initialLoadCompleteForCurrentChat: boolean = false;
 
+  /**
+   * Constructor for the PrivateChatComponent.
+   * @param {ChatService} chatService Service for chat-related operations.
+   * @param {ActivatedRoute} route Service for accessing route parameters.
+   * @param {ChatComponent} chatComponent Reference to the parent chat component.
+   * @param {UserDatasService} userDatasService Service for fetching user data.
+   */
   constructor(
     private chatService: ChatService,
     private route: ActivatedRoute,
-    private filterService: FilterService,
     public chatComponent: ChatComponent,
     public userDatasService: UserDatasService
   ) { }
 
+  /**
+   * Lifecycle hook called when the component is initialized.
+   * Loads messages and applies initial filtering.
+   */
   ngOnInit(): void {
     this.loadMessages();
-    this.loadFilter();
+    // this.loadFilter(); // Removed, logic integrated into loadMessages
+    this.isWidth400OrLess();
   }
 
-
-  setMobilePicker(boolean: boolean) {
-    this.showMobilePicker = boolean;
+  /**
+   * Sets the status for displaying the mobile emoji picker.
+   * @param {boolean} status True to show the picker, false otherwise.
+   */
+  public setMobilePicker(status: boolean): void {
+    this.showMobilePicker = status;
   }
 
-
-  setEditId(messageId: string) {
+  /**
+   * Sets the ID of the message currently being edited.
+   * @param {string} messageId The unique ID of the message to be edited.
+   */
+  public setEditId(messageId: string): void {
     this.editMessageId = messageId;
   }
 
-
-  showMemberInfo() {
+  /**
+   * Shows the user information card.
+   */
+  public showMemberInfo(): void {
     this.userDatasService.showUserInfoCard = true;
   }
 
-
-  openThread(messageId: string): void {
-      this.chatService.messageID = messageId;
-      this.chatService.getMessageThreadForPrivateChats(messageId);
-      if (this.chatService.threadClosed) {
-        this.chatService.toggleDrawerState();
-        this.chatService.threadClosed = false;
-      }
-      this.chatService.showThreadWhenResponsive = true;
+  /**
+   * Opens the thread area for a specific private chat message.
+   * @param {string} messageId The ID of the message for which to open the thread.
+   */
+  public openThread(messageId: string): void {
+    this.chatService.messageID = messageId;
+    this.chatService.getMessageThreadForPrivateChats(messageId);
+    if (this.chatService.threadClosed) {
+      this.chatService.toggleDrawerState();
+      this.chatService.threadClosed = false;
+    }
+    this.chatService.showThreadWhenResponsive = true;
   }
 
-
-  updateChatMessage(messageId: string, messageUniqueId: string) {
+  /**
+   * Updates an existing chat message with new content.
+   * @param {string} messageId The Firebase message ID (often the document key).
+   * @param {string} messageUniqueId The unique ID of the message within the application.
+   */
+  public updateChatMessage(messageId: string, messageUniqueId: string): void {
+    if (this.messageValue.trim() === '') return;
     this.chatService.updateChatMessage(messageId, this.messageValue, messageUniqueId);
     this.editMessageId = null;
+    this.messageValue = '';
   }
 
-
-  initializeMessageValue(content: string) {
+  /**
+   * Initializes the value of the message input field with the content of an existing message.
+   * @param {string} content The content of the message to be edited.
+   */
+  public initializeMessageValue(content: string): void {
     this.messageValue = content;
   }
 
-
-  loadMessages() {
+  /**
+   * Loads and filters chat messages based on the `chatId` from the route parameters.
+   * Messages are transformed to include user details and date display logic.
+   * Manages the `newMessage` flag and scrolling.
+   */
+  public loadMessages(): void {
     if (this.chatService.getCurrentRoute() === 'public') {
       return;
     }
@@ -99,143 +417,179 @@ export class PrivateChatComponent implements OnInit {
       distinctUntilChanged(),
       tap(chatId => {
         if (!chatId) {
-          console.error("Keine chatId in den Query-Parametern gefunden!");
+          console.error("No chatId found in query parameters!");
         } else {
           this.chatService.currentChatId = chatId;
+          this.initialLoadCompleteForCurrentChat = false; 
+          this.newMessage = false; 
         }
       }),
       filter(chatId => !!chatId),
       switchMap(() => this.chatService.getMessages()),
+      tap((messages: Message[]) => { 
+        this.loadMessageUserIdIntoObject(messages);
+      }),
+      map((messages: Message[]) => { 
+        return messages.filter(message =>
+          message.userId === this.userDatasService.currentUserId ||
+          message.userId === this.chatService.privateChatOtherUserId
+        );
+      }),
       map((messages: Message[]) => this.returnNewObservable(messages, null)),
       tap((updatedMessages: Message[]) => {
         if (updatedMessages.length > 0) {
           this.showFirstMessage = false;
         }
-        this.newMessage = true;
-        setTimeout(() => this.scrollToElement('auto'), 1000);
+        if (!this.initialLoadCompleteForCurrentChat) {
+          this.scrollToElement('auto');
+          this.initialLoadCompleteForCurrentChat = true;
+        } else {
+          this.newMessage = true;
+          this.scrollToElement('auto');
+        }
       })
     );
   }
 
-
-  loadMessageUserIdIntoObject(messages: Array<Message>) {
+  /**
+   * Loads user details for each message in an array if they haven't been loaded yet.
+   * Stores the fetched user data in `messageDetailsMap`.
+   * @param {Message[]} messages An array of messages for which user details should be loaded.
+   */
+  public loadMessageUserIdIntoObject(messages: Array<Message>): void {
     messages.forEach(message => {
-      this.userDatasService.getUserDataObservable(message.userId)
-        .pipe(take(1))
-        .subscribe(userData => {
-          this.messageDetailsMap[message.uniqueId] = userData;
-        }
-        );
+      if (message.uniqueId && !this.messageDetailsMap[message.uniqueId]) { // Check if already loaded
+        this.userDatasService.getUserDataObservable(message.userId)
+          .pipe(take(1))
+          .subscribe(userData => {
+            if (userData) {
+              this.messageDetailsMap[message.uniqueId] = userData;
+            }
+          });
+      }
     });
   }
 
-
-  sendReaction(emoji: string, id: string) {
-    this.chatService.updateMessage(emoji, id, this.userDatasService.currentUserId, false)
-  }
-
-
-  loadFilter() {
-    this.filteredMessages$ = combineLatest([
-      this.messages$
-    ]).pipe(
-      map(([messages]) => {
-        this.loadMessageUserIdIntoObject(messages);
-        return messages.filter(message => message.userId === this.userDatasService.currentUserId ||
-          message.userId === this.chatService.privateChatOtherUserId);
-      })
-    );
-  }
-
-
-  reactionEntries(message: Message): { emoji: string, count: number }[] {
-    return Object.entries(message.reaction || {}).map(([emoji, users]) => ({
-      emoji,
-      count: (users as string[]).length
-    }));
-  }
-
-
-  ngAfterViewInit(): void {
-    if (this.chatContainer) {
-      this.scrollListener = this.onScroll.bind(this);
-      this.chatContainer.nativeElement.addEventListener(
-        'scroll',
-        this.scrollListener
-      );
-    }
-  }
-
-
-  ngOnDestroy(): void {
-    if (this.chatContainer && this.scrollListener) {
-      this.chatContainer.nativeElement.removeEventListener(
-        'scroll',
-        this.scrollListener
-      );
-    }
-  }
-
-
-  scrollToElement(behavior: string): void {
-    if (this.chatContainer) {
-      this.chatContainer.nativeElement.scroll({
-        top: this.chatContainer.nativeElement.scrollHeight,
-        left: 0,
-        behavior: behavior,
-      });
-      this.newMessage = false;
-    }
-  }
-
-
-  onScroll(): void {
-    if (this.chatContainer) {
-      const element = this.chatContainer.nativeElement;
-      const isAtBottom =
-        element.scrollTop + element.clientHeight >= element.scrollHeight - 10;
-      if (isAtBottom) {
-        this.newMessage = false;
-      }
-    }
+  /**
+   * Sends a reaction (emoji) to a message.
+   * @param {string} emoji The emoji to send as a reaction.
+   * @param {string} id The ID of the message being reacted to.
+   */
+  public sendReaction(emoji: string, id: string): void {
+    this.chatService.updateMessage(emoji, id, this.userDatasService.currentUserId, false);
   }
 
 
   /**
+   * Transforms message reactions into an array of objects with emoji and count.
+   * @param {Message} message The message object containing reactions.
+   * @returns {{ emoji: string, count: number }[]} An array of reaction entries.
+   */
+  public reactionEntries(message: Message): { emoji: string, count: number }[] {
+    return Object.entries(message.reaction || {}).map(([emoji, users]) => ({
+      emoji,
+      count: (users as string[]).length // Type assertion for safety
+    }));
+  }
+
+  /**
+   * Lifecycle hook called after the component's view children are initialized.
+   * Adds a scroll listener to the chat container, if present.
+   */
+  ngAfterViewInit(): void {
+    if (this.chatContainer?.nativeElement) {
+      this.scrollListener = this.onScroll.bind(this);
+      this.chatContainer.nativeElement.addEventListener('scroll', this.scrollListener);
+    }
+  }
+
+  /**
+   * Lifecycle hook called immediately before the component is destroyed.
+   * Removes the scroll listener.
+   */
+  ngOnDestroy(): void {
+    if (this.chatContainer?.nativeElement && this.scrollListener) {
+      this.chatContainer.nativeElement.removeEventListener('scroll', this.scrollListener);
+    }
+  }
+
+  /**
+   * Scrolls the chat container to the specified element or position, typically the bottom.
+   * @param {ScrollBehavior | string} behavior The scroll behavior ('auto' or 'smooth').
+   */
+  public scrollToElement(behavior: ScrollBehavior | string): void {
+    if (this.chatContainer?.nativeElement) {
+      try {
+        this.chatContainer.nativeElement.scroll({
+          top: this.chatContainer.nativeElement.scrollHeight,
+          left: 0,
+          behavior: behavior as ScrollBehavior, // Cast to ScrollBehavior
+        });
+      } catch (error) {
+        console.error("Error scrolling to element:", error);
+      }
+    }
+  }
+
+  /**
+   * Handles the scroll event in the chat container.
+   * Sets `newMessage` to false if the user has scrolled away from the absolute bottom
+   * after new messages have arrived and caused a scroll.
+   */
+  public onScroll(): void {
+    if (this.chatContainer?.nativeElement) {
+      const element = this.chatContainer.nativeElement;
+      const threshold = 10;
+      if (this.newMessage) {
+        const isScrolledToBottom = element.scrollTop + element.clientHeight >= element.scrollHeight - threshold;
+        if (!isScrolledToBottom) {
+          this.newMessage = false;
+        }
+      }
+    }
+  }
+
+  /**
    * Transforms an array of messages to include display-related metadata for dates.
-   *
    * This method maps over a list of messages and determines whether the date
    * of each message should be displayed. It compares the current message's date
    * with the last seen date to decide if a new date separator is needed.
-   *
    * @param {Message[]} messages - An array of messages to process.
-   * @param {string | null} lastDate - The last displayed date in 'dd.mm.yy' format or null if none.
-   * @returns {Array} - A new array of messages, each with added properties:
-   *   - `showDate` (boolean): Whether to display the date for this message.
-   *   - `formattedDate` (string | null): The formatted date to display if `showDate` is true.
+   * @param {string | null} initialLastDate - The last displayed date in 'dd.mm.yy' format or null if none (for the start of this batch).
+   * @returns {Array<object>} - A new array of messages, each with added properties:
+   * - `showDate` (boolean): Whether to display the date for this message.
+   * - `formattedDate` (string | null): The formatted date to display if `showDate` is true.
    */
-  returnNewObservable(messages: Message[], lastDate: string | null) {
+  public returnNewObservable(messages: Message[], initialLastDate: string | null): any[] {
+    let lastDate = initialLastDate; // Use a local variable to track lastDate within this specific call/batch
     return messages.map((message) => {
-      const currentDate = new Date(message.createdAt).toLocaleDateString(
+      const currentDate = message.createdAt ? new Date(message.createdAt).toLocaleDateString(
         'de-DE',
         {
           day: '2-digit',
           month: '2-digit',
           year: '2-digit',
         }
-      );
-      const showDate = currentDate !== lastDate;
-      lastDate = currentDate;
+      ) : null;
+      const showDate = currentDate && currentDate !== lastDate;
+      if (showDate) {
+        lastDate = currentDate;
+      }
       return {
         ...message,
-        showDate,
+        showDate: !!showDate,
         formattedDate: showDate ? currentDate : null,
       };
     });
   }
 
-
-  formatTime(timestamp: number): string {
+  /**
+   * Formats a numeric timestamp into a readable time string (HH:MM).
+   * @param {number} timestamp The timestamp to format.
+   * @returns {string} The formatted time string.
+   */
+  public formatTime(timestamp: number): string {
+    if (isNaN(timestamp)) return '';
     const date = new Date(timestamp);
     return date.toLocaleTimeString('de-DE', {
       hour: '2-digit',
@@ -243,32 +597,43 @@ export class PrivateChatComponent implements OnInit {
     });
   }
 
-
-  checkStyle(userId: string): string {
+  /**
+   * Checks if a message is from the currently logged-in user to apply different styles.
+   * @param {string} userId The user ID of the message author.
+   * @returns {'secondary' | 'primary'} Returns 'secondary' if the message is from the current user, otherwise 'primary'.
+   * @remarks This method subscribes to `this.route.queryParams` on each call.
+   * For better performance with frequent calls (e.g., in `*ngFor`), the `currentUserId`
+   * should be obtained once in `ngOnInit` or reactively. The `take(1)` here is a mitigation.
+   */
+  public checkStyle(userId: string): 'secondary' | 'primary' {
     let currentUser: string = '';
-    this.route.queryParams.subscribe((params) => {
+    // Consider moving currentUser logic to ngOnInit if userID from params doesn't change frequently during component lifecycle
+    this.route.queryParams.pipe(take(1)).subscribe((params) => {
       currentUser = params['userID'];
     });
     return userId === currentUser ? 'secondary' : 'primary';
   }
 
-
+  /**
+   * HostListener that reacts to window resize events.
+   * Sets the `isMobile` flag if the window width is 400 pixels or less.
+   */
   @HostListener('window:resize', [])
-  isWidth400OrLess() {
-    if (window.innerWidth <= 400) {
-      this.isMobile = true;
-    } else {
-      this.isMobile = false;
-    }
+  public isWidth400OrLess(): void {
+    this.isMobile = window.innerWidth <= 400;
   }
 
+  /**
+   * HostListener that reacts to window resize events.
+   * @returns {boolean} True if the window width is 500 pixels or less.
+   * Sets `showMobilePicker` to false if the width is above 500 pixels.
+   */
   @HostListener('window:resize', [])
-  isWindowBelow500() {
-    if (window.innerWidth <= 500) {
-      return true;
-    } else {
+  public isWindowBelow500(): boolean {
+    const isBelow = window.innerWidth <= 500;
+    if (!isBelow) {
       this.showMobilePicker = false;
-      return false;
     }
+    return isBelow;
   }
 }

@@ -16,7 +16,7 @@
         <span>Diese Unterhaltung findet nur zwischen <a (click)="showMemberInfo()">&#64;{{
                 chatComponent.currentChannelName }}</a> und dir statt.</span>
     </div>
-    <div *ngFor="let message of filteredMessages$ | async" class="chat-content" (mouseleave)="showPicker = false">
+    <div *ngFor="let message of messages$ | async" class="chat-content" (mouseleave)="showPicker = false">
         <div class="mobile-emoji-picker" *ngIf="showMobilePicker && isWindowBelow500()"
             (click)="setMobilePicker(false)">
             <app-emoji-picker (emojiSelected)="sendReaction($event, message.id)"
