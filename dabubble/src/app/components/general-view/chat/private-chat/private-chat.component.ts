@@ -69,13 +69,13 @@ export class PrivateChatComponent implements OnInit {
 
 
   openThread(messageId: string): void {
-    //   this.chatService.messageID = messageId;
-    //   this.chatService.getMessageThread(messageId);
-    //   if (this.chatService.threadClosed) {
-    //     this.chatService.toggleDrawerState();
-    //     this.chatService.threadClosed = false;
-    //   }
-    //   this.chatService.showThreadWhenResponsive = true;
+      this.chatService.messageID = messageId;
+      this.chatService.getMessageThreadForPrivateChats(messageId);
+      if (this.chatService.threadClosed) {
+        this.chatService.toggleDrawerState();
+        this.chatService.threadClosed = false;
+      }
+      this.chatService.showThreadWhenResponsive = true;
   }
 
 

@@ -164,10 +164,11 @@ export class ChatService {
       this.generateThread(newMessage.id, message)
     }
     if (this.getCurrentRoute() === 'private') {
-      await addDoc(
+      const messageRef = await addDoc(
         collection(this.firestore, `privateChats/${this.currentChatId}/messages`),
         message
       );
+      this.generateThreadForPrivateChats(messageRef.id, message);
     }
   }
 
@@ -177,7 +178,8 @@ export class ChatService {
       const newMessage = await addDoc(collection(this.firestore, `channels/${customId}/messages`), message);
       this.generateThread(newMessage.id, message);
     } else if (path === `private`) {
-      await addDoc(collection(this.firestore, `privateChats/${customId}/messages`), message);
+      const messageRef = await addDoc(collection(this.firestore, `privateChats/${customId}/messages`), message);
+      this.generateThreadForPrivateChats(messageRef.id, message);
     } else {
       console.error('Path for Message is wrong');
     }
@@ -186,6 +188,12 @@ export class ChatService {
 
   async generateThread(messageId: string, message: Message) {
     await addDoc(collection(this.firestore, `channels/${this.currentChatId}/messages/${messageId}/thread`),
+      message);
+  }
+
+
+  async generateThreadForPrivateChats(messageId: string, message: Message) {
+    await addDoc(collection(this.firestore, `privateChats/${this.currentChatId}/messages/${messageId}/thread`),
       message);
   }
 
@@ -401,6 +409,19 @@ export class ChatService {
   async getMessageThread(messageId: string) {
     const thread = query(
       collection(this.firestore, `channels/${this.currentChatId}/messages/${messageId}/thread`),
+      orderBy('createdAt', 'asc')
+    );
+    const threadObservable = collectionData(thread, { idField: 'id' }) as Observable<Message[]>;
+    this.subscription.add(threadObservable.subscribe(messages => {
+      this.currentThreadsSubject.next(messages);
+    }));
+    this.currentMessageId = messageId;
+  }
+
+
+  async getMessageThreadForPrivateChats(messageId: string) {
+    const thread = query(
+      collection(this.firestore, `privateChats/${this.currentChatId}/messages/${messageId}/thread`),
       orderBy('createdAt', 'asc')
     );
     const threadObservable = collectionData(thread, { idField: 'id' }) as Observable<Message[]>;
