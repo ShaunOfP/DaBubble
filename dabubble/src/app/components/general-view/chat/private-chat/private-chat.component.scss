@@ -38,6 +38,11 @@ header {
   }
 }
 
+.avatar {
+  height: 70px;
+  width: 70px;
+}
+
 .chat-feed {
   @include arrangement($fd: column, $g: 20px, $ai: start);
 }
