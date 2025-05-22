@@ -368,6 +368,14 @@ export class UserDatasService {
     }
   }
 
+  async getOwnChannel(userId : string | undefined){
+     const userDocRef = doc(this.firestore, `userDatas/${userId}`);
+    const userDoc = await getDoc(userDocRef);
+
+    if (userDoc.exists()) {
+      return userDoc.get('privateChats');
+    }
+  }
 
   /**
    * Removes a channel from the Userdata of the currently logged in User

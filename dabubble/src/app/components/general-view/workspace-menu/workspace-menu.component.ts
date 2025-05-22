@@ -49,7 +49,7 @@ export class WorkspaceMenuComponent implements OnInit, OnDestroy {
   showCreateChannelOverlay: boolean = false;
   workspaceUserData!: UserObserver | null;
   toggleMarginLeft: boolean = true;
-  userDatas: any[] = [];
+  userDatas!: UserObserver
   allUsers: any[] = [];
   blur: boolean = false;
   searchInput: string = '';
@@ -217,6 +217,16 @@ export class WorkspaceMenuComponent implements OnInit, OnDestroy {
     this.showResponsiveComponents();
   }
 
+  async openPrivateNotes(userId: string | undefined | null){
+    if(userId == null) return
+    if(userId) this.chatService.privateChatOtherUserId = userId;
+    const privateChatId = await this.userDatasService.getOwnChannel(userId)
+    this.router.navigate(['/general/private-chat'], {
+      queryParams: { chatId: privateChatId },
+      queryParamsHandling: 'merge',
+      replaceUrl: true,
+    });
+  }
 
   /**
    * Sets variables to true to make them visible for responsive needs
