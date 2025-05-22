@@ -414,7 +414,12 @@ export class UserDatasService {
 
 
   getUserDataObservable(userId: string) {
-    const docRef = doc(this.firestore, `userDatas/${userId}`);
-    return docData(docRef);
+    if (userId === `guest`) {
+      const guestRef = doc(this.firestore, `guestDatas/${userId}`);
+      return docData(guestRef)
+    } else {
+      const docRef = doc(this.firestore, `userDatas/${userId}`);
+      return docData(docRef);
+    }
   }
 }

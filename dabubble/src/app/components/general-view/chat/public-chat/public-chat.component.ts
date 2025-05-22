@@ -117,8 +117,8 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
       tap(chatId => {
         if (chatId) {
           this.chatService.currentChatId = chatId;
-          this.initialLoadCompleteForCurrentChat = false; 
-          this.newMessage = false; 
+          this.initialLoadCompleteForCurrentChat = false;
+          this.newMessage = false;
         }
       }),
       filter(chatId => !!chatId),
@@ -132,11 +132,11 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
           setTimeout(() => {
             this.scrollToElement('auto');
           }, 500);
-          
+
           this.initialLoadCompleteForCurrentChat = true;
         } else {
           this.newMessage = true;
-          this.scrollToElement('auto'); 
+          this.scrollToElement('auto');
         }
       })
     );
@@ -182,6 +182,7 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
         this.userDataService.getUserDataObservable(message.userId)
           .pipe(take(1))
           .subscribe(userData => {
+            console.log(userData);
             if (userData) {
               this.messageDetailsMap[message.uniqueId] = userData;
             }
@@ -311,7 +312,7 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
       if (this.newMessage) {
         const isScrolledToBottom = element.scrollTop + element.clientHeight >= element.scrollHeight - threshold;
         if (!isScrolledToBottom) {
-           this.newMessage = false;
+          this.newMessage = false;
         }
       }
     }
