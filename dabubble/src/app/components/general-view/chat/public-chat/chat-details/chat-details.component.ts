@@ -25,6 +25,7 @@ export class ChatDetailsComponent {
   showNewChannelNameForm: boolean = false;
   descriptionContainerVisible: boolean = true;
   newDescriptionContainerVisible: boolean = false;
+  currentUserIdForLeaveChannel: string = ``;
 
   constructor(
     public chatService: ChatService,
@@ -174,9 +175,13 @@ export class ChatDetailsComponent {
   leaveChannel() {
     let currentChannelData = this.chatService.currentChannelData;
     this.userDataService.getCurrentUserId();
-    let currentUserId = this.userDataService.currentUserId;
+    if (this.userDataService.checkIfGuestIsLoggedIn()) {
+      this.currentUserIdForLeaveChannel = `guest`
+    } else {
+      this.currentUserIdForLeaveChannel = this.userDataService.currentUserId;
+    }
     if (currentChannelData?.channelName != "Entwicklerchannel" && currentChannelData != undefined) {
-      this.channelMemberService.removeCurrentUserFromChannel(currentUserId, currentChannelData);
+      this.channelMemberService.removeCurrentUserFromChannel(this.currentUserIdForLeaveChannel, currentChannelData);
       this.userDataService.getCurrentUserData().then((result: any) => {
         this.userDataService.removeChannelFromUserData(result['channels'], currentChannelData.channelId);
       });

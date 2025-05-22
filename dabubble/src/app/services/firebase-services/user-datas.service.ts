@@ -41,6 +41,7 @@ export class UserDatasService {
   private currentUserDataSubject = new BehaviorSubject<UserObserver | null>(null);
   public currentUserData$: Observable<UserObserver | null> = this.currentUserDataSubject.asObservable();
   private subscription = new Subscription();
+  userDataToLeaveChannel: any;
 
   constructor(private route: ActivatedRoute) { }
 
@@ -378,10 +379,17 @@ export class UserDatasService {
     channelArray = channelArray.filter(
       (channel: string) => channel !== channelId
     );
-    const docRef = doc(this.firestore, 'userDatas', this.currentUserId);
-    await updateDoc(docRef, {
-      channels: channelArray,
-    });
+    if (this.checkIfGuestIsLoggedIn()) {
+      const docRef = doc(this.firestore, `guestDatas/guest`);
+      await updateDoc(docRef, {
+        channels: channelArray,
+      });
+    } else {
+      const docRef = doc(this.firestore, 'userDatas', this.currentUserId);
+      await updateDoc(docRef, {
+        channels: channelArray,
+      });
+    }
   }
 
 
@@ -390,11 +398,17 @@ export class UserDatasService {
    * @returns Data of the currently logged in User
    */
   async getCurrentUserData() {
-    let data = await getDoc(
-      doc(this.firestore, 'userDatas', this.currentUserId)
-    );
-    if (data.exists()) {
-      return data.data();
+    if (this.checkIfGuestIsLoggedIn()) {
+      this.userDataToLeaveChannel = await getDoc(
+        doc(this.firestore, `guestDatas/guest`)
+      );
+    } else {
+      this.userDataToLeaveChannel = await getDoc(
+        doc(this.firestore, 'userDatas', this.currentUserId)
+      );
+    }
+    if (this.userDataToLeaveChannel.exists()) {
+      return this.userDataToLeaveChannel.data();
     } else {
       return 'No data found';
     }
