@@ -182,7 +182,6 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
         this.userDataService.getUserDataObservable(message.userId)
           .pipe(take(1))
           .subscribe(userData => {
-            console.log(userData);
             if (userData) {
               this.messageDetailsMap[message.uniqueId] = userData;
             }
