@@ -200,7 +200,8 @@ export class WorkspaceMenuComponent implements OnInit, OnDestroy {
    * Opens the direct message with the user of the provided id
    * @param userId Id of the user
    */
-  async openDirectMessage(userId: string) {
+  async openDirectMessage(userId: string | undefined | null) {
+    if(userId === undefined || userId === null) return
     this.chatService.privateChatOtherUserId = userId;
     const privateChatId = await this.userDatasService.getPrivateChannel(userId);
     this.router.navigate(['/general/private-chat'], {
