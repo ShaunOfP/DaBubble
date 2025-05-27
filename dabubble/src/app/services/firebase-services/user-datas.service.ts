@@ -42,6 +42,7 @@ export class UserDatasService {
   public currentUserData$: Observable<UserObserver | null> = this.currentUserDataSubject.asObservable();
   private subscription = new Subscription();
   userDataToLeaveChannel: any;
+  ownPrivateChatId: string = ``;
 
   constructor(private route: ActivatedRoute) { }
 
@@ -362,20 +363,20 @@ export class UserDatasService {
   async getPrivateChannel(userId: string) {
     const userDocRef = doc(this.firestore, `userDatas/${userId}`);
     const userDoc = await getDoc(userDocRef);
-
     if (userDoc.exists()) {
       return userDoc.get('privateChats');
     }
   }
 
-  async getOwnChannel(userId : string | undefined){
-     const userDocRef = doc(this.firestore, `userDatas/${userId}`);
+
+  async getOwnChannel(userId: string | undefined) {
+    const userDocRef = doc(this.firestore, `userDatas/${userId}`);
     const userDoc = await getDoc(userDocRef);
-
     if (userDoc.exists()) {
       return userDoc.get('privateChats');
     }
   }
+
 
   /**
    * Removes a channel from the Userdata of the currently logged in User

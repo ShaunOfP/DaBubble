@@ -190,8 +190,13 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
     } else if (this.chatService.getCurrentRoute() === 'new-message') {
     } else {
       let otherUserInPrivateChatId = await this.chatService.getOtherUserNameFromPrivateChat(chatId, this.currentUserId);
-      this.privateChatOtherUserData = await this.userDatasService.getSingleUserData(otherUserInPrivateChatId);
-      this.currentChannelName = this.privateChatOtherUserData['username'];
+      if (otherUserInPrivateChatId === undefined) {
+        this.currentChannelName = await this.userDatasService.getUserName(this.currentUserId);
+        this.privateChatOtherUserData = await this.userDatasService.getSingleUserData(this.currentUserId);
+      } else {
+        this.privateChatOtherUserData = await this.userDatasService.getSingleUserData(otherUserInPrivateChatId);
+        this.currentChannelName = this.privateChatOtherUserData['username'];
+      }
     }
   }
 

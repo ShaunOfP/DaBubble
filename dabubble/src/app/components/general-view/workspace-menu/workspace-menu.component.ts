@@ -201,7 +201,7 @@ export class WorkspaceMenuComponent implements OnInit, OnDestroy {
    * @param userId Id of the user
    */
   async openDirectMessage(userId: string | undefined | null) {
-    if(userId === undefined || userId === null) return
+    if (userId === undefined || userId === null) return
     this.chatService.privateChatOtherUserId = userId;
     const privateChatId = await this.userDatasService.getPrivateChannel(userId);
     this.router.navigate(['/general/private-chat'], {
@@ -218,10 +218,11 @@ export class WorkspaceMenuComponent implements OnInit, OnDestroy {
     this.showResponsiveComponents();
   }
 
-  async openPrivateNotes(userId: string | undefined | null){
-    if(userId == null) return
-    if(userId) this.chatService.privateChatOtherUserId = userId;
-    const privateChatId = await this.userDatasService.getOwnChannel(userId)
+  async openPrivateNotes(userId: string | undefined | null) {
+    if (userId == null) return
+    if (userId) this.chatService.privateChatOtherUserId = userId;
+    const privateChatId = await this.userDatasService.getOwnChannel(userId);
+    this.userDatasService.ownPrivateChatId = privateChatId;
     this.router.navigate(['/general/private-chat'], {
       queryParams: { chatId: privateChatId },
       queryParamsHandling: 'merge',

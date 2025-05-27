@@ -31,7 +31,7 @@ export class PrivateChatComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('chatContainer') chatContainer!: ElementRef;
 
   public messages$!: Observable<any[]>;
-  public reactions$!: Observable<any[]>; 
+  public reactions$!: Observable<any[]>;
   public channelId: string = '';
   public newMessage: boolean = false;
   public hoveredMessageId: string | null = null;
@@ -67,7 +67,6 @@ export class PrivateChatComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   ngOnInit(): void {
     this.loadMessages();
-    // this.loadFilter(); // Removed, logic integrated into loadMessages
     this.isWidth400OrLess();
   }
 
@@ -145,16 +144,16 @@ export class PrivateChatComponent implements OnInit, AfterViewInit, OnDestroy {
           console.error("No chatId found in query parameters!");
         } else {
           this.chatService.currentChatId = chatId;
-          this.initialLoadCompleteForCurrentChat = false; 
-          this.newMessage = false; 
+          this.initialLoadCompleteForCurrentChat = false;
+          this.newMessage = false;
         }
       }),
       filter(chatId => !!chatId),
       switchMap(() => this.chatService.getMessages()),
-      tap((messages: Message[]) => { 
+      tap((messages: Message[]) => {
         this.loadMessageUserIdIntoObject(messages);
       }),
-      map((messages: Message[]) => { 
+      map((messages: Message[]) => {
         return messages.filter(message =>
           message.userId === this.userDatasService.currentUserId ||
           message.userId === this.chatService.privateChatOtherUserId
@@ -248,7 +247,7 @@ export class PrivateChatComponent implements OnInit, AfterViewInit, OnDestroy {
         this.chatContainer.nativeElement.scroll({
           top: this.chatContainer.nativeElement.scrollHeight,
           left: 0,
-          behavior: behavior as ScrollBehavior, // Cast to ScrollBehavior
+          behavior: behavior as ScrollBehavior,
         });
       } catch (error) {
         console.error("Error scrolling to element:", error);
@@ -286,7 +285,7 @@ export class PrivateChatComponent implements OnInit, AfterViewInit, OnDestroy {
    * - `formattedDate` (string | null): The formatted date to display if `showDate` is true.
    */
   public returnNewObservable(messages: Message[], initialLastDate: string | null): any[] {
-    let lastDate = initialLastDate; // Use a local variable to track lastDate within this specific call/batch
+    let lastDate = initialLastDate;
     return messages.map((message) => {
       const currentDate = message.createdAt ? new Date(message.createdAt).toLocaleDateString(
         'de-DE',
