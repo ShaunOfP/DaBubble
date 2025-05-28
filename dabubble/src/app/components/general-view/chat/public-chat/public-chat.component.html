@@ -42,10 +42,10 @@
         <button (click)="sendReaction('green_check', message.id)"><img src="assets/img/green_check.svg"
             alt="check"></button>
         <button (click)="sendReaction('🙌', message.id)"><img src="assets/img/clap_hands.svg" alt="clap"></button>
-        <button (click)="showPicker = !showPicker; setMobilePicker(true)"><img src="assets/img/add_reaction.svg" alt="check"></button>
+        <button (click)="showPicker = !showPicker; setMobilePicker(true)"><img src="assets/img/add_reaction.svg"
+            alt="check"></button>
         <app-emoji-picker class="emoji-picker--{{ checkStyle(message.userId) }}"
-          *ngIf="showPicker && !isWindowBelow500()" (mouseleave)="showPicker = false"
-          (click)="$event.preventDefault()"
+          *ngIf="showPicker && !isWindowBelow500()" (mouseleave)="showPicker = false" (click)="$event.preventDefault()"
           (emojiSelected)="sendReaction($event, message.id)"></app-emoji-picker>
         <button (click)="openThread(message.id)"><img src="assets/img/add_comment.svg" alt="check"></button>
         <button *ngIf="checkStyle(message.userId) === 'secondary'" (click)="showEditMessage = !showEditMessage"
@@ -63,8 +63,8 @@
             <span>{{ userData.username }}</span>
             <span>{{ formatTime(message.createdAt) }}</span>
           </div>
-          <span class="chat-content_message--{{ checkStyle(message.userId) }}">
-            {{ message.content }}
+          <span class="chat-content_message--{{ checkStyle(message.userId) }}" [innerHTML]="message.content"
+            #messageContentSpan>
           </span>
         </div>
       </div>

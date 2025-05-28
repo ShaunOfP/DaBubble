@@ -19,13 +19,8 @@
         </div>
       </div>
       <div class="textarea-container">
-        <textarea #messageInput #emojiTarget
-          [placeholder]="showPlaceholder ? 'Nachricht an #' + currentChannelName : ''" (input)="evaluateChatInput()"
-          [class.padding-left-125]="customChannelName !== '' || customMemberName !== ''"></textarea>
-        <div class="textarea-selected-name" (click)="resetValuesForCustomMessageSending()"
-          *ngIf="customChannelName !== ''"># {{ customChannelName }}</div>
-        <div class="textarea-selected-name" (click)="resetValuesForCustomMessageSending()"
-          *ngIf="customMemberName !== ''">&#64; {{ customMemberName }}</div>
+        <textarea #messageInput #emojiTarget [placeholder]="'Nachricht an #' + currentChannelName"
+          (input)="evaluateChatInput()"></textarea>
       </div>
       <div class="textarea-icon-bar">
         <div appClickOutside (appClickOutside)="hideEmojiPicker()">

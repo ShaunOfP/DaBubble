@@ -6,12 +6,13 @@ import {
   AfterViewInit,
   OnDestroy,
   HostListener,
+  Renderer2,
 } from '@angular/core';
 import { ChatService } from '../../../../services/firebase-services/chat.service';
 import { Observable, distinctUntilChanged, filter, map, switchMap, take, tap } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { Message } from '../../../../models/interfaces';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EmojiPickerComponent } from '../../emoji-picker/emoji-picker.component';
 import { MatCardModule } from '@angular/material/card';
 import { ChatComponent } from '../chat.component';
@@ -19,6 +20,7 @@ import { UserInfoCardComponent } from "../user-info-card/user-info-card.componen
 import { UserDatasService } from '../../../../services/firebase-services/user-datas.service';
 import { DmReactionsComponent } from "./dm-reactions/dm-reactions.component";
 import { FormsModule } from '@angular/forms';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-private-chat',
@@ -29,7 +31,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class PrivateChatComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('chatContainer') chatContainer!: ElementRef;
-
+  @ViewChild('messageContentSpan', { static: false }) clickabelSpan?: ElementRef;
   public messages$!: Observable<any[]>;
   public reactions$!: Observable<any[]>;
   public channelId: string = '';
@@ -43,6 +45,8 @@ export class PrivateChatComponent implements OnInit, AfterViewInit, OnDestroy {
   public messageValue: string = '';
   public isMobile: boolean = false;
   public showMobilePicker: boolean = false;
+  private replaceContent!: SafeHtml;
+  private listenersAttached: boolean = false;
 
   private scrollListener!: () => void;
   private initialLoadCompleteForCurrentChat: boolean = false;
@@ -53,12 +57,18 @@ export class PrivateChatComponent implements OnInit, AfterViewInit, OnDestroy {
    * @param {ActivatedRoute} route Service for accessing route parameters.
    * @param {ChatComponent} chatComponent Reference to the parent chat component.
    * @param {UserDatasService} userDatasService Service for fetching user data.
+   * @param {Renderer2} renderer Renderer for handling rendering manually
+   * @param {DomSanitizer} sanitizer Manually sanitize the Dom
+   * @param {Router} router Service for navigation.
    */
   constructor(
     private chatService: ChatService,
     private route: ActivatedRoute,
     public chatComponent: ChatComponent,
-    public userDatasService: UserDatasService
+    public userDatasService: UserDatasService,
+    private router: Router,
+    private sanitizer: DomSanitizer,
+    private renderer: Renderer2
   ) { }
 
   /**
@@ -152,6 +162,7 @@ export class PrivateChatComponent implements OnInit, AfterViewInit, OnDestroy {
       switchMap(() => this.chatService.getMessages()),
       tap((messages: Message[]) => {
         this.loadMessageUserIdIntoObject(messages);
+        this.modifyMessageContent(messages);
       }),
       map((messages: Message[]) => {
         return messages.filter(message =>
@@ -175,6 +186,78 @@ export class PrivateChatComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
+
+  /**
+   * Iterates through all messages of the current Chat to replace substrings inside of the messages.
+   * Sanitizes the returned string to allow it in the Dom
+   * @param messages all messages of the currently opened chat
+   */
+  modifyMessageContent(messages: Message[]) {
+    messages.forEach(message => {
+      this.replaceContent = this.sanitizer.bypassSecurityTrustHtml(this.replaceUserName(message));
+      message.content = this.replaceContent as string;
+    });
+    this.listenersAttached = false;
+  }
+
+
+  /**
+   * Modifies the message content so that it can be clicked in the chat
+   * @param messageData data of the message
+   * @returns a modified version of the message content
+   */
+  replaceUserName(messageData: Message) {
+    let messageContent = messageData.content;
+    return messageContent.replace(messageData.taggedUsers.name, `<span class="hover" data-id="${messageData.taggedUsers.id}" data-type="${messageData.taggedUsers.type}">${messageData.taggedUsers.name}</span>`);
+  }
+
+
+  /**
+   * Opens the correct channel via the provided data
+   * @param id Either userId or ChannelId
+   * @param type private or public
+   */
+  async goToId(id: string, type: string) {
+    if (type === 'public') {
+      this.router.navigate(['/general/public-chat'], {
+        queryParams: { chatId: id },
+        queryParamsHandling: 'merge',
+        replaceUrl: true,
+      });
+    } else {
+      const privateChatId = await this.userDatasService.getPrivateChannel(id);
+      this.router.navigate(['/general/private-chat'], {
+        queryParams: { chatId: privateChatId },
+        queryParamsHandling: 'merge',
+        replaceUrl: true,
+      });
+    }
+  }
+
+
+  attachSpanClickEvent() {
+    if (!this.clickabelSpan) return;
+    const spans = this.clickabelSpan.nativeElement.querySelectorAll('.hover');
+    spans.forEach((span: HTMLElement) => {
+      this.renderer.listen(span, 'click', () => {
+        const id = span.getAttribute('data-id');
+        const type = span.getAttribute('data-type');
+        if (id && type) {
+          this.goToId(id, type);
+        }
+      })
+    });
+  }
+
+
+  ngAfterViewChecked() {
+    if (this.clickabelSpan && !this.listenersAttached) {
+      this.attachSpanClickEvent();
+      this.listenersAttached = true;
+    }
+  }
+
+
   /**
    * Loads user details for each message in an array if they haven't been loaded yet.
    * Stores the fetched user data in `messageDetailsMap`.
@@ -182,7 +265,7 @@ export class PrivateChatComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   public loadMessageUserIdIntoObject(messages: Array<Message>): void {
     messages.forEach(message => {
-      if (message.uniqueId && !this.messageDetailsMap[message.uniqueId]) { // Check if already loaded
+      if (message.uniqueId && !this.messageDetailsMap[message.uniqueId]) {
         this.userDatasService.getUserDataObservable(message.userId)
           .pipe(take(1))
           .subscribe(userData => {
@@ -212,7 +295,7 @@ export class PrivateChatComponent implements OnInit, AfterViewInit, OnDestroy {
   public reactionEntries(message: Message): { emoji: string, count: number }[] {
     return Object.entries(message.reaction || {}).map(([emoji, users]) => ({
       emoji,
-      count: (users as string[]).length // Type assertion for safety
+      count: (users as string[]).length
     }));
   }
 

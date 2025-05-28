@@ -54,8 +54,8 @@
                         <span>{{ userData.username }}</span>
                         <span>{{ formatTime(message.createdAt) }}</span>
                     </div>
-                    <span class="chat-content_message--{{ checkStyle(message.userId) }}">
-                        {{ message.content }}
+                    <span class="chat-content_message--{{ checkStyle(message.userId) }}" [innerHTML]="message.content"
+                        #messageContentSpan>
                     </span>
                 </div>
             </div>

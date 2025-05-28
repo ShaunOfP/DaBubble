@@ -4,5 +4,6 @@ export interface Message {
   content: string,
   userId: string,
   reaction?: Record<string, string[]>,
-  threadAnswers: number
+  threadAnswers: number,
+  taggedUsers: { id: string, type: string, name: string }
 }

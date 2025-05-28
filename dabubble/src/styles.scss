@@ -227,6 +227,10 @@ app-emoji-picker {
   }
 }
 
+.hover {
+  cursor: pointer;
+}
+
 .left-corner-0 {
   .mat-mdc-card {
     border-bottom-left-radius: 0;

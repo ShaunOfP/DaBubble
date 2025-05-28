@@ -48,10 +48,8 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
   memberResults: any[] = [];
   counter: number = 1;
   idOfChannelOrMember: string = ``;
-  privateOrPublic: string = ``;
-  customChannelName: string = ``;
-  customMemberName: string = ``;
   showPlaceholder: boolean = true;
+  currentlyTaggedUserOrChannelId: { id: string, type: string, name: string } = { id: '', type: '', name: '' };
 
   constructor(
     public chatService: ChatService,
@@ -160,22 +158,22 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   selectDataToSendMessageToPublicChat(channelData: Channel) {
-    this.messageInput.nativeElement.value = ``;
+    this.messageInput.nativeElement.value = `#${channelData.channelName} `;
+    this.messageInput.nativeElement.focus();
+    this.currentlyTaggedUserOrChannelId = { id: channelData.channelId, type: 'public', name: channelData.channelName };
     this.showPlaceholder = false;
     this.filterService.updateFilter('');
     this.idOfChannelOrMember = channelData.channelId;
-    this.customChannelName = channelData.channelName;
-    this.privateOrPublic = `public`;
   }
 
 
   selectDataToSendMessageToMember(memberData: Member) {
-    this.messageInput.nativeElement.value = ``;
+    this.messageInput.nativeElement.value = `@${memberData.username} `;
+    this.messageInput.nativeElement.focus();
+    this.currentlyTaggedUserOrChannelId = { id: memberData.id, type: 'private', name: memberData.username };
     this.showPlaceholder = false;
     this.filterService.updateFilter('');
     this.idOfChannelOrMember = memberData.privateChats;
-    this.customMemberName = memberData.username;
-    this.privateOrPublic = `private`;
   }
 
 
@@ -283,9 +281,9 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   /**
-   * 
-   * @param content 
-   * @returns 
+   * Sends the Message to the Chat/Channel
+   * @param content Value from the input field
+   * @returns void
    */
   async sendMessage(content: string): Promise<void> {
     if (!this.userDatasService.currentUserId || !content) {
@@ -306,13 +304,15 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
       console.error('User data is not available');
       return;
     }
+
     const message: Message = {
       uniqueId: this.generateId(),
       createdAt: new Date().getTime(),
       content: content,
       userId: this.userDatasService.currentUserId,
       reaction: {},
-      threadAnswers: 0
+      threadAnswers: 0,
+      taggedUsers: this.currentlyTaggedUserOrChannelId
     };
 
     if (this.chatService.currentChatId == ``) {
@@ -320,34 +320,19 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
       return;
     }
 
-    if (this.idOfChannelOrMember !== ``) {
-      this.chatService
-        .sendMessageToCustomId(message, this.idOfChannelOrMember, this.privateOrPublic)
-        .then(() => {
-          this.messageInput.nativeElement.value = ``;
-          this.resetValuesForCustomMessageSending();
-        })
-        .catch((error) => {
-          console.error("Error sending custom message:", error);
-        });
-    } else {
-      this.chatService
-        .saveMessage(message)
-        .then(() => {
-          this.messageInput.nativeElement.value = '';
-        })
-        .catch((error) => {
-          console.error('Error saving message:', error);
-        });
-    }
+    this.chatService
+      .saveMessage(message)
+      .then(() => {
+        this.messageInput.nativeElement.value = '';
+      })
+      .catch((error) => {
+        console.error('Error saving message:', error);
+      });
   }
 
 
   resetValuesForCustomMessageSending() {
     this.idOfChannelOrMember = ``;
-    this.privateOrPublic = ``;
-    this.customChannelName = ``;
-    this.customMemberName = ``;
     this.showPlaceholder = true;
     this.counter = 1;
   }

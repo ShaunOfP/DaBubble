@@ -84,7 +84,8 @@ export class ThreadComponent implements OnInit, AfterViewInit, OnDestroy {
       content: content,
       userId: this.userDatasService.currentUserId,
       reaction: {},
-      threadAnswers: 0
+      threadAnswers: 0,
+      taggedUsers: { id: '', type: '', name: '' }
     };
     const messageId = this.chatService.currentMessageId;
     this.chatService.generateThread(messageId, message);

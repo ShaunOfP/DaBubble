@@ -6,6 +6,7 @@ import {
   AfterViewInit,
   OnDestroy,
   HostListener,
+  Renderer2,
 } from '@angular/core';
 import { ChatService } from '../../../../services/firebase-services/chat.service';
 import { Observable, distinctUntilChanged, filter, map, switchMap, take, tap } from 'rxjs';
@@ -20,6 +21,7 @@ import { EmojiPickerComponent } from '../../emoji-picker/emoji-picker.component'
 import { UserDatasService } from '../../../../services/firebase-services/user-datas.service';
 import { ReactionsComponent } from './reactions/reactions.component';
 import { ChannelMemberService } from '../../../../services/firebase-services/channel-member.service';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-public-chat',
@@ -38,7 +40,7 @@ import { ChannelMemberService } from '../../../../services/firebase-services/cha
 })
 export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('chatContainer') chatContainer!: ElementRef;
-
+  @ViewChild('messageContentSpan', { static: false }) clickabelSpan?: ElementRef;
   public messages$!: Observable<any[]>;
   public newMessage: boolean = false;
   public hoveredMessageId: string | null = null;
@@ -51,6 +53,8 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   public isMobile: boolean = false;
   public messageDetailsMap: { [id: string]: any } = {};
   public showMobilePicker: boolean = false;
+  private listenersAttached: boolean = false;
+  private replaceContent!: SafeHtml;
 
   private scrollListener!: () => void;
   private initialLoadCompleteForCurrentChat: boolean = false;
@@ -62,13 +66,17 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
    * @param {UserDatasService} userDataService Service for fetching user data.
    * @param {Router} router Service for navigation.
    * @param {ChannelMemberService} channelMembersService Service for managing channel members and UI state.
+   * @param {Renderer2} renderer Renderer for handling rendering manually
+   * @param {DomSanitizer} sanitizer Manually sanitize the Dom
    */
   constructor(
     public chatService: ChatService,
     private route: ActivatedRoute,
     private userDataService: UserDatasService,
     private router: Router,
-    public channelMembersService: ChannelMemberService
+    public channelMembersService: ChannelMemberService,
+    private renderer: Renderer2,
+    private sanitizer: DomSanitizer
   ) { }
 
   /**
@@ -125,6 +133,7 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
       switchMap(() => this.chatService.getMessages()),
       tap((messages: Message[]) => {
         this.loadMessageUserIdIntoObject(messages);
+        this.modifyMessageContent(messages);
       }),
       map((messages: Message[]) => this.returnNewObservable(messages)),
       tap(() => {
@@ -132,7 +141,6 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
           setTimeout(() => {
             this.scrollToElement('auto');
           }, 500);
-
           this.initialLoadCompleteForCurrentChat = true;
         } else {
           this.newMessage = true;
@@ -141,6 +149,56 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
       })
     );
   }
+
+
+  /**
+   * Iterates through all messages of the current Chat to replace substrings inside of the messages.
+   * Sanitizes the returned string to allow it in the Dom
+   * @param messages all messages of the currently opened chat
+   */
+  modifyMessageContent(messages: Message[]) {
+    messages.forEach(message => {
+      this.replaceContent = this.sanitizer.bypassSecurityTrustHtml(this.replaceUserName(message));
+      message.content = this.replaceContent as string;
+    });
+    this.listenersAttached = false;
+  }
+
+
+  /**
+   * Modifies the message content so that it can be clicked in the chat
+   * @param messageData data of the message
+   * @returns a modified version of the message content
+   */
+  replaceUserName(messageData: Message) {
+    let messageContent = messageData.content;
+    return messageContent.replace(messageData.taggedUsers.name, `<span class="hover" data-id="${messageData.taggedUsers.id}" data-type="${messageData.taggedUsers.type}">${messageData.taggedUsers.name}</span>`);
+  }
+
+
+  /**
+   * Opens the correct channel via the provided data
+   * @param id Either userId or ChannelId
+   * @param type private or public
+   */
+  async goToId(id: string, type: string) {
+    debugger
+    if (type === 'public') {
+      this.router.navigate(['/general/public-chat'], {
+        queryParams: { chatId: id },
+        queryParamsHandling: 'merge',
+        replaceUrl: true,
+      });
+    } else {
+      const privateChatId = await this.userDataService.getPrivateChannel(id);
+      this.router.navigate(['/general/private-chat'], {
+        queryParams: { chatId: privateChatId },
+        queryParamsHandling: 'merge',
+        replaceUrl: true,
+      });
+    }
+  }
+
 
   /**
    * Transforms an array of messages to include display-related metadata for dates.
@@ -261,7 +319,7 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
 
   /**
    * Lifecycle hook called after the component's view children are initialized.
-   * Adds a scroll listener to the chat container, if present.
+   * Adds a scroll listener to the chat container, if present. Also calls function to attach click event.
    */
   ngAfterViewInit(): void {
     if (this.chatContainer?.nativeElement) {
@@ -269,6 +327,30 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
       this.chatContainer.nativeElement.addEventListener('scroll', this.scrollListener);
     }
   }
+
+
+  attachSpanClickEvent() {
+    if (!this.clickabelSpan) return;
+    const spans = this.clickabelSpan.nativeElement.querySelectorAll('.hover');
+    spans.forEach((span: HTMLElement) => {
+      this.renderer.listen(span, 'click', () => {
+        const id = span.getAttribute('data-id');
+        const type = span.getAttribute('data-type');
+        if (id && type) {
+          this.goToId(id, type);
+        }
+      })
+    });
+  }
+
+
+  ngAfterViewChecked() {
+    if (this.clickabelSpan && !this.listenersAttached) {
+      this.attachSpanClickEvent();
+      this.listenersAttached = true;
+    }
+  }
+
 
   /**
    * Lifecycle hook called immediately before the component is destroyed.
