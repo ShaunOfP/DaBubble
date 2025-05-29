@@ -144,7 +144,6 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
 
   /**
    * Iterates through all messages of the current Chat to replace substrings inside of the messages.
-   * Sanitizes the returned string to allow it in the Dom
    * @param messages all messages of the currently opened chat
    */
   modifyMessageContent(messages: Message[]) {
@@ -155,7 +154,7 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   /**
-   * Modifies the message content so that it can be clicked in the chat
+   * Removes tagged username from the message content
    * @param messageData data of the message
    * @returns a modified version of the message content
    */
