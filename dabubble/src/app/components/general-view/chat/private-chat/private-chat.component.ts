@@ -6,7 +6,6 @@ import {
   AfterViewInit,
   OnDestroy,
   HostListener,
-  Renderer2,
 } from '@angular/core';
 import { ChatService } from '../../../../services/firebase-services/chat.service';
 import { Observable, distinctUntilChanged, filter, map, switchMap, take, tap } from 'rxjs';
@@ -20,7 +19,6 @@ import { UserInfoCardComponent } from "../user-info-card/user-info-card.componen
 import { UserDatasService } from '../../../../services/firebase-services/user-datas.service';
 import { DmReactionsComponent } from "./dm-reactions/dm-reactions.component";
 import { FormsModule } from '@angular/forms';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-private-chat',
@@ -45,8 +43,6 @@ export class PrivateChatComponent implements OnInit, AfterViewInit, OnDestroy {
   public messageValue: string = '';
   public isMobile: boolean = false;
   public showMobilePicker: boolean = false;
-  private replaceContent!: SafeHtml;
-  private listenersAttached: boolean = false;
 
   private scrollListener!: () => void;
   private initialLoadCompleteForCurrentChat: boolean = false;
@@ -57,8 +53,6 @@ export class PrivateChatComponent implements OnInit, AfterViewInit, OnDestroy {
    * @param {ActivatedRoute} route Service for accessing route parameters.
    * @param {ChatComponent} chatComponent Reference to the parent chat component.
    * @param {UserDatasService} userDatasService Service for fetching user data.
-   * @param {Renderer2} renderer Renderer for handling rendering manually
-   * @param {DomSanitizer} sanitizer Manually sanitize the Dom
    * @param {Router} router Service for navigation.
    */
   constructor(
@@ -67,8 +61,6 @@ export class PrivateChatComponent implements OnInit, AfterViewInit, OnDestroy {
     public chatComponent: ChatComponent,
     public userDatasService: UserDatasService,
     private router: Router,
-    private sanitizer: DomSanitizer,
-    private renderer: Renderer2
   ) { }
 
   /**
@@ -194,10 +186,8 @@ export class PrivateChatComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   modifyMessageContent(messages: Message[]) {
     messages.forEach(message => {
-      this.replaceContent = this.sanitizer.bypassSecurityTrustHtml(this.replaceUserName(message));
-      message.content = this.replaceContent as string;
+      message.content = this.replaceUserName(message);
     });
-    this.listenersAttached = false;
   }
 
 
@@ -208,7 +198,11 @@ export class PrivateChatComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   replaceUserName(messageData: Message) {
     let messageContent = messageData.content;
-    return messageContent.replace(messageData.taggedUsers.name, `<span class="hover" data-id="${messageData.taggedUsers.id}" data-type="${messageData.taggedUsers.type}">${messageData.taggedUsers.name}</span>`);
+    if (messageData.taggedUsers.type === `public`) {
+      return messageContent.replace(`#${messageData.taggedUsers.name}`, '');
+    } else {
+      return messageContent.replace(`@${messageData.taggedUsers.name}`, '');
+    }
   }
 
 
@@ -231,29 +225,6 @@ export class PrivateChatComponent implements OnInit, AfterViewInit, OnDestroy {
         queryParamsHandling: 'merge',
         replaceUrl: true,
       });
-    }
-  }
-
-
-  attachSpanClickEvent() {
-    if (!this.clickabelSpan) return;
-    const spans = this.clickabelSpan.nativeElement.querySelectorAll('.hover');
-    spans.forEach((span: HTMLElement) => {
-      this.renderer.listen(span, 'click', () => {
-        const id = span.getAttribute('data-id');
-        const type = span.getAttribute('data-type');
-        if (id && type) {
-          this.goToId(id, type);
-        }
-      })
-    });
-  }
-
-
-  ngAfterViewChecked() {
-    if (this.clickabelSpan && !this.listenersAttached) {
-      this.attachSpanClickEvent();
-      this.listenersAttached = true;
     }
   }
 

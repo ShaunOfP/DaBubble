@@ -6,7 +6,6 @@ import {
   AfterViewInit,
   OnDestroy,
   HostListener,
-  Renderer2,
 } from '@angular/core';
 import { ChatService } from '../../../../services/firebase-services/chat.service';
 import { Observable, distinctUntilChanged, filter, map, switchMap, take, tap } from 'rxjs';
@@ -21,7 +20,6 @@ import { EmojiPickerComponent } from '../../emoji-picker/emoji-picker.component'
 import { UserDatasService } from '../../../../services/firebase-services/user-datas.service';
 import { ReactionsComponent } from './reactions/reactions.component';
 import { ChannelMemberService } from '../../../../services/firebase-services/channel-member.service';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-public-chat',
@@ -53,8 +51,6 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
   public isMobile: boolean = false;
   public messageDetailsMap: { [id: string]: any } = {};
   public showMobilePicker: boolean = false;
-  private listenersAttached: boolean = false;
-  private replaceContent!: SafeHtml;
 
   private scrollListener!: () => void;
   private initialLoadCompleteForCurrentChat: boolean = false;
@@ -66,8 +62,6 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
    * @param {UserDatasService} userDataService Service for fetching user data.
    * @param {Router} router Service for navigation.
    * @param {ChannelMemberService} channelMembersService Service for managing channel members and UI state.
-   * @param {Renderer2} renderer Renderer for handling rendering manually
-   * @param {DomSanitizer} sanitizer Manually sanitize the Dom
    */
   constructor(
     public chatService: ChatService,
@@ -75,8 +69,6 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     private userDataService: UserDatasService,
     private router: Router,
     public channelMembersService: ChannelMemberService,
-    private renderer: Renderer2,
-    private sanitizer: DomSanitizer
   ) { }
 
   /**
@@ -118,7 +110,6 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     if (currentRoute.includes('private-chat')) {
       return;
     }
-
     this.messages$ = this.route.queryParams.pipe(
       map(params => params['chatId']),
       distinctUntilChanged(),
@@ -158,10 +149,8 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   modifyMessageContent(messages: Message[]) {
     messages.forEach(message => {
-      this.replaceContent = this.sanitizer.bypassSecurityTrustHtml(this.replaceUserName(message));
-      message.content = this.replaceContent as string;
+      message.content = this.replaceUserName(message);
     });
-    this.listenersAttached = false;
   }
 
 
@@ -172,7 +161,11 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
    */
   replaceUserName(messageData: Message) {
     let messageContent = messageData.content;
-    return messageContent.replace(messageData.taggedUsers.name, `<span class="hover" data-id="${messageData.taggedUsers.id}" data-type="${messageData.taggedUsers.type}">${messageData.taggedUsers.name}</span>`);
+    if (messageData.taggedUsers.type === `public`) {
+      return messageContent.replace(`#${messageData.taggedUsers.name}`, '');
+    } else {
+      return messageContent.replace(`@${messageData.taggedUsers.name}`, '');
+    }
   }
 
 
@@ -182,7 +175,6 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
    * @param type private or public
    */
   async goToId(id: string, type: string) {
-    debugger
     if (type === 'public') {
       this.router.navigate(['/general/public-chat'], {
         queryParams: { chatId: id },
@@ -325,29 +317,6 @@ export class PublicChatComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.chatContainer?.nativeElement) {
       this.scrollListener = this.handleScroll.bind(this);
       this.chatContainer.nativeElement.addEventListener('scroll', this.scrollListener);
-    }
-  }
-
-
-  attachSpanClickEvent() {
-    if (!this.clickabelSpan) return;
-    const spans = this.clickabelSpan.nativeElement.querySelectorAll('.hover');
-    spans.forEach((span: HTMLElement) => {
-      this.renderer.listen(span, 'click', () => {
-        const id = span.getAttribute('data-id');
-        const type = span.getAttribute('data-type');
-        if (id && type) {
-          this.goToId(id, type);
-        }
-      })
-    });
-  }
-
-
-  ngAfterViewChecked() {
-    if (this.clickabelSpan && !this.listenersAttached) {
-      this.attachSpanClickEvent();
-      this.listenersAttached = true;
     }
   }
 

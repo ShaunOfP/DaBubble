@@ -5,5 +5,5 @@ export interface Message {
   userId: string,
   reaction?: Record<string, string[]>,
   threadAnswers: number,
-  taggedUsers: { id: string, type: string, name: string }
+  taggedUsers: { id: string, type: string, name: string, messageString: string }
 }

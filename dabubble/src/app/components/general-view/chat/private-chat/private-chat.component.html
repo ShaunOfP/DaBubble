@@ -54,8 +54,11 @@
                         <span>{{ userData.username }}</span>
                         <span>{{ formatTime(message.createdAt) }}</span>
                     </div>
-                    <span class="chat-content_message--{{ checkStyle(message.userId) }}" [innerHTML]="message.content"
-                        #messageContentSpan>
+                    <span class="chat-content_message--{{ checkStyle(message.userId) }}">
+                        <span *ngIf="message.taggedUsers" class="hover"
+                            (click)="goToId(message.taggedUsers.id, message.taggedUsers.type)">{{
+                            message.taggedUsers.messageString }}</span>
+                        {{ message.content }}
                     </span>
                 </div>
             </div>

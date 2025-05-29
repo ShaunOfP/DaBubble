@@ -49,7 +49,12 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
   counter: number = 1;
   idOfChannelOrMember: string = ``;
   showPlaceholder: boolean = true;
-  currentlyTaggedUserOrChannelId: { id: string, type: string, name: string } = { id: '', type: '', name: '' };
+  currentlyTaggedUserOrChannelId: {
+    id: string,
+    type: string,
+    name: string,
+    messageString: string
+  } = { id: '', type: '', name: '', messageString: '' };
 
   constructor(
     public chatService: ChatService,
@@ -160,7 +165,7 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
   selectDataToSendMessageToPublicChat(channelData: Channel) {
     this.messageInput.nativeElement.value = `#${channelData.channelName} `;
     this.messageInput.nativeElement.focus();
-    this.currentlyTaggedUserOrChannelId = { id: channelData.channelId, type: 'public', name: channelData.channelName };
+    this.currentlyTaggedUserOrChannelId = { id: channelData.channelId, type: 'public', name: channelData.channelName, messageString: `#${channelData.channelName}` };
     this.showPlaceholder = false;
     this.filterService.updateFilter('');
     this.idOfChannelOrMember = channelData.channelId;
@@ -170,7 +175,7 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
   selectDataToSendMessageToMember(memberData: Member) {
     this.messageInput.nativeElement.value = `@${memberData.username} `;
     this.messageInput.nativeElement.focus();
-    this.currentlyTaggedUserOrChannelId = { id: memberData.id, type: 'private', name: memberData.username };
+    this.currentlyTaggedUserOrChannelId = { id: memberData.id, type: 'private', name: memberData.username, messageString: `@${memberData.username}` };
     this.showPlaceholder = false;
     this.filterService.updateFilter('');
     this.idOfChannelOrMember = memberData.privateChats;
